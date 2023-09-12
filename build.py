@@ -8,20 +8,23 @@ templateEnv = jinja2.Environment(loader=templateLoader)
 
 out_dir = "html"
 
+with open("project.json", "r", encoding="utf-8") as f:
+    project_data = json.load(f)
+
 os.makedirs(out_dir, exist_ok=True)
-for x in glob.glob(f'{out_dir}/*.html'):
+for x in glob.glob(f"{out_dir}/*.html"):
     os.unlink(x)
 
-files = glob.glob('./templates/static/*.j2')
+files = glob.glob("./templates/static/*.j2")
 
-print('building static content')
+print("building static content")
 for x in files:
     print(x)
     template = templateEnv.get_template(x)
     _, tail = os.path.split(x)
-    # print(f'rendering {tail}')
-    with open(f'./html/{tail.replace(".j2", ".html")}', 'w') as f:
-        f.write(template.render({"objects": {}}))
+    print(f"rendering {tail}")
+    with open(f'./html/{tail.replace(".j2", ".html")}', "w") as f:
+        f.write(template.render({"project_data": project_data}))
 
 print("building document sites")
 
