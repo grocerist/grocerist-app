@@ -1,5 +1,66 @@
 {% extends "templates/partials/base.j2" %}
 {% block content %}
-<h1>{{ object.shelf_mark }}</h1>
-<p>{{ object }}</p>
+<div class="container">
+<h1 class="text-center">{{ object.shelfmark }}</h1>
+<h2><i class="bi bi-geo-alt"></i> Location</h2>
+<dl>
+    {% if object.district %}
+        <dt>Districts</dt>
+        {% for x in object.district %}
+            <dd class="ms-5">{{ x.value }}</dd>
+        {% endfor %}
+    {% endif %}
+
+    {% if object.neighbourhood %}
+        <dt>Neighbourhoods</dt>
+        {% for x in object.neighbourhood %}
+            <dd class="ms-5">{{ x.value }}</dd>
+        {% endfor %}
+    {% endif %}
+
+    {% if object.karye %}
+        <dt>Karye</dt>
+        {% for x in object.karye %}
+            <dd class="ms-5">{{ x.value }}</dd>
+        {% endfor %}
+    {% endif %}
+</dl>
+
+
+<h2><i class="bi bi-person"></i> Main Person/{{ object.type_of_ownership.value }} </h2>
+{% for x in object.main_person %}
+<dl>
+    <dt>Name</dt>
+    <dd class="ms-5">{{ x.name }}</dd>
+    <dt>Status</dt>
+    <dd class="ms-5">{{ object.status_of_main_person.value }}</dd>
+    <dt>Religion</dt>
+    {% for y in x.religion %}
+        <dd class="ms-5">{{ y.value }}</dd>
+    {% endfor %}
+</dl>
+{% endfor %}
+
+<h2><i class="bi bi-people"></i> Further mentioned Persons</h2>
+{% for x in object.mentioned_persons %}
+<dl>
+    <dt>Name</dt>
+    <dd class="ms-5">{{ x.value }}</dd>
+</dl>
+{% endfor %}
+
+<h2><i class="bi bi-basket"></i> Goods</h2>
+{% for x in object.goods %}
+<dt>{{ x.name }}</dt>
+<dd class="ms-5">
+        {% for y in x.has_category %} 
+            <span class="badge text-bg-primary">{{y.value}}</span>
+        {% endfor %}
+    
+</dd>
+{% endfor %}
+
+</div>
+
+
 {% endblock content %}

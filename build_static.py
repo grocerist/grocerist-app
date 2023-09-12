@@ -33,7 +33,7 @@ with open(os.path.join("json_dumps", data_file), "r", encoding="utf-8") as f:
     documents_data = json.load(f)
 
 for key, value in documents_data.items():
-    f_name = f"document-{value['grocerist_id']}.html"
+    f_name = f"{value['grocerist_id']}.html"
     save_path = os.path.join(out_dir, f_name)
     context = {}
     context["object"] = value
