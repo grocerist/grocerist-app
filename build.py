@@ -27,19 +27,30 @@ for x in files:
         f.write(template.render({"project_data": project_data}))
 
 print("building document sites")
-
 data_file = "documents.json"
-
 template = templateEnv.get_template("./templates/document.j2")
-
 with open(os.path.join("json_dumps", data_file), "r", encoding="utf-8") as f:
-    documents_data = json.load(f)
-
-for key, value in documents_data.items():
+    data = json.load(f)
+for key, value in data.items():
     f_name = f"{value['grocerist_id']}.html"
     save_path = os.path.join(out_dir, f_name)
     context = {}
     context["object"] = value
     context["page_title"] = value["shelfmark"]
+    with open(save_path, "w") as f:
+        f.write(template.render(context))
+
+
+print("building person sites")
+data_file = "persons.json"
+template = templateEnv.get_template("./templates/person.j2")
+with open(os.path.join("json_dumps", data_file), "r", encoding="utf-8") as f:
+    data = json.load(f)
+for key, value in data.items():
+    f_name = f"{value['grocerist_id']}.html"
+    save_path = os.path.join(out_dir, f_name)
+    context = {}
+    context["object"] = value
+    context["page_title"] = value["name"]
     with open(save_path, "w") as f:
         f.write(template.render(context))

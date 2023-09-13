@@ -31,7 +31,7 @@
 {% for x in object.main_person %}
 <dl>
     <dt>Name</dt>
-    <dd class="ms-5">{{ x.name }}</dd>
+    <dd class="ms-5"><a href="{{ x.grocerist_id }}.html">{{ x.name }}</a></dd>
     <dt>Status</dt>
     <dd class="ms-5">{{ object.status_of_main_person.value }}</dd>
     <dt>Religion</dt>
