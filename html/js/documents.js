@@ -12,9 +12,17 @@ function linkToDetailView(cell) {
     var row = cell.getRow().getData()
     var cellData = cell.getData()
     var groceristId = row.grocerist_id
-    var theLink = `<a target="_blank" href="${groceristId}.html">${cellData.shelfmark}</a>`
+    var theLink = `<a href="${groceristId}.html">${cellData.shelfmark}</a>`
     return theLink
 }
+
+function mutateDistrictField(value, data, type, params, component) {
+    let output = value.map((item) => {
+        return `<li><a href="district__${item.id}.html">${item.value}</a></li>`
+    }).join(" ");
+    return `<ul class="list-unstyled">${output}</ul>`
+}
+
 
 d3.json(dataUrl, function (data) {
     tableData = Object.values(data)
@@ -40,6 +48,9 @@ d3.json(dataUrl, function (data) {
             {
                 title: "Goods", field: "goods", mutator: listGoods, headerFilter: "input", formatter: "html", tooltip: true
             },
+            {
+                title: "District", field: "district", mutator: mutateDistrictField, headerFilter: "input", formatter: "html"
+            }
         ]
     });
 });
