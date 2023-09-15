@@ -1,11 +1,11 @@
 
 const dataUrl = "/json_dumps/category.json"
 
-function listGoods(value, data, type, params, component) {
+function listDocs(value, data, type, params, component) {
     let output = value.map((item) => {
-        return `<a href="${item.grocerist_id}.html">${item.name}</a>`
+        return `<li><a href="${item.grocerist_id}.html">${item.name}</a></li>`
     }).join(" ");
-    return `${output}`
+    return `<ul>${output}</ul>`
 }
 
 function linkToDetailView(cell) {
@@ -18,7 +18,7 @@ function linkToDetailView(cell) {
 
 function mutateDistrictField(value, data, type, params, component) {
     let output = value.map((item) => {
-        return `<li><a href="district__${item.id}.html">${item.value}</a></li>`
+        return `<li><a href="${item.grocerist}.html">${item.name}</a></li>`
     }).join(" ");
     return `<ul class="list-unstyled">${output}</ul>`
 }
@@ -30,7 +30,7 @@ d3.json(dataUrl, function (data) {
     var table = new Tabulator("#example-table", {
         height: 800,
         layout: "fitColumns",
-        tooltips:true,
+        tooltips: true,
         data: tableData,
         responsiveLayout: "collapse",
         persistence: {
@@ -42,12 +42,12 @@ d3.json(dataUrl, function (data) {
                     return linkToDetailView(cell)
                 }
             },
-            // {
-            //     title: "Main Person", field: "main_person", mutator: listGoods, headerFilter: "input", formatter: "html"
-            // },
-            // {
-            //     title: "Goods", field: "goods", mutator: listGoods, headerFilter: "input", formatter: "html", tooltip: true
-            // },
+            {
+                title: "Goods", field: "goods", mutator: mutateDistrictField, linkToDetailView: "input", formatter: "html", headerFilter: "input" 
+            },
+            {
+                title: "Documents", field: "documents", mutator: listDocs, headerFilter: "input", formatter: "html", tooltip: true
+            },
             // {
             //     title: "District", field: "district", mutator: mutateDistrictField, headerFilter: "input", formatter: "html"
             // }
