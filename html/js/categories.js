@@ -1,5 +1,5 @@
 
-const dataUrl = "/json_dumps/category.json"
+const dataUrl = "/json_dumps/categories.json"
 
 function listDocs(value, data, type, params, component) {
     let output = value.map((item) => {
@@ -11,7 +11,7 @@ function listDocs(value, data, type, params, component) {
 function linkToDetailView(cell) {
     var row = cell.getRow().getData()
     var cellData = cell.getData()
-    var groceristId = row.id
+    var groceristId = row.grocerist_id
     var theLink = `<a href="${groceristId}.html">${cellData.name}</a>`
     return theLink
 }

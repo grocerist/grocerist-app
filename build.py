@@ -54,3 +54,18 @@ for key, value in data.items():
     context["page_title"] = value["name"]
     with open(save_path, "w") as f:
         f.write(template.render(context))
+
+
+print("building category sites")
+data_file = "categories.json"
+template = templateEnv.get_template("./templates/category.j2")
+with open(os.path.join("json_dumps", data_file), "r", encoding="utf-8") as f:
+    data = json.load(f)
+for value in data:
+    f_name = f"{value['grocerist_id']}.html"
+    save_path = os.path.join(out_dir, f_name)
+    context = {}
+    context["object"] = value
+    context["page_title"] = value["name"]
+    with open(save_path, "w") as f:
+        f.write(template.render(context))

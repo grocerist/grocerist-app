@@ -1,0 +1,20 @@
+{% extends "templates/partials/base.j2" %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">{{ object.name }}</h1>
+    <h2><i class="bi bi-eye"></i> Goods</h2>
+    <ul>
+        {% for x in object.goods %}
+        <li>
+            {{ x.name }}
+        </li>
+        {% endfor %}
+    </ul>
+    <h2><i class="bi bi-archiv"></i> Documents</h2>
+    <ul>
+        {% for x in object.documents %}
+        <li><a href="{{ x.grocerist_id }}.html">{{ x.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}

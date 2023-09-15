@@ -8,7 +8,7 @@ github_url = (
 )
 
 file_list = [
-    "category.json",
+    "categories.json",
     "districts.json",
     "documents.json",
     "goods.json",
