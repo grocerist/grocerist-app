@@ -1,5 +1,5 @@
 
-const dataUrl = "/data/category.json"
+const dataUrl = "/json_dumps/category.json"
 
 function listGoods(value, data, type, params, component) {
     let output = value.map((item) => {
