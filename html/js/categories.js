@@ -36,23 +36,24 @@ d3.json(dataUrl, function (data) {
         persistence: {
             headerFilter: true,
         },
+        columnCalcs: "both",
         columns: [
             {
                 title: "Good Category", field: "name", headerFilter: "input", formatter: function (cell) {
                     return linkToDetailView(cell)
-                }
+                }, bottomCalc: "count"
             },
             {
-                title: "Goods", field: "goods", mutator: mutateDistrictField, linkToDetailView: "input", formatter: "html", headerFilter: "input" 
+                title: "Goods", field: "goods", mutator: mutateDistrictField, linkToDetailView: "input", formatter: "html", headerFilter: "input"
             },
             {
-                title: "# Goods", field: "good_count"
+                title: "# Goods", field: "good_count", bottomCalc: "sum"
             },
             {
                 title: "Documents", field: "documents", mutator: listDocs, headerFilter: "input", formatter: "html", tooltip: true
             },
             {
-                title: "# Docs", field: "doc_count"
+                title: "# Docs", field: "doc_count", bottomCalc: "sum"
             }
         ]
     });

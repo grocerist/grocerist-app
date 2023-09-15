@@ -40,7 +40,7 @@ d3.json(dataUrl, function (data) {
             {
                 title: "Shelfmark", field: "shelfmark", headerFilter: "input", formatter: function (cell) {
                     return linkToDetailView(cell)
-                }
+                }, bottomCalc: "count"
             },
             {
                 title: "Main Person", field: "main_person", mutator: listGoods, headerFilter: "input", formatter: "html"
