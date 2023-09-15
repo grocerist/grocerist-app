@@ -46,11 +46,14 @@ d3.json(dataUrl, function (data) {
                 title: "Goods", field: "goods", mutator: mutateDistrictField, linkToDetailView: "input", formatter: "html", headerFilter: "input" 
             },
             {
+                title: "# Goods", field: "good_count"
+            },
+            {
                 title: "Documents", field: "documents", mutator: listDocs, headerFilter: "input", formatter: "html", tooltip: true
             },
-            // {
-            //     title: "District", field: "district", mutator: mutateDistrictField, headerFilter: "input", formatter: "html"
-            // }
+            {
+                title: "# Docs", field: "doc_count"
+            }
         ]
     });
 });

@@ -54,7 +54,7 @@
 <dt>{{ x.name }}</dt>
 <dd class="ms-5">
         {% for y in x.has_category %} 
-            <span class="badge text-bg-primary">{{y.value}}</span>
+            <a href="category__{{ y.id }}.html"><span class="badge text-bg-primary">{{y.value}}</span></a>
         {% endfor %}
     
 </dd>
