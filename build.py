@@ -7,6 +7,7 @@ templateLoader = jinja2.FileSystemLoader(searchpath=".")
 templateEnv = jinja2.Environment(loader=templateLoader)
 
 out_dir = "html"
+tei_dir = os.path.join(out_dir, "tei")
 
 with open("project.json", "r", encoding="utf-8") as f:
     project_data = json.load(f)

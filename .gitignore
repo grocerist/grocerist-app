@@ -162,3 +162,5 @@ cython_debug/
 
 json_dumps/
 html/*.html
+tei/
+tmp/
