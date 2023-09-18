@@ -1,4 +1,6 @@
 import os
+import io
+import zipfile
 import shutil
 import requests
 import json
@@ -31,3 +33,18 @@ for x in file_list:
     with open(save_path, "w") as fp:
         json.dump(data, fp, ensure_ascii=False)
     shutil.copy(src=save_path, dst=os.path.join("html", json_dumps, x))
+
+
+tei_dir = "tei"
+tei_html_dir = os.path.join("html", tei_dir)
+zip_file_url = "https://github.com/grocerist/grocerist-tei/archive/refs/heads/main.zip"
+shutil.rmtree(tei_html_dir, ignore_errors=True)
+os.makedirs(tei_html_dir, exist_ok=True)
+
+r = requests.get(zip_file_url)
+z = zipfile.ZipFile(io.BytesIO(r.content))
+z.extractall(tei_dir)
+for x in os.listdir(f"./{tei_dir}/grocerist-tei-main/tei"):
+    shutil.move(os.path.join(f"./{tei_dir}/grocerist-tei-main/tei", x), tei_html_dir)
+
+shutil.rmtree(tei_dir)

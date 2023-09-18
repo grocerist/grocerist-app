@@ -2,11 +2,14 @@ import os
 import glob
 import jinja2
 import json
+import lxml.etree as ET
+from acdh_tei_pyutils.tei import TeiReader
 
 templateLoader = jinja2.FileSystemLoader(searchpath=".")
 templateEnv = jinja2.Environment(loader=templateLoader)
 
 out_dir = "html"
+tei_dir = os.path.join(out_dir, "tei")
 
 with open("project.json", "r", encoding="utf-8") as f:
     project_data = json.load(f)
@@ -37,6 +40,22 @@ for key, value in data.items():
     context = {}
     context["object"] = value
     context["page_title"] = value["shelfmark"]
+    tei_file = os.path.join(tei_dir, f_name.replace(".html", ".xml"))
+    try:
+        doc = TeiReader(tei_file)
+    except OSError:
+        doc = None
+        paragraphs = []
+        continue
+    if doc:
+        paragraphs = [
+            ET.tostring(x).decode("utf-8") for x in doc.any_xpath(".//tei:body//tei:p")
+        ]
+    context["paragraphs"] = paragraphs
+    if paragraphs:
+        context["transcript"] = True
+    else:
+        context["transcript"] = False
     with open(save_path, "w") as f:
         f.write(template.render(context))
 
