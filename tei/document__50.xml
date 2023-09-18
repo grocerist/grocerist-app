@@ -1,0 +1,66 @@
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+    <teiHeader xmlns="http://www.tei-c.org/ns/1.0" xml:id="document__50.xml">
+        <fileDesc>
+            <titleStmt>
+                <title type="main">: İSTM.ŞSC.14.d. 504/ 86a-2</title>
+                <title type="sub">Grocers of Istanbul: Tracing Food Consumption (GrocerIST)</title>
+                <principal>
+                    <persName role="acdh:hasPrincipialInvestigator" key="https://orcid.org/0000-0002-8740-5275">Yavuz Köse</persName>
+                </principal>
+                <funder>
+                    <name>FWF - Der Wissenschaftsfonds</name>
+                    <address>
+                        <street>Sensengasse 1</street>
+                        <postCode>1090 Wien</postCode>
+                        <placeName>
+                            <country>A</country>
+                            <settlement>Wien</settlement>
+                        </placeName>
+                    </address>
+                </funder>
+                <respStmt>
+                    <resp>Transcription and Annotation</resp>
+                    <persName role="acdh:hasCreator">Suemeyye Hosgoer Bueke</persName>
+                </respStmt>
+                <respStmt>
+                    <resp>XML/TEI creation</resp>
+                    <persName role="acdh:hasContributor" key="https://orcid.org/0000-0002-9575-9372">Peter Andorfer</persName>
+                </respStmt>
+            </titleStmt>
+            <publicationStmt>
+                <p>Publication Information</p>
+            </publicationStmt>
+            <sourceDesc>
+                <msDesc type="invetory">
+                    <msIdentifier>
+                        <institution>Name of the Archiv</institution>
+                        <repository>Name of the Repository</repository>
+                        <idno type="archive">İSTM.ŞSC.14.d. 504/ 86a-2</idno>
+                    </msIdentifier>
+                    <history>                        <origin when="1790-1791"/>                    </history>
+                </msDesc>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+         <abstract>
+            <ab>Transcription of the grocerist shop inventory with shelfmark <idno>İSTM.ŞSC.14.d. 504/ 86a-2</idno></ab>
+         </abstract>         <creation><date when="1790-1791">1205</date></creation>         <particDesc>
+            <listPerson>               <person role="main_person" xml:id="person__50">
+                <persName/>
+               </person>               <person role="mentioned">
+                <persName>Mother</persName>
+               </person>               <person role="mentioned">
+                <persName>Sister</persName>
+               </person>            </listPerson>
+         </particDesc>
+         <settingDesc>
+            <listPlace>
+<place xml:id="district__5" type="district"><placeName>Galata Harici</placeName></place><place xml:id="neighbourhood__7" type="neighbourhood"><placeName>Hüseyin Ağa</placeName></place>            </listPlace>
+         </settingDesc>      </profileDesc>
+    </teiHeader>
+    <text>
+        <body>
+            <div xmlns="http://www.tei-c.org/ns/1.0"><head><anchor xml:id="xmlid__heading_h_6yg51oigvfam"/><hi rend="baseline">İSTM.ŞSC.14.d. 504/ 86a-2_</hi><ref target="http://document__50"><hi rend="baseline underline color(1155cc)">GrocerIST id_48</hi></ref></head><p style="text-align: justify;"><hi xml:space="preserve">Mahrūse-i Galata hāricinde Hüseyin Ağa mahallesinde mütemekkin iken bundan akdem hālik olan bakkāl Bertiz veled-i Serkizin verāsetini anası Hava bt. Krikor ve li-ebeveyn kız karındaşı </hi><hi rend="background(yellow)" xml:space="preserve">… </hi><hi xml:space="preserve">münhasıra olduğu lede’ş-şer’i nümāyān oldukdan sonra merkūm </hi><hi rend="background(yellow)">…</hi><hi xml:space="preserve">vekil-i müseccelleri Tütüncü  Parsun veled-i </hi><hi rend="background(yellow)">…</hi> <hi>taleb ve iltimāsıyla tahrīr olunan tereke-i hālik-i merkūmdur ki ber vech-i ātī zikr olunur. 16 Rebī’ülevvel 1205</hi></p><p style="text-align: justify;"><hi rend="bold background(yellow)">…</hi><hi rend="bold" xml:space="preserve"> kürk:</hi><hi xml:space="preserve"> 840</hi></p><p style="text-align: justify;"><hi rend="bold">Minder:</hi><hi xml:space="preserve"> 2 / 480</hi></p><p style="text-align: justify;"><hi rend="bold">Döşek:</hi><hi xml:space="preserve"> 480</hi></p><p style="text-align: justify;"><hi rend="bold" xml:space="preserve">Yasdık: </hi><hi>4 / 480</hi></p><p style="text-align: justify;"><hi rend="bold">Sini:</hi><hi xml:space="preserve"> 1 / 600</hi></p><p style="text-align: justify;"><hi rend="bold">Don Gömlek Dizlik:</hi><hi xml:space="preserve"> 240</hi></p><p style="text-align: justify;"><hi>Vekil-i merkūmun Ahmed Bey olub zimmetinde olan bazarcı semeni: 4200</hi></p><p style="text-align: justify;"><hi>Vekil-i merkūmun Ahmed Bey olub zimmetinde olan bargir semeni: 6600</hi></p><p style="text-align: justify;"><hi>Vekil-i merkūmun Ahmed Bey olub zimmetinde olan bargir semeni: 5520</hi></p><p style="text-align: justify;"><hi>Vekil-i merkūmun Ahmed Bey olub zimmetinde olan bargir semeni: 3000</hi></p><p style="text-align: justify;"><hi>Vekil-i merkūmun Ahmed Bey olub zimmetinde olan bargir semeni: 4800</hi></p><p style="text-align: justify;"><hi>Vekil-i merkūmun Ahmed Bey olub zimmetinde olan bargir semeni: 6000</hi></p></div>
+        </body>
+    </text>
+</TEI>
