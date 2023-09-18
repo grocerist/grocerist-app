@@ -1,0 +1,28 @@
+name: Build and publish
+
+on: workflow_dispatch
+
+jobs:
+  build_pages:
+    name: Publish Transcription Status
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "pip"
+      - run: pip install -r requirements.txt
+      - name: fetch the data
+        run: python fetch_data.py
+      - name: build
+        run: python build.py
+      - name: Commit data
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Data update
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: ./html
