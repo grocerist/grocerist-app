@@ -1,5 +1,5 @@
 
-const dataUrl = "/json_dumps/persons.json"
+const dataUrl = "json_dumps/persons.json"
 
 function mutateSelectField(value, data, type, params, component) {
     let output = value.map((item) => {
