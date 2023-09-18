@@ -1,7 +1,7 @@
 {% extends "templates/partials/base.j2" %}
 {% block content %}
 <div class="container">
-    <h1 class="text-center">{{ object.shelfmark }}</h1>
+    <h1 class="text-center p-3">{{ object.shelfmark }}</h1>
     <div class="row">
         <div class="col">
             <h2><i class="bi bi-geo-alt"></i> Location</h2>
@@ -63,7 +63,22 @@
             {% endfor %}
         </div>
         <div class="col">
-            <h2>Transcript</h2>
+            {% if images %}
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: {{ images }}
+                });
+                </script>
+            </div>
+            {% endif %}
+            <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             {% for x in paragraphs %}
             {{ x|safe }}
             {% endfor %}
