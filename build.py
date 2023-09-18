@@ -2,11 +2,18 @@ import os
 import glob
 import jinja2
 import json
+import requests
 import lxml.etree as ET
 from acdh_tei_pyutils.tei import TeiReader
 
 templateLoader = jinja2.FileSystemLoader(searchpath=".")
 templateEnv = jinja2.Environment(loader=templateLoader)
+
+gh_img_data = (
+    "https://raw.githubusercontent.com/grocerist/transkribus-out/main/data.json"
+)
+
+img_data = requests.get(gh_img_data).json()
 
 out_dir = "html"
 tei_dir = os.path.join(out_dir, "tei")
@@ -35,6 +42,7 @@ template = templateEnv.get_template("./templates/document.j2")
 with open(os.path.join("json_dumps", data_file), "r", encoding="utf-8") as f:
     data = json.load(f)
 for key, value in data.items():
+    doc_id = value["grocerist_id"]
     f_name = f"{value['grocerist_id']}.html"
     save_path = os.path.join(out_dir, f_name)
     context = {}
@@ -46,7 +54,6 @@ for key, value in data.items():
     except OSError:
         doc = None
         paragraphs = []
-        continue
     if doc:
         paragraphs = [
             ET.tostring(x).decode("utf-8") for x in doc.any_xpath(".//tei:body//tei:p")
@@ -56,6 +63,13 @@ for key, value in data.items():
         context["transcript"] = True
     else:
         context["transcript"] = False
+    try:
+        context["images"] = [
+            f"https://files.transkribus.eu/iiif/2/{x}/info.json"
+            for x in img_data[value["grocerist_id"]]
+        ]
+    except KeyError:
+        context["images"] = False
     with open(save_path, "w") as f:
         f.write(template.render(context))
 
