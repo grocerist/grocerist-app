@@ -19,7 +19,7 @@ file_list = [
     "persons.json",
 ]
 
-json_dumps = os.path.join("html","json_dumps")
+json_dumps = os.path.join("html", "json_dumps")
 
 
 os.makedirs(json_dumps, exist_ok=True)

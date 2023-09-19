@@ -14,7 +14,7 @@ gh_img_data = (
 )
 
 img_data = requests.get(gh_img_data).json()
-json_dumps = os.path.join("html","json_dumps")
+json_dumps = os.path.join("html", "json_dumps")
 
 
 out_dir = "html"
@@ -63,6 +63,7 @@ for key, value in data.items():
     context["paragraphs"] = paragraphs
     if paragraphs:
         context["transcript"] = True
+        value["transcript"] = True
     else:
         context["transcript"] = False
     try:
@@ -70,10 +71,14 @@ for key, value in data.items():
             f"https://files.transkribus.eu/iiif/2/{x}/info.json"
             for x in img_data[value["grocerist_id"]]
         ]
+        value["images"] = True
     except KeyError:
         context["images"] = False
+        value["images"] = False
     with open(save_path, "w") as f:
         f.write(template.render(context))
+with open(os.path.join(json_dumps, data_file), "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=True)
 
 
 print("building person sites")

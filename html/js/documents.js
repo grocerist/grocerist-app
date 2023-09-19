@@ -3,9 +3,9 @@ const dataUrl = "json_dumps/documents.json"
 
 function listGoods(value, data, type, params, component) {
     let output = value.map((item) => {
-        return `<a href="${item.grocerist_id}.html">${item.name}</a>`
+        return `<li><a href="${item.grocerist_id}.html">${item.name}</a></li>`
     }).join(" ");
-    return `${output}`
+    return `<ul>${output}</ul>`
 }
 
 function linkToDetailView(cell) {
@@ -29,8 +29,8 @@ d3.json(dataUrl, function (data) {
 
     var table = new Tabulator("#example-table", {
         height: 800,
-        layout: "fitColumns",
-        tooltips:true,
+        layout: "fitData",
+        tooltips: true,
         data: tableData,
         responsiveLayout: "collapse",
         persistence: {
@@ -44,6 +44,12 @@ d3.json(dataUrl, function (data) {
             },
             {
                 title: "Main Person", field: "main_person", mutator: listGoods, headerFilter: "input", formatter: "html"
+            },
+            {
+                title: "Transcript", field: "transcript", formatter: "tickCross", headerFilter: "tickCross", headerFilterParams: { "tristate": true }, headerFilterEmptyCheck: function (value) { return value === null }
+            },
+            {
+                title: "Facsimiles", field: "images", formatter: "tickCross", headerFilter: "tickCross", headerFilterParams: { "tristate": true }, headerFilterEmptyCheck: function (value) { return value === null }
             },
             {
                 title: "Goods", field: "goods", mutator: listGoods, headerFilter: "input", formatter: "html", tooltip: true
