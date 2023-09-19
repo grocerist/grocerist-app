@@ -1,0 +1,43 @@
+{% extends "templates/partials/base.j2" %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">{{ object.name }}</h1>
+    <h2><i class="bi bi-eye"></i> Religion</h2>
+    <ul>
+        {% for x in object.religion %}
+        <li>
+            {{ x.value }}
+        </li>
+        {% endfor %}
+    </ul>
+    <h2><i class="bi bi-geo-alt"></i> Location</h2>
+    <dl>
+        {% if object.district %}
+            <dt>Districts</dt>
+            {% for x in object.district %}
+                <dd class="ms-5">{{ x.value }}</dd>
+            {% endfor %}
+        {% endif %}
+
+        {% if object.neighbourhood %}
+            <dt>Neighbourhoods</dt>
+            {% for x in object.neighbourhood %}
+                <dd class="ms-5">{{ x.value }}</dd>
+            {% endfor %}
+        {% endif %}
+
+        {% if object.karye %}
+            <dt>Karye</dt>
+            {% for x in object.karye %}
+                <dd class="ms-5">{{ x.value }}</dd>
+            {% endfor %}
+        {% endif %}
+    </dl>
+    <h2><i class="bi bi-archiv"></i> Documents</h2>
+    <ul>
+        {% for x in object.documents %}
+        <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}
