@@ -14,6 +14,8 @@ gh_img_data = (
 )
 
 img_data = requests.get(gh_img_data).json()
+json_dumps = os.path.join("html", "json_dumps")
+
 
 out_dir = "html"
 tei_dir = os.path.join(out_dir, "tei")
@@ -39,7 +41,7 @@ for x in files:
 print("building document sites")
 data_file = "documents.json"
 template = templateEnv.get_template("./templates/document.j2")
-with open(os.path.join("json_dumps", data_file), "r", encoding="utf-8") as f:
+with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
     data = json.load(f)
 for key, value in data.items():
     doc_id = value["grocerist_id"]
@@ -61,6 +63,7 @@ for key, value in data.items():
     context["paragraphs"] = paragraphs
     if paragraphs:
         context["transcript"] = True
+        value["transcript"] = True
     else:
         context["transcript"] = False
     try:
@@ -68,16 +71,20 @@ for key, value in data.items():
             f"https://files.transkribus.eu/iiif/2/{x}/info.json"
             for x in img_data[value["grocerist_id"]]
         ]
+        value["images"] = True
     except KeyError:
         context["images"] = False
+        value["images"] = False
     with open(save_path, "w") as f:
         f.write(template.render(context))
+with open(os.path.join(json_dumps, data_file), "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=True)
 
 
 print("building person sites")
 data_file = "persons.json"
 template = templateEnv.get_template("./templates/person.j2")
-with open(os.path.join("json_dumps", data_file), "r", encoding="utf-8") as f:
+with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
     data = json.load(f)
 for key, value in data.items():
     f_name = f"{value['grocerist_id']}.html"
@@ -92,9 +99,24 @@ for key, value in data.items():
 print("building category sites")
 data_file = "categories.json"
 template = templateEnv.get_template("./templates/category.j2")
-with open(os.path.join("json_dumps", data_file), "r", encoding="utf-8") as f:
+with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
     data = json.load(f)
 for value in data:
+    f_name = f"{value['grocerist_id']}.html"
+    save_path = os.path.join(out_dir, f_name)
+    context = {}
+    context["object"] = value
+    context["page_title"] = value["name"]
+    with open(save_path, "w") as f:
+        f.write(template.render(context))
+
+
+print("building district sites")
+data_file = "districts.json"
+template = templateEnv.get_template("./templates/district.j2")
+with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
+    data = json.load(f)
+for key, value in data.items():
     f_name = f"{value['grocerist_id']}.html"
     save_path = os.path.join(out_dir, f_name)
     context = {}

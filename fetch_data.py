@@ -19,7 +19,7 @@ file_list = [
     "persons.json",
 ]
 
-json_dumps = "json_dumps"
+json_dumps = os.path.join("html", "json_dumps")
 
 
 os.makedirs(json_dumps, exist_ok=True)
@@ -32,7 +32,6 @@ for x in file_list:
     print(f"downloading {url} and saving it to {save_path}")
     with open(save_path, "w") as fp:
         json.dump(data, fp, ensure_ascii=False)
-    shutil.copy(src=save_path, dst=os.path.join("html", json_dumps, x))
 
 
 tei_dir = "tei"
