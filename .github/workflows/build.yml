@@ -15,6 +15,8 @@ jobs:
       - run: pip install -r requirements.txt
       - name: fetch the data
         run: python fetch_data.py
+      - name: make geojson
+        run: python make_geojson.py
       - name: build
         run: python build.py
       - name: Commit data
