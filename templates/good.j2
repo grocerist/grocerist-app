@@ -2,18 +2,16 @@
 {% block content %}
 <div class="container">
     <h1 class="text-center">{{ object.name }}</h1>
-    <h2><i class="bi bi-basket"></i> Goods</h2>
-    <ul>
-        {% for x in object.goods %}
-        <li>
-            <a href="{{ x.grocerist_id }}.html">{{ x.name }}</a>
-        </li>
+    <h2><i class="bi bi-geo-alt"></i> Categories</h2>
+    <dl>
+        {% for x in object.has_category %}
+            <dd class="ms-5"><a href="category__{{ x.id }}.html">{{ x.value }}</a></dd>
         {% endfor %}
-    </ul>
+    </dl>
     <h2><i class="bi bi-archiv"></i> Documents</h2>
     <ul>
         {% for x in object.documents %}
-        <li><a href="{{ x.grocerist_id }}.html">{{ x.name }}</a></li>
+        <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
         {% endfor %}
     </ul>
 </div>
