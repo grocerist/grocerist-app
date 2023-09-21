@@ -1,7 +1,13 @@
 const gjDataUrl = "json_dumps/gj_districts.json"
 
 function onEachFeature(feature, layer) {
-    let popupContent = `<p>I started out as a GeoJSON ${feature.geometry.type}, but now I'm a Leaflet vector!</p>`;
+    let popupContent = `
+    <h3><a href="${feature.properties.grocerist_id}.html">${feature.properties.name}<a/></h3>
+    <ul>
+        <li>${feature.properties.doc_count} related <a href="documents.html">Documents</a></li>
+        <li>${feature.properties.person_count} related <a href="persons.html">Persons</a></li>
+    </ul>
+    `;
 
     if (feature.properties && feature.properties.popupContent) {
         popupContent += feature.properties.popupContent;
