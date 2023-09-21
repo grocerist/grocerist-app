@@ -18,7 +18,7 @@ function linkToDetailView(cell) {
 
 function mutateDistrictField(value, data, type, params, component) {
     let output = value.map((item) => {
-        return `<li><a href="${item.grocerist}.html">${item.name}</a></li>`
+        return `<li><a href="${item.grocerist_id}.html">${item.name}</a></li>`
     }).join(" ");
     return `<ul class="list-unstyled">${output}</ul>`
 }

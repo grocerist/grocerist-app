@@ -15,7 +15,7 @@
         {% if object.district %}
             <dt>Districts</dt>
             {% for x in object.district %}
-                <dd class="ms-5">{{ x.value }}</dd>
+                <dd class="ms-5"><a href="district__{{ x.id }}.html">{{ x.value }}</a></dd>
             {% endfor %}
         {% endif %}
 
