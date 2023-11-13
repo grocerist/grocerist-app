@@ -1,6 +1,9 @@
 name: Build and publish
 
-on: workflow_dispatch
+on:
+  schedule:
+  - cron: "40 23 * * *"
+  workflow_dispatch:
 
 jobs:
   build_pages:
