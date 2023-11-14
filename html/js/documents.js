@@ -42,7 +42,7 @@ d3.json(dataUrl, function (data) {
             {
                 title: "Shelfmark", field: "shelfmark", headerFilter: "input", formatter: function (cell) {
                     return linkToDetailView(cell)
-                }, bottomCalc: "count"
+                }
             },
             {
                 title: "Main Person", field: "main_person", mutator: listGoods, headerFilter: "input", formatter: "html"
@@ -63,7 +63,18 @@ d3.json(dataUrl, function (data) {
             {
                 title: "District", field: "district", mutator: mutateDistrictField, headerFilter: "input", formatter: "html"
             }
-        ]
+        ],
+        footerElement: '<span class="tabulator-counter float-left">'+
+        'Showing <span id="search_count"></span> results out of <span id="total_count"></span> '+
+        '</span>'
+    });
+
+    table.on("dataLoaded", function(data){
+        $("#total_count").text(data.length);
+    });
+    
+    table.on("dataFiltered", function(filters, rows){
+        $("#search_count").text(rows.length);
     });
 });
 
