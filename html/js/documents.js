@@ -4,7 +4,7 @@ const dataUrl = "json_dumps/documents.json"
 function listGoods(value, data, type, params, component) {
     let output = value.map((item) => {
         return `<li><a href="${item.grocerist_id}.html">${item.name}</a></li>`
-    }).join(" ");
+    }).join("");
     return `<ul>${output}</ul>`
 }
 
@@ -28,11 +28,13 @@ d3.json(dataUrl, function (data) {
     tableData = Object.values(data)
 
     var table = new Tabulator("#example-table", {
-        height: 800,
-        layout: "fitData",
+        pagination:true,
+        paginationSize:15,
+        layout: "fitDataStretch",
+        responsiveLayout:"collapse",
+        height: 600,
         tooltips: true,
         data: tableData,
-        responsiveLayout: "collapse",
         persistence: {
             headerFilter: true,
         },
@@ -52,7 +54,11 @@ d3.json(dataUrl, function (data) {
                 title: "Facsimiles", field: "images", formatter: "tickCross", headerFilter: "tickCross", headerFilterParams: { "tristate": true }, headerFilterEmptyCheck: function (value) { return value === null }
             },
             {
-                title: "Goods", field: "goods", mutator: listGoods, headerFilter: "input", formatter: "html", tooltip: true
+                title: "Goods", field: "goods", mutator: listGoods, headerFilter: "input",
+                formatter: function (cell) {
+                    return get_scrollable_cell(this, cell);
+                }, 
+                tooltip: true
             },
             {
                 title: "District", field: "district", mutator: mutateDistrictField, headerFilter: "input", formatter: "html"
