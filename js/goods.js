@@ -11,7 +11,7 @@ function mutateSelectField(value, data, type, params, component) {
 function mutateDocumentField(value, data, type, params, component) {
     let output = value.map((item) => {
         return `<li><a href="document__${item.id}.html">${item.value}</a></li>`
-    }).join(" ");
+    }).join("");
     return `<ul class="list-unstyled">${output}</ul>`
 }
 
@@ -41,11 +41,13 @@ d3.json(dataUrl, function (data) {
     });
 
     var table = new Tabulator("#example-table", {
-        height: 800,
-        layout: "fitColumns",
+        pagination:true,
+        paginationSize:15,
+        layout: "fitDataStretch",
+        responsiveLayout:"collapse",
+        height: 600,
         tooltips: true,
         data: tableData,
-        responsiveLayout: "collapse",
         persistence: {
             headerFilter: true,
         },
@@ -56,7 +58,11 @@ d3.json(dataUrl, function (data) {
                 }
             },
             {
-                title: "Documents", field: "documents", mutator: mutateDocumentField, headerFilter: "input", formatter: "html", tooltip: true
+                title: "Documents", field: "documents", mutator: mutateDocumentField, headerFilter: "input",
+                formatter: function (cell) {
+                    return get_scrollable_cell(this, cell);
+                },
+                tooltip: true
             },
             {
                 title: "Nr. of Documents", field: "doc_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
