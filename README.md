@@ -19,3 +19,5 @@ Repo for Grocerist's Web-Application
 * change into the `html` folder; `cd html`
 * start a python dev server `python -m http.server`
 * go to http://0.0.0.0:8000/
+
+(just to test)
