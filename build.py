@@ -124,9 +124,9 @@ for key, value in data.items():
     with open(save_path, "w", encoding="utf-8") as f:
         f.write(template.render(context))
 
-print("building neighborhood sites")
+print("building neighbourhood sites")
 data_file = "neighbourhoods.json"
-template = templateEnv.get_template("./templates/district.j2")
+template = templateEnv.get_template("./templates/neighbourhood.j2")
 with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
     data = json.load(f)
 for key, value in data.items():

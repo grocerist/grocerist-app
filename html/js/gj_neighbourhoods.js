@@ -1,4 +1,4 @@
-const gjDataUrl = "json_dumps/gj_neighborhoods.json"
+const gjDataUrl = "json_dumps/gj_neighbourhoods.json"
 
 function onEachFeature(feature, layer) {
     let popupContent = `
@@ -18,7 +18,7 @@ function onEachFeature(feature, layer) {
 
 
 d3.json(gjDataUrl, function (data) {
-    const map = L.map('map').setView([41.02602, 28.97451], 12);
+    const map = L.map('map').setView([41.02602, 29.03451], 11);
     const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'

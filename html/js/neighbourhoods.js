@@ -1,5 +1,5 @@
 
-const dataUrl = "json_dumps/districts.json"
+const dataUrl = "json_dumps/neighbourhoods.json"
 
 function mutateSelectField(value, data, type, params, component) {
     let output = value.map((item) => {
@@ -38,7 +38,7 @@ d3.json(dataUrl, function (data) {
         enriched["doc_count"] = item.documents.length
         enriched["person_count"] = item.persons.length
         return enriched
-    });
+    }).filter(item => item.name.trim() !== "");;
 
     var table = new Tabulator("#example-table", {
         height: 800,
@@ -49,6 +49,9 @@ d3.json(dataUrl, function (data) {
         persistence: {
             headerFilter: true,
         },
+        initialSort: [
+        { column: "name", dir: "asc" }
+        ],
         columns: [
             {
                 title: "Name", field: "name", headerFilter: "input", formatter: function (cell) {

@@ -1,5 +1,5 @@
 {% extends "templates/partials/base.j2" %}
-{% block title %}Browse Neighborhoods{% endblock title %}
+{% block title %}Browse Neighbourhoods{% endblock title %}
 {% block page_description %}
 <meta name="description" content="{{ project_data.project_sub_title }}">
 {% endblock page_description %}
@@ -17,7 +17,7 @@
 {% endblock scriptHeader %}
 {% block content %}
 <div class="container">
-    <h1 class="text-center">Neigborhoods</h1>
+    <h1 class="text-center">Neigbourhoods</h1>
     <div class="row">
         <div class="col">
             <div id="example-table"></div>
@@ -28,7 +28,7 @@
     </div>
     {% endblock content%}
 
-    {% block scripts2 %}
-    <script src="js/neigborhoods.js"></script>
- 
+   {% block scripts2 %}
+    <script src="js/neighbourhoods.js"></script>
+    <script src="js/gj_neighbourhoods.js"></script>
     {% endblock scripts2 %}
