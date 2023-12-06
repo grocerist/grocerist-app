@@ -26,7 +26,7 @@ for x in glob.glob(f"{out_dir}/*.html"):
     os.unlink(x)
 
 all_templates = templateEnv.list_templates(extensions='.j2')
-files = [template for template in all_templates if template.startswith("static")]
+files = [template for template in all_templates if template.startswith("templates/static")]
 
 print("building static content")
 for x in files:
