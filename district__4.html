@@ -48,6 +48,7 @@
             <li><a class="dropdown-item" href="goods.html">Goods</a></li>
             <li><a class="dropdown-item" href="categories.html">Categories of Goods</a></li>
             <li><a class="dropdown-item" href="districts.html">Districts</a></li>
+            <li><a class="dropdown-item" href="neighbourhoods.html">Neighbourhoods</a></li>
           </ul>
         </li>
       </ul>
@@ -182,14 +183,14 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 <script>
-    const map = L.map('map').setView([41.02602, 28.97451], 13);
+    const map = L.map('map').setView([, ], 13);
 
 	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		maxZoom: 19,
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	}).addTo(map);
 
-	const marker = L.marker([41.02602, 28.97451]).addTo(map)
+	const marker = L.marker([, ]).addTo(map)
 		.bindPopup('<strong>Galata</strong>').openPopup();
 </script>
 
