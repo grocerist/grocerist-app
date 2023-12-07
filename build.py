@@ -14,10 +14,8 @@ gh_img_data = (
 )
 
 img_data = requests.get(gh_img_data).json()
-json_dumps = os.path.join("html", "json_dumps")
-
-
 out_dir = "html"
+json_dumps = os.path.join(out_dir, "json_dumps")
 tei_dir = os.path.join(out_dir, "tei")
 
 with open("project.json", "r", encoding="utf-8") as f:
@@ -27,7 +25,8 @@ os.makedirs(out_dir, exist_ok=True)
 for x in glob.glob(f"{out_dir}/*.html"):
     os.unlink(x)
 
-files = glob.glob("./templates/static/*.j2")
+all_templates = templateEnv.list_templates(extensions='.j2')
+files = [template for template in all_templates if template.startswith("templates/static")]
 
 print("building static content")
 for x in files:
@@ -35,12 +34,15 @@ for x in files:
     template = templateEnv.get_template(x)
     _, tail = os.path.split(x)
     print(f"rendering {tail}")
-    with open(f'./html/{tail.replace(".j2", ".html")}', "w") as f:
+    output_path = os.path.join("html", tail.replace(".j2", ".html"))
+    with open(output_path, "w", encoding="utf-8") as f:
         f.write(template.render({"project_data": project_data}))
+
 
 print("building document sites")
 data_file = "documents.json"
 template = templateEnv.get_template("./templates/document.j2")
+
 with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
     data = json.load(f)
 for key, value in data.items():
@@ -75,24 +77,10 @@ for key, value in data.items():
     except KeyError:
         context["images"] = False
         value["images"] = False
-    with open(save_path, "w") as f:
+    with open(save_path, "w", encoding="utf-8") as f:
         f.write(template.render(context))
 with open(os.path.join(json_dumps, data_file), "w", encoding="utf-8") as f:
     json.dump(data, f, ensure_ascii=True)
-
-print("building person sites")
-data_file = "persons.json"
-template = templateEnv.get_template("./templates/person.j2")
-with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
-    data = json.load(f)
-for key, value in data.items():
-    f_name = f"{value['grocerist_id']}.html"
-    save_path = os.path.join(out_dir, f_name)
-    context = {}
-    context["object"] = value
-    context["page_title"] = value["name"]
-    with open(save_path, "w") as f:
-        f.write(template.render(context))
 
 print("building category sites")
 data_file = "categories.json"
@@ -105,33 +93,26 @@ for value in data:
     context = {}
     context["object"] = value
     context["page_title"] = value["name"]
-    with open(save_path, "w") as f:
+    with open(save_path, "w",encoding="utf-8") as f:
         f.write(template.render(context))
 
-print("building district sites")
-data_file = "districts.json"
-template = templateEnv.get_template("./templates/district.j2")
-with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
-    data = json.load(f)
-for key, value in data.items():
-    f_name = f"{value['grocerist_id']}.html"
-    save_path = os.path.join(out_dir, f_name)
-    context = {}
-    context["object"] = value
-    context["page_title"] = value["name"]
-    with open(save_path, "w") as f:
-        f.write(template.render(context))
+def buildSites(subpage, jsonFile, templateFile):
+    print (f"building {subpage} sites")
+    data_file = jsonFile
+    template = templateEnv.get_template(templateFile)
+    with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
+        data = json.load(f)
+    for key, value in data.items():
+        f_name = f"{value['grocerist_id']}.html"
+        save_path = os.path.join(out_dir, f_name)
+        context = {}
+        context["object"] = value
+        context["page_title"] = value["name"]
+        with open(save_path, "w", encoding="utf-8") as f:
+            f.write(template.render(context))
 
-print("building good sites")
-data_file = "goods.json"
-template = templateEnv.get_template("./templates/good.j2")
-with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
-    data = json.load(f)
-for key, value in data.items():
-    f_name = f"{value['grocerist_id']}.html"
-    save_path = os.path.join(out_dir, f_name)
-    context = {}
-    context["object"] = value
-    context["page_title"] = value["name"]
-    with open(save_path, "w") as f:
-        f.write(template.render(context))
+buildSites("person","persons.json", "./templates/person.j2")
+buildSites("district", "districts.json",  "./templates/neighbourhood.j2")
+buildSites("neighbourhood","neighbourhoods.json", "./templates/neighbourhood.j2" )
+buildSites("good","goods.json", "./templates/good.j2" )
+
