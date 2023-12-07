@@ -22,6 +22,13 @@ function mutatePersonField(value, data, type, params, component) {
     return `<ul class="list-unstyled">${output}</ul>`
 }
 
+function mutateDistrictField(value, data, type, params, component) {
+    let output = value.map((item) => {
+        return `<li><a href="district__${item.id}.html">${item.value}</a></li>`
+    }).join(" ");
+    return `<ul class="list-unstyled">${output}</ul>`
+}
+
 function linkToDetailView(cell) {
     var row = cell.getRow().getData()
     var cellData = cell.getData()
@@ -38,7 +45,7 @@ d3.json(dataUrl, function (data) {
         enriched["doc_count"] = item.documents.length
         enriched["person_count"] = item.persons.length
         return enriched
-    }).filter(item => item.name.trim() !== "");;
+    }).filter(item => item.name.trim() !== "");
 
     var table = new Tabulator("#example-table", {
         height: 800,
@@ -58,6 +65,13 @@ d3.json(dataUrl, function (data) {
                     return linkToDetailView(cell)
                 }
             },
+            {
+                title:"District 18th century", field: "district_eighteenth_century", mutator: mutateDistrictField, headerFilter: "input", formatter:"html"
+            },
+            {
+                title:"District 19th century", field: "district_nineteenth_century", mutator: mutateDistrictField, headerFilter: "input", formatter:"html"   
+            },
+
             {
                 title: "Documents", field: "documents", mutator: mutateDocumentField, headerFilter: "input", formatter: "html", tooltip: true
             },
