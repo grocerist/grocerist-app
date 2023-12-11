@@ -1,0 +1,19 @@
+{% extends "templates/partials/base.j2" %}
+{% block title %}Browse Karyes{% endblock title %}
+{% block page_description %}
+<meta name="description" content="{{ project_data.project_sub_title }}">
+{% endblock page_description %}
+
+{% block scriptHeader %}
+    {% include "templates/partials/tabulator.j2" %}
+{% endblock scriptHeader %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">Karyes</h1>
+    <div id="example-table"></div>
+</div>
+{% endblock content%}
+
+{% block scripts2 %}
+<script src="js/karyes.js"></script>
+{% endblock scripts2 %}

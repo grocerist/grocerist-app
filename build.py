@@ -115,4 +115,5 @@ buildSites("person","persons.json", "./templates/person.j2")
 buildSites("district", "districts.json",  "./templates/neighbourhood.j2")
 buildSites("neighbourhood","neighbourhoods.json", "./templates/neighbourhood.j2" )
 buildSites("good","goods.json", "./templates/good.j2" )
+buildSites("karye","karye.json", "./templates/karye.j2" )
 
