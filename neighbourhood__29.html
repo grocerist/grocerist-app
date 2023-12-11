@@ -107,14 +107,14 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 <script>
-    const map = L.map('map').setView([41.12411, 29.06124], 13);
+    const map = L.map('map').setView([41.1241100000, 29.0612400000], 13);
 
 	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		maxZoom: 19,
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	}).addTo(map);
 
-	const marker = L.marker([41.12411, 29.06124]).addTo(map)
+	const marker = L.marker([41.1241100000, 29.0612400000]).addTo(map)
 		.bindPopup('<strong>Yeniköy</strong>').openPopup();
 </script>
 

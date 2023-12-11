@@ -97,14 +97,14 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 <script>
-    const map = L.map('map').setView([41.19806, 29.03028], 13);
+    const map = L.map('map').setView([41.1980600000, 29.0302800000], 13);
 
 	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		maxZoom: 19,
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	}).addTo(map);
 
-	const marker = L.marker([41.19806, 29.03028]).addTo(map)
+	const marker = L.marker([41.1980600000, 29.0302800000]).addTo(map)
 		.bindPopup('<strong>Zekeriyaköy</strong>').openPopup();
 </script>
 
