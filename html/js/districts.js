@@ -62,7 +62,7 @@ d3.json(dataUrl, function (data) {
                 title: "Nr. of Documents", field: "doc_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
             },
             {
-                title: "Persons", field: "persons", mutator: mutatePersonField, headerFilter: "input", formatter: "html", headerFilter: "input"
+                title: "Persons", field: "persons", mutator: mutatePersonField, headerFilter: "input", formatter: "html"
             },
             {
                 title: "Nr. of Persons", field: "person_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
@@ -70,6 +70,3 @@ d3.json(dataUrl, function (data) {
         ]
     });
 });
-
-
-
