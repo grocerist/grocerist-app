@@ -74,7 +74,11 @@ d3.json(dataUrl, function (data) {
                 title: "Nr. of Documents", field: "doc_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
             },
             {
-                title: "Persons", field: "persons", mutator: mutatePersonField, headerFilter: "input", formatter: "html"
+                title: "Persons", field: "persons", mutator: mutatePersonField, headerFilter: "input", 
+                formatter: function (cell) {
+                    return get_scrollable_cell(this, cell);
+                },
+                tooltip: true
             },
             {
                 title: "Nr. of Persons", field: "person_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
