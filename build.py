@@ -114,7 +114,6 @@ def buildSites(subpage, jsonFile, templateFile):
         with open(save_path, "w", encoding="utf-8") as f:
             f.write(template.render(context))
 
-
 buildSites("person", "persons.json", "./templates/person.j2")
 buildSites("district", "districts.json", "./templates/district.j2")
 buildSites("neighbourhood", "neighbourhoods.json", "./templates/neighbourhood.j2")
