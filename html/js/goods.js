@@ -71,7 +71,7 @@ d3.json(dataUrl, function (data) {
                 title: "Categories", field: "has_category", headerFilter: "input", formatter: "html", mutator: mutateCateogryField
             },
             {
-                title: "Nr. of Cateogires", field: "cat_cont", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
+                title: "Nr. of Categories", field: "cat_cont", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
             },
         ]
     });
