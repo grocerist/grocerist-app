@@ -1,5 +1,5 @@
 
-const dataUrl = "json_dumps/districts.json"
+const dataUrl = "json_dumps/karye.json"
 
 function mutateSelectField(value, data, type, params, component) {
     let output = value.map((item) => {
@@ -56,7 +56,14 @@ d3.json(dataUrl, function (data) {
                 }
             },
             {
-                title: "Documents", field: "documents", mutator: mutateDocumentField, headerFilter: "input", formatter: "html", tooltip: true
+                title: "Notes", field: "notes", headerFilter: "input", formatter: "html"
+            },
+            {
+                title: "Documents", field: "documents", mutator: mutateDocumentField, headerFilter: "input",
+                formatter: function (cell) {
+                    return get_scrollable_cell(this, cell);
+                },
+                tooltip: true
             },
             {
                 title: "Nr. of Documents", field: "doc_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="

@@ -2,7 +2,6 @@ import os
 import json
 
 def make_geojson(json_file):
-
     with open(
         os.path.join("html", "json_dumps", json_file), "r", encoding="utf-8"
     ) as fp:
