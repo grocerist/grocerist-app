@@ -56,13 +56,21 @@ d3.json(dataUrl, function (data) {
                 }
             },
             {
-                title: "Documents", field: "documents", mutator: mutateDocumentField, headerFilter: "input", formatter: "html", tooltip: true
+                title: "Documents", field: "documents", mutator: mutateDocumentField, headerFilter: "input",
+                formatter: function (cell) {
+                    return get_scrollable_cell(this, cell);
+                },
+                tooltip: true
             },
             {
                 title: "Nr. of Documents", field: "doc_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
             },
             {
-                title: "Persons", field: "persons", mutator: mutatePersonField, headerFilter: "input", formatter: "html"
+                title: "Persons", field: "persons", mutator: mutatePersonField, headerFilter: "input", 
+                formatter: function (cell) {
+                    return get_scrollable_cell(this, cell);
+                },
+
             },
             {
                 title: "Nr. of Persons", field: "person_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
