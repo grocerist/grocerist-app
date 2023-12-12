@@ -87,6 +87,7 @@ d3.json(dataUrl, function (data) {
                 formatter: function (cell) {
                     return get_scrollable_cell(this, cell);
                 },
+
             },
             {
                 title: "Nr. of Persons", field: "person_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
