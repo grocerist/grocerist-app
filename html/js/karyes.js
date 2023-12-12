@@ -59,9 +59,6 @@ d3.json(dataUrl, function (data) {
                 title: "Notes", field: "notes", headerFilter: "input", formatter: "html"
             },
             {
-                title: "active", field: "active", headerFilter: "input", formatter: "html"
-            },
-            {
                 title: "Documents", field: "documents", mutator: mutateDocumentField, headerFilter: "input",
                 formatter: function (cell) {
                     return get_scrollable_cell(this, cell);
