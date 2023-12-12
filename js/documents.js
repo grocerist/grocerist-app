@@ -5,7 +5,7 @@ function listGoods(value, data, type, params, component) {
     let output = value.map((item) => {
         return `<li><a href="${item.grocerist_id}.html">${item.name}</a></li>`
     }).join("");
-    return `<ul>${output}</ul>`
+    return `<ul class="list-unstyled">${output}</ul>`
 }
 
 function linkToDetailView(cell) {
