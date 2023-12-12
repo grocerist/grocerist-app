@@ -25,8 +25,10 @@ os.makedirs(out_dir, exist_ok=True)
 for x in glob.glob(f"{out_dir}/*.html"):
     os.unlink(x)
 
-all_templates = templateEnv.list_templates(extensions='.j2')
-files = [template for template in all_templates if template.startswith("templates/static")]
+all_templates = templateEnv.list_templates(extensions=".j2")
+files = [
+    template for template in all_templates if template.startswith("templates/static")
+]
 
 print("building static content")
 for x in files:
@@ -93,11 +95,12 @@ for value in data:
     context = {}
     context["object"] = value
     context["page_title"] = value["name"]
-    with open(save_path, "w",encoding="utf-8") as f:
+    with open(save_path, "w", encoding="utf-8") as f:
         f.write(template.render(context))
 
+
 def buildSites(subpage, jsonFile, templateFile):
-    print (f"building {subpage} sites")
+    print(f"building {subpage} sites")
     data_file = jsonFile
     template = templateEnv.get_template(templateFile)
     with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
@@ -111,9 +114,9 @@ def buildSites(subpage, jsonFile, templateFile):
         with open(save_path, "w", encoding="utf-8") as f:
             f.write(template.render(context))
 
-buildSites("person","persons.json", "./templates/person.j2")
-buildSites("district", "districts.json",  "./templates/district.j2")
-buildSites("neighbourhood","neighbourhoods.json", "./templates/neighbourhood.j2" )
-buildSites("good","goods.json", "./templates/good.j2" )
-buildSites("karye","karye.json", "./templates/karye.j2" )
 
+buildSites("person", "persons.json", "./templates/person.j2")
+buildSites("district", "districts.json", "./templates/district.j2")
+buildSites("neighbourhood", "neighbourhoods.json", "./templates/neighbourhood.j2")
+buildSites("good", "goods.json", "./templates/good.j2")
+buildSites("karye", "karye.json", "./templates/karye.j2")
