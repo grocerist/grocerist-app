@@ -1,5 +1,6 @@
 {% extends "templates/partials/base.j2" %}
 {% block content %}
+
 <div class="container">
     <h1 class="text-center">{{ object.name }}</h1>
     <div class="row">
@@ -20,22 +21,49 @@
 {% endblock content %}
 {% block scripts2 %}
 {% if object.geonames_id %}
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+{% include "templates/partials/leaflet.j2" %}
+
 
 <script>
-    const map = L.map('map').setView([{{object.lat}}, {{object.long}}], 13);
-
-	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		maxZoom: 19,
-		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-	}).addTo(map);
-
-	const marker = L.marker([{{object.lat}}, {{object.long}}]).addTo(map)
-		.bindPopup('<strong>{{ object.name }}</strong>').openPopup();
+    import { build_map_and_table } from "./html/js/make_map.js";
+            let map_cfg = {
+                initial_zoom: "5",
+                initial_coordinates: [48.210033, 16.363449],
+                //base_map_url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                base_map_url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                json_url:
+                    "https://raw.githubusercontent.com/NestroyCA/baserow-entities/main/json_dumps/places_tabulator.json",
+                on_row_click_zoom: "11",
+                div_id: "map",
+                attribution:
+                    '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: "abcd",
+                maxZoom: 20,
+            };
+            let table_cfg = {
+                maxHeight: "45vh",
+                layout: "fitColumns",
+                width: "100%",
+                headerFilterLiveFilterDelay: 600,
+                responsiveLayout: "collapse",
+                paginationCounter: "rows",
+                pagination: "local",
+                paginationSize: 10,
+                langs: {
+                    default: {
+                        pagination: {
+                            counter: {
+                                showing: "",
+                                of: "of",
+                                rows: "",
+                            },
+                        },
+                    },
+                },
+            };
+            build_map_and_table(map_cfg, table_cfg);
 </script>
+
 
 
 {% endif %}
