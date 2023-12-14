@@ -1,10 +1,11 @@
+const gjDataUrl = "json_dumps/district_test.json"
 
 let map_cfg = {
     initial_zoom: "5",
     initial_coordinates: [48.210033, 16.363449],
     //base_map_url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
     base_map_url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-    json_url: "https://github.com/grocerist/grocerist-data/blob/main/json_dumps/districts.json",
+    //json_url: "https://github.com/grocerist/grocerist-data/blob/main/json_dumps/districts.json",
     on_row_click_zoom: "11",
     div_id: "map",
     attribution:
@@ -34,23 +35,26 @@ let table_cfg = {
     },
 };
 
+function linkToDetailView(cell) {
+    var row = cell.getRow().getData()
+    var cellData = cell.getData()
+    var groceristId = row.grocerist_id
+    var theLink = `<a href="${groceristId}.html">${cellData.name}</a>`
+    return theLink
+}
 
 function fetch_tabulatordata_and_build_table(map_cfg, map, table_cfg, marker_layer) {
 	console.log("loading table");
-	fetch(map_cfg.json_url)
-		.then(function (response) {
-			// json string
-			return response.json();
-		})
-		.then(function (tabulator_data) {
+    d3.json(gjDataUrl, function (tabulator_data) {
 			// the table will draw all markers on to the empty map
 			table_cfg.data = tabulator_data;
 			let table = build_map_table(table_cfg);
 			populateMapFromTable(table, map, map_cfg.on_row_click_zoom, marker_layer);
 		})
+        /*
 		.catch(function (err) {
 			console.log(err);
-		});
+		});*/
 }
 
 function get_html_link(name, url) {
@@ -76,7 +80,7 @@ function get_label_string_html(row, frequency) {
 }
 
 function draw_cirlce_from_rowdata(latLng, frequency) {
-	let radius = frequency;
+	//let radius = frequency;
 	let html_dot = "";
 	let border_width = 4;
 	let border_color = "red";
@@ -97,8 +101,8 @@ function draw_cirlce_from_rowdata(latLng, frequency) {
 function zoom_to_point_from_row_data(row_data, map, zoom, existing_markers_by_coordinates) {
 	let coordinate_key = get_coordinate_key_from_row_data(row_data);
 	let marker = existing_markers_by_coordinates[coordinate_key];
-	marker.openPopup();
-	L.map.setView([row_data.coordinates.lat, row_data.coordinates.lng], zoom);
+	//marker.openPopup();
+	L.map('map').setView([row_data.coordinates.lat, row_data.coordinates.lng], zoom);
 }
 
 function make_cell_scrollable(table, cell, cell_html_string_in) {
@@ -112,7 +116,7 @@ function make_cell_scrollable(table, cell, cell_html_string_in) {
 		return table.emptyToSpace(cell.getValue());
 	}
 }
-
+/*
 function build_linklist_cell(table, cell) {
 	let values = cell.getValue();
 	let i = 0;
@@ -125,6 +129,7 @@ function build_linklist_cell(table, cell) {
 	let basic_html = get_html_list(links);
 	return make_cell_scrollable(table, cell, basic_html);
 }
+*/
 
 function get_coordinate_key_from_row_data(row_data) {
 	return row_data.coordinates.lat + row_data.coordinates.lng;
@@ -136,14 +141,14 @@ function init_map_from_rows(rows, marker_layer) {
 	rows.forEach((row) => {
 		let row_data = row.getData();
 		let coordinate_key = get_coordinate_key_from_row_data(row_data);
-		let frequency = row_data.mentions.length;
-		let new_circle = draw_cirlce_from_rowdata(
+		//let frequency = row_data.mentions.length;
+		/*let new_circle = draw_cirlce_from_rowdata(
 			[row_data.coordinates.lat, row_data.coordinates.lng],
 			frequency,
-		);
-		existing_circles_by_coordinates[coordinate_key] = new_circle;
-		new_circle.bindPopup(get_label_string_html(row_data, frequency));
-		new_circle.addTo(marker_layer);
+		);*/
+		//existing_circles_by_coordinates[coordinate_key] = new_circle;
+		//new_circle.bindPopup(get_label_string_html(row_data, frequency));
+		//new_circle.addTo(marker_layer);
 	});
 	return existing_circles_by_coordinates;
 }
@@ -237,7 +242,7 @@ function build_map_table(table_cfg) {
 			},
 		];
 	}
-	let table = new Tabulator("#places_table", table_cfg);
+	let table = new Tabulator("#example-table", table_cfg);
 	console.log("made table");
 	return table;
 }
