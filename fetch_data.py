@@ -23,7 +23,7 @@ json_dumps = os.path.join("html", "json_dumps")
 
 
 os.makedirs(json_dumps, exist_ok=True)
-os.makedirs(os.path.join("html", json_dumps), exist_ok=True)
+
 
 for x in file_list:
     url = f"{github_url}{x}"

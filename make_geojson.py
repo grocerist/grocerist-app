@@ -1,6 +1,7 @@
 import os
 import json
 
+
 def make_geojson(json_file):
     with open(
         os.path.join("html", "json_dumps", json_file), "r", encoding="utf-8"
@@ -27,9 +28,10 @@ def make_geojson(json_file):
             geo_json["features"].append(gj_feature)
 
     with open(
-        os.path.join("html", "json_dumps", "gj_"+json_file), "w", encoding="utf-8"
+        os.path.join("html", "json_dumps", "gj_" + json_file), "w", encoding="utf-8"
     ) as fp:
         json.dump(geo_json, fp, ensure_ascii=False)
+
 
 make_geojson("districts.json")
 make_geojson("neighbourhoods.json")
