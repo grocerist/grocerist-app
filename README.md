@@ -1,3 +1,5 @@
+[![flake8 Lint](https://github.com/grocerist/grocerist-app/actions/workflows/lint.yml/badge.svg)](https://github.com/grocerist/grocerist-app/actions/workflows/lint.yml)
+
 # grocerist-app
 Repo for Grocerist's Web-Application
 
