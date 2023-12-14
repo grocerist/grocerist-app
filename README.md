@@ -1,3 +1,5 @@
+[![flake8 Lint](https://github.com/grocerist/grocerist-app/actions/workflows/lint.yml/badge.svg)](https://github.com/grocerist/grocerist-app/actions/workflows/lint.yml)
+
 # grocerist-app
 Repo for Grocerist's Web-Application
 
@@ -20,4 +22,10 @@ Repo for Grocerist's Web-Application
 * start a python dev server `python -m http.server`
 * go to http://127.0.0.1:8000/
 
-(just to test)
+
+## linting and code formatting
+
+* make sure you have `flake8` and `black` installed (or just run `pip install -r requirements.txt`)
+
+* run `flake8` for linting
+run `black .` for code formatting, ideally the latter fixes the errors found by flake8
