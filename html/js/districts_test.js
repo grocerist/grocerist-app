@@ -35,6 +35,7 @@ let table_cfg = {
     },
 };
 
+//imported from our original js
 function linkToDetailView(cell) {
     var row = cell.getRow().getData()
     var cellData = cell.getData()
@@ -252,7 +253,8 @@ function build_map_table(table_cfg) {
 /////////////////////
 function build_map_and_table(map_cfg, table_cfg, wms_cfg = null) {
 	console.log("loading map");
-	let map = L.map(map_cfg.div_id).setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
+	//let map = L.map(map_cfg.div_id).setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
+    var map = L.map(map_cfg.div_id).setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
 	let tile_layer = L.tileLayer(map_cfg.base_map_url, {
 		maxZoom: map_cfg.max_zoom,
 		attribution: map_cfg.attribution,
