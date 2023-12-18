@@ -1,18 +1,20 @@
-const gjDataUrl = "json_dumps/district_test.json"
+const dataUrl = "json_dumps/district_test.json"
 
+//config settings for map
 let map_cfg = {
-    initial_zoom: "5",
-    initial_coordinates: [48.210033, 16.363449],
+    initial_zoom: "12",
+    initial_coordinates: [41.015137,  28.979530],
     //base_map_url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
     base_map_url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
     //json_url: "https://github.com/grocerist/grocerist-data/blob/main/json_dumps/districts.json",
-    on_row_click_zoom: "11",
+    on_row_click_zoom: "15",
     div_id: "map",
     attribution:
         '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: "abcd",
     maxZoom: 20,
 };
+//config settings for table
 let table_cfg = {
     maxHeight: "45vh",
     layout: "fitColumns",
@@ -44,18 +46,28 @@ function linkToDetailView(cell) {
     return theLink
 }
 
+function mutateDocumentField(value, data, type, params, component) {
+    let output = value.map((item) => {
+        return `<li><a href="document__${item.id}.html">${item.value}</a></li>`
+    }).join(" ");
+    return `<ul class="list-unstyled">${output}</ul>`
+}
+
 function fetch_tabulatordata_and_build_table(map_cfg, map, table_cfg, marker_layer) {
 	console.log("loading table");
-    d3.json(gjDataUrl, function (tabulator_data) {
-			// the table will draw all markers on to the empty map
-			table_cfg.data = tabulator_data;
-			let table = build_map_table(table_cfg);
-			populateMapFromTable(table, map, map_cfg.on_row_click_zoom, marker_layer);
+    d3.json(dataUrl, function (tabulator_data) {
+		tabulator_data = Object.values(tabulator_data)
+		let tableData = tabulator_data.map((item) => {
+        const enriched = item;
+        enriched["doc_count"] = item.documents.length
+        //enriched["person_count"] = item.persons.length
+        return enriched
+    });
+		// the table will draw all markers on to the empty map
+		table_cfg.data = tableData;
+		let table = build_map_table(table_cfg);
+		populateMapFromTable(table, map, map_cfg.on_row_click_zoom, marker_layer);
 		})
-        /*
-		.catch(function (err) {
-			console.log(err);
-		});*/
 }
 
 function get_html_link(name, url) {
@@ -67,21 +79,19 @@ function get_html_list(array) {
 }
 
 function get_label_string_html(row, frequency) {
-	let number_of_plays_mentioning = frequency;
+	let number_of_docs_mentioning = frequency;
 	// could use properties.total_occurences later
-	let label_string = `<b>${row.name}</b><br>(occurring in ${number_of_plays_mentioning} plays)<br>`;
-	let plays_list_start = "<ul>";
-	let plays_list_end = "</ul>";
-	row.mentions.forEach((mention) => {
-		let internal_id = mention[1];
-		let play_title = mention[0];
-		plays_list_start += `<li><a href='${internal_id}'>${play_title}</a></li>`;
+	let label_string = `<b>${row.name}</b><br>(occurring in ${number_of_docs_mentioning} documents)<br>`;
+	let docs_list_start = "<ul>";
+	let docs_list_end = "</ul>";
+	row.documents.forEach((document) => {
+		docs_list_start += `<li><a href='${document.id}'>${document.value}</a></li>`;
 	});
-	return label_string + plays_list_start + plays_list_end;
+	return label_string + docs_list_start + docs_list_end;
 }
 
 function draw_cirlce_from_rowdata(latLng, frequency) {
-	//let radius = frequency;
+	let radius = frequency;
 	let html_dot = "";
 	let border_width = 4;
 	let border_color = "red";
@@ -102,8 +112,8 @@ function draw_cirlce_from_rowdata(latLng, frequency) {
 function zoom_to_point_from_row_data(row_data, map, zoom, existing_markers_by_coordinates) {
 	let coordinate_key = get_coordinate_key_from_row_data(row_data);
 	let marker = existing_markers_by_coordinates[coordinate_key];
-	//marker.openPopup();
-	L.map('map').setView([row_data.coordinates.lat, row_data.coordinates.lng], zoom);
+	marker.openPopup();
+	map.setView([row_data.coordinates.lat, row_data.coordinates.lng], zoom);
 }
 
 function make_cell_scrollable(table, cell, cell_html_string_in) {
@@ -142,14 +152,14 @@ function init_map_from_rows(rows, marker_layer) {
 	rows.forEach((row) => {
 		let row_data = row.getData();
 		let coordinate_key = get_coordinate_key_from_row_data(row_data);
-		//let frequency = row_data.mentions.length;
-		/*let new_circle = draw_cirlce_from_rowdata(
+		let frequency = row_data.doc_count;
+		let new_circle = draw_cirlce_from_rowdata(
 			[row_data.coordinates.lat, row_data.coordinates.lng],
 			frequency,
-		);*/
-		//existing_circles_by_coordinates[coordinate_key] = new_circle;
+		);
+		existing_circles_by_coordinates[coordinate_key] = new_circle;
 		//new_circle.bindPopup(get_label_string_html(row_data, frequency));
-		//new_circle.addTo(marker_layer);
+		new_circle.addTo(marker_layer);
 	});
 	return existing_circles_by_coordinates;
 }
@@ -241,9 +251,19 @@ function build_map_table(table_cfg) {
                     return linkToDetailView(cell)
                 }
 			},
+			{
+                title: "Documents", field: "documents", mutator: mutateDocumentField, headerFilter: "input",
+                formatter: function (cell) {
+                    return get_scrollable_cell(this, cell);
+                },
+                tooltip: true
+            },
+			{
+                title: "Nr. of Documents", field: "doc_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
+            },
 		];
 	}
-	let table = new Tabulator("#example-table", table_cfg);
+	let table = new Tabulator("#places_table", table_cfg);
 	console.log("made table");
 	return table;
 }
@@ -253,16 +273,17 @@ function build_map_table(table_cfg) {
 /////////////////////
 function build_map_and_table(map_cfg, table_cfg, wms_cfg = null) {
 	console.log("loading map");
-	//let map = L.map(map_cfg.div_id).setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
-    var map = L.map(map_cfg.div_id).setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
+	let map = L.map(map_cfg.div_id).setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
 	let tile_layer = L.tileLayer(map_cfg.base_map_url, {
 		maxZoom: map_cfg.max_zoom,
 		attribution: map_cfg.attribution,
 	});
+	
 	let marker_layer = L.layerGroup();
 	// handle the layers
 	// order of adding matters!
 	tile_layer.addTo(map);
+	/*
 	// this is for the page gui / switch for toggling overlays
 	let overlay_control = {
 		"modern map": tile_layer,
@@ -274,29 +295,12 @@ function build_map_and_table(map_cfg, table_cfg, wms_cfg = null) {
 		wms_layer.addTo(map);
 		overlay_control["Stadtplan 1858 (k.k. Ministerium des Inneren)"] = wms_layer;
 	}
+	*/
 	// this has to happen here, in case historical map gets added
 	marker_layer.addTo(map);
-	var layerControl = L.control.layers(null, overlay_control);
-	layerControl.addTo(map);
+	//var layerControl = L.control.layers(null, overlay_control);
+	//layerControl.addTo(map);
 	fetch_tabulatordata_and_build_table(map_cfg, map, table_cfg, marker_layer);
-}
-
-function build_table(table_id, table_cfg, json_url) {
-	console.log("loading table");
-	fetch(json_url)
-		.then(function (response) {
-			// json string
-			return response.json();
-		})
-		.then(function (tabulator_data) {
-			// the table will draw all markers on to the empty map
-			table_cfg.data = tabulator_data;
-			let table = new Tabulator(table_id, table_cfg);
-			console.log("made table");
-		})
-		.catch(function (err) {
-			console.log(err);
-		});
 }
 
 build_map_and_table(map_cfg, table_cfg);
