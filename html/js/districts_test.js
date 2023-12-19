@@ -1,73 +1,67 @@
-const dataUrl = "json_dumps/district_test.json"
+const dataUrl = "json_dumps/districts.json"
 
 //config settings for map
 let map_cfg = {
-    initial_zoom: "12",
-    initial_coordinates: [41.015137,  28.979530],
-    //base_map_url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-    base_map_url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-    //json_url: "https://github.com/grocerist/grocerist-data/blob/main/json_dumps/districts.json",
-    on_row_click_zoom: "15",
-    div_id: "map",
-    attribution:
-        '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: "abcd",
-    maxZoom: 20,
+	initial_zoom: 12,
+	initial_coordinates: [41.02602, 28.97451],
+	//base_map_url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+	base_map_url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+	//json_url: "https://github.com/grocerist/grocerist-data/blob/main/json_dumps/districts.json",
+	on_row_click_zoom: 13,
+	div_id: "map",
+	attribution:
+		'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
+	subdomains: "abcd",
+	maxZoom: 20,
 };
 //config settings for table
 let table_cfg = {
-    maxHeight: "45vh",
-    layout: "fitColumns",
-    width: "100%",
-    headerFilterLiveFilterDelay: 600,
-    responsiveLayout: "collapse",
-    paginationCounter: "rows",
-    pagination: "local",
-    paginationSize: 10,
-    langs: {
-        default: {
-            pagination: {
-                counter: {
-                    showing: "",
-                    of: "of",
-                    rows: "",
-                },
-            },
-        },
-    },
+	maxHeight: "45vh",
+	layout: "fitColumns",
+	width: "100%",
+	headerFilterLiveFilterDelay: 600,
+	responsiveLayout: "collapse",
+	paginationCounter: "rows",
+	pagination: "local",
+	paginationSize: 10,
+	langs: {
+		default: {
+			pagination: {
+				counter: {
+					showing: "",
+					of: "of",
+					rows: "",
+				},
+			},
+		},
+	},
+	rowClick: (e, row) => {
+		zoom_to_point_from_row_data(
+			row.getData(),
+			map,
+			on_row_click_zoom,
+			existing_markers_by_coordinates,
+		);
+	},
 };
 
-//imported from our original js
-function linkToDetailView(cell) {
-    var row = cell.getRow().getData()
-    var cellData = cell.getData()
-    var groceristId = row.grocerist_id
-    var theLink = `<a href="${groceristId}.html">${cellData.name}</a>`
-    return theLink
-}
 
-function mutateDocumentField(value, data, type, params, component) {
-    let output = value.map((item) => {
-        return `<li><a href="document__${item.id}.html">${item.value}</a></li>`
-    }).join(" ");
-    return `<ul class="list-unstyled">${output}</ul>`
-}
 
 function fetch_tabulatordata_and_build_table(map_cfg, map, table_cfg, marker_layer) {
 	console.log("loading table");
-    d3.json(dataUrl, function (tabulator_data) {
+	d3.json(dataUrl, function (tabulator_data) {
 		tabulator_data = Object.values(tabulator_data)
 		let tableData = tabulator_data.map((item) => {
-        const enriched = item;
-        enriched["doc_count"] = item.documents.length
-        //enriched["person_count"] = item.persons.length
-        return enriched
-    });
+			const enriched = item;
+			enriched["doc_count"] = item.documents.length
+			enriched["person_count"] = item.persons.length
+			return enriched
+		});
 		// the table will draw all markers on to the empty map
 		table_cfg.data = tableData;
 		let table = build_map_table(table_cfg);
 		populateMapFromTable(table, map, map_cfg.on_row_click_zoom, marker_layer);
-		})
+	})
 }
 
 function get_html_link(name, url) {
@@ -78,42 +72,17 @@ function get_html_list(array) {
 	return `<ul><li>${array.join("</li><li>")}</li></ul>`;
 }
 
-function get_label_string_html(row, frequency) {
-	let number_of_docs_mentioning = frequency;
-	// could use properties.total_occurences later
-	let label_string = `<b>${row.name}</b><br>(occurring in ${number_of_docs_mentioning} documents)<br>`;
-	let docs_list_start = "<ul>";
-	let docs_list_end = "</ul>";
-	row.documents.forEach((document) => {
-		docs_list_start += `<li><a href='${document.id}'>${document.value}</a></li>`;
-	});
-	return label_string + docs_list_start + docs_list_end;
-}
-
-function draw_cirlce_from_rowdata(latLng, frequency) {
-	let radius = frequency;
-	let html_dot = "";
-	let border_width = 4;
-	let border_color = "red";
-	let size = radius * 10;
-	let circle_style = `style="width: ${size}px; height: ${size}px; border-radius: 50%; display: table-cell; border: ${border_width}px solid ${border_color};  background: rgba(255, 0, 0, .5); overflow: hidden; position: absolute"`;
-	let iconSize = size;
-	let icon = L.divIcon({
-		html: `<span ${circle_style}>${html_dot}</span>`,
-		className: "",
-		iconSize: [iconSize, iconSize],
-	});
-	let marker = L.marker(latLng, {
-		icon: icon,
-	});
-	return marker;
-}
 
 function zoom_to_point_from_row_data(row_data, map, zoom, existing_markers_by_coordinates) {
-	let coordinate_key = get_coordinate_key_from_row_data(row_data);
-	let marker = existing_markers_by_coordinates[coordinate_key];
-	marker.openPopup();
-	map.setView([row_data.coordinates.lat, row_data.coordinates.lng], zoom);
+
+	if (row_data.lat) {
+		let coordinate_key = get_coordinate_key_from_row_data(row_data);
+		let marker = existing_markers_by_coordinates[coordinate_key];
+		marker.openPopup();
+		map.setView([row_data.lat, row_data.long]);
+		// map.setView([row_data.lat, row_data.long], zoom);
+	}
+
 }
 
 function make_cell_scrollable(table, cell, cell_html_string_in) {
@@ -127,41 +96,42 @@ function make_cell_scrollable(table, cell, cell_html_string_in) {
 		return table.emptyToSpace(cell.getValue());
 	}
 }
-/*
-function build_linklist_cell(table, cell) {
-	let values = cell.getValue();
-	let i = 0;
-	let links = [];
-	while (i < values.length) {
-		let pair = values[i];
-		links.push(get_html_link(pair[0], pair[1]));
-		i++;
-	}
-	let basic_html = get_html_list(links);
-	return make_cell_scrollable(table, cell, basic_html);
-}
-*/
 
 function get_coordinate_key_from_row_data(row_data) {
-	return row_data.coordinates.lat + row_data.coordinates.lng;
+	if (row_data.lat) {
+		return row_data.lat + row_data.long;
+	}
+}
+
+function onEachFeature(feature, layer) {
+    let popupContent = `
+    <h3><a href="${feature.grocerist_id}.html">${feature.name}<a/></h3>
+    <ul>
+        <li> related <a href="documents.html">Documents</a></li>
+    </ul>
+    `;
+
+    if (feature && feature.popupContent) {
+        popupContent += feature.properties.popupContent;
+    }
+
+    return popupContent;
 }
 
 function init_map_from_rows(rows, marker_layer) {
 	console.log("populating map with icons");
-	let existing_circles_by_coordinates = {};
+	let existing_markers_by_coordinates = {};
 	rows.forEach((row) => {
 		let row_data = row.getData();
-		let coordinate_key = get_coordinate_key_from_row_data(row_data);
-		let frequency = row_data.doc_count;
-		let new_circle = draw_cirlce_from_rowdata(
-			[row_data.coordinates.lat, row_data.coordinates.lng],
-			frequency,
-		);
-		existing_circles_by_coordinates[coordinate_key] = new_circle;
-		//new_circle.bindPopup(get_label_string_html(row_data, frequency));
-		new_circle.addTo(marker_layer);
+		if (row_data.lat) {
+			let coordinate_key = get_coordinate_key_from_row_data(row_data);
+			let marker = L.marker([row_data.lat, row_data.long]);
+			existing_markers_by_coordinates[coordinate_key] = marker;
+			marker.bindPopup(onEachFeature);
+			marker.addTo(marker_layer);
+		}
 	});
-	return existing_circles_by_coordinates;
+	return existing_markers_by_coordinates;
 }
 
 function toggle_marker_visibility(marker) {
@@ -193,7 +163,8 @@ function populateMapFromTable(table, map, on_row_click_zoom, marker_layer) {
 					existing_markers_by_coordinates,
 				);
 			} else {
-				map.setView([48.210033, 16.363449], 5);
+				map.setView([41.02602, 28.97451], 12);
+
 			}
 			let keys_of_markers_to_be_displayed = [];
 			rows.forEach((row) => {
@@ -211,7 +182,6 @@ function populateMapFromTable(table, map, on_row_click_zoom, marker_layer) {
 						// marker_layer.addLayer(marker);
 						toggle_marker_visibility(marker);
 						keys_of_displayed_markers.push(coordinate_key);
-						console.log(marker);
 					}
 				} else {
 					// this marker should be hidden
@@ -219,7 +189,6 @@ function populateMapFromTable(table, map, on_row_click_zoom, marker_layer) {
 						// it is not hidden
 						// hide it
 						// marker_layer.removeLayer(marker);
-						//console.log(marker);
 						let index_of_key = keys_of_displayed_markers.indexOf(coordinate_key);
 						keys_of_displayed_markers.splice(index_of_key, 1);
 						toggle_marker_visibility(marker);
@@ -228,79 +197,126 @@ function populateMapFromTable(table, map, on_row_click_zoom, marker_layer) {
 			});
 		});
 		//eventlistener for click on row
-		table.on("rowClick", function (event, row) {
-			let row_data = row.getData();
+		table.on('rowClick', (e, row) => {
 			zoom_to_point_from_row_data(
-				row_data,
+				row.getData(),
 				map,
 				on_row_click_zoom,
 				existing_markers_by_coordinates,
 			);
 		});
 	});
-}
+	}
+
+// mutator function(s)for table
+function mutateDocumentField(value, data, type, params, component) {
+			let output = value.map((item) => {
+				return `<li><a href="document__${item.id}.html">${item.value}</a></li>`
+			}).join(" ");
+			return `<ul class="list-unstyled">${output}</ul>`
+		}
+
+function mutatePersonField(value, data, type, params, component) {
+			let output = value.map((item) => {
+				return `<li><a href="person__${item.id}.html">${item.value}</a></li>`
+			}).join(" ");
+			return `<ul class="list-unstyled">${output}</ul>`
+		}
+
+// formatter function(s) for table
+function linkToDetailView(cell) {
+			var row = cell.getRow().getData()
+			var cellData = cell.getData()
+			var groceristId = row.grocerist_id
+			var theLink = `<a href="${groceristId}.html">${cellData.name}</a>`
+			return theLink
+		}
 
 function build_map_table(table_cfg) {
-	if (!("columns" in table_cfg)) {
-		table_cfg.columns = [
-			{
-				title: "Name",
-                field: "name",
-                headerFilter: "input",
-                formatter: function (cell) {
-                    return linkToDetailView(cell)
-                }
-			},
-			{
-                title: "Documents", field: "documents", mutator: mutateDocumentField, headerFilter: "input",
-                formatter: function (cell) {
-                    return get_scrollable_cell(this, cell);
-                },
-                tooltip: true
-            },
-			{
-                title: "Nr. of Documents", field: "doc_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
-            },
-		];
-	}
-	let table = new Tabulator("#places_table", table_cfg);
-	console.log("made table");
-	return table;
-}
+			if (!("columns" in table_cfg)) {
+				table_cfg.columns = [
+					{
+						title: "Name",
+						field: "name",
+						headerFilter: "input",
+						formatter: function (cell) {
+							return linkToDetailView(cell)
+						}
+					},
+					{
+						title: "Documents",
+						field: "documents",
+						mutator: mutateDocumentField,
+						headerFilter: "input",
+						formatter: function (cell) {
+							return get_scrollable_cell(this, cell);
+						},
+						tooltip: true
+					},
+					{
+						title: "Nr. of Documents",
+						field: "doc_count",
+						headerFilter: "number",
+						headerFilterPlaceholder: "at least...",
+						headerFilterFunc: ">="
+					},
+					{
+						title: "Persons",
+						field: "persons",
+						mutator: mutatePersonField,
+						headerFilter: "input",
+						formatter: function (cell) {
+							return get_scrollable_cell(this, cell);
+						},
+
+					},
+					{
+						title: "Nr. of Persons",
+						field: "person_count",
+						headerFilter: "number",
+						headerFilterPlaceholder: "at least...",
+						headerFilterFunc: ">="
+					},
+				];
+			}
+			let table = new Tabulator("#places_table", table_cfg);
+			console.log("made table");
+			return table;
+		}
 
 /////////////////////
 // building the map//
 /////////////////////
 function build_map_and_table(map_cfg, table_cfg, wms_cfg = null) {
-	console.log("loading map");
-	let map = L.map(map_cfg.div_id).setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
-	let tile_layer = L.tileLayer(map_cfg.base_map_url, {
-		maxZoom: map_cfg.max_zoom,
-		attribution: map_cfg.attribution,
-	});
-	
-	let marker_layer = L.layerGroup();
-	// handle the layers
-	// order of adding matters!
-	tile_layer.addTo(map);
-	/*
-	// this is for the page gui / switch for toggling overlays
-	let overlay_control = {
-		"modern map": tile_layer,
-		"mentioned entities": marker_layer,
-	};
-	// if cfg is provided wms map layer gets added
-	if (wms_cfg !== null) {
-		let wms_layer = L.tileLayer.wms(wms_cfg.wms_url, wms_cfg.wmsOptions);
-		wms_layer.addTo(map);
-		overlay_control["Stadtplan 1858 (k.k. Ministerium des Inneren)"] = wms_layer;
-	}
-	*/
-	// this has to happen here, in case historical map gets added
-	marker_layer.addTo(map);
-	//var layerControl = L.control.layers(null, overlay_control);
-	//layerControl.addTo(map);
-	fetch_tabulatordata_and_build_table(map_cfg, map, table_cfg, marker_layer);
-}
+			console.log("loading map");
+			let map = L.map(map_cfg.div_id).setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
+			let tile_layer = L.tileLayer(map_cfg.base_map_url, {
+				maxZoom: map_cfg.max_zoom,
+				attribution: map_cfg.attribution,
+			});
+
+			let marker_layer = L.layerGroup();
+			// handle the layers
+			// order of adding matters!
+			tile_layer.addTo(map);
+			/*
+			// this is for the page gui / switch for toggling overlays
+			let overlay_control = {
+				"modern map": tile_layer,
+				"mentioned entities": marker_layer,
+			};
+			// if cfg is provided wms map layer gets added
+			if (wms_cfg !== null) {
+				let wms_layer = L.tileLayer.wms(wms_cfg.wms_url, wms_cfg.wmsOptions);
+				wms_layer.addTo(map);
+				overlay_control["Stadtplan 1858 (k.k. Ministerium des Inneren)"] = wms_layer;
+			}
+			*/
+			// this has to happen here, in case historical map gets added
+			marker_layer.addTo(map);
+			//var layerControl = L.control.layers(null, overlay_control);
+			//layerControl.addTo(map);
+			fetch_tabulatordata_and_build_table(map_cfg, map, table_cfg, marker_layer);
+		}
 
 build_map_and_table(map_cfg, table_cfg);
