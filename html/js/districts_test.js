@@ -6,12 +6,12 @@ let map_cfg = {
     initial_coordinates: [41.02602, 28.97451],
     base_map_url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
     max_zoom: "20",
-                on_row_click_zoom: "16",
-                div_id: "map",
-                attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-                subdomains: "abcd",
+    on_row_click_zoom: "16",
+    div_id: "map",
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: "abcd",
 };
+
 //config settings for table
 let table_cfg = {
 	maxHeight: "45vh",
@@ -35,8 +35,6 @@ let table_cfg = {
 	},
 };
 
-
-
 function fetch_tabulatordata_and_build_table(map_cfg, map, table_cfg, marker_layer) {
 	console.log("loading table");
 	d3.json(dataUrl, function (tabulator_data) {
@@ -50,27 +48,22 @@ function fetch_tabulatordata_and_build_table(map_cfg, map, table_cfg, marker_lay
 		// the table will draw all markers on to the empty map
 		table_cfg.data = tableData;
 		let table = build_map_table(table_cfg);
-		populateMapFromTable(table, map, map_cfg.on_row_click_zoom, marker_layer);
+		populateMapFromTable(table, map, marker_layer);
 	})
 }
 
-function get_html_link(name, url) {
-	return `<a href='${url}'>${name}</a>`;
-}
 
-function get_html_list(array) {
-	return `<ul><li>${array.join("</li><li>")}</li></ul>`;
-}
-
-
-function zoom_to_point_from_row_data(row_data, map, zoom, existing_markers_by_coordinates) {
-
+function zoom_to_point_from_row_data(row_data, map, existing_markers_by_coordinates) {
 	if (row_data.lat) {
 		let coordinate_key = get_coordinate_key_from_row_data(row_data);
 		let marker = existing_markers_by_coordinates[coordinate_key];
 		marker.openPopup();
-		map.setView([row_data.lat, row_data.long]);
-		// map.setView([row_data.lat, row_data.long], zoom);
+		map.setView([row_data.lat, row_data.long], map_cfg.on_row_click_zoom);
+	}
+	else {
+		// close all open popups when resetting the map
+		map.closePopup();
+		map.setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
 	}
 
 }
@@ -93,17 +86,14 @@ function get_coordinate_key_from_row_data(row_data) {
 	}
 }
 
-function onEachFeature(feature, layer) {
+function onEachFeature(row_data) {
     let popupContent = `
-    <h3><a href="${feature.grocerist_id}.html">${feature.name}<a/></h3>
+    <h3><a href="${row_data.grocerist_id}.html">${row_data.name}<a/></h3>
     <ul>
-        <li> related <a href="documents.html">Documents</a></li>
+		<li>${row_data.doc_count} related <a href="documents.html">Documents</a></li>
+		<li>${row_data.person_count} related <a href="persons.html">Persons</a></li>
     </ul>
     `;
-
-    if (feature && feature.popupContent) {
-        popupContent += feature.properties.popupContent;
-    }
 
     return popupContent;
 }
@@ -117,17 +107,17 @@ function init_map_from_rows(rows, marker_layer) {
 			let coordinate_key = get_coordinate_key_from_row_data(row_data);
 			let marker = L.marker([row_data.lat, row_data.long]);
 			existing_markers_by_coordinates[coordinate_key] = marker;
-			marker.bindPopup(onEachFeature);
+			marker.bindPopup(onEachFeature(row_data));
 			marker.addTo(marker_layer);
 		}
 	});
 	return existing_markers_by_coordinates;
 }
-
+/*
 function toggle_marker_visibility(marker) {
-	if (marker._icon.style.display === "table-cell") {
+	if (marker._icon.style.display == "table-cell") {
 		marker._icon.style.display = "none";
-	} else if (marker._icon.style.display === "none") {
+	} else if (marker._icon.style.display == "none") {
 		marker._icon.style.display = "table-cell";
 	} else {
 		// after pageload there is no value direct value there
@@ -135,8 +125,9 @@ function toggle_marker_visibility(marker) {
 		marker._icon.style.display = "none";
 	}
 }
+*/
 
-function populateMapFromTable(table, map, on_row_click_zoom, marker_layer) {
+function populateMapFromTable(table, map, marker_layer) {
 	table.on("tableBuilt", function () {
 		console.log("built table");
 		let all_rows = this.getRows();
@@ -149,7 +140,6 @@ function populateMapFromTable(table, map, on_row_click_zoom, marker_layer) {
 				zoom_to_point_from_row_data(
 					row_data,
 					map,
-					on_row_click_zoom,
 					existing_markers_by_coordinates,
 				);
 			} else {
@@ -169,8 +159,7 @@ function populateMapFromTable(table, map, on_row_click_zoom, marker_layer) {
 					if (!keys_of_displayed_markers.includes(coordinate_key)) {
 						// it is not beeing displayed
 						// display it
-						// marker_layer.addLayer(marker);
-						toggle_marker_visibility(marker);
+						marker_layer.addLayer(marker);
 						keys_of_displayed_markers.push(coordinate_key);
 					}
 				} else {
@@ -178,10 +167,10 @@ function populateMapFromTable(table, map, on_row_click_zoom, marker_layer) {
 					if (keys_of_displayed_markers.includes(coordinate_key)) {
 						// it is not hidden
 						// hide it
-						// marker_layer.removeLayer(marker);
+						marker_layer.removeLayer(marker);
 						let index_of_key = keys_of_displayed_markers.indexOf(coordinate_key);
 						keys_of_displayed_markers.splice(index_of_key, 1);
-						toggle_marker_visibility(marker);
+
 					}
 				}
 			});
@@ -191,7 +180,6 @@ function populateMapFromTable(table, map, on_row_click_zoom, marker_layer) {
 			zoom_to_point_from_row_data(
 				row.getData(),
 				map,
-				on_row_click_zoom,
 				existing_markers_by_coordinates,
 			);
 		});
@@ -279,9 +267,9 @@ function build_map_table(table_cfg) {
 /////////////////////
 function build_map_and_table(map_cfg, table_cfg, wms_cfg = null) {
 			console.log("loading map");
-		 	let map = L.map(map_cfg.div_id).setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
+		 	var map = L.map(map_cfg.div_id).setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
 			let tile_layer = L.tileLayer(map_cfg.base_map_url, {
-				// maxZoom: map_cfg.max_zoom,
+				maxZoom: map_cfg.max_zoom,
 				attribution: map_cfg.attribution,
 			});
 
