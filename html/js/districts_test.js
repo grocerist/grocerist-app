@@ -2,17 +2,15 @@ const dataUrl = "json_dumps/districts.json"
 
 //config settings for map
 let map_cfg = {
-	initial_zoom: 12,
-	initial_coordinates: [41.02602, 28.97451],
-	//base_map_url: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-	base_map_url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-	//json_url: "https://github.com/grocerist/grocerist-data/blob/main/json_dumps/districts.json",
-	on_row_click_zoom: 13,
-	div_id: "map",
-	attribution:
-		'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
-	subdomains: "abcd",
-	maxZoom: 20,
+    initial_zoom: "12",
+    initial_coordinates: [41.02602, 28.97451],
+    base_map_url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+    max_zoom: "20",
+                on_row_click_zoom: "16",
+                div_id: "map",
+                attribution:
+                    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: "abcd",
 };
 //config settings for table
 let table_cfg = {
@@ -34,14 +32,6 @@ let table_cfg = {
 				},
 			},
 		},
-	},
-	rowClick: (e, row) => {
-		zoom_to_point_from_row_data(
-			row.getData(),
-			map,
-			on_row_click_zoom,
-			existing_markers_by_coordinates,
-		);
 	},
 };
 
@@ -197,7 +187,7 @@ function populateMapFromTable(table, map, on_row_click_zoom, marker_layer) {
 			});
 		});
 		//eventlistener for click on row
-		table.on('rowClick', (e, row) => {
+		table.on('rowClick', (_e, row) => {
 			zoom_to_point_from_row_data(
 				row.getData(),
 				map,
@@ -209,14 +199,14 @@ function populateMapFromTable(table, map, on_row_click_zoom, marker_layer) {
 	}
 
 // mutator function(s)for table
-function mutateDocumentField(value, data, type, params, component) {
+function mutateDocumentField(value, _data, _type, _params, _component) {
 			let output = value.map((item) => {
 				return `<li><a href="document__${item.id}.html">${item.value}</a></li>`
 			}).join(" ");
 			return `<ul class="list-unstyled">${output}</ul>`
 		}
 
-function mutatePersonField(value, data, type, params, component) {
+function mutatePersonField(value, _data, _type, _params, _component) {
 			let output = value.map((item) => {
 				return `<li><a href="person__${item.id}.html">${item.value}</a></li>`
 			}).join(" ");
@@ -289,9 +279,9 @@ function build_map_table(table_cfg) {
 /////////////////////
 function build_map_and_table(map_cfg, table_cfg, wms_cfg = null) {
 			console.log("loading map");
-			let map = L.map(map_cfg.div_id).setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
+		 	let map = L.map(map_cfg.div_id).setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
 			let tile_layer = L.tileLayer(map_cfg.base_map_url, {
-				maxZoom: map_cfg.max_zoom,
+				// maxZoom: map_cfg.max_zoom,
 				attribution: map_cfg.attribution,
 			});
 
