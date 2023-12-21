@@ -67,20 +67,43 @@ function onEachFeature(row_data) {
 	return popupContent;
 }
 
+function draw_circle_from_rowdata(latLng, frequency) {
+	let radius = frequency;
+	let html_dot = "";
+	let border_width = 4;
+	let border_color = "red";
+	let size = radius * 10;
+	let circle_style = `style="width: ${size}px; height: ${size}px; border-radius: 50%; display: table-cell; border: ${border_width}px solid ${border_color};  background: rgba(255, 0, 0, .5); overflow: hidden; position: absolute"`;
+	let iconSize = size;
+	let icon = L.divIcon({
+		html: `<span ${circle_style}>${html_dot}</span>`,
+		className: "",
+		iconSize: [iconSize, iconSize],
+	});
+	let marker = L.marker(latLng, {
+		icon: icon,
+	});
+	return marker;
+}
+
 function init_map_from_rows(rows, marker_layer) {
 	console.log("populating map with icons");
-	let existing_markers_by_coordinates = {};
+	let existing_circles_by_coordinates = {};
 	rows.forEach((row) => {
 		let row_data = row.getData();
 		if (row_data.lat) {
-			let coordinate_key = get_coordinate_key_from_row_data(row_data);
-			let marker = L.marker([row_data.lat, row_data.long]);
-			existing_markers_by_coordinates[coordinate_key] = marker;
-			marker.bindPopup(onEachFeature(row_data));
-			marker.addTo(marker_layer);
+		let coordinate_key = get_coordinate_key_from_row_data(row_data);
+		let frequency = row_data.doc_count;
+		let new_circle = draw_circle_from_rowdata(
+			[row_data.lat, row_data.long],
+			frequency,
+		);
+			existing_circles_by_coordinates[coordinate_key] = new_circle;
+			// marker.bindPopup(onEachFeature(row_data));
+			new_circle.addTo(marker_layer);
 		}
 	});
-	return existing_markers_by_coordinates;
+	return existing_circles_by_coordinates;
 }
 
 
@@ -88,16 +111,16 @@ function populateMapFromTable(table, map, marker_layer) {
 	table.on("tableBuilt", function () {
 		console.log("built table");
 		let all_rows = this.getRows();
-		var existing_markers_by_coordinates = init_map_from_rows(all_rows, marker_layer);
+		var existing_circles_by_coordinates = init_map_from_rows(all_rows, marker_layer);
 		// every marker is displayed …
-		var keys_of_displayed_markers = Object.keys(existing_markers_by_coordinates);
+		var keys_of_displayed_markers = Object.keys(existing_circles_by_coordinates);
 		table.on("dataFiltered", function (filters, rows) {
 			if (rows.length < 4 && rows.length > 0) {
 				let row_data = rows[0].getData();
 				zoom_to_point_from_row_data(
 					row_data,
 					map,
-					existing_markers_by_coordinates,
+					existing_circles_by_coordinates,
 				);
 			} else {
 				map.setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
@@ -110,7 +133,7 @@ function populateMapFromTable(table, map, marker_layer) {
 				keys_of_markers_to_be_displayed.push(coordinate_key);
 			});
 			// hide & display filtered markers
-			Object.entries(existing_markers_by_coordinates).forEach(([coordinate_key, marker]) => {
+			Object.entries(existing_circles_by_coordinates).forEach(([coordinate_key, marker]) => {
 				if (keys_of_markers_to_be_displayed.includes(coordinate_key)) {
 					// this marker should be displayed
 					if (!keys_of_displayed_markers.includes(coordinate_key)) {
@@ -138,7 +161,7 @@ function populateMapFromTable(table, map, marker_layer) {
 			zoom_to_point_from_row_data(
 				row.getData(),
 				map,
-				existing_markers_by_coordinates,
+				existing_circles_by_coordinates,
 			);
 		});
 	});
@@ -234,6 +257,7 @@ function build_table(map, marker_layer) {
 		// the table will draw all markers on to the empty map
 		table_cfg.data = tableData;
 		let table = build_map_table();
+		console.log(table);
 		populateMapFromTable(table, map, marker_layer);
 	})
 }
