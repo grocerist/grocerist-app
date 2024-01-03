@@ -52,7 +52,7 @@ function createMap () {
   const persMarkerLayer = new L.layerGroup()
   // this is for the page gui / switch for toggling overlays
   const layerGroups = {
-    frequency: docsMarkerLayer,
+    'number of documents': docsMarkerLayer,
     'number of persons': persMarkerLayer
   }
   docsMarkerLayer.addTo(map)
@@ -145,46 +145,98 @@ function createTable () {
 }
 
 function createMarkerLayers (table, layerGroups) {
-  console.log('populating map with icons')
+  console.log('creating markers')
   let rows = table.getRows()
   let existingCirclesByCoordinates = {}
   rows.forEach(row => {
     let rowData = row.getData()
     if (rowData.lat) {
       let coordinateKey = rowData.lat + rowData.long
-      // create markers for frequency
-      let frequency = rowData.doc_count
-      let frequencyCircle = L.divIcon({
-        html: `<span style="width: 100%; height: 100%; border-radius: 50%; display: table-cell; border: 4px solid red; background: rgba(255, 0, 0, .5); overflow: hidden; position: absolute;"></span>`,
-        className: 'circles frequency',
-        iconSize: [frequency, frequency]
+
+      // create markers for doc count
+      let numDocs = rowData.doc_count
+      let docsCircle = L.divIcon({
+        html: '<span style="width: 100%; height: 100%; border-radius: 50%; display: table-cell; border: 4px solid red; background: rgba(255, 0, 0, .5); overflow: hidden; position: absolute;"></span>',
+        className: 'doccircles',
+        iconSize: [numDocs, numDocs]
       })
-      let frequencyMarker = L.marker([rowData.lat, rowData.long], {
-        icon: frequencyCircle
+      let docsMarker = L.marker([rowData.lat, rowData.long], {
+        icon: docsCircle
       })
-      frequencyMarker.addTo(layerGroups['frequency'])
+
       // create markers for person count
-      let people = rowData.person_count
-      let peopleCircle = L.divIcon({
-        html: `<span style="width: 100%; height: 100%; border-radius: 50%; display: table-cell; border: 4px solid blue; background: rgba(0, 0, 255, .5); overflow: hidden; position: absolute;"></span>`,
-        className: 'circles people',
-        iconSize: [people, people]
+      let numPers = rowData.person_count
+      let persCircle = L.divIcon({
+        html: '<span style="width: 100%; height: 100%; border-radius: 50%; display: table-cell; border: 4px solid blue; background: rgba(0, 0, 255, .5); overflow: hidden; position: absolute;"></span>',
+        className: 'perscircles',
+        iconSize: [numPers, numPers]
       })
-      let peopleMarker = L.marker([rowData.lat, rowData.long], {
-        icon: peopleCircle
+      let persMarker = L.marker([rowData.lat, rowData.long], {
+        icon: persCircle
       })
-      peopleMarker.addTo(layerGroups['number of persons'])
-      // only needs to be added once, since coordinates are the same
-      existingCirclesByCoordinates[coordinateKey] = frequencyMarker
+
+      // store markers in existingCirclesByCoordinates
+      existingCirclesByCoordinates[coordinateKey] = {
+        'number of documents': docsMarker,
+        'number of persons': persMarker
+      }
+
+      function onEachFeature (rowData) {
+        let popupContent = `
+          <h3><a href="${rowData.grocerist_id}.html">${rowData.name}<a/></h3>
+          <ul>
+          <li>${rowData.doc_count} related <a href="documents.html">Documents</a></li>
+          <li>${rowData.person_count} related <a href="persons.html">Persons</a></li>
+          </ul>
+          `
+    
+        return popupContent
+      }
+      
+      docsMarker.bindPopup(onEachFeature(rowData))
+      persMarker.bindPopup(onEachFeature(rowData))
+      // add markers to respective layerGroups
+      docsMarker.addTo(layerGroups['number of documents'])
+      persMarker.addTo(layerGroups['number of persons'])
     }
   })
   return existingCirclesByCoordinates
 }
 
-function setupEventHandlers (map, table, existingCirclesByCoordinates) {
+function setupEventHandlers (
+  map,
+  table,
+  existingCirclesByCoordinates,
+  layerGroups
+) {
+  const LayerManager = {
+    activeLayer: 'number of documents',
+
+    setActiveLayer: function () {
+      // Toggle between marker layers
+      map.on('baselayerchange', event => {
+        this.activeLayer = event.name
+        table.clearHeaderFilter()
+      })
+    },
+    getActiveLayer: function () {
+      return this.activeLayer
+    }
+  }
+
   function filterRowsandMarkers () {
+    // every marker is displayed …
     let displayedMarkers = Object.keys(existingCirclesByCoordinates)
     table.on('dataFiltered', function (filters, rows) {
+      let currentMarkerLayer
+      // determine active layer
+      const activeLayer = LayerManager.getActiveLayer()
+      if (activeLayer === 'number of documents') {
+        currentMarkerLayer = layerGroups['number of documents']
+      } else if (activeLayer === 'number of persons') {
+        currentMarkerLayer = layerGroups['number of persons']
+      }
+
       // zooming in on first result if filtered table contains only a few rows
       if (rows.length < 4 && rows.length > 0) {
         let rowData = rows[0].getData()
@@ -194,21 +246,24 @@ function setupEventHandlers (map, table, existingCirclesByCoordinates) {
       } else {
         map.setView(MAP_CFG.initialCoordinates, MAP_CFG.initialZoom)
       }
+
       let markersToDisplay = []
       rows.forEach(row => {
         let rowData = row.getData()
         let coordinateKey = rowData.lat + rowData.long
         markersToDisplay.push(coordinateKey)
       })
+
       // hide & display filtered markers
       Object.entries(existingCirclesByCoordinates).forEach(
-        ([coordinateKey, marker]) => {
+        ([coordinateKey, markersForEachBaselayer]) => {
+          let marker = markersForEachBaselayer[activeLayer]
           if (markersToDisplay.includes(coordinateKey)) {
             // this marker should be displayed
             if (!displayedMarkers.includes(coordinateKey)) {
               // it is not beeing displayed
               // display it
-              markerLayer.addLayer(marker)
+              currentMarkerLayer.addLayer(marker)
               displayedMarkers.push(coordinateKey)
             }
           } else {
@@ -216,7 +271,7 @@ function setupEventHandlers (map, table, existingCirclesByCoordinates) {
             if (displayedMarkers.includes(coordinateKey)) {
               // it is not hidden
               // hide it
-              markerLayer.removeLayer(marker)
+              currentMarkerLayer.removeLayer(marker)
               let keyIndex = displayedMarkers.indexOf(coordinateKey)
               displayedMarkers.splice(keyIndex, 1)
             }
@@ -231,36 +286,46 @@ function setupEventHandlers (map, table, existingCirclesByCoordinates) {
       zoomToPointFromRowData(row.getData(), map, existingCirclesByCoordinates)
     })
   }
-  function resizeIconsOnZoom () {
-    map.on('zoomend', function () {
-      console.log('zoom end')
-      Object.values(existingCirclesByCoordinates).forEach(marker => {
-        let circleElement = marker.options.icon
-        let currentSize = circleElement.options.iconSize
-        let newSize = currentSize * map.getZoom()
-        // Adjust the circle size
-        circleElement.options.iconSize = [newSize, newSize]
-        marker.setIcon(circleElement)
-      })
-    })
+
+  function zoomToPointFromRowData (rowData, map, existingCirclesByCoordinates) {
+    if (rowData.lat) {
+      let activeLayer = LayerManager.getActiveLayer()
+      let coordinateKey = rowData.lat + rowData.long
+      let marker = existingCirclesByCoordinates[coordinateKey][activeLayer]
+      marker.openPopup()
+      map.setView([rowData.lat, rowData.long], MAP_CFG.onRowClickZoom)
+    } else {
+      // close all open popups when resetting the map
+      map.closePopup()
+      map.setView(MAP_CFG.initialCoordinates, MAP_CFG.initialZoom)
+    }
   }
 
+  function resizeIconsOnZoom () {
+    let previousZoom
+    map.on('zoomstart', function () {
+      previousZoom = map.getZoom()
+    })
+    map.on('zoomend', function () {
+      let zoomRatio = map.getZoom() / previousZoom
+      Object.entries(existingCirclesByCoordinates).forEach(
+        ([coordinateKey, markersForEachBaselayer]) => {
+          Object.values(markersForEachBaselayer).forEach(marker => {
+            let circleElement = marker.options.icon
+            let currentSize = circleElement.options.iconSize
+            let newSize = currentSize.map(size => size * zoomRatio)
+            // Adjust the circle size
+            circleElement.options.iconSize = newSize
+            marker.setIcon(circleElement)
+          })
+        }
+      )
+    })
+  }
+  LayerManager.setActiveLayer()
   filterRowsandMarkers()
   handleRowClick()
   resizeIconsOnZoom()
-}
-
-function zoomToPointFromRowData (rowData, map, existingCirclesByCoordinates) {
-  if (rowData.lat) {
-    let coordinateKey = rowData.lat + rowData.long
-    let marker = existingCirclesByCoordinates[coordinateKey]
-    marker.openPopup()
-    map.setView([rowData.lat, rowData.long], MAP_CFG.onRowClickZoom)
-  } else {
-    // close all open popups when resetting the map
-    map.closePopup()
-    map.setView(MAP_CFG.initialCoordinates, MAP_CFG.initialZoom)
-  }
 }
 
 // Main function for initializing the map and table
@@ -278,7 +343,7 @@ function setupMapAndTable () {
     const table = createTable()
     table.on('tableBuilt', function () {
       let existingCirclesByCoordinates = createMarkerLayers(table, layerGroups)
-      setupEventHandlers(map, table, existingCirclesByCoordinates)
+      setupEventHandlers(map, table, existingCirclesByCoordinates, layerGroups)
     })
   })
 }
