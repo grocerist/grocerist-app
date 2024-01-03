@@ -3,3 +3,385 @@ img.footerimage {
     height: auto;
     max-width: 180px;
 }
+
+:root {
+    --documents: #536e61;
+    --documents-hover:#536e61c2;
+    --persons: #79B4A9;
+    --persons-hover: #79B4A9c2;
+    --neighbourhoods: #9CC69B;
+    --neighbourhoods-hover: #9CC69Bc2;
+    --districts: #BDE4A8;
+    --districts-hover: #BDE4A8c2;
+    --karyes: #EDB183;
+    --karyes-hover: #EDB183c2;
+    --categories: #cf7332;
+    --categories-hover: #cf7332c2;
+    --goods: #993333;
+    --goods-hover: #993333c2;
+    --link: #000000;
+    --link-hover: #6e6e6ec2;
+    --footer-hover-background: #f2f2f2;
+}
+
+/*
+document is built up as follows: 
+
+links to a specific page
+remaining links
+page headers
+tabulator headers
+tabulator footer
+subpages 
+*/
+
+/* links to a specific page */
+a[href="documents.html"] {
+    color: var(--documents);
+}
+a[href="documents.html"]:hover { 
+    color: var(--documents-hover);
+} 
+a[href="persons.html"] {
+    color: var(--persons);
+}
+a[href="persons.html"]:hover { 
+    color: var(--persons-hover);
+} 
+a[href="neighbourhoods.html"] {
+    color: var(--neighbourhoods);
+}
+a[href="neighbourhoods.html"]:hover {
+    color: var(--neighbourhoods-hover);
+}
+a[href="districts.html"] {
+    color: var(--districts);
+}
+a[href="districts.html"]:hover {
+    color: var(--districts-hover);
+}
+a[href="karyes.html"] {
+    color: var(--karyes);
+}
+a[href="karyes.html"]:hover {
+    color: var(--karyes-hover);
+}
+a[href="categories.html"] {
+    color: var(--categories);
+}
+a[href="categories.html"]:hover {
+    color: var(--categories-hover);
+}
+a[href="goods.html"] {
+    color: var(--goods);
+}
+a[href="goods.html"]:hover {
+    color: var(--goods-hover);
+}
+
+/* remaining links */
+a {
+    color: var(--link);
+    text-decoration: unset;
+}
+a:hover {
+    color: var(--link-hover);
+}
+
+
+/* page headers */
+h1 {
+    text-decoration:unset;
+}
+div.documents h1 {
+    color: var(--documents);
+}
+div.persons h1 {
+    color: var(--persons);
+}
+div.neighbourhoods h1 {
+    color: var(--neighbourhoods);
+}
+div.districts h1 {
+    color: var(--districts);
+}
+div.karyes h1 {
+    color: var(--karyes);
+}
+div.categories h1 {
+    color: var(--categories);
+}
+div.goods h1 {
+    color: var(--goods);
+}
+
+/* tabulator headers */
+/*documents page*/
+div.documents div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element { /*parts of header with text*/
+    background-color: var(--documents);
+    color: white; 
+}
+div.documents div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+    background-color: var(--documents-hover) !important;
+}
+div.documents div.tabulator-header-contents { /*parts of header without text*/
+    background-color: var(--document);
+}
+div.documents div.tabulator-header-contents:hover {
+    background-color: var(--document-hover) !important;
+}
+/*persons page*/
+div.persons div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+    background-color: var(--persons);
+}
+div.persons div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+    background-color: var(--persons-hover) !important;
+}
+div.persons div.tabulator-header-contents {
+    background-color: var(--persons);
+}
+div.persons div.tabulator-header-contents:hover {
+    background-color: var(--persons-hover) !important;
+}
+/*neighbourhoods page*/
+div.neighbourhoods div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+    background-color: var(--neighbourhoods);
+}
+div.neighbourhoods div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+    background-color: var(--neighbourhoods-hover) !important;
+}
+div.neighbourhoods div.tabulator-header-contents {
+    background-color: var(--neighbourhoods);
+}
+div.neighbourhoods div.tabulator-header-contents:hover {
+    background-color: var(--neighbourhoods-hover) !important;
+}
+/*districts page*/
+div.districts div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+    background-color: var(--districts);
+}
+div.districts div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+    background-color: var(--districts-hover) !important;
+}
+iv.districts div.tabulator-header-contents {
+    background-color: var(--districts);
+}
+iv.districts div.tabulator-header-contents:hover {
+    background-color: var(--districts-hover) !important;
+}
+/*karyes page*/
+div.karyes div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+    background-color: var(--karyes);
+}
+div.karyes div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+    background-color: var(--karyes-hover) !important;
+}
+div.karyes div.tabulator-header-contents {
+    background-color: var(--document);
+}
+div.karyes div.tabulator-header-contents:hover {
+    background-color: var(--document-hover) !important;
+}
+/*categories page*/
+div.categories div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+    background-color: var(--categories);
+}
+div.categories div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+    background-color: var(--categories-hover) !important;
+}
+div.categories div.tabulator-header-contents {
+    background-color: var(--categories);
+}
+div.categories div.tabulator-header-contents:hover {
+    background-color: var(--categories-hover) !important;
+}
+/*goods page*/
+div.goods div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+    background-color: var(--goods);
+    color: white;
+}
+div.goods div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+    background-color: var(--goods-hover) !important;
+}
+div.goods div.tabulator-header-contents {
+    background-color: var(--goods);
+}
+div.goods div.tabulator-header-contents:hover {
+    background-color: var(--goods-hover) !important;
+}
+/* end of tabulator headers */
+
+
+/* tabulator footer */
+/*documents footer*/
+div.documents div.tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--documents);
+    border-color: var(--documents);
+}
+div.documents div.tabulator .tabulator-footer .tabulator-page:hover {
+    color: var(--documents) !important;
+}
+div.documents div.tabulator .tabulator-footer .tabulator-page.active:hover {
+    background-color: var(--footer-hover-background);
+}
+/*persons footer*/
+div.persons div.tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--persons);
+    border-color: var(--persons);
+}
+div.persons div.tabulator .tabulator-footer .tabulator-page:hover {
+    color: var(--persons) !important;
+}
+div.persons div.tabulator .tabulator-footer .tabulator-page.active:hover {
+    background-color: var(--footer-hover-background);
+}
+/*neighbourhoods footer*/
+div.neighbourhoods div.tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--neighbourhoods);
+    border-color: var(--neighbourhoods);
+}
+div.neighbourhoods div.tabulator .tabulator-footer .tabulator-page:hover {
+    color: var(--neighbourhoods) !important;
+}
+div.neighbourhoods div.tabulator .tabulator-footer .tabulator-page.active:hover {
+    background-color: var(--footer-hover-background);
+}
+/*districts footer*/
+div.districts div.tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--districts);
+    border-color: var(--districts);
+}
+div.districts div.tabulator .tabulator-footer .tabulator-page:hover {
+    color: var(--districts) !important;
+}
+div.districts div.tabulator .tabulator-footer .tabulator-page.active:hover {
+    background-color: var(--footer-hover-background);
+}
+/*karyes footer*/
+div.karyes div.tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--karyes);
+    border-color: var(--karyes);
+}
+div.karyes div.tabulator .tabulator-footer .tabulator-page:hover {
+    color: var(--karyes) !important;
+}
+div.karyes div.tabulator .tabulator-footer .tabulator-page.active:hover {
+    background-color: var(--footer-hover-background);
+}
+/*categories footer*/
+div.categories div.tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--categories);
+    border-color: var(--categories);
+}
+div.categories div.tabulator .tabulator-footer .tabulator-page:hover {
+    color: var(--categories) !important;
+}
+div.categories div.tabulator .tabulator-footer .tabulator-page.active:hover {
+    background-color: var(--footer-hover-background);
+}
+/*goods footer*/
+div.goods div.tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--goods);
+    border-color: var(--goods);
+}
+div.goods div.tabulator .tabulator-footer .tabulator-page:hover {
+    color: var(--goods) !important;
+}
+div.goods div.tabulator .tabulator-footer .tabulator-page.active:hover {
+    background-color: var(--footer-hover-background);
+}
+/* end of tabulator footer */
+
+
+/* subpages */
+/*document subpage*/
+div.document h1 { /*create line*/
+    border-bottom: 3px solid var(--documents);  
+    padding-bottom: 5px;
+}
+div.document a {
+      color: var(--documents)
+}
+div.document a:hover {
+    color: var(--documents-hover)
+}
+div.document .badge {
+    background-color: var(--documents) !important;
+}
+div.document .badge:hover {
+    background-color: var(--documents-hover) !important;
+}
+
+/*person subpage*/
+div.person h1 {
+    border-bottom: 3px solid var(--persons); 
+    padding-bottom: 5px;
+}
+div.person a {
+      color: var(--persons)
+}
+div.person a:hover {
+    color: var(--persons-hover)
+}
+
+/*neighbourhood subpage*/
+div.neighbourhood h1 {
+    border-bottom: 3px solid var(--neighbourhoods);
+    padding-bottom: 5px;
+}
+div.neighbourhood a {
+    color: var(--neighbourhoods)
+}
+div.neighbourhood a:hover {
+    color: var(--neighbourhoods-hover)
+}
+
+/*district subpage*/
+div.district h1 {
+    border-bottom: 3px solid var(--districts);
+    padding-bottom: 5px;
+}
+div.district a {
+      color: var(--districts)
+}
+div.district a:hover {
+    color: var(--districts-hover)
+}
+
+/*karye subpage*/
+div.karye h1 {
+    border-bottom: 3px solid var(--karyes);
+    padding-bottom: 5px;
+}
+div.karye a {
+      color: var(--karyes)
+}
+div.karye a:hover {
+    color: var(--karyes-hover)
+}
+
+/*category subpage*/
+div.category h1 {
+    border-bottom: 3px solid var(--categories);
+    padding-bottom: 5px;
+}
+div.category a {
+      color: var(--categories)
+}
+div.category a:hover {
+    color: var(--categories-hover)
+}
+
+/*good subpage*/
+div.good h1 {
+    border-bottom: 3px solid var(--goods);
+    padding-bottom: 5px;
+}
+div.good a {
+      color: var(--goods)
+}
+div.good a:hover {
+    color: var(--goods-hover)
+}
+
+/* end of subpages */
