@@ -11,8 +11,8 @@ img.footerimage {
     --persons-hover: #79B4A9c2;
     --neighbourhoods: #9CC69B;
     --neighbourhoods-hover: #9CC69Bc2;
-    --districts: #BDE4A8;
-    --districts-hover: #BDE4A8c2;
+    --districts: #9cc288;
+    --districts-hover: #9cc288c2;
     --karyes: #EDB183;
     --karyes-hover: #EDB183c2;
     --categories: #cf7332;
@@ -163,10 +163,10 @@ div.districts div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element 
 div.districts div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
     background-color: var(--districts-hover) !important;
 }
-iv.districts div.tabulator-header-contents {
+div.districts div.tabulator-header-contents {
     background-color: var(--districts);
 }
-iv.districts div.tabulator-header-contents:hover {
+div.districts div.tabulator-header-contents:hover {
     background-color: var(--districts-hover) !important;
 }
 /*karyes page*/
