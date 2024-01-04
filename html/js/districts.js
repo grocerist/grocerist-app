@@ -58,7 +58,7 @@ function createMap () {
   docsMarkerLayer.addTo(map)
   // persMarkerLayer.addTo(map);
   // passing the overlays as baselayers so they will be mutually exclusive
-  const layerControl = L.control.layers(layerGroups, null)
+  const layerControl = L.control.layers(layerGroups, null, { collapsed: false })
   layerControl.addTo(map)
   return { map, layerGroups }
 }
@@ -156,8 +156,8 @@ function createMarkerLayers (table, layerGroups) {
       // create markers for doc count
       let numDocs = rowData.doc_count
       let docsCircle = L.divIcon({
-        html: '<span style="width: 100%; height: 100%; border-radius: 50%; display: table-cell; border: 4px solid red; background: rgba(255, 0, 0, .5); overflow: hidden; position: absolute;"></span>',
-        className: 'doccircles',
+        html: '<span style="width: 100%; height: 100%; border-radius: 50%; display: table-cell; border: 4px solid #536e61; background: rgba(83, 110, 97, .5) ; overflow: hidden; position: absolute;"></span>',
+        className: '',
         iconSize: [numDocs, numDocs]
       })
       let docsMarker = L.marker([rowData.lat, rowData.long], {
@@ -167,8 +167,8 @@ function createMarkerLayers (table, layerGroups) {
       // create markers for person count
       let numPers = rowData.person_count
       let persCircle = L.divIcon({
-        html: '<span style="width: 100%; height: 100%; border-radius: 50%; display: table-cell; border: 4px solid blue; background: rgba(0, 0, 255, .5); overflow: hidden; position: absolute;"></span>',
-        className: 'perscircles',
+        html: '<span style="width: 100%; height: 100%; border-radius: 50%; display: table-cell; border: 4px solid #79B4A9; background: rgba(121, 180, 169, .5); overflow: hidden; position: absolute;"></span>',
+        className: '',
         iconSize: [numPers, numPers]
       })
       let persMarker = L.marker([rowData.lat, rowData.long], {
@@ -227,17 +227,6 @@ function setupEventHandlers (
     let displayedMarkers = Object.keys(existingCirclesByCoordinates)
     // every marker is displayed …
     table.on('dataFiltered', function (filters, rows) {
-      /*console.log(existingCirclesByCoordinates)
-      let currentMarkerLayer
-      // determine active layer
-      const activeLayer = LayerManager.getActiveLayer()
-      if (activeLayer === 'number of documents') {
-        currentMarkerLayer = layerGroups['number of documents']
-        otherMarkerLayer =  layerGroups['number of persons']
-      } else if (activeLayer === 'number of persons') {
-        currentMarkerLayer = layerGroups['number of persons']
-      }*/
-
       // zooming in on first result if filtered table contains only a few rows
       if (rows.length < 4 && rows.length > 0) {
         let rowData = rows[0].getData()
@@ -254,7 +243,6 @@ function setupEventHandlers (
         let coordinateKey = rowData.lat + rowData.long
         markersToDisplay.push(coordinateKey)
       })
-      console.log(existingCirclesByCoordinates)
       // hide & display filtered markers
       Object.entries(existingCirclesByCoordinates).forEach(
         ([coordinateKey, baselayers]) => {
@@ -278,7 +266,6 @@ function setupEventHandlers (
               layerGroups['number of persons'].removeLayer(persMarker)
               let keyIndex = displayedMarkers.indexOf(coordinateKey)
               displayedMarkers.splice(keyIndex, 1)
-              //add it to a list of removed markers
             }
           }
         }
