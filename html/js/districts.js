@@ -189,10 +189,10 @@ function createMarkerLayers (table, layerGroups) {
           <li>${rowData.person_count} related <a href="persons.html">Persons</a></li>
           </ul>
           `
-    
+
         return popupContent
       }
-      
+
       docsMarker.bindPopup(onEachFeature(rowData))
       persMarker.bindPopup(onEachFeature(rowData))
       // add markers to respective layerGroups
@@ -216,7 +216,6 @@ function setupEventHandlers (
       // Toggle between marker layers
       map.on('baselayerchange', event => {
         this.activeLayer = event.name
-        table.clearHeaderFilter()
       })
     },
     getActiveLayer: function () {
@@ -225,17 +224,19 @@ function setupEventHandlers (
   }
 
   function filterRowsandMarkers () {
-    // every marker is displayed …
     let displayedMarkers = Object.keys(existingCirclesByCoordinates)
+    // every marker is displayed …
     table.on('dataFiltered', function (filters, rows) {
+      /*console.log(existingCirclesByCoordinates)
       let currentMarkerLayer
       // determine active layer
       const activeLayer = LayerManager.getActiveLayer()
       if (activeLayer === 'number of documents') {
         currentMarkerLayer = layerGroups['number of documents']
+        otherMarkerLayer =  layerGroups['number of persons']
       } else if (activeLayer === 'number of persons') {
         currentMarkerLayer = layerGroups['number of persons']
-      }
+      }*/
 
       // zooming in on first result if filtered table contains only a few rows
       if (rows.length < 4 && rows.length > 0) {
@@ -253,17 +254,19 @@ function setupEventHandlers (
         let coordinateKey = rowData.lat + rowData.long
         markersToDisplay.push(coordinateKey)
       })
-
+      console.log(existingCirclesByCoordinates)
       // hide & display filtered markers
       Object.entries(existingCirclesByCoordinates).forEach(
-        ([coordinateKey, markersForEachBaselayer]) => {
-          let marker = markersForEachBaselayer[activeLayer]
+        ([coordinateKey, baselayers]) => {
+          let docsMarker = baselayers['number of documents']
+          let persMarker = baselayers['number of persons']
           if (markersToDisplay.includes(coordinateKey)) {
             // this marker should be displayed
             if (!displayedMarkers.includes(coordinateKey)) {
               // it is not beeing displayed
               // display it
-              currentMarkerLayer.addLayer(marker)
+              layerGroups['number of documents'].addLayer(docsMarker)
+              layerGroups['number of persons'].addLayer(persMarker)
               displayedMarkers.push(coordinateKey)
             }
           } else {
@@ -271,9 +274,11 @@ function setupEventHandlers (
             if (displayedMarkers.includes(coordinateKey)) {
               // it is not hidden
               // hide it
-              currentMarkerLayer.removeLayer(marker)
+              layerGroups['number of documents'].removeLayer(docsMarker)
+              layerGroups['number of persons'].removeLayer(persMarker)
               let keyIndex = displayedMarkers.indexOf(coordinateKey)
               displayedMarkers.splice(keyIndex, 1)
+              //add it to a list of removed markers
             }
           }
         }
