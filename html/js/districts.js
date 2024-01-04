@@ -1,276 +1,343 @@
-const dataUrl = "json_dumps/districts.json"
+const dataUrl = 'json_dumps/districts.json'
 
-//config settings for map
-let map_cfg = {
-	initial_zoom: "12",
-	initial_coordinates: [41.01224, 28.976018],
-	base_map_url: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-	max_zoom: "20",
-	on_row_click_zoom: "16",
-	div_id: "map",
-	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-	subdomains: "abcd",
-};
-
-//config settings for table
-let table_cfg = {
-	maxHeight: "60vh",
-	layout: "fitColumns",
-	width: "100%",
-	headerFilterLiveFilterDelay: 600,
-	responsiveLayout: "collapse",
-	langs: {
-		default: {
-			pagination: {
-				counter: {
-					showing: "",
-					of: "of",
-					rows: "",
-				},
-			},
-		},
-	},
-};
-
-
-
-function zoom_to_point_from_row_data(row_data, map, existing_markers_by_coordinates) {
-	if (row_data.lat) {
-		let coordinate_key = get_coordinate_key_from_row_data(row_data);
-		let marker = existing_markers_by_coordinates[coordinate_key];
-		marker.openPopup();
-		map.setView([row_data.lat, row_data.long], map_cfg.on_row_click_zoom);
-	}
-	else {
-		// close all open popups when resetting the map
-		map.closePopup();
-		map.setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
-	}
-
+// Config settings for map
+const MAP_CFG = {
+  initialZoom: 12,
+  initialCoordinates: [41.01224, 28.976018],
+  baseMapUrl: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+  maxZoom: 20,
+  onRowClickZoom: 16,
+  divId: 'map',
+  attribution:
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd'
 }
 
-function get_coordinate_key_from_row_data(row_data) {
-	if (row_data.lat) {
-		return row_data.lat + row_data.long;
-	}
+// Config settings for table
+const TABLE_CFG = {
+  maxHeight: '60vh',
+  layout: 'fitColumns',
+  width: '100%',
+  headerFilterLiveFilterDelay: 600,
+  responsiveLayout: 'collapse',
+  langs: {
+    default: {
+      pagination: {
+        counter: {
+          showing: '',
+          of: 'of',
+          rows: ''
+        }
+      }
+    }
+  }
 }
 
-function onEachFeature(row_data) {
-	let popupContent = `
-    <h3><a href="${row_data.grocerist_id}.html">${row_data.name}<a/></h3>
-    <ul>
-		<li>${row_data.doc_count} related <a href="documents.html">Documents</a></li>
-		<li>${row_data.person_count} related <a href="persons.html">Persons</a></li>
-    </ul>
-    `;
-
-	return popupContent;
+// Function for initializing the (empty) map
+function createMap () {
+  console.log('loading map')
+  const map = L.map(MAP_CFG.divId).setView(
+    MAP_CFG.initialCoordinates,
+    MAP_CFG.initialZoom
+  )
+  const baseMapLayer = L.tileLayer(MAP_CFG.baseMapUrl, {
+    maxZoom: MAP_CFG.maxZoom,
+    attribution: MAP_CFG.attribution
+  })
+  // handle the layers
+  // order of adding matters!
+  baseMapLayer.addTo(map)
+  // create marker layers
+  const docsMarkerLayer = new L.layerGroup()
+  const persMarkerLayer = new L.layerGroup()
+  // this is for the page gui / switch for toggling overlays
+  const layerGroups = {
+    'number of documents': docsMarkerLayer,
+    'number of persons': persMarkerLayer
+  }
+  docsMarkerLayer.addTo(map)
+  // persMarkerLayer.addTo(map);
+  // passing the overlays as baselayers so they will be mutually exclusive
+  const layerControl = L.control.layers(layerGroups, null, { collapsed: false })
+  layerControl.addTo(map)
+  return { map, layerGroups }
 }
 
-function init_map_from_rows(rows, marker_layer) {
-	console.log("populating map with icons");
-	let existing_markers_by_coordinates = {};
-	rows.forEach((row) => {
-		let row_data = row.getData();
-		if (row_data.lat) {
-			let coordinate_key = get_coordinate_key_from_row_data(row_data);
-			let marker = L.marker([row_data.lat, row_data.long]);
-			existing_markers_by_coordinates[coordinate_key] = marker;
-			marker.bindPopup(onEachFeature(row_data));
-			marker.addTo(marker_layer);
-		}
-	});
-	return existing_markers_by_coordinates;
+// Functions for creating and initializing the table
+function createTable () {
+  console.log('loading table')
+
+  // mutator & formatter functions
+  function mutateDocumentField (value, data, type, params, component) {
+    let output = value
+      .map(item => {
+        return `<li><a href="document__${item.id}.html">${item.value}</a></li>`
+      })
+      .join(' ')
+    return `<ul class="list-unstyled">${output}</ul>`
+  }
+
+  function mutatePersonField (value, data, type, params, component) {
+    let output = value
+      .map(item => {
+        return `<li><a href="person__${item.id}.html">${item.value}</a></li>`
+      })
+      .join(' ')
+    return `<ul class="list-unstyled">${output}</ul>`
+  }
+
+  function linkToDetailView (cell) {
+    let row = cell.getRow().getData()
+    let cellData = cell.getData()
+    let groceristId = row.grocerist_id
+    let theLink = `<a href="${groceristId}.html">${cellData.name}</a>`
+    return theLink
+  }
+
+  if (!('columns' in TABLE_CFG)) {
+    TABLE_CFG.columns = [
+      {
+        title: 'Name',
+        field: 'name',
+        headerFilter: 'input',
+        formatter: function (cell) {
+          return linkToDetailView(cell)
+        }
+      },
+      {
+        title: 'Documents',
+        field: 'documents',
+        mutator: mutateDocumentField,
+        headerFilter: 'input',
+        formatter: function (cell) {
+          return get_scrollable_cell(this, cell)
+        },
+        tooltip: true
+      },
+      {
+        title: 'Nr. of Documents',
+        field: 'doc_count',
+        headerFilter: 'number',
+        headerFilterPlaceholder: 'at least...',
+        headerFilterFunc: '>='
+      },
+      {
+        title: 'Persons',
+        field: 'persons',
+        mutator: mutatePersonField,
+        headerFilter: 'input',
+        formatter: function (cell) {
+          return get_scrollable_cell(this, cell)
+        }
+      },
+      {
+        title: 'Nr. of Persons',
+        field: 'person_count',
+        headerFilter: 'number',
+        headerFilterPlaceholder: 'at least...',
+        headerFilterFunc: '>='
+      }
+    ]
+  }
+
+  const table = new Tabulator('#places_table', TABLE_CFG)
+  return table
 }
 
+function createMarkerLayers (table, layerGroups) {
+  console.log('creating markers')
+  let rows = table.getRows()
+  let existingCirclesByCoordinates = {}
+  rows.forEach(row => {
+    let rowData = row.getData()
+    if (rowData.lat) {
+      let coordinateKey = rowData.lat + rowData.long
 
-function populateMapFromTable(table, map, marker_layer) {
-	table.on("tableBuilt", function () {
-		console.log("built table");
-		let all_rows = this.getRows();
-		var existing_markers_by_coordinates = init_map_from_rows(all_rows, marker_layer);
-		// every marker is displayed …
-		var keys_of_displayed_markers = Object.keys(existing_markers_by_coordinates);
-		table.on("dataFiltered", function (filters, rows) {
-			if (rows.length < 4 && rows.length > 0) {
-				let row_data = rows[0].getData();
-				zoom_to_point_from_row_data(
-					row_data,
-					map,
-					existing_markers_by_coordinates,
-				);
-			} else {
-				map.setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
+      // create markers for doc count
+      let numDocs = rowData.doc_count
+      let docsCircle = L.divIcon({
+        html: '<span style="width: 100%; height: 100%; border-radius: 50%; display: table-cell; border: 4px solid #536e61; background: rgba(83, 110, 97, .5) ; overflow: hidden; position: absolute;"></span>',
+        className: '',
+        iconSize: [numDocs, numDocs]
+      })
+      let docsMarker = L.marker([rowData.lat, rowData.long], {
+        icon: docsCircle
+      })
 
-			}
-			let keys_of_markers_to_be_displayed = [];
-			rows.forEach((row) => {
-				let row_data = row.getData();
-				let coordinate_key = get_coordinate_key_from_row_data(row_data);
-				keys_of_markers_to_be_displayed.push(coordinate_key);
-			});
-			// hide & display filtered markers
-			Object.entries(existing_markers_by_coordinates).forEach(([coordinate_key, marker]) => {
-				if (keys_of_markers_to_be_displayed.includes(coordinate_key)) {
-					// this marker should be displayed
-					if (!keys_of_displayed_markers.includes(coordinate_key)) {
-						// it is not beeing displayed
-						// display it
-						marker_layer.addLayer(marker);
-						keys_of_displayed_markers.push(coordinate_key);
-					}
-				} else {
-					// this marker should be hidden
-					if (keys_of_displayed_markers.includes(coordinate_key)) {
-						// it is not hidden
-						// hide it
-						marker_layer.removeLayer(marker);
-						let index_of_key = keys_of_displayed_markers.indexOf(coordinate_key);
-						keys_of_displayed_markers.splice(index_of_key, 1);
+      // create markers for person count
+      let numPers = rowData.person_count
+      let persCircle = L.divIcon({
+        html: '<span style="width: 100%; height: 100%; border-radius: 50%; display: table-cell; border: 4px solid #79B4A9; background: rgba(121, 180, 169, .5); overflow: hidden; position: absolute;"></span>',
+        className: '',
+        iconSize: [numPers, numPers]
+      })
+      let persMarker = L.marker([rowData.lat, rowData.long], {
+        icon: persCircle
+      })
 
-					}
-				}
-			});
-		});
+      // store markers in existingCirclesByCoordinates
+      existingCirclesByCoordinates[coordinateKey] = {
+        'number of documents': docsMarker,
+        'number of persons': persMarker
+      }
 
-		//eventlistener for click on row
-		table.on('rowClick', (_e, row) => {
-			zoom_to_point_from_row_data(
-				row.getData(),
-				map,
-				existing_markers_by_coordinates,
-			);
-		});
-	});
+      function onEachFeature (rowData) {
+        let popupContent = `
+          <h3><a href="${rowData.grocerist_id}.html">${rowData.name}<a/></h3>
+          <ul>
+          <li>${rowData.doc_count} related <a href="documents.html">Documents</a></li>
+          <li>${rowData.person_count} related <a href="persons.html">Persons</a></li>
+          </ul>
+          `
+
+        return popupContent
+      }
+
+      docsMarker.bindPopup(onEachFeature(rowData))
+      persMarker.bindPopup(onEachFeature(rowData))
+      // add markers to respective layerGroups
+      docsMarker.addTo(layerGroups['number of documents'])
+      persMarker.addTo(layerGroups['number of persons'])
+    }
+  })
+  return existingCirclesByCoordinates
 }
 
-// mutator function(s)for table
-function mutateDocumentField(value, _data, _type, _params, _component) {
-	let output = value.map((item) => {
-		return `<li><a href="document__${item.id}.html">${item.value}</a></li>`
-	}).join(" ");
-	return `<ul class="list-unstyled">${output}</ul>`
+function setupEventHandlers (
+  map,
+  table,
+  existingCirclesByCoordinates,
+  layerGroups
+) {
+  const LayerManager = {
+    activeLayer: 'number of documents',
+
+    setActiveLayer: function () {
+      // Toggle between marker layers
+      map.on('baselayerchange', event => {
+        this.activeLayer = event.name
+      })
+    },
+    getActiveLayer: function () {
+      return this.activeLayer
+    }
+  }
+
+  function filterRowsandMarkers () {
+    let displayedMarkers = Object.keys(existingCirclesByCoordinates)
+    // every marker is displayed …
+    table.on('dataFiltered', function (filters, rows) {
+      // zooming in on first result if filtered table contains only a few rows
+      if (rows.length < 4 && rows.length > 0) {
+        let rowData = rows[0].getData()
+        let coordinateKey = rowData.lat + rowData.long
+        zoomToPointFromRowData(rowData, map, existingCirclesByCoordinates)
+        displayedMarkers.push(coordinateKey)
+      } else {
+        map.setView(MAP_CFG.initialCoordinates, MAP_CFG.initialZoom)
+      }
+
+      let markersToDisplay = []
+      rows.forEach(row => {
+        let rowData = row.getData()
+        let coordinateKey = rowData.lat + rowData.long
+        markersToDisplay.push(coordinateKey)
+      })
+      // hide & display filtered markers
+      Object.entries(existingCirclesByCoordinates).forEach(
+        ([coordinateKey, baselayers]) => {
+          let docsMarker = baselayers['number of documents']
+          let persMarker = baselayers['number of persons']
+          if (markersToDisplay.includes(coordinateKey)) {
+            // this marker should be displayed
+            if (!displayedMarkers.includes(coordinateKey)) {
+              // it is not beeing displayed
+              // display it
+              layerGroups['number of documents'].addLayer(docsMarker)
+              layerGroups['number of persons'].addLayer(persMarker)
+              displayedMarkers.push(coordinateKey)
+            }
+          } else {
+            // this marker should be hidden
+            if (displayedMarkers.includes(coordinateKey)) {
+              // it is not hidden
+              // hide it
+              layerGroups['number of documents'].removeLayer(docsMarker)
+              layerGroups['number of persons'].removeLayer(persMarker)
+              let keyIndex = displayedMarkers.indexOf(coordinateKey)
+              displayedMarkers.splice(keyIndex, 1)
+            }
+          }
+        }
+      )
+    })
+  }
+  function handleRowClick () {
+    //eventlistener for click on row
+    table.on('rowClick', (e, row) => {
+      zoomToPointFromRowData(row.getData(), map, existingCirclesByCoordinates)
+    })
+  }
+
+  function zoomToPointFromRowData (rowData, map, existingCirclesByCoordinates) {
+    if (rowData.lat) {
+      let activeLayer = LayerManager.getActiveLayer()
+      let coordinateKey = rowData.lat + rowData.long
+      let marker = existingCirclesByCoordinates[coordinateKey][activeLayer]
+      marker.openPopup()
+      map.setView([rowData.lat, rowData.long], MAP_CFG.onRowClickZoom)
+    } else {
+      // close all open popups when resetting the map
+      map.closePopup()
+      map.setView(MAP_CFG.initialCoordinates, MAP_CFG.initialZoom)
+    }
+  }
+
+  function resizeIconsOnZoom () {
+    let previousZoom
+    map.on('zoomstart', function () {
+      previousZoom = map.getZoom()
+    })
+    map.on('zoomend', function () {
+      let zoomRatio = map.getZoom() / previousZoom
+      Object.entries(existingCirclesByCoordinates).forEach(
+        ([coordinateKey, markersForEachBaselayer]) => {
+          Object.values(markersForEachBaselayer).forEach(marker => {
+            let circleElement = marker.options.icon
+            let currentSize = circleElement.options.iconSize
+            let newSize = currentSize.map(size => size * zoomRatio)
+            // Adjust the circle size
+            circleElement.options.iconSize = newSize
+            marker.setIcon(circleElement)
+          })
+        }
+      )
+    })
+  }
+  LayerManager.setActiveLayer()
+  filterRowsandMarkers()
+  handleRowClick()
+  resizeIconsOnZoom()
 }
 
-function mutatePersonField(value, _data, _type, _params, _component) {
-	let output = value.map((item) => {
-		return `<li><a href="person__${item.id}.html">${item.value}</a></li>`
-	}).join(" ");
-	return `<ul class="list-unstyled">${output}</ul>`
+// Main function for initializing the map and table
+function setupMapAndTable () {
+  const { map, layerGroups } = createMap()
+  d3.json(dataUrl, function (dataFromJson) {
+    dataFromJson = Object.values(dataFromJson)
+    const tableData = dataFromJson.map(item => {
+      let enriched = item
+      enriched['doc_count'] = item.documents.length
+      enriched['person_count'] = item.persons.length
+      return enriched
+    })
+    TABLE_CFG.data = tableData
+    const table = createTable()
+    table.on('tableBuilt', function () {
+      let existingCirclesByCoordinates = createMarkerLayers(table, layerGroups)
+      setupEventHandlers(map, table, existingCirclesByCoordinates, layerGroups)
+    })
+  })
 }
 
-// formatter function(s) for table
-function linkToDetailView(cell) {
-	var row = cell.getRow().getData()
-	var cellData = cell.getData()
-	var groceristId = row.grocerist_id
-	var theLink = `<a href="${groceristId}.html">${cellData.name}</a>`
-	return theLink
-}
-
-function build_map_table() {
-	if (!("columns" in table_cfg)) {
-		table_cfg.columns = [
-			{
-				title: "Name",
-				field: "name",
-				headerFilter: "input",
-				formatter: function (cell) {
-					return linkToDetailView(cell)
-				}
-			},
-			{
-				title: "Documents",
-				field: "documents",
-				mutator: mutateDocumentField,
-				headerFilter: "input",
-				formatter: function (cell) {
-					return get_scrollable_cell(this, cell);
-				},
-				tooltip: true
-			},
-			{
-				title: "Nr. of Documents",
-				field: "doc_count",
-				headerFilter: "number",
-				headerFilterPlaceholder: "at least...",
-				headerFilterFunc: ">="
-			},
-			{
-				title: "Persons",
-				field: "persons",
-				mutator: mutatePersonField,
-				headerFilter: "input",
-				formatter: function (cell) {
-					return get_scrollable_cell(this, cell);
-				},
-
-			},
-			{
-				title: "Nr. of Persons",
-				field: "person_count",
-				headerFilter: "number",
-				headerFilterPlaceholder: "at least...",
-				headerFilterFunc: ">="
-			},
-		];
-	}
-	let table = new Tabulator("#places_table", table_cfg);
-	console.log("made table");
-	return table;
-}
-
-
-function build_table(map, marker_layer) {
-	console.log("loading table");
-	d3.json(dataUrl, function (tabulator_data) {
-		tabulator_data = Object.values(tabulator_data)
-		let tableData = tabulator_data.map((item) => {
-			const enriched = item;
-			enriched["doc_count"] = item.documents.length
-			enriched["person_count"] = item.persons.length
-			return enriched
-		});
-		// the table will draw all markers on to the empty map
-		table_cfg.data = tableData;
-		let table = build_map_table();
-		populateMapFromTable(table, map, marker_layer);
-	})
-}
-
-/////////////////////
-// building the map//
-/////////////////////
-function build_map_and_table() {
-	console.log("loading map");
-	var map = L.map(map_cfg.div_id).setView(map_cfg.initial_coordinates, map_cfg.initial_zoom);
-	let tile_layer = L.tileLayer(map_cfg.base_map_url, {
-		maxZoom: map_cfg.max_zoom,
-		attribution: map_cfg.attribution,
-	});
-
-	let marker_layer = L.layerGroup();
-	// handle the layers
-	// order of adding matters!
-	tile_layer.addTo(map);
-	/*
-	// this is for the page gui / switch for toggling overlays
-	let overlay_control = {
-		"modern map": tile_layer,
-		"mentioned entities": marker_layer,
-	};
-	// if cfg is provided wms map layer gets added
-	if (wms_cfg !== null) {
-		let wms_layer = L.tileLayer.wms(wms_cfg.wms_url, wms_cfg.wmsOptions);
-		wms_layer.addTo(map);
-		overlay_control["Stadtplan 1858 (k.k. Ministerium des Inneren)"] = wms_layer;
-	}
-	*/
-	// this has to happen here, in case historical map gets added
-	marker_layer.addTo(map);
-	//var layerControl = L.control.layers(null, overlay_control);
-	//layerControl.addTo(map);
-	build_table(map, marker_layer);
-}
-
-build_map_and_table();
+setupMapAndTable()
