@@ -34,7 +34,9 @@ d3.json(dataUrl, function (data) {
     tableData = Object.values(data)
 
     var table = new Tabulator("#example-table", {
-        height: 800,
+        pagination:true,
+        paginationSize:15,
+        height: 600,
         layout: "fitColumns",
         tooltips:true,
         data: tableData,

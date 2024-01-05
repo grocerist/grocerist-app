@@ -1,5 +1,5 @@
 {%extends 'templates/partials/table_map.j2'%}
-{%block subpage%}Neighbourhoods{%endblock subpage%}
+{%set subpage = 'Neighbourhoods' %}
 {%set data_url = 'json_dumps/neighbourhoods.json'%}
 {% block extra_columns%}
             {
