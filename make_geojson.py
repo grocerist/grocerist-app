@@ -16,10 +16,16 @@ def make_geojson(json_file):
                 "geometry": {"type": "Point"},
                 "properties": {},
             }
-            gj_feature["geometry"]["coordinates"] = [
-                float(value["long"]),
-                float(value["lat"]),
-            ]
+            try:
+                gj_feature["geometry"]["coordinates"] = [
+                    float(value["long"]),
+                    float(value["lat"]),
+                ]
+            except TypeError:
+                print("###########")
+                print(f"looks like there is an issue with coordinates for entry: {value['name']}")
+                print("###########")
+                continue
             gj_feature["properties"]["name"] = value["name"]
             gj_feature["properties"]["grocerist_id"] = value["grocerist_id"]
             gj_feature["properties"]["doc_count"] = len(value["documents"])
