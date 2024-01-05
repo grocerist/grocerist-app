@@ -1,63 +1,13 @@
-{% extends "templates/partials/base.j2" %}
-{% block title %}Browse Neighbourhoods{% endblock title %}
-{% block page_description %}
-<meta name="description" content="{{ project_data.project_sub_title }}">
-{% endblock page_description %}
-
-{% block scriptHeader %}
-{% include "templates/partials/tabulator.j2" %}
-{% include "templates/partials/leaflet.j2" %}
-<script type="module">
-import * as tableMapModule from './js/table_map.js';
-const dataUrl = 'json_dumps/neighbourhoods.json';
-const tableCfg = {
-columns: [
+{%extends 'templates/partials/table_map.j2'%}
+{%block subpage%}Neighbourhoods{%endblock subpage%}
+{%set data_url = 'json_dumps/neighbourhoods.json'%}
+{% block extra_columns%}
             {
-                title: "Name", field: "name", headerFilter: "input", formatter: function (cell) {
-                    return tableMapModule.linkToDetailView(cell)
-                }
+            title:'District 18th century', field: 'district_eighteenth_century', mutator: tableMapModule.mutateDistrictField,
+            headerFilter: 'input', formatter:'html'
             },
             {
-                title:"District 18th century", field: "district_eighteenth_century", mutator: tableMapModule.mutateDistrictField, headerFilter: "input", formatter:"html"
+            title:'District 19th century', field: 'district_nineteenth_century', mutator: tableMapModule.mutateDistrictField,
+            headerFilter: 'input', formatter:'html'
             },
-            {
-                title:"District 19th century", field: "district_nineteenth_century", mutator: tableMapModule.mutateDistrictField, headerFilter: "input", formatter:"html"   
-            },
-
-            {
-                title: "Documents", field: "documents", mutator: tableMapModule.mutateDocumentField, headerFilter: "input",
-                formatter: function (cell) {
-                    return get_scrollable_cell(this, cell);
-                },
-                tooltip: true
-            },
-            {
-                title: "Nr. of Documents", field: "doc_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
-            },
-            {
-                title: "Persons", field: "persons", mutator: tableMapModule.mutatePersonField, headerFilter: "input", 
-                formatter: function (cell) {
-                    return get_scrollable_cell(this, cell);
-                },
-
-            },
-            {
-                title: "Nr. of Persons", field: "person_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
-            },
-        ]
-}
-tableMapModule.setupMapAndTable(dataUrl, tableCfg);
-</script>
-{% endblock scriptHeader %}
-{% block content %}
-<div class="container neighbourhoods">
-    <h1 class="text-center">Neighbourhoods</h1>
-    <div class="row">
-        <div class="col-md-7">
-             <div id="places_table"></div>
-        </div>
-        <div class="col-md-5">
-            <div id="map"></div>
-        </div>
-    </div>
-    {% endblock content%}
+{% endblock%}
