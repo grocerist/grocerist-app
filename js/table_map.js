@@ -17,6 +17,8 @@ const commonTableCfg = {
   height: '60vh',
   layout: 'fitColumns',
   width: '100%',
+  pagination:true,
+  paginationSize:15,
   headerFilterLiveFilterDelay: 600,
   responsiveLayout: 'collapse',
   initialSort: [

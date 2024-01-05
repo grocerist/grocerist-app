@@ -23,6 +23,8 @@ d3.json(dataUrl, function (data) {
         layout: "fitColumns",
         tooltips: true,
         data: tableData,
+        pagination:true,
+        paginationSize:15,
         responsiveLayout: "collapse",
         persistence: {
             headerFilter: true,
