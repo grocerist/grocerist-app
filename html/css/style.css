@@ -3,6 +3,9 @@ img.footerimage {
     height: auto;
     max-width: 180px;
 }
+#map {
+    height: 60vh;
+}
 
 :root {
     --documents: #536e61;

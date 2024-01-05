@@ -1,27 +1,13 @@
-{% extends "templates/partials/base.j2" %}
-{% block title %}Browse Neighbourhoods{% endblock title %}
-{% block page_description %}
-<meta name="description" content="{{ project_data.project_sub_title }}">
-{% endblock page_description %}
-
-{% block scriptHeader %}
-{% include "templates/partials/tabulator.j2" %}
-{% include "templates/partials/leaflet.j2" %}
-{% endblock scriptHeader %}
-{% block content %}
-<div class="container neighbourhoods">
-    <h1 class="text-center">Neighbourhoods</h1>
-    <div class="row">
-        <div class="col">
-            <div id="example-table"></div>
-        </div>
-        <div class="col">
-            <div id="map" style="height: 800px;"></div>
-        </div>
-    </div>
-    {% endblock content%}
-
-   {% block scripts2 %}
-    <script src="js/neighbourhoods.js"></script>
-    <script src="js/gj_neighbourhoods.js"></script>
-    {% endblock scripts2 %}
+{%extends 'templates/partials/table_map.j2'%}
+{%block subpage%}Neighbourhoods{%endblock subpage%}
+{%set data_url = 'json_dumps/neighbourhoods.json'%}
+{% block extra_columns%}
+            {
+            title:'District 18th century', field: 'district_eighteenth_century', mutator: tableMapModule.mutateDistrictField,
+            headerFilter: 'input', formatter:'html'
+            },
+            {
+            title:'District 19th century', field: 'district_nineteenth_century', mutator: tableMapModule.mutateDistrictField,
+            headerFilter: 'input', formatter:'html'
+            },
+{% endblock%}
