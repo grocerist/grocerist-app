@@ -1,7 +1,12 @@
 {% extends "templates/partials/base.j2" %}
 {% block content %}
 <div class="container karye">
-    <h1 class="text-center">{{ object.name }}</h1>
+    <h1 class="text-center">
+        {% with parent_page = "karyes" %}
+        {% include "templates/partials/link_to_top.j2" %}
+        {% endwith %}
+        {{ object.name }}
+    </h1>
     <h2><i class="bi bi-archiv"></i> Documents</h2>
     <ul>
         {% for x in object.documents %}
