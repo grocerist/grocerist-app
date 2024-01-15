@@ -1,11 +1,16 @@
 {% extends "templates/partials/base.j2" %}
 {% block content %}
 <div class="container good">
-    <h1 class="text-center">{{ object.name }}</h1>
+    <h1 class="text-center">
+        {% with parent_page = "goods" %}
+        {% include "templates/partials/link_to_top.j2" %}
+        {% endwith %}
+        {{ object.name }}
+    </h1>
     <h2><i class="bi bi-geo-alt"></i> Categories</h2>
     <dl>
         {% for x in object.has_category %}
-            <dd class="ms-5"><a href="category__{{ x.id }}.html">{{ x.value }}</a></dd>
+        <dd class="ms-5"><a href="category__{{ x.id }}.html">{{ x.value }}</a></dd>
         {% endfor %}
     </dl>
     <h2><i class="bi bi-archiv"></i> Documents</h2>

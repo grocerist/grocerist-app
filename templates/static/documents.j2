@@ -5,11 +5,13 @@
 {% endblock page_description %}
 
 {% block scriptHeader %}
-    {% include "templates/partials/tabulator.j2" %}
+{% include "templates/partials/tabulator.j2" %}
 {% endblock scriptHeader %}
 {% block content %}
 <div class="container documents">
-    <h1 class="text-center">Documents</h1>
+    <h1 class="text-center">
+        {% include "templates/partials/link_to_top.j2" %}
+        Documents</h1>
     <div id="example-table"></div>
 </div>
 {% endblock content%}
