@@ -9,57 +9,60 @@
 <script type="module">
     import * as tableMapModule from './js/table_map.js'
     const dataUrl = '{{ data_url}}'
-    const tableCfg = { columns: 
-        [
-            {
-                title: 'Name',
-                field: 'name',
-                headerFilter: 'input',
-                formatter: function (cell) {
-                    return tableMapModule.linkToDetailView(cell)
-                }
-            },
-            {% block extra_columns %}{% endblock %}
-            {
-                title: 'Documents',
-                field: 'documents',
-                mutator: tableMapModule.mutateDocumentField,
-                headerFilter: 'input',
-                formatter: function (cell) {
-                    return get_scrollable_cell(this, cell)
+    const tableCfg = {
+        columns:
+            [
+                {
+                    title: 'Name',
+                    field: 'name',
+                    headerFilter: 'input',
+                    formatter: function (cell) {
+                        return tableMapModule.linkToDetailView(cell)
+                    }
                 },
-                tooltip: true
-            },
-            {
-                title: 'Nr. of Documents',
-                field: 'doc_count',
+                {% block extra_columns %}{% endblock %}
+    {
+        title: 'Documents',
+            field: 'documents',
+                mutator: tableMapModule.mutateDocumentField,
+                    headerFilter: 'input',
+                        formatter: function (cell) {
+                            return get_scrollable_cell(this, cell)
+                        },
+        tooltip: true
+    },
+    {
+        title: 'Nr. of Documents',
+            field: 'doc_count',
                 headerFilter: 'number',
-                headerFilterPlaceholder: 'at least...',
-                headerFilterFunc: '>='
-            },
-            {
-                title: 'Persons',
-                field: 'persons',
+                    headerFilterPlaceholder: 'at least...',
+                        headerFilterFunc: '>='
+    },
+    {
+        title: 'Persons',
+            field: 'persons',
                 mutator: tableMapModule.mutatePersonField,
-                headerFilter: 'input',
-                formatter: function (cell) {
-                    return get_scrollable_cell(this, cell)
-                }
-            },
-            {
-                title: 'Nr. of Persons',
-                field: 'person_count',
+                    headerFilter: 'input',
+                        formatter: function (cell) {
+                            return get_scrollable_cell(this, cell)
+                        }
+    },
+    {
+        title: 'Nr. of Persons',
+            field: 'person_count',
                 headerFilter: 'number',
-                headerFilterPlaceholder: 'at least...',
-                headerFilterFunc: '>='
-            }
+                    headerFilterPlaceholder: 'at least...',
+                        headerFilterFunc: '>='
+    }
         ]}
-        tableMapModule.setupMapAndTable(dataUrl, tableCfg)
+    tableMapModule.setupMapAndTable(dataUrl, tableCfg)
 </script>
 {% endblock scriptHeader %}
 {% block content %}
 <div class="container {{ subpage|lower }}">
-    <h1 class="text-center">{{ subpage }}</h1>
+    <h1 class="text-center">
+        {% include "templates/partials/link_to_top.j2" %}
+        {{ subpage }}</h1>
     <div class="row">
         <div class="col-md-7">
             <div id="places_table"></div>
