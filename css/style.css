@@ -13,16 +13,16 @@ img.footerimage {
     --documents-hover: #536e61c2;
     --persons: #79B4A9;
     --persons-hover: #79B4A9c2;
-    --neighbourhoods: #9CC69B;
-    --neighbourhoods-hover: #9CC69Bc2;
-    --districts: #9cc288;
-    --districts-hover: #9cc288c2;
+    --mahalles: #cf7332;
+    --mahalles-hover: #cf7332c2;
+    --districts: #993333;
+    --districts-hover: #993333c2;
     --karyes: #EDB183;
     --karyes-hover: #EDB183c2;
-    --categories: #cf7332;
-    --categories-hover: #cf7332c2;
-    --goods: #993333;
-    --goods-hover: #993333c2;
+    --categories: #9CC69B;
+    --categories-hover: #9CC69Bc2;
+    --goods: #9cc288;
+    --goods-hover: #9cc288c2;
     --link: #000000;
     --link-hover: #6e6e6ec2;
     --footer-hover-background: #f2f2f2;
@@ -42,68 +42,57 @@ subpages
 /* links to a specific page */
 a[href="documents.html"] {
     color: var(--documents);
-}
-
-a[href="documents.html"]:hover {
+ &:hover { 
     color: var(--documents-hover);
+ }
 }
-
 a[href="persons.html"] {
     color: var(--persons);
-}
-
-a[href="persons.html"]:hover {
+ &:hover { 
     color: var(--persons-hover);
-}
-
+ }
+} 
 a[href="neighbourhoods.html"] {
-    color: var(--neighbourhoods);
+    color: var(--mahalles);
+ &:hover { 
+    color: var(--mahalles-hover);
+ }
 }
-
-a[href="neighbourhoods.html"]:hover {
-    color: var(--neighbourhoods-hover);
-}
-
 a[href="districts.html"] {
     color: var(--districts);
-}
-
-a[href="districts.html"]:hover {
+ &:hover { 
     color: var(--districts-hover);
+ }
 }
 
 a[href="karyes.html"] {
     color: var(--karyes);
-}
-
-a[href="karyes.html"]:hover {
+ &:hover { 
     color: var(--karyes-hover);
+ }
 }
 
 a[href="categories.html"] {
     color: var(--categories);
-}
-
-a[href="categories.html"]:hover {
+ &:hover { 
     color: var(--categories-hover);
+ }
 }
 
 a[href="goods.html"] {
     color: var(--goods);
-}
-
-a[href="goods.html"]:hover {
+ &:hover { 
     color: var(--goods-hover);
+ }
 }
 
 /* remaining links */
 a {
     color: var(--link);
     text-decoration: unset;
-}
-
-a:hover {
+ &:hover {
     color: var(--link-hover);
+ }
 }
 
 
@@ -128,11 +117,11 @@ div.persons h1 > a {
     }
 }
 
-div.neighbourhoods h1, 
-div.neighbourhoods h1 > a {
-    color: var(--neighbourhoods);
+div.mahalles h1,
+div.mahalles h1 > a {
+    color: var(--mahalles);
     &:hover{
-        color: var(--neighbourhoods-hover);
+        color: var(--mahalles-hover);
     }
 }
 
@@ -173,123 +162,59 @@ div.goods h1 > a {
 div.documents div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     /*parts of header with text*/
     background-color: var(--documents);
-    color: white;
-}
-
-div.documents div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+    color: white; 
+ &:hover {
     background-color: var(--documents-hover) !important;
-}
-
-div.documents div.tabulator-header-contents {
-    /*parts of header without text*/
-    background-color: var(--document);
-}
-
-div.documents div.tabulator-header-contents:hover {
-    background-color: var(--document-hover) !important;
+ }
 }
 
 /*persons page*/
 div.persons div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     background-color: var(--persons);
-}
-
-div.persons div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+ &:hover {
     background-color: var(--persons-hover) !important;
+ }
 }
 
-div.persons div.tabulator-header-contents {
-    background-color: var(--persons);
-}
-
-div.persons div.tabulator-header-contents:hover {
-    background-color: var(--persons-hover) !important;
-}
-
-/*neighbourhoods page*/
-div.neighbourhoods div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--neighbourhoods);
-}
-
-div.neighbourhoods div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
-    background-color: var(--neighbourhoods-hover) !important;
-}
-
-div.neighbourhoods div.tabulator-header-contents {
-    background-color: var(--neighbourhoods);
-}
-
-div.neighbourhoods div.tabulator-header-contents:hover {
-    background-color: var(--neighbourhoods-hover) !important;
+/*mahalles page*/
+div.mahalles div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+    background-color: var(--mahalles);
+ &:hover {
+    background-color: var(--mahalles-hover) !important;
+ }
 }
 
 /*districts page*/
 div.districts div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     background-color: var(--districts);
-}
-
-div.districts div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+ &:hover {
     background-color: var(--districts-hover) !important;
-}
-
-div.districts div.tabulator-header-contents {
-    background-color: var(--districts);
-}
-
-div.districts div.tabulator-header-contents:hover {
-    background-color: var(--districts-hover) !important;
+ }
 }
 
 /*karyes page*/
 div.karyes div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     background-color: var(--karyes);
-}
-
-div.karyes div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+ &:hover {
     background-color: var(--karyes-hover) !important;
-}
-
-div.karyes div.tabulator-header-contents {
-    background-color: var(--document);
-}
-
-div.karyes div.tabulator-header-contents:hover {
-    background-color: var(--document-hover) !important;
+ }
 }
 
 /*categories page*/
 div.categories div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     background-color: var(--categories);
-}
-
-div.categories div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+ &:hover {
     background-color: var(--categories-hover) !important;
-}
-
-div.categories div.tabulator-header-contents {
-    background-color: var(--categories);
-}
-
-div.categories div.tabulator-header-contents:hover {
-    background-color: var(--categories-hover) !important;
+ }
 }
 
 /*goods page*/
 div.goods div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     background-color: var(--goods);
     color: white;
-}
-
-div.goods div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+ &:hover {
     background-color: var(--goods-hover) !important;
-}
-
-div.goods div.tabulator-header-contents {
-    background-color: var(--goods);
-}
-
-div.goods div.tabulator-header-contents:hover {
-    background-color: var(--goods-hover) !important;
+ }
 }
 
 /* end of tabulator headers */
@@ -300,98 +225,91 @@ div.goods div.tabulator-header-contents:hover {
 div.documents div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--documents);
     border-color: var(--documents);
+ &:hover {
+    background-color: var(--footer-hover-background);
+ }
 }
 
 div.documents div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--documents) !important;
 }
 
-div.documents div.tabulator .tabulator-footer .tabulator-page.active:hover {
-    background-color: var(--footer-hover-background);
-}
-
 /*persons footer*/
 div.persons div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--persons);
     border-color: var(--persons);
+ &:hover {
+    background-color: var(--footer-hover-background);
+ }
 }
 
 div.persons div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--persons) !important;
 }
 
-div.persons div.tabulator .tabulator-footer .tabulator-page.active:hover {
+/*mahalles footer*/
+div.mahalles div.tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--mahalles);
+    border-color: var(--mahalles);
+ &:hover {
     background-color: var(--footer-hover-background);
+ }
 }
 
-/*neighbourhoods footer*/
-div.neighbourhoods div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--neighbourhoods);
-    border-color: var(--neighbourhoods);
-}
-
-div.neighbourhoods div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--neighbourhoods) !important;
-}
-
-div.neighbourhoods div.tabulator .tabulator-footer .tabulator-page.active:hover {
-    background-color: var(--footer-hover-background);
+div.mahalles div.tabulator .tabulator-footer .tabulator-page:hover {
+    color: var(--mahalles) !important;
 }
 
 /*districts footer*/
 div.districts div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--districts);
     border-color: var(--districts);
+ &:hover {
+    background-color: var(--footer-hover-background);
+ }
 }
 
 div.districts div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--districts) !important;
 }
 
-div.districts div.tabulator .tabulator-footer .tabulator-page.active:hover {
-    background-color: var(--footer-hover-background);
-}
-
 /*karyes footer*/
 div.karyes div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--karyes);
     border-color: var(--karyes);
+ &:hover {
+    background-color: var(--footer-hover-background);
+ }
 }
 
 div.karyes div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--karyes) !important;
 }
 
-div.karyes div.tabulator .tabulator-footer .tabulator-page.active:hover {
-    background-color: var(--footer-hover-background);
-}
-
 /*categories footer*/
 div.categories div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--categories);
     border-color: var(--categories);
+ &:hover {
+    background-color: var(--footer-hover-background);
+ }
 }
 
 div.categories div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--categories) !important;
 }
 
-div.categories div.tabulator .tabulator-footer .tabulator-page.active:hover {
-    background-color: var(--footer-hover-background);
-}
-
 /*goods footer*/
 div.goods div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--goods);
     border-color: var(--goods);
+ &:hover {
+    background-color: var(--footer-hover-background);
+ }
 }
 
 div.goods div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--goods) !important;
-}
-
-div.goods div.tabulator .tabulator-footer .tabulator-page.active:hover {
-    background-color: var(--footer-hover-background);
 }
 
 /* end of tabulator footer */
@@ -406,19 +324,17 @@ div.document h1 {
 }
 
 div.document a {
-    color: var(--documents)
-}
-
-div.document a:hover {
-    color: var(--documents-hover)
+    color: var(--documents);
+ &:hover {
+    color: var(--documents-hover);
+ }
 }
 
 div.document .badge {
     background-color: var(--documents) !important;
-}
-
-div.document .badge:hover {
+ &:hover {
     background-color: var(--documents-hover) !important;
+ }
 }
 
 /*person subpage*/
@@ -428,25 +344,23 @@ div.person h1 {
 }
 
 div.person a {
-    color: var(--persons)
+    color: var(--persons);
+ &:hover {
+    color: var(--persons-hover);
+ }
 }
 
-div.person a:hover {
-    color: var(--persons-hover)
-}
-
-/*neighbourhood subpage*/
-div.neighbourhood h1 {
-    border-bottom: 3px solid var(--neighbourhoods);
+/*mahalle subpage*/
+div.mahalle h1 {
+    border-bottom: 3px solid var(--mahalles);
     padding-bottom: 5px;
 }
 
-div.neighbourhood a {
-    color: var(--neighbourhoods)
-}
-
-div.neighbourhood a:hover {
-    color: var(--neighbourhoods-hover)
+div.mahalle a {
+    color: var(--mahalles);
+ &:hover {
+    color: var(--mahalles-hover);
+ }
 }
 
 /*district subpage*/
@@ -456,11 +370,10 @@ div.district h1 {
 }
 
 div.district a {
-    color: var(--districts)
-}
-
-div.district a:hover {
-    color: var(--districts-hover)
+    color: var(--districts);
+ &:hover {
+    color: var(--districts-hover);
+ }
 }
 
 /*karye subpage*/
@@ -470,11 +383,10 @@ div.karye h1 {
 }
 
 div.karye a {
-    color: var(--karyes)
-}
-
-div.karye a:hover {
-    color: var(--karyes-hover)
+    color: var(--karyes);
+ &:hover {
+    color: var(--karyes-hover);
+ }
 }
 
 /*category subpage*/
@@ -484,11 +396,10 @@ div.category h1 {
 }
 
 div.category a {
-    color: var(--categories)
-}
-
-div.category a:hover {
-    color: var(--categories-hover)
+    color: var(--categories);
+ &:hover {
+    color: var(--categories-hover);
+ }
 }
 
 /*good subpage*/
@@ -498,11 +409,12 @@ div.good h1 {
 }
 
 div.good a {
-    color: var(--goods)
+41-correct-spelling-of-kariyekaryes
+    color: var(--goods);
+ &:hover {
+    color: var(--goods-hover);
+ }
 }
 
-div.good a:hover {
-    color: var(--goods-hover)
-}
 
 /* end of subpages */
