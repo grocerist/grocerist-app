@@ -9,7 +9,9 @@
 {% endblock scriptHeader %}
 {% block content %}
 <div class="container goods">
-    <h1 class="text-center">Goods</h1>
+    <h1 class="text-center">
+    {% include "templates/partials/link_to_top.j2" %}
+    Goods</h1>
     <div id="example-table"></div>
 </div>
 {% endblock content%}

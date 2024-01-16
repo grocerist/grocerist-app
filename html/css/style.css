@@ -3,13 +3,14 @@ img.footerimage {
     height: auto;
     max-width: 180px;
 }
+
 #map {
     height: 60vh;
 }
 
 :root {
     --documents: #536e61;
-    --documents-hover:#536e61c2;
+    --documents-hover: #536e61c2;
     --persons: #79B4A9;
     --persons-hover: #79B4A9c2;
     --mahalles: #cf7332;
@@ -63,18 +64,21 @@ a[href="districts.html"] {
     color: var(--districts-hover);
  }
 }
+
 a[href="karyes.html"] {
     color: var(--karyes);
  &:hover { 
     color: var(--karyes-hover);
  }
 }
+
 a[href="categories.html"] {
     color: var(--categories);
  &:hover { 
     color: var(--categories-hover);
  }
 }
+
 a[href="goods.html"] {
     color: var(--goods);
  &:hover { 
@@ -94,33 +98,69 @@ a {
 
 /* page headers */
 h1 {
-    text-decoration:unset;
+    text-decoration: unset;
 }
-div.documents h1 {
+
+div.documents h1,
+div.documents h1 > a {
     color: var(--documents);
+    &:hover{
+        color: var(--documents-hover);
+    }
 }
-div.persons h1 {
+
+div.persons h1,
+div.persons h1 > a {
     color: var(--persons);
+    &:hover{
+        color: var(--persons-hover);
+    }
 }
-div.mahalles h1 {
+
+div.mahalles h1,
+div.mahalles h1 > a {
     color: var(--mahalles);
+    &:hover{
+        color: var(--mahalles-hover);
+    }
 }
-div.districts h1 {
+
+div.districts h1,
+div.districts h1 > a {
     color: var(--districts);
+    &:hover{
+        color: var(--districts-hover);
+    }
 }
-div.karyes h1 {
+
+div.karyes h1,
+div.karyes h1 > a {
     color: var(--karyes);
+    &:hover{
+        color: var(--karyes-hover);
+    }
 }
-div.categories h1 {
+
+div.categories h1,
+div.categories h1 > a {
     color: var(--categories);
+    &:hover{
+        color: var(--categories-hover);
+    }
 }
-div.goods h1 {
+
+div.goods h1,
+div.goods h1 > a {
     color: var(--goods);
+    &:hover{
+        color: var(--goods-hover);
+    }
 }
 
 /* tabulator headers */
 /*documents page*/
-div.documents div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element { /*parts of header with text*/
+div.documents div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+    /*parts of header with text*/
     background-color: var(--documents);
     color: white; 
  &:hover {
@@ -189,6 +229,7 @@ div.documents div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--footer-hover-background);
  }
 }
+
 div.documents div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--documents) !important;
 }
@@ -201,6 +242,7 @@ div.persons div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--footer-hover-background);
  }
 }
+
 div.persons div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--persons) !important;
 }
@@ -213,6 +255,7 @@ div.mahalles div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--footer-hover-background);
  }
 }
+
 div.mahalles div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--mahalles) !important;
 }
@@ -225,6 +268,7 @@ div.districts div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--footer-hover-background);
  }
 }
+
 div.districts div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--districts) !important;
 }
@@ -237,6 +281,7 @@ div.karyes div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--footer-hover-background);
  }
 }
+
 div.karyes div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--karyes) !important;
 }
@@ -249,6 +294,7 @@ div.categories div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--footer-hover-background);
  }
 }
+
 div.categories div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--categories) !important;
 }
@@ -261,6 +307,7 @@ div.goods div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--footer-hover-background);
  }
 }
+
 div.goods div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--goods) !important;
 }
@@ -270,16 +317,19 @@ div.goods div.tabulator .tabulator-footer .tabulator-page:hover {
 
 /* subpages */
 /*document subpage*/
-div.document h1 { /*create line*/
-    border-bottom: 3px solid var(--documents);  
+div.document h1 {
+    /*create line*/
+    border-bottom: 3px solid var(--documents);
     padding-bottom: 5px;
 }
+
 div.document a {
     color: var(--documents);
  &:hover {
     color: var(--documents-hover);
  }
 }
+
 div.document .badge {
     background-color: var(--documents) !important;
  &:hover {
@@ -289,11 +339,12 @@ div.document .badge {
 
 /*person subpage*/
 div.person h1 {
-    border-bottom: 3px solid var(--persons); 
+    border-bottom: 3px solid var(--persons);
     padding-bottom: 5px;
 }
+
 div.person a {
-      color: var(--persons);
+    color: var(--persons);
  &:hover {
     color: var(--persons-hover);
  }
@@ -304,6 +355,7 @@ div.mahalle h1 {
     border-bottom: 3px solid var(--mahalles);
     padding-bottom: 5px;
 }
+
 div.mahalle a {
     color: var(--mahalles);
  &:hover {
@@ -316,8 +368,9 @@ div.district h1 {
     border-bottom: 3px solid var(--districts);
     padding-bottom: 5px;
 }
+
 div.district a {
-      color: var(--districts);
+    color: var(--districts);
  &:hover {
     color: var(--districts-hover);
  }
@@ -328,8 +381,9 @@ div.karye h1 {
     border-bottom: 3px solid var(--karyes);
     padding-bottom: 5px;
 }
+
 div.karye a {
-      color: var(--karyes);
+    color: var(--karyes);
  &:hover {
     color: var(--karyes-hover);
  }
@@ -340,8 +394,9 @@ div.category h1 {
     border-bottom: 3px solid var(--categories);
     padding-bottom: 5px;
 }
+
 div.category a {
-      color: var(--categories);
+    color: var(--categories);
  &:hover {
     color: var(--categories-hover);
  }
@@ -352,8 +407,10 @@ div.good h1 {
     border-bottom: 3px solid var(--goods);
     padding-bottom: 5px;
 }
+
 div.good a {
-      color: var(--goods);
+41-correct-spelling-of-kariyekaryes
+    color: var(--goods);
  &:hover {
     color: var(--goods-hover);
  }

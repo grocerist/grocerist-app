@@ -9,7 +9,9 @@
 {% endblock scriptHeader %}
 {% block content %}
 <div class="container categories">
-    <h1 class="text-center">Good Categories</h1>
+    <h1 class="text-center">
+        {% include "templates/partials/link_to_top.j2" %}
+        Good Categories</h1>
     <div id="example-table"></div>
 </div>
 {% endblock content%}
