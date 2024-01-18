@@ -5,7 +5,12 @@ img.footerimage {
 }
 
 #map {
-    height: 60vh;
+    height: 50vh;
+}
+
+/* navigation bar drop down menu will always be in front*/
+nav.navbar ul.dropdown-menu {
+    z-index: 2147483647;
 }
 
 :root {
