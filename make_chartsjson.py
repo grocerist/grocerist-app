@@ -40,7 +40,7 @@ total_persons = sum(religion_count.values())
 religions_results = []
 for religion, count in religion_count.items():
     percentage = (count / total_persons) * 100
-    religions_results.append({"name": religion, "y": percentage})
+    religions_results.append({"name": religion, "y": round(percentage, 2)})
 
 # Data for good categories chart
 
