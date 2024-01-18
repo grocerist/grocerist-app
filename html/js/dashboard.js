@@ -1,8 +1,8 @@
 const dataUrl = "json_dumps/charts.json"
 d3.json(dataUrl, function (data) {
-    chartData = Object.values(data)
-    // Create the chart
-    const chart = Highcharts.chart('container', {
+    const relChartData = Object.values(data.religions)
+    // Create the religions chart
+    const religionsChart = Highcharts.chart('container religion_chart', {
         chart: {
             type: 'pie'
         },
@@ -16,32 +16,51 @@ d3.json(dataUrl, function (data) {
             series: {
                 allowPointSelect: true,
                 cursor: 'pointer',
-                dataLabels: [{
+                dataLabels: {
                     enabled: true,
-                    distance: 20
-                }, {
-                    enabled: true,
-                    distance: -40,
-                    format: '{point.percentage:.1f}%',
-                    style: {
-                        fontSize: '1.2em',
-                        textOutline: 'none',
-                        opacity: 0.7
-                    },
-                    filter: {
-                        operator: '>',
-                        property: 'percentage',
-                        value: 10
-                    }
-                }]
+                }
             }
         },
         series: [
             {
                 name: 'Percentage',
                 colorByPoint: true,
-                data: chartData
+                data: relChartData
             }
         ]
     });   
+    // Create categories chart
+    const catChartData= Object.values(data.categories)
+    const drilldownData = Object.values(data.categories_drilldown)
+    console.log(catChartData)
+    Highcharts.chart('container', {
+        chart: {
+            type: 'pie'
+        },
+        title: {
+            text: 'Good Categories'
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        },
+        plotOptions: {
+            series: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                }
+            }
+        },
+        series: [
+            {
+                name: 'Mentioned in',
+                colorByPoint: true,
+                data: catChartData
+            }
+        ],
+        drilldown:{
+            series: drilldownData
+        }
+    })
   })
