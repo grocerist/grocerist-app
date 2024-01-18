@@ -23,7 +23,9 @@ def make_geojson(json_file):
                 ]
             except TypeError:
                 print("###########")
-                print(f"looks like there is an issue with coordinates for entry: {value['name']}")
+                print(
+                    f"looks like there is an issue with coordinates for entry: {value['name']}"
+                )
                 print("###########")
                 continue
             gj_feature["properties"]["name"] = value["name"]

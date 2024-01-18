@@ -2,9 +2,9 @@ import os
 import json
 import random
 
-##############################
-###Data for religions chart###
-##############################
+
+# Data for religions chart ###
+
 # Read the JSON file
 with open(
     os.path.join("html", "json_dumps", "persons.json"), "r", encoding="utf-8"
@@ -40,13 +40,9 @@ total_persons = sum(religion_count.values())
 religions_results = []
 for religion, count in religion_count.items():
     percentage = (count / total_persons) * 100
-    religions_results.append({'name': religion, 'y': percentage})
+    religions_results.append({"name": religion, "y": percentage})
 
-
-
-####################################
-###Data for good categories chart###
-####################################
+# Data for good categories chart
 
 # Read the JSON file
 with open(
@@ -58,16 +54,27 @@ with open(
 categories_results = []
 categories_drilldown = []
 for category in categories_data:
-    category_name = category['name']
-    categories_results.append({'name': category_name, 'y': category['doc_count'], 'drilldown': category_name})
+    category_name = category["name"]
+    categories_results.append(
+        {"name": category_name, "y": category["doc_count"], "drilldown": category_name}
+    )
     goodslist = []
-    for good in category['goods']:
-        goodslist.append([good["name"], random.randrange(1,10)])
-    categories_drilldown.append({'name': category_name, 'id': category_name, 'data': goodslist})
+    for good in category["goods"]:
+        goodslist.append([good["name"], random.randrange(1, 10)])
+    categories_drilldown.append(
+        {"name": category_name, "id": category_name, "data": goodslist}
+    )
 
 
 # Convert the results to JSON format and write to a file
-result_json = json.dumps({"religions": religions_results, "categories": categories_results, "categories_drilldown": categories_drilldown}, indent=2)
+result_json = json.dumps(
+    {
+        "religions": religions_results,
+        "categories": categories_results,
+        "categories_drilldown": categories_drilldown,
+    },
+    indent=2,
+)
 
 with open(
     os.path.join("html", "json_dumps", "charts.json"), "w", encoding="utf-8"
