@@ -1,3 +1,4 @@
+import itertools
 import os
 import json
 import random
@@ -49,8 +50,8 @@ with open(
     os.path.join("html", "json_dumps", "categories.json"), "r", encoding="utf-8"
 ) as file:
     categories_data = json.load(file)
-
-
+# Categories and the number of documents they were mentioned in
+# + an attempt at creating a drilldown chart for each category that contains the goods
 categories_results = []
 categories_drilldown = []
 for category in categories_data:
@@ -60,7 +61,7 @@ for category in categories_data:
     )
     goodslist = []
     for good in category["goods"]:
-        goodslist.append([good["name"], random.randrange(1, 10)])
+        goodslist.append([good["name"], random.randrange(1, 10)])  # random number for testing
     categories_drilldown.append(
         {"name": category_name, "id": category_name, "data": goodslist}
     )
@@ -82,41 +83,41 @@ with open(
             decade = round(int(year_of_creation), -1)
             decades.add(decade)
     decades = sorted(decades)
+
     decade_dict = {}
     for category in categories_data:
         category_name = category["name"]
+        # nested dict for each decade
         decade_dict[category_name] = {}
         for decade in decades:
             # initialize for each decade so there will be a value even if there were no documents in that decade
             decade_dict[category_name][decade] = 0
-
+        # get a list of all the documents the category was mentioned in
         doc_list = []
         for document in category["documents"]:
             doc_list.append(document["id"])
+        # determine the decade for those documents
         for doc in doc_list:
             year_of_creation = docs_data[doc]["year_of_creation__hicri"]
             if year_of_creation is not None:
                 decade = round(int(year_of_creation), -1)
                 decade_dict[category_name][decade] += 1
 
-print(decade_dict)
-
-categories = [str(x) for x in decades]
-
+# Symbols for the time series chart
+symbols = ['square', 'diamond', 'circle', 'triangle']
+symbol_cycle = itertools.cycle(symbols)
 
 decades_results = []
-# sort categories so they will be displayed in an alphabetical order later
+# Sort categories so they will be displayed in an alphabetical order later
 sorted_categories = sorted(decade_dict.keys())
 for category in sorted_categories:
-    docs_per_decade = list(decade_dict[category].values())
-    # only do this for the first category
-
+    symbol = next(symbol_cycle)  # Get the next symbol from the cycle
+    docs_per_decade = list(decade_dict[category].values())  # Highcharts just needs the values without the decades
     decades_results.append(
         {
             "name": category,
-            "marker": {"symbol": "square"},
-            "visible": "false",
-            "data": docs_per_decade,
+            "marker": {"symbol": symbol},
+            "data": docs_per_decade
         }
     )
 
@@ -127,7 +128,7 @@ result_json = json.dumps(
         "categories": categories_results,
         "categories_drilldown": categories_drilldown,
         "categories_over_decades": {
-            "categories": categories,
+            "categories": [str(x) for x in decades],
             "series": decades_results,
         },
     },
