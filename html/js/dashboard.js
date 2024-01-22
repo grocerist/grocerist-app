@@ -32,7 +32,7 @@ d3.json(dataUrl, function (data) {
   // Create categories chart
   const catChartData = Object.values(data.categories)
   const drilldownData = Object.values(data.categories_drilldown)
-  Highcharts.chart('container', {
+  Highcharts.chart('container categories_chart', {
     chart: {
       type: 'column'
     },
@@ -81,4 +81,35 @@ d3.json(dataUrl, function (data) {
       series: drilldownData
     }
   })
+
+// Create category time series
+const timeChartData = Object.values(data.categories_over_decades)
+Highcharts.chart('container', {
+  chart: {
+      type: 'spline'
+  },
+  title: {
+      text: 'Mentions of Good Categories over Decades'
+  },
+    xAxis: {
+      categories:timeChartData[0]
+  },
+  yAxis: {
+      title: {
+          text: 'Number of Documents'
+      }
+  },
+  plotOptions: {
+      line: {
+          dataLabels: {
+              enabled: true
+          },
+          enableMouseTracking: false
+      },
+      
+  },
+  series: timeChartData[1]
+});
 })
+
+
