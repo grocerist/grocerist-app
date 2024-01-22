@@ -136,7 +136,7 @@ d3.json(dataUrl, function (data) {
     element.visible = index === 0 // Set visible: true for the first element, false for all others
   })
 
-  Highcharts.chart('container', {
+  Highcharts.chart('container time_chart', {
     chart: {
       type: 'spline'
     },
