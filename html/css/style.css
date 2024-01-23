@@ -23,6 +23,8 @@ img.footerimage {
     --categories-hover: #9CC69Bc2;
     --goods: #9cc288;
     --goods-hover: #9cc288c2;
+    --dashboard: #236FAD;
+    --dashboard-hover: #236FADc2;
     --link: #000000;
     --link-hover: #6e6e6ec2;
     --footer-hover-background: #f2f2f2;
@@ -86,6 +88,13 @@ a[href="goods.html"] {
  }
 }
 
+a[href="dashboard.html"] {
+    color: var(--dashboard);
+ &:hover { 
+    color: var(--dashboard-hover);
+ }
+}
+
 /* remaining links */
 a {
     color: var(--link);
@@ -101,7 +110,9 @@ h1 {
     text-decoration: unset;
 }
 
-div.documents h1,
+div.documents h1 {
+    color: var(--documents);
+}
 div.documents h1 > a {
     color: var(--documents);
     &:hover{
@@ -109,7 +120,9 @@ div.documents h1 > a {
     }
 }
 
-div.persons h1,
+div.persons h1 {
+    color: var(--persons);
+}
 div.persons h1 > a {
     color: var(--persons);
     &:hover{
@@ -117,7 +130,9 @@ div.persons h1 > a {
     }
 }
 
-div.mahalles h1,
+div.mahalles h1 {
+    color: var(--mahalles);
+}
 div.mahalles h1 > a {
     color: var(--mahalles);
     &:hover{
@@ -125,7 +140,9 @@ div.mahalles h1 > a {
     }
 }
 
-div.districts h1,
+div.districts h1 {
+    color: var(--districts);
+}
 div.districts h1 > a {
     color: var(--districts);
     &:hover{
@@ -133,7 +150,9 @@ div.districts h1 > a {
     }
 }
 
-div.karyes h1,
+div.karyes h1 {
+    color: var(--karyes);
+}
 div.karyes h1 > a {
     color: var(--karyes);
     &:hover{
@@ -141,7 +160,9 @@ div.karyes h1 > a {
     }
 }
 
-div.categories h1,
+div.categories h1 {
+    color: var(--categories);
+}
 div.categories h1 > a {
     color: var(--categories);
     &:hover{
@@ -149,13 +170,26 @@ div.categories h1 > a {
     }
 }
 
-div.goods h1,
+div.goods h1 {
+    color: var(--goods);
+}
 div.goods h1 > a {
     color: var(--goods);
     &:hover{
         color: var(--goods-hover);
     }
 }
+
+div.dashboard h1 {
+    color: var(--dashboard);
+}
+div.dashboard h1 > a {
+    color: var(--dashboard);
+    &:hover{
+        color: var(--dashboard-hover);
+    }
+}
+
 
 /* tabulator headers */
 /*documents page*/
@@ -409,7 +443,6 @@ div.good h1 {
 }
 
 div.good a {
-41-correct-spelling-of-kariyekaryes
     color: var(--goods);
  &:hover {
     color: var(--goods-hover);
