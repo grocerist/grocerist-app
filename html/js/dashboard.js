@@ -89,6 +89,9 @@ d3.json(dataUrl, function (data) {
     title: {
       text: 'Good Categories'
     },
+    subtitle: {
+      text: 'Click the columns to view the goods in that category'
+  },
     xAxis: {
       type: 'category',
       reversed: true
