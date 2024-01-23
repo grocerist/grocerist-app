@@ -418,6 +418,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/TGZWNMBIONGSVAXGYCTCPSNN/info.json', 'https://files.transkribus.eu/iiif/2/PEPWMUDHLDEXMJBMGLBXRIJB/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Vil&#257;yet-i Rumilindeki Ni&#351; kaz&#257;s&#305;na&#160;t&#257;bi&#8216;&#160;</hi><hi rend="background(yellow)">&#8230;</hi><hi xml:space="preserve"> n&#257;m karye s&#363;kk&#257;n&#305;ndan olub mahr&#363;se-i Galata nev&#257;h&#299;sinden&#160;&#304;stinye n&#257;hiyesine t&#257;bi&#8216;&#160;Rumeli kaz&#257;s&#305; varo&#351;unda bakk&#257;l oldu&#287;u halde bundan akdem h&#257;lik olan Yorgi veled-i Hristo veled-i Yorgi n&#257;m&#160;z&#305;mm&#299;nin&#160;ver&#257;seti el&#257;n karye-i mezb&#363;rede s&#257;kineler zevce-i metr&#363;kesi Marya bt. Nikola n&#257;m&#160;nasr&#257;niyeye ve sulbiye-i sag&#299;re k&#305;z&#305; Kaliye ve anas&#305; &#304;stimat bt. Yani n&#257;m&#160;nasr&#257;niyeye ve bu tarafda m&#252;temekkin b&#257;bas&#305; merk&#363;m Hristo veled-i Yorgi n&#257;m&#160;z&#305;mm&#299;ye lede&#8217;&#351; &#351;er&#8217;il enver z&#257;hir ve mukarrer oldukdan sonra h&#257;lik mezb&#363;run cemi&#8216; um&#363;runa b&#257;-h&#252;ccet-i &#351;er&#8217;iye vasiyy-i muht&#257;r&#305; oldu&#287;u s&#257;bit olan merk&#363;m Hristo ma&#8217;rifetiyle h&#257;lik-i mers&#363;mun tahr&#299;r olunan muhallef&#257;t&#305; defteridir ki vech-i &#257;t&#299; &#252;zere zikr olunur. Hurrire f&#299; 24 &#350;aban 126</hi>  </p>
