@@ -1,10 +1,8 @@
 import itertools
 import os
 import json
-import random
 
-
-# Data for religions chart ###
+# DATA FOR RELIGIONS CHART
 
 # Read the JSON file
 with open(
@@ -43,15 +41,21 @@ for religion, count in religion_count.items():
     percentage = (count / total_persons) * 100
     religions_results.append({"name": religion, "y": round(percentage, 2)})
 
-# Data for good categories chart
+# DATA FOR CATEGORIES CHART
 
-# Read the JSON file
+# Read the JSON files
 with open(
     os.path.join("html", "json_dumps", "categories.json"), "r", encoding="utf-8"
 ) as file:
     categories_data = json.load(file)
+
+with open(
+    os.path.join("html", "json_dumps", "goods.json"), "r", encoding="utf-8"
+) as file:
+    goods_data = json.load(file)
+
 # Categories and the number of documents they were mentioned in
-# + an attempt at creating a drilldown chart for each category that contains the goods
+# and the same for each good (for drilldown chart)
 categories_results = []
 categories_drilldown = []
 for category in categories_data:
@@ -59,15 +63,18 @@ for category in categories_data:
     categories_results.append(
         {"name": category_name, "y": category["doc_count"], "drilldown": category_name}
     )
+    # data for drilldown
     goodslist = []
     for good in category["goods"]:
-        goodslist.append([good["name"], random.randrange(1, 10)])  # random number for testing
+        good_id = good["id"]
+        good_doc_count = len(goods_data[good_id]["documents"])
+        goodslist.append([good["name"], good_doc_count])
     categories_drilldown.append(
         {"name": category_name, "id": category_name, "data": goodslist}
     )
 
 
-# Data for the time series chart
+# DATA FOR MENTIONS OVER DECADES CHART
 
 # Read the JSON file
 with open(

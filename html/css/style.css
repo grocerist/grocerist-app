@@ -418,3 +418,8 @@ div.good a {
 
 
 /* end of subpages */
+
+/* removes the stroke thorugh the symbols in the legend of Highcharts graph */
+.highcharts-legend-item .highcharts-graph {
+	display: none;
+}

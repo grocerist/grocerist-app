@@ -124,6 +124,14 @@ d3.json(dataUrl, function (data) {
       }
     ],
     drilldown: {
+      activeAxisLabelStyle: {
+        color: '#000000',
+        textDecoration: 'unset'
+      },
+      activeDataLabelStyle: {
+        color: '#000000',
+        textDecoration: 'unset'
+      },
       series: drilldownData
     }
   })
@@ -140,11 +148,17 @@ d3.json(dataUrl, function (data) {
     chart: {
       type: 'spline'
     },
+    title: {
+      text: 'Mentions of Good Categories over Decades'
+    },
     subtitle: {
       text: 'Select more categories to see the number of documents mentioned'
     },
-    title: {
-      text: 'Mentions of Good Categories over Decades'
+    legend: {
+      itemHiddenStyle: {
+        color: '#d3d3d3',
+        textDecoration: 'none'
+      }
     },
     xAxis: {
       title: {
