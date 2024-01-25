@@ -32,7 +32,7 @@ d3.json(dataUrl, function (data) {
         paginationSize:15,
         layout: "fitDataStretch",
         responsiveLayout:"collapse",
-        height: 600,
+        height: 800,
         tooltips: true,
         data: tableData,
         persistence: {
