@@ -53,7 +53,12 @@ d3.json(dataUrl, function (data) {
       type: 'pie'
     },
     title: {
-      text: 'Religion'
+      text: 'Religion',
+      style: {
+        color: '#236FAD',
+        fontWeight: 'bold',
+        fontSize: '30px'
+      }
     },
     tooltip: {
       valueSuffix: '%'
@@ -87,7 +92,12 @@ d3.json(dataUrl, function (data) {
       enabled: false
     },
     title: {
-      text: 'Good Categories'
+      text: 'Good Categories',
+      style: {
+        color: '#236FAD',
+        fontWeight: 'bold',
+        fontSize: '30px'
+      }
     },
     subtitle: {
       text: 'Click the columns to view the goods in that category'
@@ -152,7 +162,12 @@ d3.json(dataUrl, function (data) {
       type: 'spline'
     },
     title: {
-      text: 'Mentions of Good Categories over Decades'
+      text: 'Mentions of Good Categories over Decades',
+      style: {
+        color: '#236FAD',
+        fontWeight: 'bold',
+        fontSize: '30px'
+      }
     },
     subtitle: {
       text: 'Select more categories to see the number of documents mentioned'
