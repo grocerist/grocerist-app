@@ -27,17 +27,6 @@ const commonTableCfg = {
   persistence: {
       headerFilter: true
   },
-  langs: {
-    default: {
-      pagination: {
-        counter: {
-          showing: '',
-          of: 'of',
-          rows: ''
-        }
-      }
-    }
-  }
 }
 
 // mutator & formatter functions used by the columns in the table
@@ -119,26 +108,12 @@ function createMarkerLayers (table, layerGroups) {
       let coordinateKey = rowData.lat + rowData.long
 
       // create markers for doc count
-      let numDocs = rowData.doc_count
-      let docsCircle = L.divIcon({
-        html: '<span style="width: 100%; height: 100%; border-radius: 50%; display: table-cell; border: 4px solid #536e61; background: rgba(83, 110, 97, .5) ; overflow: hidden; position: absolute;"></span>',
-        className: '',
-        iconSize: [numDocs, numDocs]
-      })
-      let docsMarker = L.marker([rowData.lat, rowData.long], {
-        icon: docsCircle
-      })
+      let docsRadius = rowData.doc_count / 2
+      let docsMarker = L.circleMarker([rowData.lat, rowData.long], {radius: docsRadius, color: "#536e61"})
 
       // create markers for person count
-      let numPers = rowData.person_count
-      let persCircle = L.divIcon({
-        html: '<span style="width: 100%; height: 100%; border-radius: 50%; display: table-cell; border: 4px solid #79B4A9; background: rgba(121, 180, 169, .5); overflow: hidden; position: absolute;"></span>',
-        className: '',
-        iconSize: [numPers, numPers]
-      })
-      let persMarker = L.marker([rowData.lat, rowData.long], {
-        icon: persCircle
-      })
+      let persRadius = rowData.person_count / 2
+      let persMarker = L.circleMarker([rowData.lat, rowData.long], {radius: persRadius, color: "#79B4A9"})
 
       // store markers in existingCirclesByCoordinates
       existingCirclesByCoordinates[coordinateKey] = {
@@ -268,12 +243,9 @@ function setupEventHandlers (
       Object.entries(existingCirclesByCoordinates).forEach(
         ([coordinateKey, markersForEachBaselayer]) => {
           Object.values(markersForEachBaselayer).forEach(marker => {
-            let circleElement = marker.options.icon
-            let currentSize = circleElement.options.iconSize
-            let newSize = currentSize.map(size => size * zoomRatio)
-            // Adjust the circle size
-            circleElement.options.iconSize = newSize
-            marker.setIcon(circleElement)
+            // Adjust the circle radius based on the zoom ratio
+            let currentSize = marker.getRadius()
+            marker.setRadius(currentSize * zoomRatio)
           })
         }
       )
