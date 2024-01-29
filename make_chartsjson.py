@@ -98,7 +98,6 @@ decades = sorted(set(round_down_to_ten(year) for year in years_of_creation))
 
 # Count the total number of documents in each decade
 total_docs_per_decade = Counter(round_down_to_ten(year) for year in years_of_creation)
-print(total_docs_per_decade)
 # Initialize decade_dict with zeros for all categories and decades
 decade_dict = {
     category["name"]: {decade: 0 for decade in decades} for category in categories_data
