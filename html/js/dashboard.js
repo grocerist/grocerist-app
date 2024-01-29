@@ -1,6 +1,167 @@
 const dataUrl = 'json_dumps/charts.json'
+
+function setVisibilityForFirstElement (chartData) {
+  chartData[1].forEach((element, index) => {
+    element.visible = index === 0 // Set visible: true for the first element, false for all others
+  })
+}
+
+function createPieChart (containerId, title, data) {
+  return Highcharts.chart(containerId, {
+    chart: {
+      type: 'pie'
+    },
+    title: {
+      text: title
+    },
+    tooltip: {
+      valueSuffix: '%'
+    },
+    plotOptions: {
+      series: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true
+        }
+      }
+    },
+    series: [
+      {
+        name: 'Percentage',
+        colorByPoint: true,
+        data: data
+      }
+    ]
+  })
+}
+
+function createColumnChart (containerId, title, data, drilldownData) {
+  Highcharts.chart(containerId, {
+    chart: {
+      type: 'column'
+    },
+
+    legend: {
+      enabled: false
+    },
+    title: {
+      text: title
+    },
+    subtitle: {
+      text: 'Click the columns to view the goods in that category'
+    },
+    xAxis: {
+      type: 'category',
+      reversed: true
+    },
+    yAxis: {
+      title: {
+        text: 'Number of Documents'
+      }
+    },
+    tooltip: {
+      headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+      pointFormat:
+        '<span style="color:{point.color}">{point.name}</span>: mentioned in <b>{point.y}</b> documents<br/>'
+    },
+    plotOptions: {
+      series: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        dataLabels: {
+          enabled: true
+        }
+      }
+    },
+    series: [
+      {
+        name: 'Good Categories',
+        dataSorting: {
+          enabled: true,
+          sortKey: 'name'
+        },
+        colorByPoint: true,
+        data: data
+      }
+    ],
+    drilldown: {
+      activeAxisLabelStyle: {
+        color: '#000000',
+        textDecoration: 'unset'
+      },
+      activeDataLabelStyle: {
+        color: '#000000',
+        textDecoration: 'unset'
+      },
+      series: drilldownData
+    }
+  })
+}
+
+function createSplineChart (
+  containerId,
+  title,
+  yAxisTitle,
+  data,
+  tooltipText
+) {
+  return Highcharts.chart(containerId, {
+    chart: {
+      type: 'spline'
+    },
+    title: {
+      text: title
+    },
+    subtitle: {
+      text: 'Select more categories to display their numbers'
+    },
+    legend: {
+      itemHiddenStyle: {
+        color: '#d3d3d3',
+        textDecoration: 'none'
+      }
+    },
+    xAxis: {
+      title: {
+        text: 'Decades'
+      },
+      labels: {
+        format: '{value} AH'
+      },
+      categories: data[0]
+    },
+    yAxis: {
+      title: {
+        text: yAxisTitle
+      }
+    },
+    tooltip: {
+      headerFormat: '<span>{point.key}</span> AH<br>',
+      pointFormat: `<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b>${tooltipText}`,
+      shared: true
+    },
+    plotOptions: {
+      line: {
+        dataLabels: {
+          enabled: true
+        },
+        enableMouseTracking: false
+      }
+    },
+    series: data[1]
+  })
+}
 d3.json(dataUrl, function (data) {
   const relChartData = Object.values(data.religions)
+  const catChartData = Object.values(data.categories)
+  const drilldownData = Object.values(data.categories_drilldown)
+  const timeChartData = Object.values(data.categories_over_decades)
+  const normalizedTimeChartData = Object.values(
+    data.normalized_categories_over_decades
+  )
+
+  // Custom colors (default HighCharts list has too few)
   Highcharts.setOptions({
     colors: [
       '#536e61',
@@ -47,150 +208,30 @@ d3.json(dataUrl, function (data) {
       '#7FFF00'
     ]
   })
-  // Create the religions chart
-  const religionsChart = Highcharts.chart('container religion_chart', {
-    chart: {
-      type: 'pie'
-    },
-    title: {
-      text: 'Religion'
-    },
-    tooltip: {
-      valueSuffix: '%'
-    },
-    plotOptions: {
-      series: {
-        allowPointSelect: true,
-        cursor: 'pointer',
-        dataLabels: {
-          enabled: true
-        }
-      }
-    },
-    series: [
-      {
-        name: 'Percentage',
-        colorByPoint: true,
-        data: relChartData
-      }
-    ]
-  })
-  // Create categories chart
-  const catChartData = Object.values(data.categories)
-  const drilldownData = Object.values(data.categories_drilldown)
-  Highcharts.chart('container categories_chart', {
-    chart: {
-      type: 'column'
-    },
 
-    legend: {
-      enabled: false
-    },
-    title: {
-      text: 'Good Categories'
-    },
-    subtitle: {
-      text: 'Click the columns to view the goods in that category'
-  },
-    xAxis: {
-      type: 'category',
-      reversed: true
-    },
-    yAxis: {
-      title: {
-        text: 'Number of Documents'
-      }
-    },
-    tooltip: {
-      headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-      pointFormat:
-        '<span style="color:{point.color}">{point.name}</span>: mentioned in <b>{point.y}</b> documents<br/>'
-    },
-    plotOptions: {
-      series: {
-        allowPointSelect: true,
-        cursor: 'pointer',
-        dataLabels: {
-          enabled: true
-        }
-      }
-    },
-    series: [
-      {
-        name: 'Good Categories',
-        dataSorting: {
-          enabled: true,
-          sortKey: 'name'
-        },
-        colorByPoint: true,
-        data: catChartData
-      }
-    ],
-    drilldown: {
-      activeAxisLabelStyle: {
-        color: '#000000',
-        textDecoration: 'unset'
-      },
-      activeDataLabelStyle: {
-        color: '#000000',
-        textDecoration: 'unset'
-      },
-      series: drilldownData
-    }
-  })
+  createPieChart('container religion_chart', 'Religion', relChartData)
+  createColumnChart(
+    'container categories_chart',
+    'Good Categories',
+    catChartData,
+    drilldownData
+  )
+  // Add visibility attribute for the spline charts
+  setVisibilityForFirstElement(timeChartData)
+  setVisibilityForFirstElement(normalizedTimeChartData)
 
-  // Create category time series
-  const timeChartData = Object.values(data.categories_over_decades)
-
-  // Add visibility attribute
-  timeChartData[1].forEach((element, index) => {
-    element.visible = index === 0 // Set visible: true for the first element, false for all others
-  })
-
-  Highcharts.chart('container time_chart', {
-    chart: {
-      type: 'spline'
-    },
-    title: {
-      text: 'Mentions of Good Categories over Decades'
-    },
-    subtitle: {
-      text: 'Select more categories to see the number of documents mentioned'
-    },
-    legend: {
-      itemHiddenStyle: {
-        color: '#d3d3d3',
-        textDecoration: 'none'
-      }
-    },
-    xAxis: {
-      title: {
-        text: 'Decades'
-      },
-      labels: {
-        format: '{value} AH'
-      },
-      categories: timeChartData[0]
-    },
-    yAxis: {
-      title: {
-        text: 'Number of Documents'
-      }
-    },
-    tooltip: {
-      headerFormat: '<span>{point.key}</span> AH<br>',
-      pointFormat:
-        '<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b> documents<br/>',
-      shared: true
-    },
-    plotOptions: {
-      line: {
-        dataLabels: {
-          enabled: true
-        },
-        enableMouseTracking: false
-      }
-    },
-    series: timeChartData[1]
-  })
+  createSplineChart(
+    'container time_chart',
+    'Category Mentions Over Time',
+    'Number of Documents',
+    timeChartData,
+    ' documents'
+  )
+  createSplineChart(
+    'container normalized_time_chart',
+    'Category Mentions Over Time: Document Percentage by Decade',
+    'Percentage of Documents from a Decade',
+    normalizedTimeChartData,
+    '% of documents from this decade'
+  )
 })
