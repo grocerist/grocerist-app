@@ -4,6 +4,7 @@ import json
 from collections import Counter
 import copy
 
+
 # Read JSON file
 def read_json_file(file_name):
     with open(
@@ -97,9 +98,11 @@ decades = sorted(set(round_down_to_ten(year) for year in years_of_creation))
 
 # Count the total number of documents in each decade
 total_docs_per_decade = Counter(round_down_to_ten(year) for year in years_of_creation)
-print (total_docs_per_decade)
+print(total_docs_per_decade)
 # Initialize decade_dict with zeros for all categories and decades
-decade_dict = {category["name"]: {decade: 0 for decade in decades} for category in categories_data}
+decade_dict = {
+    category["name"]: {decade: 0 for decade in decades} for category in categories_data
+}
 for category in categories_data:
     category_name = category["name"]
     doc_list = [document["id"] for document in category["documents"]]
@@ -114,7 +117,9 @@ normalized_decade_dict = copy.deepcopy(decade_dict)
 for category_name, decade_counts in normalized_decade_dict.items():
     for decade, count in decade_counts.items():
         total_docs_in_decade = total_docs_per_decade.get(decade, 1)
-        normalized_decade_dict[category_name][decade] = calculate_percentage(count, total_docs_in_decade)
+        normalized_decade_dict[category_name][decade] = calculate_percentage(
+            count, total_docs_in_decade
+        )
 
 # Symbols for the time series chart
 symbols = ["square", "diamond", "circle", "triangle"]
@@ -124,7 +129,7 @@ decades_results = [
     {
         "name": category,
         "marker": {"symbol": next(symbol_cycle)},
-        "data": list(decade_counts.values())
+        "data": list(decade_counts.values()),
     }
     for category, decade_counts in sorted(decade_dict.items())
 ]
@@ -132,7 +137,7 @@ normalized_decades_results = [
     {
         "name": category,
         "marker": {"symbol": next(symbol_cycle)},
-        "data": list(decade_counts.values())
+        "data": list(decade_counts.values()),
     }
     for category, decade_counts in sorted(normalized_decade_dict.items())
 ]
