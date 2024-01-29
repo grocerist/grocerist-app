@@ -143,6 +143,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/MPGCCVYJIENIAQMRACAQOBKX/info.json', 'https://files.transkribus.eu/iiif/2/KCDTQEGTFCVCRGQOPNJXCMWK/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Mahmiye-i Galata tev&#257;bi&#8217;nden &#304;stinye n&#257;hiyesine&#160;t&#257;bi&#8216; Kale-i Bo&#287;azkesen d&#257;hilinde s&#257;kin iken bundan akdem vil&#257;yet-i Rumilinde mahmiye-i Selanik kasabas&#305;nda vef&#257;t eden bakk&#257;l Mustafa Be&#351;e b. Osman Be&#351;e b. Abdull&#257;h&#305;n ver&#257;seti zevce-i metr&#363;kesi Ai&#351;e bt. Abdull&#257;h ile v&#257;lidesi di&#287;er Ai&#351;e bt. H&#252;seyin n&#257;m hatun ve sulb&#299; sag&#299;r o&#287;lu Osman ve keb&#299;r k&#305;z&#305; Rukiyeye ve sag&#299;re k&#305;zlar&#305; Havva ve Hadiceye m&#252;nhas&#305;ra oldu&#287;u &#351;er&#8217;an z&#257;hir ve m&#252;te&#8217;ayyen oldukdan sonra m&#252;teveff&#257;-i mezb&#363;run terekesidir ki s&#305;g&#257;r-&#305; mezk&#363;renin vasiyy-i mans&#363;beleri olan mezb&#363;re Ai&#351;e ma&#8216;rifetleriyle&#160;tahr&#299;r olunub vech &#252;zere zikr olunur. Fi&#8217;l-h&#257;mis&#160;min-&#351;ehri&#160;Recebi&#8217;l-ferd li-sene sel&#257;se&#160;ve a&#351;ara ve mie ve&#160;elf. 1113</hi></p>

@@ -401,6 +401,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/ATSUGQORTUEKCDZDZNUEYLDT/info.json', 'https://files.transkribus.eu/iiif/2/GOLUJMACJVOMLOKWXIAQOUXV/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi xml:space="preserve">Vilayet-i Rumilindeki Ni&#351; kasabas&#305; s&#257;kinlerinden olub med&#299;ne-i &#220;sk&#252;darda Kefere mahallesinde m&#252;temekkin iken bundan akdem m&#252;sta&#287;rak bi&#8217;d deyn oldu&#287;u halde h&#257;lik olan Asteryo veled-i Yorgi veled-i </hi><hi rend="background(yellow)">&#8230;</hi><hi xml:space="preserve"> n&#257;m z&#305;mm&#299;nin ver&#257;seti zevce-i metr&#363;kesi g&#257;ibet&#252; ani&#8217;l-beled Fidanko bt. Arakil ile sulb&#299; keb&#299;r o&#287;lu Trandafil n&#257;m z&#305;mm&#299;ye sulb&#299; sag&#299;r o&#287;lu Yaniye m&#252;nhas&#305;ra oldu&#287;u &#351;er&#8216;an m&#252;tehakk&#305;k oldukdan sonra h&#257;lik mezb&#363;run terekesini &#257;hara&#160;bey&#8216; ve semenin deynini if&#257;ya k&#305;bel-i &#351;er&#8217;den vas&#299; nasb ve ta&#8217;y&#299;n olunan mezb&#363;r Trandafil talebiyle h&#257;lik mezb&#363;run med&#299;ne-i mezb&#363;rede Kefere mahallesinde v&#257;ki&#8216;&#160;bakk&#257;l d&#252;kk&#257;n&#305;nda mevc&#363;d bulunub tahr&#299;r ve ba&#8216;de&#8217;l-m&#252;z&#257;yede f&#252;r&#363;ht olunan terekesi defteridir ki ber vech-i &#257;t&#299; zikr olunur. Fi&#8217;l-yevmi&#8217;l-h&#257;mis min-Muharremi&#8217;l-har&#257;m li sene tis&#8216;a ve&#160;&#305;&#351;r&#299;n ve&#160;mi&#8217;e&#160;ve&#160;elf. 1129</hi> </p>

@@ -138,6 +138,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/PTLTUGGGWBNFVWNAVOVOGOTP/info.json', 'https://files.transkribus.eu/iiif/2/YXOLZBCDBDJTBBPXCHSYULII/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Med&#299;ne-i &#220;sk&#252;darda Yeni mahallede m&#252;temekkin iken bundan h&#257;lik olan bakk&#257;l Panayot veled-i Polin&#231;eron z&#305;mm&#299;nin ver&#257;seti zevce-i metr&#363;kesi Marya bt. Yani n&#257;m nasr&#257;niye ile sulb&#299; sag&#299;r o&#287;ullar&#305; Apostol ve Nikola ve sulbiye sag&#299;re k&#305;z&#305; Fotinaya ve terekesinin s&#252;l&#252;s&#252;nden ves&#257;y&#257;-y&#305; mu&#8216;ayyenesini tenf&#299;ze bakk&#257;l Yorgaki veled-i Yani n&#257;m z&#305;mm&#299;ye vassiyy-i muht&#257;r nasb ta&#8217;y&#299;n eyledi&#287;i lede&#8217;&#351;-&#351;er&#8216;i&#8217;l-enver&#160; sabit ve z&#257;hir olma&#287;la s&#252;l&#252;s-i mezk&#363;r inhis&#257;r tahakkukundan sonra zevce-i mesf&#363;re Marya ile vasiyy-i merk&#363;m Yorgaki z&#305;mm&#299;nin taleb ve iltim&#257;slar&#305;yla h&#257;lik merk&#363;mun tahr&#299;r ve terk&#299;m olunan defteridir ki ber vech-i &#257;t&#299; zikr olunur.</hi></p>

@@ -421,6 +421,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/JCYHNXMKFLHAPAQXIKLUMLFK/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Med&#299;ne-i &#220;sk&#252;darda Tenbel Elhac Mehmed mahallesinde v&#257;ki&#8216;</hi> <hi rend="background(yellow)" xml:space="preserve">&#8230; </hi><hi xml:space="preserve">demekle ma&#8216;r&#363;f&#160;bakk&#257;l d&#252;kk&#257;n&#305;nda m&#252;steciran m&#252;temekkin iken bundan akdem fir&#257;r ve gaybet eden Yovan veled-i Vasil n&#257;m z&#305;mm&#299;nin d&#252;kk&#257;n-&#305; mezk&#363;rda mevc&#363;d ecn&#257;s-&#305; zeh&#257;ir z&#305;mmem-i nasda olan hukukunu ahz &#252; kabz ve h&#305;fza k&#305;bel-i &#351;erden  b&#257;-h&#252;ccet-i &#351;er&#8216;iye vas&#299; ve kayy&#305;m nasb olunan ve debba&#287; Esseyid Elhac Mehmed A&#287;a b. Elhac &#304;smail n&#257;m kimesnenin talebiyle ve ma&#8216;rifetiyle g&#257;ib merk&#363;mun tahr&#299;r ve terk&#299;m olunan ecn&#257;s-&#305; zeh&#257;ir defteridir ki ber vech-i &#257;t&#299; zikr olunur. </hi><hi rend="background(yellow)">Hurrira fil yevm &#8230; &#351;evval m&#252;kerrem &#8230;.</hi></p>

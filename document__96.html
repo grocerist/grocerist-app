@@ -153,6 +153,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/QLAUWPBMTATUFHHPJJYOFLCY/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi xml:space="preserve">Hav&#257;ss-&#305;&#160;ref&#299;&#8216;a&#160;kaz&#257;s&#305; muz&#257;f&#257;t&#305;ndan &#199;ekmece-i Keb&#299;rde m&#252;temekkin iken bundan akdem h&#257;lik olan bakk&#257;l Dimitri veled-i Hristonun ver&#257;seti zevce-i metr&#363;kesi Afendirye bt. Yorgaki n&#257;m n&#257;sraniye ile sulbiye keb&#299;re k&#305;zlar&#305; Zora ve Gevher ve Dominaya ve min cihet-i us&#363;be ammisi o&#287;lu olub h&#257;l&#257; diy&#257;r-&#305; &#257;harda olan Yorgakiye m&#252;nhas&#305;ra oldu&#287;u &#351;er&#8217;an z&#257;hir ve m&#252;te&#8217;ayyen oldukdan sonra g&#257;ib-i mezb&#363;run hisse-i &#305;rsiyesini ahz &#252; kabz zabt ve h&#305;fza k&#305;bel-i &#351;erden vas&#299; ve kayy&#305;m nasb olunan mezb&#363;re Afendirye ile mezb&#363;rat Zora ve Gevhere ve Dominaya taleb ve ma&#8216;rifetleriyle  tahr&#299;r ve takv&#299;m olunan tereke-i h&#257;lik-i mers&#363;mdur ki ber vech-i &#257;t&#299; zikr olunur.  Fi&#8217;l-yevmi&#8217;l-a&#351;ir min-Muharremi&#8216;l-haram li sene tis&#699;a ve&#160;hams&#299;n&#160;ve mie ve elf. </hi></p>

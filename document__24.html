@@ -406,6 +406,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/TZFZRGWFNDZJMXITVPSJCTRU/info.json', 'https://files.transkribus.eu/iiif/2/SQPOHJBOEOIIWODQCQUGEEQI/info.json', 'https://files.transkribus.eu/iiif/2/ETQJCBEUCJGFJYSRVRKWMVOU/info.json', 'https://files.transkribus.eu/iiif/2/PSZYIAUNROGOYCVZGTOCXITC/info.json', 'https://files.transkribus.eu/iiif/2/VSZUURGOHBJQXQLKIEKABYJT/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Mahr&#363;se-i Galata h&#257;ricinde Galata mevlev&#299;h&#257;nesi kurbunda bakk&#257;l oldu&#287;u h&#257;lde bundan akdem h&#257;lik olan Yani veled-i Panayot veled-i Yorgi&#8217;nin ver&#257;seti h&#257;l&#257; vil&#257;yet-i Rumelinde Yeni&#351;ehir nev&#257;hisinden A&#287;rafa n&#257;hiyesine t&#257;b&#299;&#8216; Kerasova n&#257;m karyede s&#257;kinler zevce-i metr&#363;kesi Anasta bt. Nikola ile sulb&#299; o&#287;lu</hi><hi rend="background(yellow)" xml:space="preserve"> .. </hi><hi>ve sulbiye k&#305;zlar&#305; Agora ve Kaliye inhis&#257;r&#305; tahakkukundan sonra h&#257;lik mezb&#363;run c&#252;mle um&#363;runa vasiyy-i muht&#257;r olan ammi o&#287;lu bakk&#257;l Dimitri veled-i &#350;ilo ma&#8216;rifetiyle  h&#257;lik mezb&#363;run bu tarafda tahr&#299;r olunan muhallef&#257;t&#305; defterdir ki vech-i &#257;t&#299; &#252;zere zikr olunur. Hurrire 20 Saferi&#8217;l-hayr&#160;1141</hi> </p>

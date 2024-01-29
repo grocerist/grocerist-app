@@ -220,6 +220,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/UPIJRKVJMEOGPYKBBIJABBGR/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi xml:space="preserve">Med&#299;ne-i &#220;sk&#252;darda Yani Camii karyesinde m&#252;temekkinlerinden iken bundan akdem h&#257;lik olan bakk&#257;l Konstantin veled-i Hristodoli n&#257;m z&#305;mm&#299;nin ver&#257;seti zevce-i metr&#363;kesi Pera&#351;kova bint Laskari ve anas&#305; Zenbula bt. Yanaki ve sag&#299;r evl&#257;dlar&#305; Yorgaki ve Dimitraki </hi><hi rend="background(yellow)">&#8230;</hi><hi xml:space="preserve"> n&#257;m sag&#299;rlere m&#252;nhas&#305;ra oldu&#287;u tahakkukundan sonra s&#299;gar-&#305; mezb&#363;run analar&#305; ve tesviye-i emrlerine vas&#299; mans&#363;blar&#305; olan merk&#363;me Pera&#351;kova ve mers&#363;me Zenbula taleb ve iltim&#257;slar&#305;yla h&#257;lik mesf&#363;run tahr&#299;r ve tahm&#299;n-i sah&#299;h ile&#160;takv&#299;m olunan tereke defteridir ki ber vech-i &#257;t&#299; zikr olunur. F&#299;  9 Zilka&#8216;deti&#8217;&#351;-&#351;er&#299;fe 169</hi></p>

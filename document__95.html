@@ -426,6 +426,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/KLCQWZGHOVQPSEBHXUVKJIOG/info.json', 'https://files.transkribus.eu/iiif/2/KHZRWBMCQWULKXVHYGKWVFDS/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Med&#299;ne-i hazret-i Eb&#299; Eyy&#252;b&#160;el-Ens&#257;r&#299;&#160;-radiye anhu Rabb&#252;h&#252;&#8217;l-b&#257;r&#299;-de Yavud? mahallesinde v&#257;ki&#8216; bakk&#257;l d&#252;kk&#257;n&#305;nda m&#252;steciren m&#252;temekkin iken bundan akdem fir&#257;r ve gaybet id&#252;b hay&#257;t&#305; ve mem&#257;t&#305; ma&#8216;l&#363;m olmayan Yorgi veled-i Franko n&#257;m g&#257;ibin z&#257;hirde v&#257;ris-i&#160;ma&#8216;r&#363;f&#160;ve ma&#8216;r&#363;fesi olmama&#287;la d&#252;kk&#257;n-&#305; mezk&#363;rede Elhac H&#252;srev mahallesinde v&#257;ki&#8216; bakk&#257;l d&#252;kk&#257;n&#305; der&#363;nlar&#305;nda ve mahzeninde mevc&#363;d terekesi c&#257;nib-i beyt&#252;lm&#257;le aid olma&#287;la med&#299;ne-i mezb&#363;rede beyt&#252;lm&#257;l&#305;&#160;kabza mem&#363;r olan Mustafa A&#287;a b. Hasan taleb ve ma&#8216;rifetiyle  tahr&#299;r ve f&#252;r&#363;ht olunan g&#257;ib-i mesf&#363;run d&#252;kk&#257;n-&#305; mezb&#363;rlar&#305;nda olan e&#351;y&#257;s&#305;d&#305;r ki ber vech-i &#257;t&#299; zikr olunur.  Fi&#8217;l-yevmi&#8217;l-h&#257;d&#299; a&#351;ar&#160;min-Recebi&#8217;l-ferd sene seb&#8216;a&#160;ve&#160;hams&#299;n ve mie ve elf. 1157</hi></p>

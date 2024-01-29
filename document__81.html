@@ -133,6 +133,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/WTGWFNHVGPSYFWPVCPZJKOMU/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi xml:space="preserve">Med&#299;ne-i &#220;sk&#252;darda Yeni mahallede m&#252;temekkin iken bundan akdem h&#257;lik olan bakk&#257;l Manok veled-i Agik veled-i Manok z&#305;mm&#299;nin ver&#257;seti zevce-i metr&#363;kesi </hi><hi rend="background(yellow)" xml:space="preserve">.. </hi><hi>bt</hi><hi rend="background(yellow)" xml:space="preserve">&#8230; </hi><hi xml:space="preserve">n&#257;m nasr&#257;niye ile sulbiye keb&#299;re k&#305;zlar&#305; Perapon ve </hi><hi rend="background(yellow)">&#8230;</hi><hi xml:space="preserve"> inhisar&#305; </hi><hi style="font-size:8.5pt">&#160;</hi><hi>lede&#8217;&#351;-&#351;er&#8216;i&#8217;l-enver&#160; m&#252;tehakk&#305;k oldukdan sonra verese-i mezb&#363;randan her birinin taleb ve iltim&#257;slar&#305;yla h&#257;lik merk&#363;mun tahr&#299;r ve terk&#299;m olunan defteridir ki ber vech-i &#257;t&#299; zikr olunur. Fi 19 Safer 1190</hi></p>

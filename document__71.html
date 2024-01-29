@@ -248,6 +248,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/SADOUATLYXXCYTBLGIUUHDCA/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Med&#299;ne-i &#220;sk&#252;darda Valide-i Cedid Camii &#351;erif kar&#351;&#305;s&#305;ndaki bakk&#257;l suhte &#214;merin d&#252;k&#257;n&#305;nda  mevc&#363;d olan ustalar ma&#8216;rifeti ve&#160;ma&#8216;rifet-i &#351;er&#8216;le tahr&#299;r ve defter ve d&#252;kk&#257;n-&#305; merk&#363;ma bir mu&#8217;tebet kimesne vaz&#8216; olunmak b&#257;b&#305;nda &#351;eref-bah&#351;-&#305; sud&#363;r bulan ferm&#257;n-&#305;&#160;&#257;l&#299;lerine imtis&#257;len manav taifesinden Elhac Hasan ve manav Mahmud ve manav Mustafa ve Ali Be&#351;e kef&#257;letleriyle pazarba&#351;&#305; vek&#299;li Ali kullar&#305; husus-&#305; mezb&#363;re m&#252;b&#257;&#351;ir ta&#8216;y&#299;n buyrulan kap&#305; keth&#252;d&#257;lar&#305;ndan Elhac Ahmed Be&#351;e kullar&#305; m&#252;b&#257;&#351;eretleriyle Osman b. Mustafa n&#257;m kimesne bakk&#257;ll&#305;k eylemek &#252;zere mezb&#363;re vaz&#8216; ve d&#252;kk&#257;n-&#305; merk&#363;mdan z&#363;hur edip mezb&#363;r Osmana ma&#8216;rifet-i &#351;er&#8216;le teslim olunan defterdir ki ber vech-i &#257;t&#299; zikr olunur. Hurrira fi 8 Zilka&#8216;de sene 1154</hi></p>

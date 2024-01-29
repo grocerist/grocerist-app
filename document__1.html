@@ -429,6 +429,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/BSWEXTWRQKTKTUXMMKKNXWVH/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Mahr&#363;se-i Galata d&#257;hilinde &#350;ehsuvar mahallesinde s&#257;kin&#160;iken&#160;bundan akdem&#160;vef&#257;t&#160;eden Bakk&#257;l Hasan Be&#351;e b. Abdull&#257;h b. Abd&#252;lmennan&#305;n ver&#257;seti zevce-i menk&#363;ha-i metr&#363;kesi Ai&#351;e bt. Hasan&#160;n&#257;m&#160;hatun&#160;ile&#160;sulb&#299; sag&#299;r&#160;o&#287;lu Mehmed m&#252;nhas&#305;ra&#160;oldu&#287;u &#351;er&#8216;an z&#257;hir ve m&#252;tebeyyin oldukdan sonra sag&#299;r-i&#160;mezb&#363;run&#160;tesviye-i um&#363;runa k&#305;bel-i &#351;er&#8216;-i enverden&#160;mans&#363;be vas&#299;si olan v&#257;lidesi&#160;mezb&#363;re Ai&#351;e Hatun ma&#8216;rifetiyle&#160;tahr&#299;r olunub vech-i&#160;&#257;t&#299;&#160;&#252;zere zikr.&#160;Fi&#8217;l-yevmi&#8217;l-h&#257;mis&#160;ve&#8217;l-&#305;&#351;r&#299;n min-&#351;ehr i Reb&#299; &#8216;i&#8217;l-&#257;hir li-sene&#160;tis&#8216;a&#160;ve mi&#8217;e ve&#160;elf.</hi>  </p>

@@ -136,6 +136,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/YQZWPVKQJGWVUJMYSNEWWQCB/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Mahmiye-i &#304;stanbul&#8217;da Kapu A&#287;as&#305; mahallesinde s&#257;kin iken bundan akdem vef&#257;t eden Elhac Mahmud A&#287;a b. Hasan&#305;n ver&#257;seti zevce-i menk&#363;ha-i metr&#363;kesi Nefise bt. Abdull&#257;h n&#257;m hatun ile sulbiye keb&#299;re k&#305;z&#305; Fatmaya ve sulbiye sag&#299;re k&#305;z&#305; Amineye ve sulb&#299; sag&#299;r o&#287;ullar&#305; Mahmud ve Osmana m&#252;nhas&#305;ra oldu&#287;u tahakkukundan sonra sag&#299;r&#257;n-&#305; mezb&#363;runun b&#257;-h&#252;ccet-i &#351;er&#8216;iye</hi><hi style="font-size:8.5pt">&#160;</hi><hi xml:space="preserve">vasiyy-i muht&#257;rlar&#305; olan &#199;orbac&#305; H&#252;seyin A&#287;a b. Mustafa n&#257;m kimesne ile  z&#257;t&#305;&#160;ta&#8216;r&#299;f-i &#351;er&#8216;&#299; ile&#160;ma&#8216;r&#299;fe olan zevce-i mezb&#363;renin vek&#299;l-i&#160;m&#252;seccel-i &#351;er&#8216;&#299;si olan Esseyid &#304;brahim A&#287;a b. Mehmed ile kez&#257;lik&#160;z&#257;t&#305; vech-i&#160;&#351;er&#8216;&#299; &#252;zere ma&#8216;r&#299;fe olan mezb&#363;re &#351;erife Fat&#305;ma hatunun vek&#299;l-i s&#257;bit&#252;&#8217;l-vek&#257;lesi olan Veli Efendi b. Receb n&#257;m kimesneler taleb ve ma&#8217;rifetiyle m&#252;teveff&#257;-i mezb&#363;run med&#299;ne-i mezb&#363;rede Sinan Pa&#351;a mahallesinde mevc&#363;d olub ba&#8216;de&#8217;l-m&#252;z&#257;yede bey&#8217; olunan terekesi defteridir ki ber vech-i &#257;t&#299; zikr olunur. </hi>  </p>

@@ -361,6 +361,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/SZKMJWCPQEVAPCZPQQPHSETX/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Med&#299;ne-i &#220;sk&#252;dara t&#257;bi&#8216; H&#252;nkar karyesinde v&#257;ki&#8216; M&#252;h&#252;rdar A&#287;a n&#257;m kimesnenin d&#252;kk&#257;n&#305;nda m&#252;stecir gediklu bakk&#257;l iken bundan akdem gaybet-i m&#252;nkat&#305;&#8216;a ile g&#257;ib  olub hay&#257;t ve mem&#257;t&#305; ma&#8217;l&#363;m olmama&#287;la h&#257;li m&#252;tebeyyin olunca d&#252;kk&#257;n-&#305; mezb&#363;rda mevc&#363;d e&#351;y&#257;s&#305;n&#305; kabz ve h&#305;fza bir kayy&#305;m nasb olunmak l&#257;b&#252;d olma&#287;&#305;n k&#305;bel-i &#351;eri &#351;erifden karye-i mezb&#363;rede h&#257;l&#257; suba&#351;&#305; olan Esseyid Mustafa b. Ahmed kayy&#305;m nasb olunmak talebiyle mefk&#363;d merk&#363;m Edirneli Anderya nam z&#305;mm&#299;nin tahr&#299;r ve tahm&#299;n olunan e&#351;y&#257;s&#305; defteridir ki ber vech-i &#257;t&#299; zikr olunur. Fi 29 &#350;evval 1178</hi> </p>

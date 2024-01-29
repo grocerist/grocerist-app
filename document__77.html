@@ -477,6 +477,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/KXHFNLWVAIQZESWCWAHRBGOE/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Med&#299;ne-i &#220;sk&#252;darda S&#252;leyman A&#287;a mahallesi s&#363;kk&#257;n&#305;ndan K&#246;pr&#252;ba&#351;&#305; n&#257;m mahallede bakk&#257;l iken bundan gaybet-i m&#252;nkat&#305;&#8216;a ile g&#257;ib olub hay&#257;t ve mem&#257;t&#305; mal&#363;m olmayan Yorgi veled-i Andon n&#257;m z&#305;mm&#299;nin m&#252;stecir oldu&#287;u d&#252;kk&#257;n-&#305; merk&#363;mda olan e&#351;y&#257;s&#305;n&#305; ahz u h&#305;fz c&#252;mle ustalar&#305;n ma&#8216;rifetiyle  vas&#299; ve kayy&#305;m nasb ve ta&#8216;y&#299;n olunan yine ta&#299;fe-i mezb&#363;rdan</hi><hi rend="background(white)" xml:space="preserve">  Anayos </hi><hi>veled-i [] n&#257;m z&#305;mm&#299;ye ma&#8216;rifet-i &#351;er&#8216; ve ustalar ma&#8216;rifetiyle tesl&#299;m olunan g&#257;ib-i mezb&#363;run d&#252;kk&#257;n-&#305; merk&#363;mda olan e&#351;y&#257;s&#305;d&#305;r ki ber vech-i &#257;t&#299; zikr olunur. Fi 25 Saferi&#8217;l-hayr 1175</hi></p>

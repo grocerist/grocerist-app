@@ -484,6 +484,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/JHRTWSMIRSPGYTBMHPTOHDCL/info.json', 'https://files.transkribus.eu/iiif/2/WGBBRNEDYMTPMFOCSNCMNBXA/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Med&#299;ne-i &#220;sk&#252;darda Reis mahallesinde v&#257;ki&#8216;&#160;bakk&#257;l d&#252;kk&#257;n&#305;nda m&#252;stecir iken bundan akdem gaybet ve fir&#257;r eden hay&#257;t&#305; ve hel&#257;k&#305; mal&#363;m olmayan Yani veled-i Dimo n&#257;m z&#305;mm&#299;nin d&#252;kk&#257;n-&#305; mezb&#363;rda mevc&#363;d olan e&#351;y&#257;s&#305; semen-i misilleriyle &#160;bey&#8216;e&#160;semenlerini ahz &#252; kabz ve h&#305;fza vas&#299;  ve kayy&#305;m nasb ve ta&#8217;y&#299;n olunan bakk&#257;l Petro veled-i Aleksi n&#257;m z&#305;mm&#299; iltim&#257;s&#305;yla g&#257;ib-i mezb&#363;r Yani z&#305;mm&#299;nin d&#252;kk&#257;nlar&#305;nda mevc&#363;de olub bey&#8216;</hi><hi style="font-size:8.5pt">&#160;</hi><hi>olunan e&#351;y&#257;s&#305; defteridir ki hirfet-i mezb&#363;run bazarba&#351;&#305;lar&#305; olan Osman yaz&#305;c&#305; ves&#257;ir bakk&#257;l ustalar&#305; ma&#8216;rifetiyle  tahr&#299;r  olunub vech-i &#257;t&#299; &#252;zere zikr olunur. Fi&#8217;l-yevmi&#8217;s-s&#257;min ve&#8217;l-&#305;&#351;r&#299;n min &#351;ehri&#160;Recebi&#8217;l-ferd li-sene&#160;&#305;&#351;rin ve mi&#8217;ete ve elf min hicreti men leh&#252;'l-izz&#252; ve'&#351;-&#351;eref 1120</hi> </p>

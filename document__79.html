@@ -138,6 +138,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/HKKHUNFESWUHVIVSYIQCPPSH/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi xml:space="preserve">Med&#299;ne-i &#220;sk&#252;dara t&#257;bi&#8216; Kuzguncuk karyesinde m&#252;temekkin iken bundan akdem h&#257;lik olan bakk&#257;l Manol veled-i Dimitri n&#257;m z&#305;mm&#299;nin ver&#257;seti zevce-i metr&#363;kesi Susana bt. Hristo n&#257;m nasr&#257;niye ile sulb&#299; sag&#299;r o&#287;ullar&#305; Nikola ve Tana&#351; ve sulbiye sag&#299;re k&#305;zlar&#305; Fotini ve Kokonaya inhis&#257;r&#305; lede&#8217;&#351;-&#351;er&#8216;i&#8217;l-enver m&#252;tehakk&#305;k oldukdan sonra zevce-i mers&#363;me Susana nasr&#257;niye kendi taraf&#305;ndan as&#257;leten evl&#257;d-&#305; s&#305;g&#257;r-&#305; merk&#363;munun tesviye-i emrlerini r&#252;&#8217;yete b&#257;-h&#252;ccet-i &#351;er&#8216;iye vas&#299; mansublar&#305; olma&#287;la ves&#257;yet taleb ve iltim&#257;s&#305;yla h&#257;lik merk&#363;mun tahr&#299;r  olunan terekesi defteridir ki ber vech-i &#257;t&#299; &#252;zere zikr olunur. </hi> <hi rend="background(yellow)">Fil yevm .. muharrem&#252;l haram sene &#8230;.</hi></p>

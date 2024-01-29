@@ -263,6 +263,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/ZERHUAXKLWKKTWWXLVSDJTRW/info.json', 'https://files.transkribus.eu/iiif/2/ZJXVZZGQFPOHIZNPKAWZZEKA/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Mahmiye-i Galata dahilinde Emekyemez mahallesinde s&#257;kin iken bundan akdem d&#252;y&#363;nu terekesinden&#160;ezyed&#160;oldu&#287;u&#160;h&#257;lde vef&#257;t eden Elhac Osman b. &#304;brahimin ver&#257;seti zevce-i menk&#363;ha-i metr&#363;kesi Afife bt. Mustafa ile sag&#299;r o&#287;lu Ali ve Mehmede ve sag&#299;re k&#305;z&#305; Fatmaya ve Amasyada s&#257;kine v&#257;lidesi Hadice bt. Abdull&#257;ha m&#252;nhas&#305;ra oldu&#287;u &#351;er&#8216;an&#160;z&#257;hir ve n&#252;m&#257;y&#257;n&#160;oldukdan sonra s&#305;g&#257;r-&#305; mezb&#363;runun tevsiye-i emirlerine k&#305;bel-i &#351;erden mans&#363;b-u vas&#299;si olan olan Mustafa Be&#351;e b.[] ma&#8216;rifetiyle m&#252;teveff&#257;-i mezb&#363;run tahr&#299;r olunan terekesidir ki ber vech-i &#257;t&#299; zikr olunur. Fi&#8217;s-s&#257;n&#299;&#160;min Saferi&#8217;l-hayr&#160;1133</hi></p>

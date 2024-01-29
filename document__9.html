@@ -186,6 +186,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/NPPBHBFOZKQQTUJOLKWEBQVQ/info.json', 'https://files.transkribus.eu/iiif/2/DNKCWOLHINFXKMTRWZPGNEFY/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Mahr&#363;se-i Galata tev&#257;bi&#8216;inden&#160;Kur&#351;unlu Mahzen Kapusu d&#257;hilinde Mustafa Pa&#351;a mahallesinde s&#257;kin iken d&#252;y&#363;nu&#160;terekesinden ezyed oldu&#287;u h&#257;lde vef&#257;t eden Mustafa Be&#351;e b. Abdull&#257;h&#305;n ver&#257;seti zevce-i menk&#363;ha-i metr&#363;kesi F&#257;tma bt. Mehmede sag&#299;r k&#305;zlar&#305; Zeyneb ve Hadiceye ve mezb&#363;r F&#257;tma Hatunun batn&#305;nda mevc&#363;d olan hamle m&#252;nhas&#305;ra oldu&#287;u z&#257;hir ve m&#252;te&#8216;ayyen oldukdan sonra s&#257;gir-i mezb&#363;run v&#257;lidesi tesviye-i emrlerini ve m&#252;teveff&#257;-y&#305; mezb&#363;run terekesinden d&#252;yunu &#351;eriyye ayn&#252;&#8217;l ay&#257;n k&#305;bel-i&#160;&#351;er&#8217;den mans&#363;b vas&#299;leri olan F&#257;tma Hatun ma&#8217;rifetiyle m&#252;teveff&#257;-i mezb&#363;run tahr&#299;r olunan terekesidir ki vech-i &#257;t&#299; &#252;zere zikr olunur. Fi&#8217;l-yevmi&#8217;s-s&#257;lis min &#351;ehr-i Reb&#299; &#8216;&#252;lahir 1125</hi>  </p>

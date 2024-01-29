@@ -420,6 +420,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/ACLNGQZIJFAGOSEBXXKPNRUA/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi xml:space="preserve">Mahmiye-i Galata muz&#257;f&#257;t&#305;ndan&#160;&#304;stinye n&#257;hiyesine t&#257;bi&#8216; Yenik&#246;y kasabas&#305;nda m&#252;temekkin iken&#160;bundan akdem&#160;halik olan bakk&#257;l&#160;taifesinden Filibi veled-i Yorgi&#160;n&#257;m&#160;z&#305;mm&#299;nin z&#257;hirde&#160;v&#257;ris-i ma&#8216;r&#363;fu olmayub muhallef&#257;t&#305;n&#305; mecm&#363;&#8216;u&#160;beyt&#252;lm&#257;le &#257;id ve r&#257;ci&#8216; olma&#287;la mahmiye-i mezb&#363;re ve tev&#257;bi&#8217;nde beyt&#252;lm&#257;l em&#299;ni olan S&#252;leyman A&#287;a b. Selim n&#257;m kimesne talebiyle h&#257;lik mezb&#363;run muhallef&#257;t&#305; tahr&#299;r oldu&#287;u defterdir ki ber-vech-i &#257;t&#299; zikr olunur. </hi> </p>

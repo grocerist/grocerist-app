@@ -317,6 +317,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/HEWQJJRIGTXJJIDPRLXTSSFU/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi xml:space="preserve">Med&#299;ne-i &#220;sk&#252;darda H&#252;seyin A&#287;a mahallesinde A&#287;a hamam&#305; n&#257;m mahalde bakk&#257;l iken bundan akdem h&#257;lik olan Dimitri v. Polizo n&#257;m z&#305;mm&#299;nin ver&#257;seti zevce-i metr&#363;kesi olub vil&#257;yet-i Rumilinde Yeni&#351;ehir Fenar kaz&#257;s&#305;na muz&#257;fe Agrefe n&#257;hiyesine tabi Zo&#287;lub? n&#257;m karyede m&#252;temekkin Katerina bt. Askarlat n&#257;m nasr&#257;niye ile sulb&#299; sag&#299;r o&#287;lu Astaryo ve sulbiye sag&#299;re k&#305;zlar&#305; Ma&#287;delin&#231;e ve Agori&#231;eye zevce-i mers&#363;me Katerina nasr&#257;niyenin batn&#305;nda m&#252;tebeyyin hamle m&#252;nhas&#305;ra oldu&#287;u tahakkukundan sonra h&#257;lik merk&#363;mun med&#299;ne-i mezb&#363;rede olan terekesini kabz </hi><hi rend="background(yellow)">&#8230;.</hi><hi xml:space="preserve"> merk&#363;meye irs&#257;l ve &#299;s&#257;le k&#305;bel-i&#160;&#351;er&#8216;den vas&#299; nasb olunan &#350;erbet&#231;i Konstantin veled-i Vasil n&#257;m z&#305;mm&#299;nin taleb iltim&#257;s&#305;yla h&#257;lik merk&#363;mun tahr&#299;r ve terk&#299;m olunan terekesi defteridir ki ber vech-i &#257;t&#299; zikr olunur. Fi 11</hi> <hi rend="background(yellow)">&#8230;</hi><hi xml:space="preserve"> 1200</hi></p>

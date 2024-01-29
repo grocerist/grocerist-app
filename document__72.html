@@ -612,6 +612,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/TWIALHVSQPDICDHWQNCIIWRM/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi xml:space="preserve">Med&#299;ne-i &#220;sk&#252;darda Kefere mahallesinde s&#257;kin  iken bundan akdem h&#257;lik olan bakk&#257;l Kosta veled-i Piyo veled-i Yani n&#257;m z&#305;mm&#299;nin ver&#257;seti zevce-i metr&#363;kesi Yamande bt. Konstantin n&#257;m nasr&#257;niye ile sulb&#299; sag&#299;r o&#287;lu Konstantin ve sulbiye sag&#299;re k&#305;z&#305; Manoryaya m&#252;nhas&#305;ra oldu&#287;u &#351;er&#8217;an tahakkukundan sonra sag&#299;r&#257;n-&#305; mezb&#363;r&#257;n&#305;n analar&#305; ve tesviye-i emrlerine ve m&#257;l-&#305; mevr&#363;slar&#305;n&#305; h&#305;fza k&#305;bel-i &#351;erden vas&#299; nasb ve ta&#8217;y&#299;n olunan zevce-i mezb&#363;re Yamande n&#257;m nasr&#257;niye taleb ve marifeti hayyiz-i naz&#305;r ta&#8217;y&#299;n olunan bakk&#257;l Yorgi veled-i Arkasil n&#257;m z&#305;mm&#299; ma&#8216;rifetiyle  tahr&#299;r ve tahm&#299;n olunan h&#257;lik mezb&#363;run terekesidir ki ber vech-i &#257;t&#299; zikr olunur. </hi></p>

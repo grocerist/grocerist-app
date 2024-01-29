@@ -459,6 +459,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/VYAIMUHBSRXXKYQMUQCSMZRC/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Vil&#257;yet-i Anadoluda v&#257;ki&#8216; &#220;rg&#252;p kasabas&#305; a&#8216;m&#257;linden olub mahr&#363;se-i Galatada Karak&#246;yde Sand&#305;k&#231;&#305;larba&#351;&#305; n&#257;m mahalde bakk&#257;l oldu&#287;u h&#257;lde bundan akdem m&#252;sta&#287;rak&#160;bi&#8217;d-d&#252;y&#363;n masl&#363;ben h&#257;lik olan Nikola veled-i Ula&#351; veled-i Yani n&#257;m z&#305;mm&#299;nin hasren v&#257;risleri olan zevcesi Destina ve sag&#299;r o&#287;lu Haraknos ve sag&#299;re k&#305;z&#305; Marya mevc&#363;d olmama&#287;lar&#305;yla terekesine Galata voyvodas&#305; beyt&#252;lm&#257;l em&#299;ni olan Elhac Ahmed A&#287;a taraf&#305;ndan veresesi gayb oldu&#287;una bin&#257;en m&#252;dahale olunub l&#257;kin h&#257;lik-i mezb&#363;run d&#252;y&#363;n-&#305;&#160;kes&#299;resi olmak hasebiyle terekesini ahz &#252; kabza ve semeni misilleriyle bey&#8217; ve d&#252;y&#363;n-&#305; m&#252;sbitesini edaya b&#257;-h&#252;ccet-i&#160;&#351;er&#8216;iye k&#305;bel-i&#160;&#351;er&#8216;den&#160;vas&#299; nasb olunan b&#257;z&#257;rba&#351;&#305; Elhac Halil b. Mustafa ma&#8216;rifetiyle</hi>  <hi style="font-size:8.5pt">&#160;</hi><hi xml:space="preserve">mezb&#363;r Nikolan&#305;n d&#252;kk&#257;n-&#305; mezb&#363;rda tahr&#299;r ve bey&#8217; ve beyne&#8217;l-gurem&#257;&#160;tevz&#299;&#8216; ve taks&#299;m olunan muhallef&#257;t&#305; defterdir ki vech-i &#257;t&#299; &#252;zere zikr olunur. Hurrire Fi&#8217;l-yevmi&#8217;l h&#257;mis min &#351;ehri Reb&#299;&#699;i&#8217;l-&#257;hir li sene tis&#8217;a ve erbain ve mie ve elf. </hi></p>

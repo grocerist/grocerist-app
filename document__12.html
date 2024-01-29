@@ -216,6 +216,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/TCKIRWFWZHWNMJJMHAJMLSGM/info.json', 'https://files.transkribus.eu/iiif/2/AQFTAVMWEVRALHONAFJTFRNC/info.json', 'https://files.transkribus.eu/iiif/2/QHTWKOPMTJNFAQUVLIWPJLSJ/info.json', 'https://files.transkribus.eu/iiif/2/UOUVALOVJXJFRBIQDVVAKGPR/info.json', 'https://files.transkribus.eu/iiif/2/EBZZWKSEILDDEBMWSPMRCFJS/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><anchor xml:id="xmlid__heading_h_1fob9te"/><hi>Mahr&#363;se-i Galata&#8217;da Sult&#257;n Bayezid mahallesinde m&#252;temekkin iken bundan akdem h&#257;lik olan bakk&#257;l Dimitri veled-i Hristo veled-i Nikola n&#257;m z&#305;mm&#299;nin ver&#257;seti zevce-i metr&#363;kesi Marya bt. Yorgaki nam nasr&#257;niyeye ve batn-&#305; v&#257;hidde mevc&#363;d ve m&#252;tehakk&#305;k c&#252;mle m&#252;nhas&#305;ra oldu&#287;u z&#257;hir oldukdan sonra h&#257;lik mezb&#363;run h&#257;mili hamli mezb&#363;r zevcesi merk&#363;me Marya ma&#8216;rifetiyle&#160;tahr&#299;r olunan muhallef&#257;t-&#305; defteridir ki vech-i &#257;t&#299; &#252;zere zikr olunur. Hurrira ev&#257;s&#305;t &#350;evv&#257;li&#8217;l-m&#252;kerrem 128</hi></p>

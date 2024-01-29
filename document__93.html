@@ -138,6 +138,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/WLMCKYTAIJFFGUKNGUIGAJIM/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Hav&#257;ss-&#305;&#160;ref&#299;&#8216;a kasabas&#305;na t&#257;bi&#8216;&#160; K&#252;&#231;&#252;k n&#257;m karyede m&#252;temekkin iken bundan akdem h&#257;lik olan &#304;&#351;rapo veled-i Yaninin ver&#257;seti zevce-i metr&#363;kesi Anya bt. Aleksand&#305;ri o&#287;ullar&#305; Penaki ve Konstantin ve sag&#299;r o&#287;ullar&#305; Yorgaki ve Nikolakiye ve keb&#299;re k&#305;z&#305; Arhuniye ve sag&#299;re k&#305;z&#305; Fotiye m&#252;nhas&#305;ra olma&#287;la &#351;er&#8216;an&#160;z&#257;hir&#160;ve m&#252;te&#8216;ayyen&#160;oldukdan sonra s&#305;g&#257;r-&#305; mezb&#363;runun b&#257;-h&#252;ccet-i&#160;&#351;er&#8216;iyye&#160;vasiyy-i muht&#257;rlar&#305; olan Dimitri veled-i b&#257;ba Tana&#351; ile zevcesi mezb&#363;re Anya ve o&#287;ullar&#305; mezb&#363;ran Penaki ve Konstantin ve Arhundi taleb ve ma&#8216;rifetiyle tahr&#299;r olunan tereke-i h&#257;lik-i mers&#363;mdur ki vech-i &#257;t&#299; zikr olunur.  &#160;Fi&#8217;l-yevmi&#8217;l-&#305;&#351;r&#299;n min Reb&#299; &#8216;ulevvel&#160;li-sene&#160;tis&#8217;a ve ve&#160;erba&#8216;&#299;n&#160;ve mie ve elf. 1149</hi></p>

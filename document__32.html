@@ -123,6 +123,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/VXJSGMUGRMWEGXOISDWBAGJJ/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Fi&#8217;l-asl Med&#299;ne-i Yeni&#351;ehir muzaf&#257;t&#305;ndan A&#287;rafa n&#257;hiyesi ah&#257;l&#299;sinden olub mahr&#363;se-i Galata h&#257;ricinde bakk&#257;l oldu&#287;u halde h&#257;lik olan Dimitri veled-i Todori veled-i Tafirenin z&#257;hirde var&#299;s-i ma&#8217;r&#363;fu olmamak &#252;zere mahr&#363;se-i mezk&#363;re ve tev&#257;bi&#8217;nde voyvoda ve beyt&#252;lm&#257;l &#257;mme ve h&#257;ssa em&#299;ni fahr&#252;&#8217;l-e&#351;b&#257;h&#160;&#304;brahim A&#287;a b. Mahmud taraf&#305;ndan um&#363;r-&#305; beyt&#252;lm&#257;l&#305; r&#252;&#8217;yete vek&#299;l-i m&#252;secceli Yusuf A&#287;a b. Ahmed terike-i halik-i mezk&#363;ru zabt ettikten sonra bakk&#257;l t&#257;ifesinden Yanaki veled-i Kosta h&#257;lik mesf&#363;run m&#257;rru&#8217;z-zikr A&#287;refe n&#257;hiyesinde m&#252;temekkin zevcesi Seltane bt. Yani ve sulb&#299; sag&#299;r o&#287;lu Yorgaki ve sag&#299;re k&#305;z&#305; Agori&#231;enin hisse-i &#305;rsiyelerini zabt ve h&#305;fza vasiyy-i muht&#257;r oldu&#287;u vek&#299;l-i mezb&#363;r Yusuf A&#287;a muv&#257;cehesinde t&#257;ife-i mezk&#363;reden bakk&#257;l Dimitri veled-i Drakodakles veled-i Yani &#351;ah&#257;detleriyle ba&#8216;de&#8217;l ispat ve&#8217;l h&#252;km vek&#299;l-i mezb&#363;r yedinden vas&#299;-i mesf&#363;run ahzu kabz etti&#287;i tereke-i h&#257;lik-i mesf&#363;rdur ki ber vech-i &#257;t&#299; zikr olunur. Fi&#8217;l-yevmi&#8217;t-t&#257;si&#8216;&#160;min a&#351;er&#160; min Cum&#257;del&#363;l&#257; sene &#160;erba&#8216;a ve&#160;sittin ve mie ve elf.  1164</hi></p>

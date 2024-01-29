@@ -266,6 +266,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/UCVLFPDHPYXCAJEUIKWEENRD/info.json', 'https://files.transkribus.eu/iiif/2/MJOBUDGHXIGBKYQCZWWOSSMA/info.json', 'https://files.transkribus.eu/iiif/2/OHORLNIMOVHDKIVMRFIZAWXV/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Mahr&#363;se-i Galata h&#257;ricinde Hasan A&#287;a mahallesinde m&#252;temekkin iken h&#257;lik olan Bakk&#257;l Yorgi n&#257;m&#160;z&#305;mm&#299;nin z&#257;hirde v&#257;ris-i&#160;ma&#8216;r&#363;fu olmama&#287;la mecm&#363;&#8216;&#160;terekesi c&#257;nib-i&#160;beyt&#252;lm&#257;la &#257;id olma&#287;&#305;n mahr&#363;se-i mezb&#363;rede beyt&#252;lm&#257;l em&#299;ni olan fahr&#252;&#8217;l-akr&#257;n Ali ibn-i Ahmed taraf&#305;ndan um&#363;r-&#305; beyt&#252;lm&#257;l&#305; r&#252;&#8217;yete</hi>  <hi style="font-size:8.5pt">&#160;</hi><hi>vek&#299;l-i m&#252;secceli olan Abdull&#257;h talebiyle h&#257;lik mezb&#363;run tahr&#299;r olunan muhallef&#257;t&#305; defteridir ki vech-i &#257;t&#299; &#252;zere zikr olunur. F&#299; 2 &#350;aban 1123</hi></p>

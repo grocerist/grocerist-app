@@ -590,6 +590,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/LRGXYONRTYKZMLSCTLWANVSZ/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Med&#299;ne-i &#220;sk&#252;darda Arakiyeci Elhac Mehmed mahallesinde Kas&#305;m A&#287;a &#199;e&#351;mesi kurbunda v&#257;ki&#8216;H&#252;seyin Efendi d&#252;kk&#257;n&#305; demekle ma&#8216;r&#363;f bakk&#257;l d&#252;kk&#257;n&#305;nda m&#252;steciren m&#252;temekkin iken bundan akdem gaybet-i m&#252;nkat&#305;&#8216;a  ile g&#257;ib olub hay&#257;t ve mem&#257;t&#305; ma&#8216;l&#363;m olmayub mefk&#363;d olan Yani veled-i Papa Dimitraki n&#257;m z&#305;mm&#299;nin d&#252;kk&#257;n-&#305; mezb&#363;rede mevc&#363;d ecn&#257;s-&#305; zeh&#257;ir ahz ve kabz ve bey&#8217;e k&#305;bel-i&#160;&#351;er&#8216;den vas&#299; ve kayy&#305;m nasb ve ta&#8217;y&#299;n olunan di&#287;er Yani veled-i Konstantin n&#257;m z&#305;mm&#299;ye ve bazarba&#351;&#305; ve bakk&#257;l ustalar&#305; ma&#8216;rifetiyle g&#257;ib merkumun tahr&#299;r ve terk&#299;m olunan ecn&#257;s-&#305; zeh&#257;ir defteridir ki ber vech-i &#257;t&#299; zikr olunur. Fi 10 min&#160;Reb&#299; &#8216;&#252;l&#257;hir 1194</hi> </p>

@@ -282,6 +282,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/LFIVMBEYPBUXELRGRKXVHQGJ/info.json', 'https://files.transkribus.eu/iiif/2/QLSDOYEXMKUVPJEEBHXGXJHH/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Mahr&#363;se-i Galata tev&#257;bi&#8216;inden&#160;kasaba-i Kas&#305;mpa&#351;ada Elhac Hasan mahallesinde s&#257;kin iken bundan akdem vef&#257;t eden Bakk&#257;l Ali Be&#351;e b. Mehmed b. Abdull&#257;h n&#257;m m&#252;tevvef&#257;n&#305;n ver&#257;seti zevce-i&#160;menk&#363;he-i metr&#363;kesi Hadice bt. Mustafa n&#257;m hatun ile sulbiye&#160;sag&#299;re k&#305;zlar&#305; Amineye ve Afifeye ve&#160;li-ebeveyn&#160;er kar&#305;nda&#351;&#305;&#160;Mustafa kapudana m&#252;nhas&#305;ra oldu&#287;u lede&#8217;&#351; &#351;er&#8216;i z&#257;hir ve m&#252;tebeyyin oldukdan sonra mezb&#363;re ile kar&#305;nda&#351;&#305; mezb&#363;r Mustafa kapudan ma&#8216;rifetiyle</hi> <hi style="font-size:8.5pt">&#160;</hi><hi xml:space="preserve">m&#252;teveff&#257;-i mezb&#363;run tahr&#299;r olunan terekesidir ki zikr olunur. </hi></p>

@@ -288,6 +288,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/QGWUWDFZPRCIJGVYNRQSWACJ/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi xml:space="preserve">Mahr&#363;se-i Galataya muz&#257;fe &#304;stinye n&#257;hiyesine </hi><hi style="font-size:8.5pt">&#160;</hi><hi xml:space="preserve">t&#257;bi&#8216; Sar&#305;yerde v&#257;ki&#8216;&#160;Yeni mahallede m&#252;temekkin iken bundan akdem h&#257;lik olan Bakk&#257;l Yorgi veled-i Kirikorun z&#257;hirde v&#257;ris-i ma&#8216;r&#363;fu&#160;olmayub bi&#8217;l-c&#252;mle terekesi&#160;c&#257;nib-i beyt&#252;lm&#257;la &#257;id olma&#287;&#305;n mahr&#363;se-i mezk&#363;re ve tev&#257;bi&#8216;nde voyvoda ve beyt&#252;lm&#257;l &#257;mme ve h&#257;ssa em&#299;ni </hi> <hi style="font-size:8.5pt">&#160;</hi><hi>H&#257;ceg&#257;n-&#305; D&#299;v&#257;n-&#305; H&#252;m&#257;y&#363;n H&#252;seyin &#350;&#252;kr&#252; Efendi b. Elhac Hasan&#305;n um&#363;r-&#305; beyt&#252;lm&#257;l&#305;&#160;r&#252;&#8217;yete vek&#299;l-i m&#252;secceli Mehmed Efendi b. Elhac Abdull&#257;h talebi ve iltim&#257;slar&#305;yla tahr&#299;r  olunan tereke-i h&#257;lik-i merk&#363;mdur ki ber vech-i &#257;t&#299; zikr olunur. Fi&#8217;l-yevmi&#8217;s-san&#299;&#160;a&#351;ar&#160;min -Cemaziye&#8217;l-evvel sene&#160;a&#351;ara ve&#160;mi&#8217;eteyn&#160;ve elf. 12 Cemaziye&#8217;l-evvel 1210</hi> </p>

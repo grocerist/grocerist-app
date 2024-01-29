@@ -121,6 +121,20 @@
         </div>
         <div class="col">
             
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script type="text/javascript">
+                    var viewer = OpenSeadragon({
+                        id: "openseadragon1",
+                        sequenceMode: true,
+                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        tileSources: ['https://files.transkribus.eu/iiif/2/QVZOGRPFQDWXTLZXCUPLIYSR/info.json']
+                });
+                </script>
+            </div>
+            
             <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
             
             <p xmlns="http://www.tei-c.org/ns/1.0" style="text-align: justify;"><hi>Med&#299;ne-i hazret-i Eb&#299; Eyy&#252;b&#160;el-Ens&#257;r&#299;&#160;-radiye anhu Rabb&#252;hi&#8217;l-b&#257;r&#299;- mahall&#257;t&#305;ndan &#350;ah Sultan mahallesinde s&#257;kin iken bundan akdem vef&#257;t eden bakk&#257;l Ahmed Be&#351;e b. Abdull&#257;h&#305;n terekesinin s&#252;l&#252;s&#252;nden ves&#257;yas&#305;n&#305; tenf&#238;ze&#160;b&#257;-h&#252;ccet-i&#160;&#351;er&#8216;iye vasiyy-i muht&#257;r&#305; olan H&#252;seyin &#199;elebi b. Mustafan&#305;n ber-m&#363;ceb-i defter-i kass&#257;m-&#305; asker&#299;&#160; tereke-i m&#252;teveff&#257;-y&#305; mezb&#363;rdan kabz eyledi&#287;i s&#252;l&#252;s ve mas&#257;r&#305;fi defteridir ber-vech-i &#257;t&#299; zikrolunur. Fi&#8217;l-yevmi&#8217;l-h&#257;mis&#160;ve&#8217;l-&#305;&#351;r&#299;n min- Zilhicceti&#8217;&#351;-&#351;er&#299;fe&#160;li-sene sem&#257;n&#160;ve&#8217;l-&#305;&#351;r&#299;n ve mie ve elf. 1128</hi></p>
