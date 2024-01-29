@@ -1,5 +1,9 @@
 const dataUrl = 'json_dumps/charts.json'
-
+const titleStyle =  {
+        color: '#236FAD',
+        fontWeight: 'bold',
+        fontSize: '30px'
+      }
 function setVisibilityForFirstElement (chartData) {
   chartData[1].forEach((element, index) => {
     element.visible = index === 0 // Set visible: true for the first element, false for all others
@@ -12,7 +16,9 @@ function createPieChart (containerId, title, data) {
       type: 'pie'
     },
     title: {
-      text: title
+
+      text: title,
+      style: titleStyle
     },
     tooltip: {
       valueSuffix: '%'
@@ -46,7 +52,8 @@ function createColumnChart (containerId, title, data, drilldownData) {
       enabled: false
     },
     title: {
-      text: title
+      text: title,
+      style: titleStyle
     },
     subtitle: {
       text: 'Click the columns to view the goods in that category'
@@ -111,7 +118,8 @@ function createSplineChart (
       type: 'spline'
     },
     title: {
-      text: title
+      text: title,
+      style: titleStyle
     },
     subtitle: {
       text: 'Select more categories to display their numbers'
