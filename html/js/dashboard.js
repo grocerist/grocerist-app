@@ -68,7 +68,7 @@ function createColumnChart (containerId, title, data, drilldownData) {
       }
     },
     tooltip: {
-      headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+      headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
       pointFormat:
         '<span style="color:{point.color}">{point.name}</span>: mentioned in <b>{point.y}</b> documents<br/>'
     },
@@ -146,7 +146,7 @@ function createSplineChart (
     },
     tooltip: {
       headerFormat: '<span>{point.key}</span> AH<br>',
-      pointFormat: `<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b>${tooltipText}`,
+      pointFormat: `<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b>${tooltipText}<br/>`,
       shared: true
     },
     plotOptions: {
