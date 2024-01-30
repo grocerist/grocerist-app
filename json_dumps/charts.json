@@ -1,0 +1,4418 @@
+{
+  "religions": [
+    {
+      "name": "Muslim",
+      "y": 21.49
+    },
+    {
+      "name": "Non muslim|Orthodox",
+      "y": 61.16
+    },
+    {
+      "name": "Non muslim|Armenian",
+      "y": 0.83
+    },
+    {
+      "name": "Unknown",
+      "y": 0.83
+    },
+    {
+      "name": "Non muslim",
+      "y": 15.7
+    }
+  ],
+  "categories": [
+    {
+      "name": "Oil Seeds",
+      "y": 47,
+      "drilldown": "Oil Seeds"
+    },
+    {
+      "name": "Snacks",
+      "y": 52,
+      "drilldown": "Snacks"
+    },
+    {
+      "name": "Cooking Oils",
+      "y": 58,
+      "drilldown": "Cooking Oils"
+    },
+    {
+      "name": "Fats",
+      "y": 58,
+      "drilldown": "Fats"
+    },
+    {
+      "name": "Dairy",
+      "y": 59,
+      "drilldown": "Dairy"
+    },
+    {
+      "name": "Cheese Assortment",
+      "y": 48,
+      "drilldown": "Cheese Assortment"
+    },
+    {
+      "name": "Ka\u015fkaval Assortment",
+      "y": 33,
+      "drilldown": "Ka\u015fkaval Assortment"
+    },
+    {
+      "name": "Dried Goods",
+      "y": 64,
+      "drilldown": "Dried Goods"
+    },
+    {
+      "name": "Legumes",
+      "y": 53,
+      "drilldown": "Legumes"
+    },
+    {
+      "name": "Grains",
+      "y": 61,
+      "drilldown": "Grains"
+    },
+    {
+      "name": "Dried Fruits",
+      "y": 40,
+      "drilldown": "Dried Fruits"
+    },
+    {
+      "name": "Raisin Assortment",
+      "y": 35,
+      "drilldown": "Raisin Assortment"
+    },
+    {
+      "name": "Fig Assortment",
+      "y": 25,
+      "drilldown": "Fig Assortment"
+    },
+    {
+      "name": "Condiments",
+      "y": 61,
+      "drilldown": "Condiments"
+    },
+    {
+      "name": "Molasses Assortment",
+      "y": 38,
+      "drilldown": "Molasses Assortment"
+    },
+    {
+      "name": "Sweeteners",
+      "y": 48,
+      "drilldown": "Sweeteners"
+    },
+    {
+      "name": "Beverages",
+      "y": 40,
+      "drilldown": "Beverages"
+    },
+    {
+      "name": "Honey Assortment",
+      "y": 36,
+      "drilldown": "Honey Assortment"
+    },
+    {
+      "name": "Baking Goods",
+      "y": 43,
+      "drilldown": "Baking Goods"
+    },
+    {
+      "name": "Ingredients",
+      "y": 54,
+      "drilldown": "Ingredients"
+    },
+    {
+      "name": "Spices and Add Ons",
+      "y": 57,
+      "drilldown": "Spices and Add Ons"
+    },
+    {
+      "name": "Sour Flavorings",
+      "y": 49,
+      "drilldown": "Sour Flavorings"
+    },
+    {
+      "name": "Produce",
+      "y": 49,
+      "drilldown": "Produce"
+    },
+    {
+      "name": "Vegetables",
+      "y": 47,
+      "drilldown": "Vegetables"
+    },
+    {
+      "name": "Olive Assortment",
+      "y": 44,
+      "drilldown": "Olive Assortment"
+    },
+    {
+      "name": "Deli",
+      "y": 52,
+      "drilldown": "Deli"
+    },
+    {
+      "name": "Non-foods",
+      "y": 58,
+      "drilldown": "Non-foods"
+    },
+    {
+      "name": "Pickle",
+      "y": 12,
+      "drilldown": "Pickle"
+    },
+    {
+      "name": "Fish Assortment",
+      "y": 17,
+      "drilldown": "Fish Assortment"
+    },
+    {
+      "name": "Animal Food",
+      "y": 27,
+      "drilldown": "Animal Food"
+    },
+    {
+      "name": "Brine",
+      "y": 10,
+      "drilldown": "Brine"
+    },
+    {
+      "name": "Durable Goods",
+      "y": 20,
+      "drilldown": "Durable Goods"
+    },
+    {
+      "name": "Fresh Fruits",
+      "y": 10,
+      "drilldown": "Fresh Fruits"
+    },
+    {
+      "name": "Soap Assortment",
+      "y": 35,
+      "drilldown": "Soap Assortment"
+    },
+    {
+      "name": "Utensils",
+      "y": 61,
+      "drilldown": "Utensils"
+    },
+    {
+      "name": "Broom Assortment",
+      "y": 11,
+      "drilldown": "Broom Assortment"
+    },
+    {
+      "name": "Oil Assortment",
+      "y": 4,
+      "drilldown": "Oil Assortment"
+    },
+    {
+      "name": "Pastrami Assortment",
+      "y": 3,
+      "drilldown": "Pastrami Assortment"
+    },
+    {
+      "name": "Rice Assortment",
+      "y": 1,
+      "drilldown": "Rice Assortment"
+    },
+    {
+      "name": "Vermicelli Assortment",
+      "y": 3,
+      "drilldown": "Vermicelli Assortment"
+    }
+  ],
+  "categories_drilldown": [
+    {
+      "name": "Oil Seeds",
+      "id": "Oil Seeds",
+      "data": [
+        [
+          "Walnut",
+          12
+        ],
+        [
+          "Pistachio",
+          18
+        ],
+        [
+          "Chestnut",
+          4
+        ],
+        [
+          "Almond",
+          11
+        ],
+        [
+          "Nutmeat",
+          1
+        ],
+        [
+          "Hazelnut",
+          41
+        ],
+        [
+          "Kabuklu ac\u0131badem",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Snacks",
+      "id": "Snacks",
+      "data": [
+        [
+          "Kuru \u00fcz\u00fcm",
+          3
+        ],
+        [
+          "Chestnut",
+          4
+        ],
+        [
+          "Kabuklu badem",
+          1
+        ],
+        [
+          "Kabuklu ac\u0131badem",
+          1
+        ],
+        [
+          "Walnut",
+          12
+        ],
+        [
+          "Roasted chickpea",
+          2
+        ],
+        [
+          "Lob fig",
+          2
+        ],
+        [
+          "\u00dcz\u00fcm",
+          5
+        ],
+        [
+          "Oleaster",
+          3
+        ],
+        [
+          "Pistachio",
+          18
+        ],
+        [
+          "K\u0131z\u0131l",
+          3
+        ],
+        [
+          "K\u00fcfter",
+          5
+        ],
+        [
+          "Nutmeat",
+          1
+        ],
+        [
+          "Figs",
+          22
+        ],
+        [
+          "Hazelnut",
+          41
+        ],
+        [
+          "Beylerce",
+          14
+        ],
+        [
+          "Siyah",
+          10
+        ],
+        [
+          "Sar\u0131ca fig",
+          2
+        ],
+        [
+          "Dried pear",
+          2
+        ],
+        [
+          "Dried cherry",
+          1
+        ],
+        [
+          "Razaki",
+          13
+        ],
+        [
+          "Cornelian cherry",
+          3
+        ],
+        [
+          "Almond",
+          11
+        ],
+        [
+          "Pestil",
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Cooking Oils",
+      "id": "Cooking Oils",
+      "data": [
+        [
+          "Olive Oil",
+          48
+        ],
+        [
+          "Revgan-\u0131 \u00e7ervi\u015f",
+          6
+        ],
+        [
+          "Ghee, Clarified Butter",
+          45
+        ],
+        [
+          "Revgan-\u0131 Leh",
+          1
+        ],
+        [
+          "\u00c7alg\u0131 revgan-\u0131 sade",
+          0
+        ],
+        [
+          "Kak\u0131rdak",
+          1
+        ],
+        [
+          "Sesame Oil",
+          8
+        ],
+        [
+          "Linseed Oil",
+          4
+        ],
+        [
+          "Tallow",
+          5
+        ],
+        [
+          "Dolama Ya\u011f\u0131",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Fats",
+      "id": "Fats",
+      "data": [
+        [
+          "Olive Oil",
+          48
+        ],
+        [
+          "Revgan-\u0131 \u00e7ervi\u015f",
+          6
+        ],
+        [
+          "Ghee, Clarified Butter",
+          45
+        ],
+        [
+          "Revgan-\u0131 Leh",
+          1
+        ],
+        [
+          "\u00c7alg\u0131 revgan-\u0131 sade",
+          0
+        ],
+        [
+          "Kak\u0131rdak",
+          1
+        ],
+        [
+          "Sesame Oil",
+          8
+        ],
+        [
+          "Linseed Oil",
+          4
+        ],
+        [
+          "Tallow",
+          5
+        ],
+        [
+          "Dolama Ya\u011f\u0131",
+          1
+        ],
+        [
+          "Tahini",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Dairy",
+      "id": "Dairy",
+      "data": [
+        [
+          "Ghee, Clarified Butter",
+          45
+        ],
+        [
+          "Balkan cheese",
+          1
+        ],
+        [
+          "Mudurnu peyniri",
+          1
+        ],
+        [
+          "\u00c7alg\u0131 revgan-\u0131 sade",
+          0
+        ],
+        [
+          "Yogurt",
+          1
+        ],
+        [
+          "\u00c7orlu cheese",
+          3
+        ],
+        [
+          "Torba yo\u011furt",
+          1
+        ],
+        [
+          "Taze peynir",
+          1
+        ],
+        [
+          "Ka\u015far cheese",
+          2
+        ],
+        [
+          "Goat cheese",
+          4
+        ],
+        [
+          "Yerli ka\u015fkaval",
+          1
+        ],
+        [
+          "\u00c7orlu ka\u015fkaval\u0131",
+          2
+        ],
+        [
+          "Cheese",
+          3
+        ],
+        [
+          "Kashkaval",
+          32
+        ],
+        [
+          "Tulum peyniri",
+          31
+        ],
+        [
+          "Karag\u00fcmr\u00fck tulum cheese",
+          1
+        ],
+        [
+          "Egg",
+          6
+        ],
+        [
+          "Leh ka\u015fkaval\u0131",
+          2
+        ],
+        [
+          "Salamura peynir",
+          2
+        ],
+        [
+          "Dil peyniri",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Cheese Assortment",
+      "id": "Cheese Assortment",
+      "data": [
+        [
+          "Goat cheese",
+          4
+        ],
+        [
+          "Cheese",
+          3
+        ],
+        [
+          "Karag\u00fcmr\u00fck tulum cheese",
+          1
+        ],
+        [
+          "Leh ka\u015fkaval\u0131",
+          2
+        ],
+        [
+          "Kashkaval",
+          32
+        ],
+        [
+          "\u00c7orlu cheese",
+          3
+        ],
+        [
+          "Balkan cheese",
+          1
+        ],
+        [
+          "Mudurnu peyniri",
+          1
+        ],
+        [
+          "Yerli ka\u015fkaval",
+          1
+        ],
+        [
+          "Tulum peyniri",
+          31
+        ],
+        [
+          "Taze peynir",
+          1
+        ],
+        [
+          "Ka\u015far cheese",
+          2
+        ],
+        [
+          "Salamura peynir",
+          2
+        ],
+        [
+          "Dil peyniri",
+          1
+        ],
+        [
+          "\u00c7orlu ka\u015fkaval\u0131",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Ka\u015fkaval Assortment",
+      "id": "Ka\u015fkaval Assortment",
+      "data": [
+        [
+          "Leh ka\u015fkaval\u0131",
+          2
+        ],
+        [
+          "\u00c7orlu ka\u015fkaval\u0131",
+          2
+        ],
+        [
+          "Kashkaval",
+          32
+        ],
+        [
+          "Yerli ka\u015fkaval",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Dried Goods",
+      "id": "Dried Goods",
+      "data": [
+        [
+          "Kuru \u00fcz\u00fcm",
+          3
+        ],
+        [
+          "\u015eorbal\u0131k arpa",
+          0
+        ],
+        [
+          "K\u0131z\u0131l \u015eariyye",
+          1
+        ],
+        [
+          "Wheat",
+          9
+        ],
+        [
+          "Lentil",
+          31
+        ],
+        [
+          "Bean",
+          9
+        ],
+        [
+          "Broad bean",
+          13
+        ],
+        [
+          "Edremit siyah\u0131 \u00fcz\u00fcm",
+          2
+        ],
+        [
+          "Roasted chickpea",
+          2
+        ],
+        [
+          "\u015eorbal\u0131k \u015fariye",
+          1
+        ],
+        [
+          "Lob fig",
+          2
+        ],
+        [
+          "Daru",
+          20
+        ],
+        [
+          "Barley",
+          17
+        ],
+        [
+          "\u00dcz\u00fcm",
+          5
+        ],
+        [
+          "Erik",
+          1
+        ],
+        [
+          "Rice",
+          53
+        ],
+        [
+          "Alaca bakla",
+          0
+        ],
+        [
+          "Oleaster",
+          3
+        ],
+        [
+          "K\u0131z\u0131l",
+          3
+        ],
+        [
+          "M\u0131s\u0131r pirinci",
+          1
+        ],
+        [
+          "Tarhana",
+          2
+        ],
+        [
+          "Pea",
+          32
+        ],
+        [
+          "Carob",
+          9
+        ],
+        [
+          "K\u00fcfter",
+          5
+        ],
+        [
+          "Edremit siyah\u0131",
+          1
+        ],
+        [
+          "Figs",
+          22
+        ],
+        [
+          "Hemp seed",
+          3
+        ],
+        [
+          "Vermicelli",
+          34
+        ],
+        [
+          "Beylerce",
+          14
+        ],
+        [
+          "Siyah",
+          10
+        ],
+        [
+          "Sar\u0131ca fig",
+          2
+        ],
+        [
+          "Dried pear",
+          2
+        ],
+        [
+          "\u0130zmir siyah\u0131 \u00fcz\u00fcm",
+          7
+        ],
+        [
+          "Dried cherry",
+          1
+        ],
+        [
+          "Razaki",
+          13
+        ],
+        [
+          "Cornelian cherry",
+          3
+        ],
+        [
+          "Karadeniz m\u0131s\u0131r\u0131",
+          1
+        ],
+        [
+          "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
+          2
+        ],
+        [
+          "Peksimet",
+          1
+        ],
+        [
+          "Anadolu pirinci",
+          1
+        ],
+        [
+          "Chickpea",
+          39
+        ],
+        [
+          "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
+          1
+        ],
+        [
+          "Arpa \u015fariye",
+          1
+        ],
+        [
+          "Bulgur",
+          17
+        ],
+        [
+          "Pestil",
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Legumes",
+      "id": "Legumes",
+      "data": [
+        [
+          "Alaca bakla",
+          0
+        ],
+        [
+          "Lentil",
+          31
+        ],
+        [
+          "Bean",
+          9
+        ],
+        [
+          "Broad bean",
+          13
+        ],
+        [
+          "Chickpea",
+          39
+        ],
+        [
+          "Pea",
+          32
+        ],
+        [
+          "Roasted chickpea",
+          2
+        ],
+        [
+          "Hemp seed",
+          3
+        ]
+      ]
+    },
+    {
+      "name": "Grains",
+      "id": "Grains",
+      "data": [
+        [
+          "Rice",
+          53
+        ],
+        [
+          "Karadeniz m\u0131s\u0131r\u0131",
+          1
+        ],
+        [
+          "\u015eorbal\u0131k arpa",
+          0
+        ],
+        [
+          "M\u0131s\u0131r pirinci",
+          1
+        ],
+        [
+          "Anadolu pirinci",
+          1
+        ],
+        [
+          "K\u0131z\u0131l \u015eariyye",
+          1
+        ],
+        [
+          "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
+          1
+        ],
+        [
+          "\u015eorbal\u0131k \u015fariye",
+          1
+        ],
+        [
+          "Wheat",
+          9
+        ],
+        [
+          "Arpa \u015fariye",
+          1
+        ],
+        [
+          "Daru",
+          20
+        ],
+        [
+          "Bulgur",
+          17
+        ],
+        [
+          "Vermicelli",
+          34
+        ],
+        [
+          "Barley",
+          17
+        ]
+      ]
+    },
+    {
+      "name": "Dried Fruits",
+      "id": "Dried Fruits",
+      "data": [
+        [
+          "Kuru \u00fcz\u00fcm",
+          3
+        ],
+        [
+          "Koca siyah \u00fcz\u00fcm",
+          1
+        ],
+        [
+          "Edremit siyah\u0131 \u00fcz\u00fcm",
+          2
+        ],
+        [
+          "Lob fig",
+          2
+        ],
+        [
+          "Erik",
+          1
+        ],
+        [
+          "\u00dcz\u00fcm",
+          5
+        ],
+        [
+          "Oleaster",
+          3
+        ],
+        [
+          "K\u0131z\u0131l",
+          3
+        ],
+        [
+          "Edremit siyah\u0131",
+          1
+        ],
+        [
+          "Figs",
+          22
+        ],
+        [
+          "Dried pear",
+          2
+        ],
+        [
+          "Siyah",
+          10
+        ],
+        [
+          "Sar\u0131ca fig",
+          2
+        ],
+        [
+          "\u0130zmir siyah\u0131 \u00fcz\u00fcm",
+          7
+        ],
+        [
+          "Beylerce",
+          14
+        ],
+        [
+          "Dried cherry",
+          1
+        ],
+        [
+          "Razaki",
+          13
+        ],
+        [
+          "Koca \u00fcz\u00fcm\u00fc",
+          2
+        ],
+        [
+          "Cornelian cherry",
+          3
+        ],
+        [
+          "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
+          2
+        ],
+        [
+          "Ho\u015fabl\u0131k \u00fcz\u00fcm",
+          1
+        ],
+        [
+          "Carob",
+          9
+        ]
+      ]
+    },
+    {
+      "name": "Raisin Assortment",
+      "id": "Raisin Assortment",
+      "data": [
+        [
+          "Siyah",
+          10
+        ],
+        [
+          "\u0130zmir siyah\u0131 \u00fcz\u00fcm",
+          7
+        ],
+        [
+          "Kuru \u00fcz\u00fcm",
+          3
+        ],
+        [
+          "Razaki",
+          13
+        ],
+        [
+          "Koca \u00fcz\u00fcm\u00fc",
+          2
+        ],
+        [
+          "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
+          2
+        ],
+        [
+          "K\u0131z\u0131l",
+          3
+        ],
+        [
+          "Ho\u015fabl\u0131k \u00fcz\u00fcm",
+          1
+        ],
+        [
+          "Edremit siyah\u0131 \u00fcz\u00fcm",
+          2
+        ],
+        [
+          "Koca siyah \u00fcz\u00fcm",
+          1
+        ],
+        [
+          "\u00dcz\u00fcm",
+          5
+        ],
+        [
+          "Beylerce",
+          14
+        ]
+      ]
+    },
+    {
+      "name": "Fig Assortment",
+      "id": "Fig Assortment",
+      "data": [
+        [
+          "Sar\u0131ca fig",
+          2
+        ],
+        [
+          "Lob fig",
+          2
+        ],
+        [
+          "Figs",
+          22
+        ]
+      ]
+    },
+    {
+      "name": "Condiments",
+      "id": "Condiments",
+      "data": [
+        [
+          "Ku\u015fadas\u0131  honey",
+          2
+        ],
+        [
+          "Akdeniz honey",
+          2
+        ],
+        [
+          "Revak asel",
+          2
+        ],
+        [
+          "Eflak salt",
+          12
+        ],
+        [
+          "Scrap salt",
+          3
+        ],
+        [
+          "Kutu bal\u0131",
+          1
+        ],
+        [
+          "Cretan molasses",
+          1
+        ],
+        [
+          "Kefe salt",
+          21
+        ],
+        [
+          "Aniseed",
+          1
+        ],
+        [
+          "Odun pekmezi",
+          1
+        ],
+        [
+          "Pepper",
+          12
+        ],
+        [
+          "Peppercorn",
+          1
+        ],
+        [
+          "Karadeniz honey",
+          1
+        ],
+        [
+          "Red pepper",
+          1
+        ],
+        [
+          "Tahini",
+          2
+        ],
+        [
+          "G\u00f6me\u00e7 honey",
+          4
+        ],
+        [
+          "Eflak honey",
+          2
+        ],
+        [
+          "Kal\u0131n tuz",
+          1
+        ],
+        [
+          "\u00c7orlu molasses",
+          1
+        ],
+        [
+          "Yaprak tuzu",
+          1
+        ],
+        [
+          "Sumac",
+          1
+        ],
+        [
+          "\u0130nce tuz",
+          2
+        ],
+        [
+          "Vinegar",
+          47
+        ],
+        [
+          "Lemon juice",
+          2
+        ],
+        [
+          "Honey",
+          34
+        ],
+        [
+          "K\u00f6y tuzu",
+          1
+        ],
+        [
+          "Smashed salt",
+          11
+        ],
+        [
+          "Molasses",
+          36
+        ]
+      ]
+    },
+    {
+      "name": "Molasses Assortment",
+      "id": "Molasses Assortment",
+      "data": [
+        [
+          "\u00c7orlu molasses",
+          1
+        ],
+        [
+          "Odun pekmezi",
+          1
+        ],
+        [
+          "Molasses",
+          36
+        ],
+        [
+          "Cretan molasses",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Sweeteners",
+      "id": "Sweeteners",
+      "data": [
+        [
+          "Ku\u015fadas\u0131  honey",
+          2
+        ],
+        [
+          "G\u00f6me\u00e7 honey",
+          4
+        ],
+        [
+          "Akdeniz honey",
+          2
+        ],
+        [
+          "Eflak honey",
+          2
+        ],
+        [
+          "Revak asel",
+          2
+        ],
+        [
+          "Odun asel",
+          2
+        ],
+        [
+          "\u00c7orlu molasses",
+          1
+        ],
+        [
+          "Odun pekmezi",
+          1
+        ],
+        [
+          "Karadeniz honey",
+          1
+        ],
+        [
+          "Cretan molasses",
+          1
+        ],
+        [
+          "Molasses",
+          36
+        ],
+        [
+          "Honey",
+          34
+        ]
+      ]
+    },
+    {
+      "name": "Beverages",
+      "id": "Beverages",
+      "data": [
+        [
+          "Linden",
+          4
+        ],
+        [
+          "Nardenk",
+          33
+        ],
+        [
+          "Ham sirke",
+          3
+        ],
+        [
+          "Kahve",
+          2
+        ],
+        [
+          "Arak",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Honey Assortment",
+      "id": "Honey Assortment",
+      "data": [
+        [
+          "Ku\u015fadas\u0131  honey",
+          2
+        ],
+        [
+          "Eflak honey",
+          2
+        ],
+        [
+          "G\u00f6me\u00e7 honey",
+          4
+        ],
+        [
+          "Akdeniz honey",
+          2
+        ],
+        [
+          "Revak asel",
+          2
+        ],
+        [
+          "Odun asel",
+          2
+        ],
+        [
+          "Karadeniz honey",
+          1
+        ],
+        [
+          "Kutu bal\u0131",
+          1
+        ],
+        [
+          "Honey",
+          34
+        ]
+      ]
+    },
+    {
+      "name": "Baking Goods",
+      "id": "Baking Goods",
+      "data": [
+        [
+          "Starch",
+          37
+        ],
+        [
+          "Flour",
+          15
+        ],
+        [
+          "Dakik-i vasat",
+          1
+        ],
+        [
+          "Dakik-i has",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Ingredients",
+      "id": "Ingredients",
+      "data": [
+        [
+          "Kefe salt",
+          21
+        ],
+        [
+          "K\u00f6y tuzu",
+          1
+        ],
+        [
+          "Smashed salt",
+          11
+        ],
+        [
+          "Kal\u0131n tuz",
+          1
+        ],
+        [
+          "Eflak salt",
+          12
+        ],
+        [
+          "Scrap salt",
+          3
+        ],
+        [
+          "Salt",
+          25
+        ],
+        [
+          "Flour",
+          15
+        ],
+        [
+          "Yaprak tuzu",
+          1
+        ],
+        [
+          "\u0130nce tuz",
+          2
+        ],
+        [
+          "Dakik-i has",
+          2
+        ],
+        [
+          "Starch",
+          37
+        ],
+        [
+          "Dakik-i vasat",
+          1
+        ],
+        [
+          "Tahini",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Spices and Add Ons",
+      "id": "Spices and Add Ons",
+      "data": [
+        [
+          "D\u00f6\u011f\u00fclm\u00fc\u015f Leh tuzu",
+          1
+        ],
+        [
+          "Eflak salt",
+          12
+        ],
+        [
+          "Scrap salt",
+          3
+        ],
+        [
+          "Salt",
+          25
+        ],
+        [
+          "Leh tuzu",
+          2
+        ],
+        [
+          "Currant",
+          4
+        ],
+        [
+          "Kefe salt",
+          21
+        ],
+        [
+          "Aniseed",
+          1
+        ],
+        [
+          "Pepper",
+          12
+        ],
+        [
+          "Gemlik tuzu",
+          1
+        ],
+        [
+          "Black sesame",
+          2
+        ],
+        [
+          "Peppercorn",
+          1
+        ],
+        [
+          "Kaya tuzu",
+          1
+        ],
+        [
+          "Red pepper",
+          1
+        ],
+        [
+          "Kal\u0131n tuz",
+          1
+        ],
+        [
+          "Yaprak tuzu",
+          1
+        ],
+        [
+          "Sumac",
+          1
+        ],
+        [
+          "\u0130nce tuz",
+          2
+        ],
+        [
+          "Vinegar",
+          47
+        ],
+        [
+          "K\u00f6y tuzu",
+          1
+        ],
+        [
+          "Smashed salt",
+          11
+        ]
+      ]
+    },
+    {
+      "name": "Sour Flavorings",
+      "id": "Sour Flavorings",
+      "data": [
+        [
+          "Vinegar",
+          47
+        ],
+        [
+          "Pickled peppers",
+          3
+        ],
+        [
+          "Pickled cabbage",
+          3
+        ],
+        [
+          "Lemon",
+          7
+        ],
+        [
+          "Lemon juice",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Produce",
+      "id": "Produce",
+      "data": [
+        [
+          "Sapl\u0131 sar\u0131msak",
+          2
+        ],
+        [
+          "Hunnap",
+          1
+        ],
+        [
+          "Onion",
+          40
+        ],
+        [
+          "Dolmal\u0131k yaprak",
+          1
+        ],
+        [
+          "Apple",
+          1
+        ],
+        [
+          "Pearl onion",
+          6
+        ],
+        [
+          "Garlic",
+          20
+        ],
+        [
+          "Pomegranate",
+          1
+        ],
+        [
+          "Radish",
+          1
+        ],
+        [
+          "Lemon",
+          7
+        ],
+        [
+          "Water melon",
+          2
+        ],
+        [
+          "Tur\u015fu yapra\u011f\u0131",
+          5
+        ],
+        [
+          "Kaba so\u011fan",
+          6
+        ]
+      ]
+    },
+    {
+      "name": "Vegetables",
+      "id": "Vegetables",
+      "data": [
+        [
+          "Sapl\u0131 sar\u0131msak",
+          2
+        ],
+        [
+          "Onion",
+          40
+        ],
+        [
+          "Pearl onion",
+          6
+        ],
+        [
+          "Garlic",
+          20
+        ],
+        [
+          "Radish",
+          1
+        ],
+        [
+          "Kaba so\u011fan",
+          6
+        ]
+      ]
+    },
+    {
+      "name": "Olive Assortment",
+      "id": "Olive Assortment",
+      "data": [
+        [
+          "Createn olives",
+          1
+        ],
+        [
+          "K\u00fcflenmi\u015f zeytun",
+          1
+        ],
+        [
+          "Trilye olives",
+          13
+        ],
+        [
+          "Olive",
+          29
+        ],
+        [
+          "\u00c7\u00fcr\u00fck zeytun",
+          0
+        ],
+        [
+          "Red dried olives",
+          1
+        ],
+        [
+          "Karam\u00fcrsel olives",
+          2
+        ],
+        [
+          "Gemlik olives",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Deli",
+      "id": "Deli",
+      "data": [
+        [
+          "Sausage",
+          13
+        ],
+        [
+          "Createn olives",
+          1
+        ],
+        [
+          "Kayseriye past\u0131rmas\u0131",
+          1
+        ],
+        [
+          "Trilye olives",
+          13
+        ],
+        [
+          "Olive",
+          29
+        ],
+        [
+          "Red dried olives",
+          1
+        ],
+        [
+          "Karam\u00fcrsel olives",
+          2
+        ],
+        [
+          "Rumeli sucu\u011fu past\u0131rmas\u0131",
+          2
+        ],
+        [
+          "Gemlik olives",
+          1
+        ],
+        [
+          "Pastrami",
+          10
+        ]
+      ]
+    },
+    {
+      "name": "Non-foods",
+      "id": "Non-foods",
+      "data": [
+        [
+          "Pekmez destisi",
+          2
+        ],
+        [
+          "Bottled candle",
+          1
+        ],
+        [
+          "Cretan soap",
+          1
+        ],
+        [
+          "\u015eamad\u0131ra",
+          1
+        ],
+        [
+          "Zift",
+          1
+        ],
+        [
+          "\u00c7akmak",
+          1
+        ],
+        [
+          "Has\u0131r S\u00fcp\u00fcrgesi",
+          4
+        ],
+        [
+          "Kav",
+          1
+        ],
+        [
+          "Trablus soap",
+          1
+        ],
+        [
+          "Tem\u00fcr hurdas\u0131",
+          8
+        ],
+        [
+          "\u00c7al\u0131 s\u00fcp\u00fcrgesi",
+          2
+        ],
+        [
+          "Yaz\u0131 ka\u011f\u0131d\u0131",
+          1
+        ],
+        [
+          "Wood",
+          13
+        ],
+        [
+          "Yo\u011furt \u00e7ana\u011f\u0131",
+          1
+        ],
+        [
+          "String",
+          5
+        ],
+        [
+          "Candle wax",
+          10
+        ],
+        [
+          "Beeswax",
+          1
+        ],
+        [
+          "Soap",
+          32
+        ],
+        [
+          "Broom",
+          6
+        ],
+        [
+          "Tobacco",
+          4
+        ],
+        [
+          "M\u0131s\u0131r ipli\u011fi",
+          1
+        ],
+        [
+          "\u0130zmir soap",
+          2
+        ],
+        [
+          "Adi s\u00fcp\u00fcrge",
+          1
+        ],
+        [
+          "\u00c7akmak tozu",
+          2
+        ],
+        [
+          "Pipe",
+          5
+        ],
+        [
+          "Coal",
+          5
+        ],
+        [
+          "Enfiye",
+          1
+        ],
+        [
+          "Paper",
+          3
+        ],
+        [
+          "Firewood",
+          2
+        ],
+        [
+          "Brick dust",
+          1
+        ],
+        [
+          "K\u0131zak ya\u011f\u0131",
+          1
+        ],
+        [
+          "\u00c7ingane s\u00fcp\u00fcrgesi",
+          1
+        ],
+        [
+          "Kil",
+          1
+        ],
+        [
+          "\u00c7ar\u00e7ube ka\u011f\u0131d\u0131",
+          3
+        ],
+        [
+          "Saman",
+          2
+        ],
+        [
+          "Katran",
+          4
+        ],
+        [
+          "Candle",
+          24
+        ],
+        [
+          "Yapa\u011f\u0131 y\u00fcn",
+          2
+        ],
+        [
+          "Meydan s\u00fcp\u00fcrgesi",
+          2
+        ],
+        [
+          "Demet odunu",
+          6
+        ]
+      ]
+    },
+    {
+      "name": "Pickle",
+      "id": "Pickle",
+      "data": [
+        [
+          "Uskumru bal\u0131\u011fu tur\u015fusu",
+          1
+        ],
+        [
+          "Tur\u015fu",
+          1
+        ],
+        [
+          "Fish brine",
+          1
+        ],
+        [
+          "Tur\u015fu yapra\u011f\u0131",
+          2
+        ],
+        [
+          "Pickled cabbage",
+          3
+        ],
+        [
+          "Tur\u015fu bal\u0131\u011f\u0131",
+          2
+        ],
+        [
+          "Pickled peppers",
+          3
+        ],
+        [
+          "Pickled fish",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Fish Assortment",
+      "id": "Fish Assortment",
+      "data": [
+        [
+          "Kolyarudya bal\u0131\u011f\u0131",
+          1
+        ],
+        [
+          "Lakerda bal\u0131\u011f\u0131",
+          1
+        ],
+        [
+          "Morina bal\u0131\u011f\u0131",
+          1
+        ],
+        [
+          "Tur\u015fu bal\u0131\u011f\u0131",
+          2
+        ],
+        [
+          "Kolyoz bal\u0131\u011f\u0131",
+          1
+        ],
+        [
+          "\u00c7iroz bal\u0131\u011f\u0131",
+          1
+        ],
+        [
+          "Tuzlu bal\u0131k",
+          3
+        ],
+        [
+          "Caviar",
+          8
+        ],
+        [
+          "Uskumru bal\u0131\u011f\u0131 tuzlamas\u0131",
+          2
+        ],
+        [
+          "Bal\u0131k",
+          1
+        ],
+        [
+          "\u00c7\u00fctre bal\u0131\u011f\u0131",
+          2
+        ],
+        [
+          "Fish brine",
+          1
+        ],
+        [
+          "Mersin bal\u0131\u011f\u0131",
+          2
+        ],
+        [
+          "Terkoz bal\u0131\u011f\u0131",
+          1
+        ],
+        [
+          "Pickled fish",
+          2
+        ],
+        [
+          "Sade bal\u0131k",
+          1
+        ],
+        [
+          "Uskumru bal\u0131\u011fu tur\u015fusu",
+          1
+        ],
+        [
+          "Sardine",
+          3
+        ],
+        [
+          "Uskumru bal\u0131\u011f\u0131",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Animal Food",
+      "id": "Animal Food",
+      "data": [
+        [
+          "Sade bal\u0131k",
+          1
+        ],
+        [
+          "Sausage",
+          13
+        ],
+        [
+          "Kolyoz bal\u0131\u011f\u0131",
+          1
+        ],
+        [
+          "Kayseriye past\u0131rmas\u0131",
+          1
+        ],
+        [
+          "\u00c7iroz bal\u0131\u011f\u0131",
+          1
+        ],
+        [
+          "Tuzlu bal\u0131k",
+          3
+        ],
+        [
+          "Sardine",
+          3
+        ],
+        [
+          "Kolyarudya bal\u0131\u011f\u0131",
+          1
+        ],
+        [
+          "\u00c7\u00fctre bal\u0131\u011f\u0131",
+          2
+        ],
+        [
+          "Lakerda bal\u0131\u011f\u0131",
+          1
+        ],
+        [
+          "Mersin bal\u0131\u011f\u0131",
+          2
+        ],
+        [
+          "Caviar",
+          8
+        ],
+        [
+          "Morina bal\u0131\u011f\u0131",
+          1
+        ],
+        [
+          "Terkoz bal\u0131\u011f\u0131",
+          1
+        ],
+        [
+          "Uskumru bal\u0131\u011f\u0131",
+          1
+        ],
+        [
+          "Pastrami",
+          10
+        ],
+        [
+          "Bal\u0131k",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Brine",
+      "id": "Brine",
+      "data": [
+        [
+          "Dolmal\u0131k yaprak",
+          1
+        ],
+        [
+          "Fish brine",
+          1
+        ],
+        [
+          "Salamura peynir",
+          2
+        ],
+        [
+          "Asma yapra\u011f\u0131",
+          1
+        ],
+        [
+          "Tur\u015fu yapra\u011f\u0131",
+          5
+        ]
+      ]
+    },
+    {
+      "name": "Durable Goods",
+      "id": "Durable Goods",
+      "data": [
+        [
+          "Zenbil",
+          14
+        ],
+        [
+          "Pipe",
+          5
+        ],
+        [
+          "Asel tulumu",
+          1
+        ],
+        [
+          "Tur\u015fu f\u0131\u00e7\u0131s\u0131",
+          1
+        ],
+        [
+          "Nardenk destisi",
+          2
+        ],
+        [
+          "Nardenk ko\u011fas\u0131",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Fresh Fruits",
+      "id": "Fresh Fruits",
+      "data": [
+        [
+          "Hunnap",
+          1
+        ],
+        [
+          "Apple",
+          1
+        ],
+        [
+          "Pomegranate",
+          1
+        ],
+        [
+          "Lemon",
+          7
+        ],
+        [
+          "Water melon",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Soap Assortment",
+      "id": "Soap Assortment",
+      "data": [
+        [
+          "Cretan soap",
+          1
+        ],
+        [
+          "Trablus soap",
+          1
+        ],
+        [
+          "Soap",
+          32
+        ],
+        [
+          "\u0130zmir soap",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Utensils",
+      "id": "Utensils",
+      "data": [
+        [
+          "Hadde",
+          1
+        ],
+        [
+          "Box",
+          1
+        ],
+        [
+          "Kandil",
+          3
+        ],
+        [
+          "Asel tulumu",
+          1
+        ],
+        [
+          "Huni",
+          1
+        ],
+        [
+          "Duhan kavanozu",
+          1
+        ],
+        [
+          "Zenbil",
+          14
+        ],
+        [
+          "Dara",
+          1
+        ],
+        [
+          "Tas",
+          1
+        ],
+        [
+          "Tahin \u00e7\u00f6mle\u011fi",
+          1
+        ],
+        [
+          "Ni\u015fasta fu\u00e7\u0131s\u0131",
+          1
+        ],
+        [
+          "\u00c7\u00f6mlek",
+          14
+        ],
+        [
+          "Zeyt ya\u011f\u0131 k\u00fcp\u00fc",
+          2
+        ],
+        [
+          "Steelyard",
+          19
+        ],
+        [
+          "Fenar",
+          1
+        ],
+        [
+          "Keyl",
+          1
+        ],
+        [
+          "\u0130brik",
+          4
+        ],
+        [
+          "Tencere",
+          4
+        ],
+        [
+          "Sand\u0131k",
+          4
+        ],
+        [
+          "Mug",
+          15
+        ],
+        [
+          "Jar",
+          15
+        ],
+        [
+          "Ak\u00e7e kesesi",
+          1
+        ],
+        [
+          "Kalbur",
+          1
+        ],
+        [
+          "\u0130skemle",
+          1
+        ],
+        [
+          "Dirhem",
+          15
+        ],
+        [
+          "G\u00fc\u011f\u00fcm",
+          1
+        ],
+        [
+          "Ya\u011f destisi",
+          1
+        ],
+        [
+          "Sack",
+          7
+        ],
+        [
+          "Loom",
+          1
+        ],
+        [
+          "destere",
+          1
+        ],
+        [
+          "Ya\u011f badyesi",
+          1
+        ],
+        [
+          "Knife",
+          5
+        ],
+        [
+          "Manula",
+          1
+        ],
+        [
+          "S\u00fczek",
+          1
+        ],
+        [
+          "Tur\u015fu f\u0131\u00e7\u0131s\u0131",
+          1
+        ],
+        [
+          "Kahve kutusu",
+          1
+        ],
+        [
+          "Vezne",
+          1
+        ],
+        [
+          "Zeyt ya\u011f\u0131 barda\u011f\u0131",
+          3
+        ],
+        [
+          "Bal\u0131k tabas\u0131",
+          1
+        ],
+        [
+          "Yumurta sepeti",
+          1
+        ],
+        [
+          "Havan",
+          2
+        ],
+        [
+          "Dikel",
+          1
+        ],
+        [
+          "Nardenk ko\u011fas\u0131",
+          1
+        ],
+        [
+          "Washing tray",
+          3
+        ],
+        [
+          "Frying pan",
+          1
+        ],
+        [
+          "Ka\u015f\u0131k",
+          2
+        ],
+        [
+          "Devad",
+          1
+        ],
+        [
+          "Pirin\u00e7 hunisi",
+          1
+        ],
+        [
+          "B\u00f6\u011fr\u00fclce anbar\u0131",
+          1
+        ],
+        [
+          "Zeytin ya\u011f\u0131 tulumu",
+          1
+        ],
+        [
+          "Oil scale",
+          1
+        ],
+        [
+          "Hokka",
+          1
+        ],
+        [
+          "Kahve kutusu",
+          1
+        ],
+        [
+          "Havan",
+          3
+        ],
+        [
+          "Bucket",
+          6
+        ],
+        [
+          "Ar\u015f\u0131n",
+          1
+        ],
+        [
+          "Keser",
+          2
+        ],
+        [
+          "Pekmez destisi",
+          2
+        ],
+        [
+          "Zeytun fu\u00e7\u0131s\u0131",
+          1
+        ],
+        [
+          "Pot",
+          7
+        ],
+        [
+          "\u015eamdan",
+          5
+        ],
+        [
+          "Nardenk destisi",
+          2
+        ],
+        [
+          "Barrel",
+          18
+        ],
+        [
+          "Misafir sofras\u0131",
+          1
+        ],
+        [
+          "Zeytun fu\u00e7\u0131s\u0131",
+          1
+        ],
+        [
+          "Flat tray",
+          11
+        ],
+        [
+          "Yo\u011furt \u00e7ana\u011f\u0131",
+          1
+        ],
+        [
+          "Ya\u011f malas\u0131",
+          1
+        ],
+        [
+          "Ak\u00e7e tahtas\u0131",
+          2
+        ],
+        [
+          "Saban",
+          1
+        ],
+        [
+          "D\u00fckkan perdesi",
+          1
+        ],
+        [
+          "\u00c7engel",
+          1
+        ],
+        [
+          "Pirin\u00e7 kilesi",
+          1
+        ],
+        [
+          "Kazgan",
+          3
+        ],
+        [
+          "Badya",
+          2
+        ],
+        [
+          "Pi\u015ftahta",
+          2
+        ],
+        [
+          "\u00c7anak",
+          5
+        ],
+        [
+          "\u00c7atal-\u0131 hali\u00e7",
+          1
+        ],
+        [
+          "Ya\u011f tulumu",
+          1
+        ],
+        [
+          "\u00c7ekmece",
+          1
+        ],
+        [
+          "Tabak",
+          1
+        ],
+        [
+          "Mum kutusu",
+          1
+        ],
+        [
+          "Zeytun ya\u011f\u0131 kaplar\u0131",
+          1
+        ],
+        [
+          "\u015einik",
+          1
+        ],
+        [
+          "Kahve terazisi",
+          1
+        ],
+        [
+          "Sirke hunisi",
+          1
+        ],
+        [
+          "Tur\u015fu f\u0131\u00e7\u0131s\u0131",
+          1
+        ],
+        [
+          "Trivet",
+          2
+        ],
+        [
+          "Potna",
+          5
+        ],
+        [
+          "Jug",
+          17
+        ],
+        [
+          "Basket",
+          2
+        ],
+        [
+          "Mizan",
+          4
+        ],
+        [
+          "Zeyt ya\u011f\u0131 kovas\u0131",
+          1
+        ],
+        [
+          "Torba",
+          1
+        ],
+        [
+          "K\u00f6m\u00fcr terazisi",
+          1
+        ],
+        [
+          "Peynir Kutusu",
+          1
+        ],
+        [
+          "Sofra",
+          2
+        ],
+        [
+          "Sahan",
+          1
+        ],
+        [
+          "Scales",
+          11
+        ],
+        [
+          "Biblo kutusu",
+          1
+        ],
+        [
+          "Yata\u011fan b\u0131\u00e7a\u011f\u0131",
+          1
+        ],
+        [
+          "Rende",
+          1
+        ],
+        [
+          "Urgan",
+          2
+        ],
+        [
+          "Seklem",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Broom Assortment",
+      "id": "Broom Assortment",
+      "data": [
+        [
+          "Adi s\u00fcp\u00fcrge",
+          1
+        ],
+        [
+          "\u00c7ingane s\u00fcp\u00fcrgesi",
+          1
+        ],
+        [
+          "Has\u0131r S\u00fcp\u00fcrgesi",
+          4
+        ],
+        [
+          "Broom",
+          6
+        ],
+        [
+          "\u00c7al\u0131 s\u00fcp\u00fcrgesi",
+          2
+        ],
+        [
+          "Meydan s\u00fcp\u00fcrgesi",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Oil Assortment",
+      "id": "Oil Assortment",
+      "data": [
+        [
+          "Mum ya\u011f\u0131",
+          2
+        ],
+        [
+          "Peynir ya\u011f\u0131",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Pastrami Assortment",
+      "id": "Pastrami Assortment",
+      "data": [
+        [
+          "Rumeli sucu\u011fu past\u0131rmas\u0131",
+          2
+        ],
+        [
+          "Kayseriye past\u0131rmas\u0131",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Rice Assortment",
+      "id": "Rice Assortment",
+      "data": [
+        [
+          "M\u0131s\u0131r pirinci",
+          1
+        ],
+        [
+          "Anadolu pirinci",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Vermicelli Assortment",
+      "id": "Vermicelli Assortment",
+      "data": [
+        [
+          "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
+          1
+        ],
+        [
+          "\u015eorbal\u0131k \u015fariye",
+          1
+        ],
+        [
+          "Arpa \u015fariye",
+          1
+        ],
+        [
+          "K\u0131z\u0131l \u015eariyye",
+          1
+        ]
+      ]
+    }
+  ],
+  "categories_over_decades": {
+    "categories": [
+      "1110",
+      "1120",
+      "1130",
+      "1140",
+      "1150",
+      "1160",
+      "1170",
+      "1180",
+      "1190",
+      "1200",
+      "1210",
+      "1220",
+      "1230"
+    ],
+    "series": [
+      {
+        "name": "Animal Food",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          1,
+          2,
+          1,
+          6,
+          2,
+          2,
+          1,
+          2,
+          1,
+          1,
+          1,
+          2,
+          2
+        ]
+      },
+      {
+        "name": "Baking Goods",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          1,
+          9,
+          1,
+          7,
+          2,
+          2,
+          3,
+          0,
+          2,
+          1,
+          0,
+          2,
+          4
+        ]
+      },
+      {
+        "name": "Beverages",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          1,
+          7,
+          0,
+          6,
+          2,
+          3,
+          4,
+          2,
+          4,
+          2,
+          0,
+          1,
+          4
+        ]
+      },
+      {
+        "name": "Brine",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          0,
+          3,
+          0,
+          2,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Broom Assortment",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          1,
+          0,
+          2,
+          0,
+          0,
+          3,
+          4
+        ]
+      },
+      {
+        "name": "Cheese Assortment",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          3,
+          8,
+          3,
+          8,
+          1,
+          2,
+          3,
+          1,
+          3,
+          2,
+          1,
+          2,
+          4
+        ]
+      },
+      {
+        "name": "Condiments",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          3,
+          12,
+          3,
+          9,
+          2,
+          3,
+          3,
+          2,
+          5,
+          2,
+          1,
+          3,
+          4
+        ]
+      },
+      {
+        "name": "Cooking Oils",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          3,
+          10,
+          3,
+          10,
+          2,
+          3,
+          3,
+          2,
+          5,
+          3,
+          1,
+          1,
+          3
+        ]
+      },
+      {
+        "name": "Dairy",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          3,
+          9,
+          4,
+          10,
+          2,
+          3,
+          3,
+          2,
+          4,
+          3,
+          1,
+          2,
+          4
+        ]
+      },
+      {
+        "name": "Deli",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          3,
+          10,
+          1,
+          10,
+          2,
+          2,
+          2,
+          2,
+          4,
+          3,
+          0,
+          2,
+          4
+        ]
+      },
+      {
+        "name": "Dried Fruits",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          3,
+          8,
+          3,
+          4,
+          1,
+          1,
+          2,
+          1,
+          2,
+          1,
+          0,
+          1,
+          4
+        ]
+      },
+      {
+        "name": "Dried Goods",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          3,
+          12,
+          4,
+          9,
+          2,
+          3,
+          4,
+          2,
+          5,
+          2,
+          0,
+          4,
+          4
+        ]
+      },
+      {
+        "name": "Durable Goods",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          2,
+          4,
+          1,
+          1,
+          1,
+          2,
+          2,
+          0,
+          2,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "name": "Fats",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          3,
+          10,
+          3,
+          10,
+          2,
+          3,
+          3,
+          2,
+          5,
+          3,
+          1,
+          1,
+          3
+        ]
+      },
+      {
+        "name": "Fig Assortment",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          1,
+          5,
+          2,
+          2,
+          1,
+          1,
+          1,
+          0,
+          1,
+          1,
+          0,
+          0,
+          3
+        ]
+      },
+      {
+        "name": "Fish Assortment",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          2,
+          2,
+          0,
+          4,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "name": "Fresh Fruits",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+          3
+        ]
+      },
+      {
+        "name": "Grains",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          3,
+          12,
+          3,
+          9,
+          2,
+          3,
+          4,
+          2,
+          5,
+          2,
+          0,
+          3,
+          4
+        ]
+      },
+      {
+        "name": "Honey Assortment",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          2,
+          5,
+          1,
+          5,
+          1,
+          2,
+          1,
+          1,
+          3,
+          1,
+          0,
+          2,
+          4
+        ]
+      },
+      {
+        "name": "Ingredients",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          3,
+          10,
+          1,
+          9,
+          2,
+          2,
+          3,
+          0,
+          5,
+          2,
+          1,
+          3,
+          4
+        ]
+      },
+      {
+        "name": "Ka\u015fkaval Assortment",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          3,
+          7,
+          2,
+          5,
+          1,
+          2,
+          1,
+          1,
+          2,
+          0,
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "name": "Legumes",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          3,
+          9,
+          2,
+          9,
+          2,
+          2,
+          3,
+          1,
+          5,
+          2,
+          0,
+          3,
+          4
+        ]
+      },
+      {
+        "name": "Molasses Assortment",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          2,
+          5,
+          0,
+          5,
+          2,
+          2,
+          2,
+          1,
+          4,
+          2,
+          0,
+          2,
+          4
+        ]
+      },
+      {
+        "name": "Non-foods",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          3,
+          8,
+          2,
+          9,
+          2,
+          3,
+          3,
+          2,
+          5,
+          3,
+          1,
+          4,
+          4
+        ]
+      },
+      {
+        "name": "Oil Assortment",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          2
+        ]
+      },
+      {
+        "name": "Oil Seeds",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          3,
+          8,
+          3,
+          7,
+          1,
+          2,
+          3,
+          0,
+          3,
+          2,
+          0,
+          3,
+          4
+        ]
+      },
+      {
+        "name": "Olive Assortment",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          3,
+          9,
+          2,
+          10,
+          1,
+          0,
+          2,
+          0,
+          3,
+          2,
+          0,
+          2,
+          3
+        ]
+      },
+      {
+        "name": "Pastrami Assortment",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "name": "Pickle",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          2,
+          3,
+          0,
+          2,
+          0,
+          1,
+          1,
+          0,
+          1,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "name": "Produce",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          2,
+          7,
+          2,
+          7,
+          2,
+          3,
+          3,
+          1,
+          4,
+          3,
+          1,
+          4,
+          3
+        ]
+      },
+      {
+        "name": "Raisin Assortment",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          3,
+          7,
+          2,
+          4,
+          0,
+          1,
+          2,
+          1,
+          2,
+          1,
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "name": "Rice Assortment",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "name": "Snacks",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          3,
+          10,
+          3,
+          7,
+          1,
+          2,
+          3,
+          1,
+          3,
+          2,
+          0,
+          4,
+          4
+        ]
+      },
+      {
+        "name": "Soap Assortment",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          2,
+          7,
+          0,
+          6,
+          1,
+          1,
+          2,
+          0,
+          2,
+          2,
+          0,
+          2,
+          3
+        ]
+      },
+      {
+        "name": "Sour Flavorings",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          3,
+          9,
+          1,
+          7,
+          1,
+          2,
+          3,
+          2,
+          5,
+          2,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "name": "Spices and Add Ons",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          3,
+          11,
+          2,
+          9,
+          2,
+          2,
+          3,
+          2,
+          5,
+          2,
+          1,
+          2,
+          4
+        ]
+      },
+      {
+        "name": "Sweeteners",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          3,
+          7,
+          1,
+          8,
+          2,
+          3,
+          2,
+          1,
+          5,
+          2,
+          0,
+          2,
+          4
+        ]
+      },
+      {
+        "name": "Utensils",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          3,
+          11,
+          4,
+          8,
+          3,
+          4,
+          5,
+          2,
+          5,
+          2,
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "name": "Vegetables",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          2,
+          7,
+          1,
+          7,
+          2,
+          3,
+          3,
+          1,
+          3,
+          3,
+          1,
+          4,
+          3
+        ]
+      },
+      {
+        "name": "Vermicelli Assortment",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          2,
+          1
+        ]
+      }
+    ]
+  },
+  "normalized_categories_over_decades": {
+    "categories": [
+      "1110",
+      "1120",
+      "1130",
+      "1140",
+      "1150",
+      "1160",
+      "1170",
+      "1180",
+      "1190",
+      "1200",
+      "1210",
+      "1220",
+      "1230"
+    ],
+    "series": [
+      {
+        "name": "Animal Food",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          25.0,
+          13.33,
+          12.5,
+          50.0,
+          50.0,
+          28.57,
+          12.5,
+          28.57,
+          12.5,
+          25.0,
+          33.33,
+          18.18,
+          28.57
+        ]
+      },
+      {
+        "name": "Baking Goods",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          25.0,
+          60.0,
+          12.5,
+          58.33,
+          50.0,
+          28.57,
+          37.5,
+          0.0,
+          25.0,
+          25.0,
+          0.0,
+          18.18,
+          57.14
+        ]
+      },
+      {
+        "name": "Beverages",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          25.0,
+          46.67,
+          0.0,
+          50.0,
+          50.0,
+          42.86,
+          50.0,
+          28.57,
+          50.0,
+          50.0,
+          0.0,
+          9.09,
+          57.14
+        ]
+      },
+      {
+        "name": "Brine",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          0.0,
+          20.0,
+          0.0,
+          16.67,
+          0.0,
+          0.0,
+          12.5,
+          0.0,
+          12.5,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "Broom Assortment",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          25.0,
+          0.0,
+          12.5,
+          0.0,
+          25.0,
+          0.0,
+          0.0,
+          27.27,
+          57.14
+        ]
+      },
+      {
+        "name": "Cheese Assortment",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          75.0,
+          53.33,
+          37.5,
+          66.67,
+          25.0,
+          28.57,
+          37.5,
+          14.29,
+          37.5,
+          50.0,
+          33.33,
+          18.18,
+          57.14
+        ]
+      },
+      {
+        "name": "Condiments",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          75.0,
+          80.0,
+          37.5,
+          75.0,
+          50.0,
+          42.86,
+          37.5,
+          28.57,
+          62.5,
+          50.0,
+          33.33,
+          27.27,
+          57.14
+        ]
+      },
+      {
+        "name": "Cooking Oils",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          75.0,
+          66.67,
+          37.5,
+          83.33,
+          50.0,
+          42.86,
+          37.5,
+          28.57,
+          62.5,
+          75.0,
+          33.33,
+          9.09,
+          42.86
+        ]
+      },
+      {
+        "name": "Dairy",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          75.0,
+          60.0,
+          50.0,
+          83.33,
+          50.0,
+          42.86,
+          37.5,
+          28.57,
+          50.0,
+          75.0,
+          33.33,
+          18.18,
+          57.14
+        ]
+      },
+      {
+        "name": "Deli",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          75.0,
+          66.67,
+          12.5,
+          83.33,
+          50.0,
+          28.57,
+          25.0,
+          28.57,
+          50.0,
+          75.0,
+          0.0,
+          18.18,
+          57.14
+        ]
+      },
+      {
+        "name": "Dried Fruits",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          75.0,
+          53.33,
+          37.5,
+          33.33,
+          25.0,
+          14.29,
+          25.0,
+          14.29,
+          25.0,
+          25.0,
+          0.0,
+          9.09,
+          57.14
+        ]
+      },
+      {
+        "name": "Dried Goods",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          75.0,
+          80.0,
+          50.0,
+          75.0,
+          50.0,
+          42.86,
+          50.0,
+          28.57,
+          62.5,
+          50.0,
+          0.0,
+          36.36,
+          57.14
+        ]
+      },
+      {
+        "name": "Durable Goods",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          50.0,
+          26.67,
+          12.5,
+          8.33,
+          25.0,
+          28.57,
+          25.0,
+          0.0,
+          25.0,
+          25.0,
+          33.33,
+          9.09,
+          14.29
+        ]
+      },
+      {
+        "name": "Fats",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          75.0,
+          66.67,
+          37.5,
+          83.33,
+          50.0,
+          42.86,
+          37.5,
+          28.57,
+          62.5,
+          75.0,
+          33.33,
+          9.09,
+          42.86
+        ]
+      },
+      {
+        "name": "Fig Assortment",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          25.0,
+          33.33,
+          25.0,
+          16.67,
+          25.0,
+          14.29,
+          12.5,
+          0.0,
+          12.5,
+          25.0,
+          0.0,
+          0.0,
+          42.86
+        ]
+      },
+      {
+        "name": "Fish Assortment",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          50.0,
+          13.33,
+          0.0,
+          33.33,
+          25.0,
+          14.29,
+          12.5,
+          14.29,
+          12.5,
+          25.0,
+          33.33,
+          9.09,
+          14.29
+        ]
+      },
+      {
+        "name": "Fresh Fruits",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          0.0,
+          6.67,
+          12.5,
+          8.33,
+          25.0,
+          14.29,
+          12.5,
+          0.0,
+          0.0,
+          25.0,
+          0.0,
+          0.0,
+          42.86
+        ]
+      },
+      {
+        "name": "Grains",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          75.0,
+          80.0,
+          37.5,
+          75.0,
+          50.0,
+          42.86,
+          50.0,
+          28.57,
+          62.5,
+          50.0,
+          0.0,
+          27.27,
+          57.14
+        ]
+      },
+      {
+        "name": "Honey Assortment",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          50.0,
+          33.33,
+          12.5,
+          41.67,
+          25.0,
+          28.57,
+          12.5,
+          14.29,
+          37.5,
+          25.0,
+          0.0,
+          18.18,
+          57.14
+        ]
+      },
+      {
+        "name": "Ingredients",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          75.0,
+          66.67,
+          12.5,
+          75.0,
+          50.0,
+          28.57,
+          37.5,
+          0.0,
+          62.5,
+          50.0,
+          33.33,
+          27.27,
+          57.14
+        ]
+      },
+      {
+        "name": "Ka\u015fkaval Assortment",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          75.0,
+          46.67,
+          25.0,
+          41.67,
+          25.0,
+          28.57,
+          12.5,
+          14.29,
+          25.0,
+          0.0,
+          0.0,
+          9.09,
+          28.57
+        ]
+      },
+      {
+        "name": "Legumes",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          75.0,
+          60.0,
+          25.0,
+          75.0,
+          50.0,
+          28.57,
+          37.5,
+          14.29,
+          62.5,
+          50.0,
+          0.0,
+          27.27,
+          57.14
+        ]
+      },
+      {
+        "name": "Molasses Assortment",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          50.0,
+          33.33,
+          0.0,
+          41.67,
+          50.0,
+          28.57,
+          25.0,
+          14.29,
+          50.0,
+          50.0,
+          0.0,
+          18.18,
+          57.14
+        ]
+      },
+      {
+        "name": "Non-foods",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          75.0,
+          53.33,
+          25.0,
+          75.0,
+          50.0,
+          42.86,
+          37.5,
+          28.57,
+          62.5,
+          75.0,
+          33.33,
+          36.36,
+          57.14
+        ]
+      },
+      {
+        "name": "Oil Assortment",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          18.18,
+          28.57
+        ]
+      },
+      {
+        "name": "Oil Seeds",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          75.0,
+          53.33,
+          37.5,
+          58.33,
+          25.0,
+          28.57,
+          37.5,
+          0.0,
+          37.5,
+          50.0,
+          0.0,
+          27.27,
+          57.14
+        ]
+      },
+      {
+        "name": "Olive Assortment",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          75.0,
+          60.0,
+          25.0,
+          83.33,
+          25.0,
+          0.0,
+          25.0,
+          0.0,
+          37.5,
+          50.0,
+          0.0,
+          18.18,
+          42.86
+        ]
+      },
+      {
+        "name": "Pastrami Assortment",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          9.09,
+          28.57
+        ]
+      },
+      {
+        "name": "Pickle",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          50.0,
+          20.0,
+          0.0,
+          16.67,
+          0.0,
+          14.29,
+          12.5,
+          0.0,
+          12.5,
+          0.0,
+          0.0,
+          0.0,
+          14.29
+        ]
+      },
+      {
+        "name": "Produce",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          50.0,
+          46.67,
+          25.0,
+          58.33,
+          50.0,
+          42.86,
+          37.5,
+          14.29,
+          50.0,
+          75.0,
+          33.33,
+          36.36,
+          42.86
+        ]
+      },
+      {
+        "name": "Raisin Assortment",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          75.0,
+          46.67,
+          25.0,
+          33.33,
+          0.0,
+          14.29,
+          25.0,
+          14.29,
+          25.0,
+          25.0,
+          0.0,
+          9.09,
+          42.86
+        ]
+      },
+      {
+        "name": "Rice Assortment",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          9.09,
+          0.0
+        ]
+      },
+      {
+        "name": "Snacks",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          75.0,
+          66.67,
+          37.5,
+          58.33,
+          25.0,
+          28.57,
+          37.5,
+          14.29,
+          37.5,
+          50.0,
+          0.0,
+          36.36,
+          57.14
+        ]
+      },
+      {
+        "name": "Soap Assortment",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          50.0,
+          46.67,
+          0.0,
+          50.0,
+          25.0,
+          14.29,
+          25.0,
+          0.0,
+          25.0,
+          50.0,
+          0.0,
+          18.18,
+          42.86
+        ]
+      },
+      {
+        "name": "Sour Flavorings",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          75.0,
+          60.0,
+          12.5,
+          58.33,
+          25.0,
+          28.57,
+          37.5,
+          28.57,
+          62.5,
+          50.0,
+          33.33,
+          18.18,
+          42.86
+        ]
+      },
+      {
+        "name": "Spices and Add Ons",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          75.0,
+          73.33,
+          25.0,
+          75.0,
+          50.0,
+          28.57,
+          37.5,
+          28.57,
+          62.5,
+          50.0,
+          33.33,
+          18.18,
+          57.14
+        ]
+      },
+      {
+        "name": "Sweeteners",
+        "marker": {
+          "symbol": "square"
+        },
+        "data": [
+          75.0,
+          46.67,
+          12.5,
+          66.67,
+          50.0,
+          42.86,
+          25.0,
+          14.29,
+          62.5,
+          50.0,
+          0.0,
+          18.18,
+          57.14
+        ]
+      },
+      {
+        "name": "Utensils",
+        "marker": {
+          "symbol": "diamond"
+        },
+        "data": [
+          75.0,
+          73.33,
+          50.0,
+          66.67,
+          75.0,
+          57.14,
+          62.5,
+          28.57,
+          62.5,
+          50.0,
+          33.33,
+          18.18,
+          42.86
+        ]
+      },
+      {
+        "name": "Vegetables",
+        "marker": {
+          "symbol": "circle"
+        },
+        "data": [
+          50.0,
+          46.67,
+          12.5,
+          58.33,
+          50.0,
+          42.86,
+          37.5,
+          14.29,
+          37.5,
+          75.0,
+          33.33,
+          36.36,
+          42.86
+        ]
+      },
+      {
+        "name": "Vermicelli Assortment",
+        "marker": {
+          "symbol": "triangle"
+        },
+        "data": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          18.18,
+          14.29
+        ]
+      }
+    ]
+  }
+}
