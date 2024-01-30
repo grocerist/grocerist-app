@@ -115,14 +115,16 @@ function createSplineChart (
 ) {
   return Highcharts.chart(containerId, {
     chart: {
-      type: 'spline'
+      type: 'spline',
+      zoomType: 'x'
+      
     },
     title: {
       text: title,
       style: titleStyle
     },
     subtitle: {
-      text: 'Select more categories to display their numbers'
+      text: '(Select more categories to display their numbers, <br/> click and drag in the plot area to zoom in)'
     },
     legend: {
       itemHiddenStyle: {
