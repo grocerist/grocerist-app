@@ -20,6 +20,8 @@ jobs:
         run: python fetch_data.py
       - name: make geojson
         run: python make_geojson.py
+      - name: make charts json
+        run: python make_chartsjson.py
       - name: build
         run: python build.py
       - name: Commit data
