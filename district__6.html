@@ -103,7 +103,7 @@
         </div>
         <div class="col">
             <h2>Map</h2>
-            <div id="map" style="height: 800px;" />
+            <div id="map" style="height: 600px;" />
         </div>
     </div>
 </div>
@@ -197,14 +197,14 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 <script>
-    const map = L.map('map').setView([41.03178, { { object.long } }], 13);
+    const map = L.map('map').setView([41.03178, 28.96842], 13);
 
-    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 20,
+        attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    const marker = L.marker([41.03178, { { object.long } }]).addTo(map)
+    const marker = L.marker([41.03178, 28.96842]).addTo(map)
         .bindPopup('<strong>Kasımpaşa</strong>').openPopup();
 </script>
 

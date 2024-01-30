@@ -78,12 +78,20 @@
         
         Makrahorya
     </h1>
-    <h2><i class="bi bi-archiv"></i> Documents</h2>
-    <ul>
-        
-        <li><a href="document__106.html">İSTM.ŞSC.15.d. 272 / 27b-1</a></li>
-        
-    </ul>
+    <div class="row">
+        <div class="col">
+            <h2><i class="bi bi-archiv"></i> Documents</h2>
+            <ul>
+                
+                <li><a href="document__106.html">İSTM.ŞSC.15.d. 272 / 27b-1</a></li>
+                
+            </ul>
+        </div>
+        <div class="col">
+            <h2>Map</h2>
+            <div id="map" style="height: 600px;" />
+        </div>
+    </div>
 </div>
 
         </div>
@@ -168,7 +176,27 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
     
-    
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script>
+    const map = L.map('map').setView([40.9862800000, 28.8738400000], 13);
+
+    const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 20,
+        attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    }).addTo(map);
+
+    const marker = L.marker([40.9862800000, 28.8738400000]).addTo(map)
+        .bindPopup('<strong>Makrahorya</strong>').openPopup();
+</script>
+
+
+
+
 </body>
 
 </html>
