@@ -46,18 +46,19 @@ const TABLE_CFG = {
       formatter: 'html'
     }
   ],
-  footerElement: '<span class="tabulator-counter float-left">'+
-  'Showing <span id="search_count"></span> results out of <span id="total_count"></span> '+
-  '</span>'
+  footerElement:
+    '<span class="tabulator-counter float-left">' +
+    'Showing <span id="search_count"></span> results out of <span id="total_count"></span> ' +
+    '</span>'
 }
 
-function generateChartsFromTable(rows) {
+function generateChartsFromTable (rows, table) {
   let religionsResults = calculateReligionData(rows)
-  createPieChart('religion-chart', 'Religion', religionsResults)
+  createPieChart('religion-chart', 'Religion', religionsResults, table)
   let districtResults = calculateDistrictData(rows)
-  createPieChart('districts-chart', 'Districts', districtResults)
+  createColumnChart('districts-chart', 'Districts', districtResults, table)
 }
-function createPieChart (containerId, title, data) {
+function createPieChart (containerId, title, data, table) {
   return Highcharts.chart(containerId, {
     chart: {
       type: 'pie'
@@ -73,6 +74,27 @@ function createPieChart (containerId, title, data) {
       series: {
         allowPointSelect: true,
         cursor: 'pointer',
+        point: {
+          events: {
+            click: function () {
+              if (this.name === 'Unknown') {
+                table.setFilter(
+                  'religion',
+                  '=',
+                  '<ul class="list-unstyled"></ul>'
+                )
+              } // specific logic to deal with combined religion names
+              else if (this.name.split(' ').length > 2) {
+                table.setHeaderFilterValue(
+                  'religion',
+                  this.name.split(' ').pop()
+                )
+              } else {
+                table.setHeaderFilterValue('religion', this.name)
+              }
+            }
+          }
+        },
         dataLabels: {
           enabled: true
         }
@@ -88,6 +110,70 @@ function createPieChart (containerId, title, data) {
   })
 }
 
+function createColumnChart (containerId, title, data, table) {
+  Highcharts.chart(containerId, {
+    chart: {
+      type: 'column'
+    },
+
+    legend: {
+      enabled: false
+    },
+    title: {
+      text: title,
+      style: titleStyle
+    },
+    xAxis: {
+      type: 'category',
+      reversed: true
+    },
+    yAxis: {
+      title: {
+        text: 'Persons'
+      }
+    },
+    tooltip: {
+      headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
+      pointFormat:
+        '<span style="color:{point.color}">{point.name}</span> <b>{point.y}</b> names associated<br/>'
+    },
+    plotOptions: {
+      series: {
+        allowPointSelect: true,
+        cursor: 'pointer',
+        point: {
+          events: {
+            click: function () {
+              if (this.name === 'Unknown') {
+                table.setFilter(
+                  'district',
+                  '=',
+                  '<ul class="list-unstyled"></ul>'
+                )
+              } else {
+                table.setHeaderFilterValue('district', this.name)
+              }
+            }
+          }
+        },
+        dataLabels: {
+          enabled: true
+        }
+      }
+    },
+    series: [
+      {
+        name: 'Districts',
+        dataSorting: {
+          enabled: true,
+          sortKey: 'name'
+        },
+        colorByPoint: true,
+        data: data
+      }
+    ]
+  })
+}
 // Function to calculate percentage  and round it to 2 decimal places
 function calculatePercentage (count, total) {
   let percentage = (count / total) * 100
@@ -95,32 +181,28 @@ function calculatePercentage (count, total) {
 }
 function calculateReligionData (rows) {
   let religionCount = {}
+  let totalPersons = rows.length
   rows.forEach(row => {
     let rowData = row.getData()
     let religionKey = rowData.religion.replace(/(<([^>]+)>)/gi, '')
+    // Check if the resulting string is empty
+    if (religionKey.trim() === '') {
+      religionKey = 'Unknown'
+    }
     // Update the count for a specific religion
     religionCount[religionKey] = (religionCount[religionKey] || 0) + 1
   })
-  // Calculate the total number of persons
-  let totalPersons = Object.values(religionCount).reduce(
-    (acc, count) => acc + count,
-    0
-  )
 
   // Calculate the percentages for each religion and store them in an array
-  let religionsResults = Object.entries(religionCount).map(
-    ([religion, count]) => ({
-      name: religion,
-      y: calculatePercentage(count, totalPersons)
-    })
-  )
-  return religionsResults
+  let results = Object.entries(religionCount).map(([religion, count]) => ({
+    name: religion,
+    y: calculatePercentage(count, totalPersons)
+  }))
+  return results
 }
 
 function calculateDistrictData (rows) {
   let districtCount = {}
-  // Calculate the total number of persons
-  let totalPersons = rows.length
   rows.forEach(row => {
     let rowData = row.getData()
     let htmlString = rowData.district
@@ -132,25 +214,19 @@ function calculateDistrictData (rows) {
       item.textContent.trim()
     )
     if (textValues.length === 0) {
-      districtCount['Unknown']++
+      districtCount['Unknown'] = (districtCount['Unknown'] || 0) + 1
     } else {
       textValues.forEach(value => {
-        if (districtCount[value]) {
-          districtCount[value]++
-        } else {
-          districtCount[value] = 1
-        }
+        districtCount[value] = (districtCount[value] || 0) + 1
       })
     }
   })
   // Calculate the percentages for each district and store them in an array
-  let districtResults = Object.entries(districtCount).map(
-    ([district, count]) => ({
-      name: district,
-      y: calculatePercentage(count, totalPersons)
-    })
-  )
-  return districtResults
+  let results = Object.entries(districtCount).map(([district, count]) => ({
+    name: district,
+    y: count
+  }))
+  return results
 }
 function createTable (TABLE_CFG) {
   console.log('loading table')
@@ -162,18 +238,15 @@ d3.json(dataUrl, function (data) {
   tableData = Object.values(data)
   TABLE_CFG.data = tableData
   const table = createTable(TABLE_CFG)
-  table.on("dataLoaded", function(data){
-    $("#total_count").text(data.length);
-});
-
+  table.on('dataLoaded', function (data) {
+    $('#total_count').text(data.length)
+  })
   table.on('tableBuilt', function () {
     let rows = table.getRows()
-    generateChartsFromTable(rows)
+    generateChartsFromTable(rows, table)
   })
   table.on('dataFiltered', function (_filters, rows) {
-    generateChartsFromTable(rows)
-    $("#search_count").text(rows.length);
+    $('#search_count').text(rows.length)
+    generateChartsFromTable(rows, table)
   })
 })
-
-
