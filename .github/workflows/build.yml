@@ -16,11 +16,11 @@ jobs:
     name: Publish Transcription Status
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
-          cache: "pip"
+          python-version: '3.10'
+          cache: 'pip'
       - run: pip install -r requirements.txt
       - name: fetch the data
         run: python fetch_data.py
@@ -31,7 +31,7 @@ jobs:
       - name: build
         run: python build.py
       - name: Commit data
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Data update
       - name: Deploy
