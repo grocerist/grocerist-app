@@ -135,7 +135,7 @@ function createColumnChart (containerId, title, data, table) {
     tooltip: {
       headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
       pointFormat:
-        '<span style="color:{point.color}">{point.name}</span> <b>{point.y}</b> names associated<br/>'
+        '<span style="color:{point.color}">{point.name}</span> <b>{point.y}</b> persons<br/>'
     },
     plotOptions: {
       series: {
