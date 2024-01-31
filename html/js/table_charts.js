@@ -45,43 +45,18 @@ const TABLE_CFG = {
       headerFilter: 'input',
       formatter: 'html'
     }
-  ]
-}
-function mutateSelectField (value, data, type, params, component) {
-  let output = value
-    .map(item => {
-      return `<li>${item.value}</li>`
-    })
-    .join(' ')
-  return `<ul class="list-unstyled">${output}</ul>`
+  ],
+  footerElement: '<span class="tabulator-counter float-left">'+
+  'Showing <span id="search_count"></span> results out of <span id="total_count"></span> '+
+  '</span>'
 }
 
-function mutateDocumentField (value, data, type, params, component) {
-  let output = value
-    .map(item => {
-      return `<li><a href="document__${item.id}.html">${item.value}</a></li>`
-    })
-    .join(' ')
-  return `<ul class="list-unstyled">${output}</ul>`
+function generateChartsFromTable(rows) {
+  let religionsResults = calculateReligionData(rows)
+  createPieChart('religion-chart', 'Religion', religionsResults)
+  let districtResults = calculateDistrictData(rows)
+  createPieChart('districts-chart', 'Districts', districtResults)
 }
-
-function mutateDistrictField (value, data, type, params, component) {
-  let output = value
-    .map(item => {
-      return `<li><a href="district__${item.id}.html">${item.value}</a></li>`
-    })
-    .join(' ')
-  return `<ul class="list-unstyled">${output}</ul>`
-}
-
-function linkToDetailView (cell) {
-  var row = cell.getRow().getData()
-  var cellData = cell.getData()
-  var groceristId = row.grocerist_id
-  var theLink = `<a href="${groceristId}.html">${cellData.name}</a>`
-  return theLink
-}
-
 function createPieChart (containerId, title, data) {
   return Highcharts.chart(containerId, {
     chart: {
@@ -112,6 +87,12 @@ function createPieChart (containerId, title, data) {
     ]
   })
 }
+
+// Function to calculate percentage  and round it to 2 decimal places
+function calculatePercentage (count, total) {
+  let percentage = (count / total) * 100
+  return parseFloat(percentage.toFixed(2))
+}
 function calculateReligionData (rows) {
   let religionCount = {}
   rows.forEach(row => {
@@ -126,12 +107,6 @@ function calculateReligionData (rows) {
     0
   )
 
-  // Function to calculate percentage  and round it to 2 decimal places
-  function calculatePercentage (count, total) {
-    let percentage = (count / total) * 100
-    return parseFloat(percentage.toFixed(2))
-  }
-
   // Calculate the percentages for each religion and store them in an array
   let religionsResults = Object.entries(religionCount).map(
     ([religion, count]) => ({
@@ -142,6 +117,41 @@ function calculateReligionData (rows) {
   return religionsResults
 }
 
+function calculateDistrictData (rows) {
+  let districtCount = {}
+  // Calculate the total number of persons
+  let totalPersons = rows.length
+  rows.forEach(row => {
+    let rowData = row.getData()
+    let htmlString = rowData.district
+    // Create a temporary div element to parse the HTML
+    let tempDiv = document.createElement('div')
+    tempDiv.innerHTML = htmlString
+    // Extract text values from list items
+    let textValues = Array.from(tempDiv.querySelectorAll('li a')).map(item =>
+      item.textContent.trim()
+    )
+    if (textValues.length === 0) {
+      districtCount['Unknown']++
+    } else {
+      textValues.forEach(value => {
+        if (districtCount[value]) {
+          districtCount[value]++
+        } else {
+          districtCount[value] = 1
+        }
+      })
+    }
+  })
+  // Calculate the percentages for each district and store them in an array
+  let districtResults = Object.entries(districtCount).map(
+    ([district, count]) => ({
+      name: district,
+      y: calculatePercentage(count, totalPersons)
+    })
+  )
+  return districtResults
+}
 function createTable (TABLE_CFG) {
   console.log('loading table')
   const table = new Tabulator('#persons-table', TABLE_CFG)
@@ -152,21 +162,18 @@ d3.json(dataUrl, function (data) {
   tableData = Object.values(data)
   TABLE_CFG.data = tableData
   const table = createTable(TABLE_CFG)
-
-  let dummyData = [
-    { name: 'District 1', y: 57 },
-    { name: 'District 2', y: 43 }
-  ]
+  table.on("dataLoaded", function(data){
+    $("#total_count").text(data.length);
+});
 
   table.on('tableBuilt', function () {
     let rows = table.getRows()
-    let religionsResults = calculateReligionData(rows)
-    createPieChart('religion-chart', 'Religion', religionsResults)
-    createPieChart('districts-chart', 'Districts', dummyData)
+    generateChartsFromTable(rows)
   })
   table.on('dataFiltered', function (_filters, rows) {
-    let religionsResults = calculateReligionData(rows)
-    createPieChart('religion-chart', 'Religion', religionsResults)
+    generateChartsFromTable(rows)
+    $("#search_count").text(rows.length);
   })
 })
+
 
