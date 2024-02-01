@@ -78,13 +78,10 @@ function createPieChart (containerId, title, data, table) {
           events: {
             click: function () {
               if (this.name === 'Unknown') {
-                table.setFilter(
-                  'religion',
-                  '=',
-                  '<ul class="list-unstyled"></ul>'
-                )
-              } // specific logic to deal with combined religion names
+                //nothing happens
+              } 
               else if (this.name.split(' ').length > 2) {
+                // specific logic to deal with the combined religion names
                 table.setHeaderFilterValue(
                   'religion',
                   this.name.split(' ').pop()
@@ -145,11 +142,7 @@ function createColumnChart (containerId, title, data, table) {
           events: {
             click: function () {
               if (this.name === 'Unknown') {
-                table.setFilter(
-                  'district',
-                  '=',
-                  '<ul class="list-unstyled"></ul>'
-                )
+                // nothing happens
               } else {
                 table.setHeaderFilterValue('district', this.name)
               }
@@ -206,12 +199,11 @@ function calculateDistrictData (rows) {
   rows.forEach(row => {
     let rowData = row.getData()
     let htmlString = rowData.district
-    // Create a temporary div element to parse the HTML
-    let tempDiv = document.createElement('div')
-    tempDiv.innerHTML = htmlString
-    // Extract text values from list items
-    let textValues = Array.from(tempDiv.querySelectorAll('li a')).map(item =>
-      item.textContent.trim()
+    let textValues = Array.from(
+      new DOMParser()
+        .parseFromString(htmlString, 'text/html')
+        .querySelectorAll('li a'),
+      value => value.textContent.trim()
     )
     if (textValues.length === 0) {
       districtCount['Unknown'] = (districtCount['Unknown'] || 0) + 1
@@ -221,7 +213,7 @@ function calculateDistrictData (rows) {
       })
     }
   })
-  // Calculate the percentages for each district and store them in an array
+  // Calculate the numbers for each district and store them in an array
   let results = Object.entries(districtCount).map(([district, count]) => ({
     name: district,
     y: count
