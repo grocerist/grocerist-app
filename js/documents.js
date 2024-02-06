@@ -54,7 +54,7 @@ d3.json(dataUrl, function (data) {
                 title: "Facsimiles", field: "images", formatter: "tickCross", headerFilter: "tickCross", headerFilterParams: { "tristate": true }, headerFilterEmptyCheck: function (value) { return value === null }
             },
             {
-                title: "Goods", field: "goods", mutator: listGoods, headerFilter: "input",
+                title: "Groceries", field: "goods", mutator: listGoods, headerFilter: "input",
                 formatter: function (cell) {
                     return get_scrollable_cell(this, cell);
                 }, 

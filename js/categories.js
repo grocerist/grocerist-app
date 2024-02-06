@@ -32,18 +32,18 @@ d3.json(dataUrl, function (data) {
         columnCalcs: "both",
         columns: [
             {
-                title: "Good Category", field: "name", headerFilter: "input", formatter: function (cell) {
+                title: "Grocery Category", field: "name", headerFilter: "input", formatter: function (cell) {
                     return linkToDetailView(cell)
                 }, bottomCalc: "count"
             },
             {
-                title: "Goods", field: "goods", mutator: linkList, headerFilter: "input", 
+                title: "Groceries", field: "goods", mutator: linkList, headerFilter: "input", 
                 formatter: function (cell) {
                     return get_scrollable_cell(this, cell);
                 },
             },
             {
-                title: "# Goods", field: "good_count", bottomCalc: "sum"
+                title: "# Groceries", field: "good_count", bottomCalc: "sum"
             },
             {
                 title: "Documents", field: "documents", mutator: linkList, headerFilter: "input",

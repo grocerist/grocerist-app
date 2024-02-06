@@ -56,7 +56,7 @@ function createColumnChart (containerId, title, data, drilldownData) {
       style: titleStyle
     },
     subtitle: {
-      text: 'Click the columns to view the goods in that category'
+      text: 'Click the columns to view the groceries in that category'
     },
     xAxis: {
       type: 'category',
@@ -83,7 +83,7 @@ function createColumnChart (containerId, title, data, drilldownData) {
     },
     series: [
       {
-        name: 'Good Categories',
+        name: 'Grocery Categories',
         dataSorting: {
           enabled: true,
           sortKey: 'name'
@@ -222,7 +222,7 @@ d3.json(dataUrl, function (data) {
   createPieChart('container religion_chart', 'Religion', relChartData)
   createColumnChart(
     'container categories_chart',
-    'Good Categories',
+    'Grocery Categories',
     catChartData,
     drilldownData
   )
