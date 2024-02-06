@@ -45,7 +45,7 @@ d3.json(dataUrl, function (data) {
                 }
             },
             {
-                title: "Main Person", field: "main_person", mutator: listGoods, headerFilter: "input", formatter: "html"
+                title: "Bakkal/Grocer", field: "main_person", mutator: listGoods, headerFilter: "input", formatter: "html"
             },
             {
                 title: "Transcript", field: "transcript", formatter: "tickCross", headerFilter: "tickCross", headerFilterParams: { "tristate": true }, headerFilterEmptyCheck: function (value) { return value === null }
