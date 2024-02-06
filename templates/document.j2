@@ -34,21 +34,23 @@
             </dl>
 
 
-            <h2><i class="bi bi-person"></i> Main Person/{{ object.type_of_ownership.value }} </h2>
+            <h2><i class="bi bi-person"></i> Bakkal/Grocer</h2>
             {% for x in object.main_person %}
             <dl>
                 <dt>Name</dt>
                 <dd class="ms-5"><a href="{{ x.grocerist_id }}.html">{{ x.name }}</a></dd>
-                <dt>Status</dt>
-                <dd class="ms-5">{{ object.status_of_main_person.value }}</dd>
                 <dt>Religion</dt>
                 {% for y in x.religion %}
                 <dd class="ms-5">{{ y.value }}</dd>
                 {% endfor %}
+                <dt>Status</dt>
+                <dd class="ms-5">{{ object.status_of_main_person.value }}</dd>
+                <dt>Type of ownership</dt>
+                <dd class="ms-5">{{ object.type_of_ownership.value }}</dd>
             </dl>
             {% endfor %}
 
-            <h2><i class="bi bi-people"></i> Further mentioned Persons</h2>
+            <h2><i class="bi bi-people"></i> Further mentioned people</h2>
             {% for x in object.mentioned_persons %}
             <dl>
                 <dt>Role/Name</dt>
