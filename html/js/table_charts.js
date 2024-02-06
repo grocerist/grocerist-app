@@ -52,6 +52,21 @@ const TABLE_CFG = {
     '</span>'
 }
 
+function religionClick(table) {
+  if (this.name === 'Unknown') {
+    //nothing happens
+  } 
+  else if (this.name.split(' ').length > 2) {
+    // specific logic to deal with the combined religion names
+    table.setHeaderFilterValue(
+      'religion',
+      this.name.split(' ').pop()
+    )
+  } else {
+    table.setHeaderFilterValue('religion', this.name)
+  }
+}
+
 function generateChartsFromTable (rows, table) {
   let religionsResults = calculateReligionData(rows)
   createPieChart('religion-chart', 'Religion', religionsResults, table)
@@ -76,22 +91,8 @@ function createPieChart (containerId, title, data, table) {
         cursor: 'pointer',
         point: {
           events: {
-            click: function () {
-              if (this.name === 'Unknown') {
-                //nothing happens
-              } 
-              else if (this.name.split(' ').length > 2) {
-                // specific logic to deal with the combined religion names
-                table.setHeaderFilterValue(
-                  'religion',
-                  this.name.split(' ').pop()
-                )
-              } else {
-                table.setHeaderFilterValue('religion', this.name)
-              }
-            }
-          }
-        },
+            click: religionClick(table)
+        }},
         dataLabels: {
           enabled: true
         }
