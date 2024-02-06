@@ -1,3 +1,7 @@
+{% extends "templates/partials/base.j2" %}
+{% block title %}Browse Persons{% endblock title %}
+{% block page_description %}
+<meta name="description" content="{{ project_data.project_sub_title }}">
 {% endblock page_description %}
 
 {% block scriptHeader %}
@@ -24,7 +28,7 @@
     </div>
     
 </div>
-{% endblock content%}
+{% endblock content %}
 
 {% block scripts2 %}
 <script src="js/table_charts.js"></script>
