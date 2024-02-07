@@ -6,16 +6,30 @@
 
 {% block scriptHeader %}
 {% include "templates/partials/tabulator.j2" %}
+<script src="https://code.highcharts.com/highcharts.js"></script>
 {% endblock scriptHeader %}
 {% block content %}
 <div class="container persons">
     <h1 class="text-center">
         {% include "templates/partials/link_to_top.j2" %}
         Persons</h1>
-    <div id="example-table"></div>
+            <div class="row">
+        <div class="col-md-6">
+            <div id="religion-chart"></div>
+        </div>
+                <div class="col-md-6">
+            <div id="districts-chart"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="persons-table"></div>
+        </div>
+    </div>
+    
 </div>
-{% endblock content%}
+{% endblock content %}
 
 {% block scripts2 %}
-<script src="js/persons.js"></script>
+<script src="js/table_charts.js"></script>
 {% endblock scripts2 %}

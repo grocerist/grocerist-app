@@ -10,3 +10,37 @@ function get_scrollable_cell(table, cell, cell_html_string = undefined) {
     let final_val = table.emptyToSpace(cell_html_string);
     return final_val;
 }
+
+function mutateSelectField (value, data, type, params, component) {
+    let output = value
+      .map(item => {
+        return `<li>${item.value}</li>`
+      })
+      .join(' ')
+    return `<ul class="list-unstyled">${output}</ul>`
+  }
+function mutateDocumentField (value, data, type, params, component) {
+    let output = value
+      .map(item => {
+        return `<li><a href="document__${item.id}.html">${item.value}</a></li>`
+      })
+      .join(' ')
+    return `<ul class="list-unstyled">${output}</ul>`
+  }
+  
+  function mutateDistrictField (value, data, type, params, component) {
+    let output = value
+      .map(item => {
+        return `<li><a href="district__${item.id}.html">${item.value}</a></li>`
+      })
+      .join(' ')
+    return `<ul class="list-unstyled">${output}</ul>`
+  }
+  
+  function linkToDetailView (cell) {
+    var row = cell.getRow().getData()
+    var cellData = cell.getData()
+    var groceristId = row.grocerist_id
+    var theLink = `<a href="${groceristId}.html">${cellData.name}</a>`
+    return theLink
+  }
