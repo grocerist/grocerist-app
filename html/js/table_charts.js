@@ -52,20 +52,6 @@ const TABLE_CFG = {
     '</span>'
 }
 
-function religionClick(table) {
-  if (this.name === 'Unknown') {
-    //nothing happens
-  } 
-  else if (this.name.split(' ').length > 2) {
-    // specific logic to deal with the combined religion names
-    table.setHeaderFilterValue(
-      'religion',
-      this.name.split(' ').pop()
-    )
-  } else {
-    table.setHeaderFilterValue('religion', this.name)
-  }
-}
 
 function generateChartsFromTable (rows, table) {
   let religionsResults = calculateReligionData(rows)
@@ -91,7 +77,19 @@ function createPieChart (containerId, title, data, table) {
         cursor: 'pointer',
         point: {
           events: {
-            click: religionClick(table)
+            click: function(){
+              if (this.name === 'Unknown') {
+              //nothing happens
+            } 
+            else if (this.name.split(' ').length > 2) {
+              // specific logic to deal with the combined religion names
+              table.setHeaderFilterValue(
+                'religion',
+                this.name.split(' ').pop()
+              )
+            } else {
+              table.setHeaderFilterValue('religion', this.name)
+            }}
         }},
         dataLabels: {
           enabled: true
@@ -178,6 +176,7 @@ function calculateReligionData (rows) {
   let totalPersons = rows.length
   rows.forEach(row => {
     let rowData = row.getData()
+    // Combine multiple values into one key
     let religionKey = rowData.religion.replace(/(<([^>]+)>)/gi, '')
     // Check if the resulting string is empty
     if (religionKey.trim() === '') {
@@ -197,6 +196,7 @@ function calculateReligionData (rows) {
 
 function calculateDistrictData (rows) {
   let districtCount = {}
+  // get the districts (html list elements) from each row
   rows.forEach(row => {
     let rowData = row.getData()
     let htmlString = rowData.district
