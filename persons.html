@@ -21,6 +21,7 @@
 <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script type="text/javascript" src="js/tabulator-utils.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
 
 </head>
 
@@ -81,7 +82,20 @@
         </svg>
     </a>
         Persons</h1>
-    <div id="example-table"></div>
+            <div class="row">
+        <div class="col-md-6">
+            <div id="religion-chart"></div>
+        </div>
+                <div class="col-md-6">
+            <div id="districts-chart"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="persons-table"></div>
+        </div>
+    </div>
+    
 </div>
 
         </div>
@@ -166,7 +180,7 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
     
-<script src="js/persons.js"></script>
+<script src="js/table_charts.js"></script>
 
 </body>
 
