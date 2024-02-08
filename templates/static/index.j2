@@ -20,137 +20,49 @@
             circumstances of the empire.
         </p>
     </div>
-    <div class="row pt-3">
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center">Documents</h3>
-                </div>
-                <div class="card-body">
-                    <p class="text-center">
-                        <a class="icon-link icon-link-hover" href="documents.html">
-                            <i class="bi bi-archive" style="font-size: 80px"></i>
-                        </a>
-                    </p>
-                    <p class="text-center">Browse Documents about Grocers</p>
+    {% set card_groups = [
+    [
+    {"title": "Documents", "icon": "bi-archive", "link": "documents.html", "description": "Browse Documents about
+    Grocers"},
+    {"title": "Grocers", "icon": "bi-people", "link": "persons.html", "description": "Browse Grocers"}
+    ],
+    [
+    {"title": "Mahalles", "icon": "bi-geo", "link": "neighbourhoods.html", "description": "Browse Mahalles"},
+    {"title": "Districts", "icon": "bi-geo-alt", "link": "districts.html", "description": "Browse Districts"},
+    {"title": "Karyes", "icon": "bi-map", "link": "karyes.html", "description": "Browse Karyes"}
+    ],
+    [
+    {"title": "Grocery Categories", "icon": "bi-boxes", "link": "categories.html", "description": "Browse Categories of
+    Groceries"},
+    {"title": "Groceries", "icon": "bi-basket", "link": "goods.html", "description": "Browse Groceries"}
+    ],
+    [
+    {"title": "Dashboard", "icon": "bi-bar-chart", "link": "dashboard.html", "description": "Browse Dashboard"},
+    ]
+    ] %}
+
+    <div class="container">
+        {% for card_group in card_groups %}
+        <div class="row pt-3">
+            {% for card_data in card_group %}
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">{{ card_data.title }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-center">
+                            <a class="icon-link icon-link-hover" href="{{ card_data.link }}">
+                                <i class="bi {{ card_data.icon }}" style="font-size: 80px"></i>
+                            </a>
+                        </p>
+                        <p class="text-center">{{ card_data.description }}</p>
+                    </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center">Grocers</h3>
-                </div>
-                <div class="card-body">
-                    <p class="text-center">
-                        <a class="icon-link icon-link-hover" href="persons.html">
-                            <i class="bi bi-people" style="font-size: 80px"></i>
-                        </a>
-                    </p>
-                    <p class="text-center">Browse Grocers</p>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-    <div class="row pt-3">
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center"><i>Mahalle</i>s</h3>
-                </div>
-                <div class="card-body">
-                    <p class="text-center">
-                        <a class="icon-link icon-link-hover" href="neighbourhoods.html">
-                            <i class="bi bi-geo" style="font-size: 80px"></i>
-                        </a>
-                    </p>
-                    <p class="text-center">Browse <i>Mahalle</i>s</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center">Districts</h3>
-                </div>
-                <div class="card-body">
-                    <p class="text-center">
-                        <a class="icon-link icon-link-hover" href="districts.html">
-                            <i class="bi bi-geo-alt" style="font-size: 80px"></i>
-                        </a>
-                    </p>
-                    <p class="text-center">Browse Districts</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center"><i>Karye</i>s</h3>
-                </div>
-                <div class="card-body">
-                    <p class="text-center">
-                        <a class="icon-link icon-link-hover" href="karyes.html">
-                            <i class="bi bi-map" style="font-size: 80px"></i>
-                        </a>
-                    </p>
-                    <p class="text-center">Browse <i>Karye</i>s</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-3">
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center">Grocery Categories</h3>
-                </div>
-                <div class="card-body">
-                    <p class="text-center">
-                        <a class="icon-link icon-link-hover" href="categories.html">
-                            <i class="bi bi-boxes" style="font-size: 80px"></i>
-                        </a>
-                    </p>
-                    <p class="text-center">Browse Categories of Groceries</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center">Groceries</h3>
-                </div>
-                <div class="card-body">
-                    <p class="text-center">
-                        <a class="icon-link icon-link-hover" href="goods.html">
-                            <i class="bi bi-basket" style="font-size: 80px"></i>
-                        </a>
-                    </p>
-                    <p class="text-center">Browse Groceries</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row pt-3">
-        <div class="col">
-        </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center">Dashboard</h3>
-                </div>
-                <div class="card-body">
-                    <p class="text-center">
-                        <a class="icon-link icon-link-hover" href="dashboard.html">
-                            <i class="bi bi-bar-chart" style="font-size: 80px"></i>
-                        </a>
-                    </p>
-                    <p class="text-center">Browse Dashboard</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-        </div>
-    </div>
-</div>
-{% endblock content %}
+
+    {% endblock content %}
