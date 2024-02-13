@@ -28,8 +28,10 @@ const TABLE_CFG = {
       title: 'Religion',
       field: 'religion',
       mutator: mutateSelectField,
-      headerFilter: 'input',
-      formatter: 'html'
+      formatter: 'html',
+      headerFilter: 'select',
+      headerFilterFunc: '=',
+      headerFilterParams: {valuesLookup:'religion', sort: 'asc'}
     },
     {
       title: 'Documents',
@@ -80,13 +82,6 @@ function createPieChart (containerId, title, data, table) {
             click: function(){
               if (this.name === 'Unknown') {
               //nothing happens
-            } 
-            else if (this.name.split(' ').length > 2) {
-              // specific logic to deal with the combined religion names
-              table.setHeaderFilterValue(
-                'religion',
-                this.name.split(' ').pop()
-              )
             } else {
               table.setHeaderFilterValue('religion', this.name)
             }}
@@ -242,4 +237,52 @@ d3.json(dataUrl, function (data) {
     $('#search_count').text(rows.length)
     generateChartsFromTable(rows, table)
   })
+})
+
+// Custom colors (default HighCharts list has too few)
+Highcharts.setOptions({
+  colors: [
+    '#536e61',
+    '#9CC69B',
+    '#cf7332',
+    '#993333',
+    '#9cc288',
+    '#EDB183',
+    '#79B4A9',
+    '#5E8B7E',
+    '#A2CAB3',
+    '#E0A180',
+    '#CC9999',
+    '#BFD1B3',
+    '#D6BABA',
+    '#CCFF66',
+    '#FAD02E',
+    '#FF9966',
+    '#CC9966',
+    '#CCFFCC',
+    '#FFD633',
+    '#FF9966',
+    '#FFB366',
+    '#87CEEB',
+    '#AFEEEE',
+    '#FFDAB9',
+    '#F0E68C',
+    '#98FB98',
+    '#F08080',
+    '#20B2AA',
+    '#87CEFA',
+    '#9400D3',
+    '#66CDAA',
+    '#8A2BE2',
+    '#32CD32',
+    '#6495ED',
+    '#B8860B',
+    '#008080',
+    '#DC143C',
+    '#556B2F',
+    '#2F4F4F',
+    '#FF1493',
+    '#4B0082',
+    '#7FFF00'
+  ]
 })
