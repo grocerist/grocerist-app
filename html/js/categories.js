@@ -1,20 +1,5 @@
 const dataUrl = "json_dumps/categories.json"
 
-function linkList(value, data, type, params, component) {
-    let output = value.map((item) => {
-        return `<li><a href="${item.grocerist_id}.html">${item.name}</a></li>`
-    }).join(" ");
-    return `<ul class="list-unstyled">${output}</ul>`
-}
-
-function linkToDetailView(cell) {
-    var row = cell.getRow().getData()
-    var cellData = cell.getData()
-    var groceristId = row.grocerist_id
-    var theLink = `<a href="${groceristId}.html">${cellData.name}</a>`
-    return theLink
-}
-
 d3.json(dataUrl, function (data) {
     tableData = Object.values(data)
 
