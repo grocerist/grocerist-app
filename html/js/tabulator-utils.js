@@ -16,7 +16,7 @@ function mutateSelectField (value, data, type, params, component) {
     .map(item => {
       return `${item.value}`
     })
-    .join(' ')
+    .join('/')
   return `${output}`
 }
 function mutateDocumentField (value, data, type, params, component) {
