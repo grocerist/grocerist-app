@@ -1,35 +1,6 @@
 
 const dataUrl = "json_dumps/goods.json"
 
-function mutateSelectField(value, data, type, params, component) {
-    let output = value.map((item) => {
-        return `<li>${item.value}</li>`
-    }).join(" ");
-    return `<ul class="list-unstyled">${output}</ul>`
-}
-
-function mutateDocumentField(value, data, type, params, component) {
-    let output = value.map((item) => {
-        return `<li><a href="document__${item.id}.html">${item.value}</a></li>`
-    }).join("");
-    return `<ul class="list-unstyled">${output}</ul>`
-}
-
-function mutateCateogryField(value, data, type, params, component) {
-    let output = value.map((item) => {
-        return `<li><a href="category__${item.id}.html">${item.value}</a></li>`
-    }).join(" ");
-    return `<ul class="list-unstyled">${output}</ul>`
-}
-
-function linkToDetailView(cell) {
-    var row = cell.getRow().getData()
-    var cellData = cell.getData()
-    var groceristId = row.grocerist_id
-    var theLink = `<a href="${groceristId}.html">${cellData.name}</a>`
-    return theLink
-}
-
 d3.json(dataUrl, function (data) {
 
     data = Object.values(data)
@@ -68,7 +39,7 @@ d3.json(dataUrl, function (data) {
                 title: "Nr. of Documents", field: "doc_count", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
             },
             {
-                title: "Categories", field: "has_category", headerFilter: "input", formatter: "html", mutator: mutateCateogryField
+                title: "Categories", field: "has_category", headerFilter: "input", formatter: "html", mutator: mutateCategoryField
             },
             {
                 title: "Nr. of Categories", field: "cat_cont", headerFilter: "number", headerFilterPlaceholder: "at least...", headerFilterFunc: ">="
