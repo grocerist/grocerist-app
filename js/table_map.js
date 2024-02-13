@@ -30,36 +30,7 @@ const commonTableCfg = {
 }
 
 // mutator & formatter functions used by the columns in the table
-export function mutateDocumentField (value, data, type, params, component) {
-    let output = value
-      .map(item => {
-        return `<li><a href="document__${item.id}.html">${item.value}</a></li>`
-      })
-      .join(' ')
-    return `<ul class="list-unstyled">${output}</ul>`
-  }
 
-export  function mutatePersonField (value, data, type, params, component) {
-    let output = value
-      .map(item => {
-        return `<li><a href="person__${item.id}.html">${item.value}</a></li>`
-      })
-      .join(' ')
-    return `<ul class="list-unstyled">${output}</ul>`
-  }
-export  function mutateDistrictField(value, data, type, params, component) {
-    let output = value.map((item) => {
-        return `<li><a href="district__${item.id}.html">${item.value}</a></li>`
-    }).join(" ");
-    return `<ul class="list-unstyled">${output}</ul>`
-}
-export  function linkToDetailView (cell) {
-    let row = cell.getRow().getData()
-    let cellData = cell.getData()
-    let groceristId = row.grocerist_id
-    let theLink = `<a href="${groceristId}.html">${cellData.name}</a>`
-    return theLink
-  }
 
 // Function for initializing the (empty) map
 function createMap () {

@@ -36,7 +36,7 @@
                     field: 'name',
                     headerFilter: 'input',
                     formatter: function (cell) {
-                        return tableMapModule.linkToDetailView(cell)
+                        return linkToDetailView(cell)
                     }
                 },
                 
@@ -47,7 +47,7 @@
     {
         title: 'Documents',
             field: 'documents',
-                mutator: tableMapModule.mutateDocumentField,
+                mutator: mutateDocumentField,
                     headerFilter: 'input',
                         formatter: function (cell) {
                             return get_scrollable_cell(this, cell)
@@ -64,7 +64,7 @@
     {
         title: 'Persons',
             field: 'persons',
-                mutator: tableMapModule.mutatePersonField,
+                mutator: mutatePersonField,
                     headerFilter: 'input',
                         formatter: function (cell) {
                             return get_scrollable_cell(this, cell)
