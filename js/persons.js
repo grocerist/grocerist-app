@@ -3,9 +3,9 @@ const dataUrl = "json_dumps/persons.json"
 
 function mutateSelectField(value, data, type, params, component) {
     let output = value.map((item) => {
-        return `<li>${item.value}</li>`
-    }).join(" ");
-    return `<ul class="list-unstyled">${output}</ul>`
+        return `${item.value}`
+    }).join(", ");
+    return `${output}`
 }
 
 function mutateDocumentField(value, data, type, params, component) {
@@ -51,8 +51,11 @@ d3.json(dataUrl, function (data) {
                 }
             },
             {
-                title: "Religion", field: "religion", mutator: mutateSelectField, headerFilter: "input", formatter: "html"
-            },
+                title: "Religion", field: "religion", mutator: mutateSelectField, formatter: "html",
+                headerFilter: "select",
+                headerFilterFunc: "=",
+                headerFilterParams: {valuesLookup:"religion", sort: "asc"}
+            },        
             {
                 title: "Documents", field: "documents", mutator: mutateDocumentField, headerFilter: "input", formatter: "html"
             },
