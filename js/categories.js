@@ -11,9 +11,6 @@ d3.json(dataUrl, function (data) {
         pagination:true,
         paginationSize:15,
         responsiveLayout: "collapse",
-        persistence: {
-            headerFilter: true,
-        },
         columnCalcs: "both",
         columns: [
             {

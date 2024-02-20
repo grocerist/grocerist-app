@@ -41,9 +41,6 @@ d3.json(dataUrl, function (data) {
         tooltips:true,
         data: tableData,
         responsiveLayout: "collapse",
-        persistence: {
-            headerFilter: true,
-        },
         columns: [
             {
                 title: "Name", field: "name", headerFilter: "input", formatter: function (cell) {
