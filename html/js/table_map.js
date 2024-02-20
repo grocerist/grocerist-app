@@ -13,7 +13,7 @@ const MAP_CFG = {
 }
 
 // Common config settings for table
-const commonTableCfg = {
+const TABLE_CFG = {
   height: '60vh',
   layout: 'fitColumns',
   width: '100%',
@@ -21,6 +21,54 @@ const commonTableCfg = {
   paginationSize:15,
   headerFilterLiveFilterDelay: 600,
   responsiveLayout: 'collapse',
+  columns:
+  [
+      {
+          title: 'Name',
+          field: 'name',
+          headerFilter: 'input',
+          formatter: function (cell) {
+              return linkToDetailView(cell)
+          }
+      },
+      {
+          title: 'Documents',
+          field: 'documents',
+          mutator: mutateDocumentField,
+          headerFilter: 'input',
+          formatter: function (cell) {
+              return get_scrollable_cell(this, cell)
+          },
+          tooltip: true
+      },
+      {
+          title: 'Nr. of Documents',
+          field: 'doc_count',
+          headerFilter: 'number',
+          headerFilterPlaceholder: 'at least...',
+          headerFilterFunc: '>='
+      },
+      {
+          title: 'Persons',
+          field: 'persons',
+          mutator: mutatePersonField,
+          headerFilter: 'input',
+          formatter: function (cell) {
+              return get_scrollable_cell(this, cell)
+          }
+      },
+      {
+          title: 'Nr. of Persons',
+          field: 'person_count',
+          headerFilter: 'number',
+          headerFilterPlaceholder: 'at least...',
+          headerFilterFunc: '>='
+      },
+      { title: 'Location Type', 
+      field: 'location_type', 
+      headerFilter: 'list',
+      headerFilterParams: { values: true } },
+  ],
   initialSort: [
     { column: "name", dir: "asc" }
     ],
@@ -229,8 +277,7 @@ function setupEventHandlers (
 }
 
 // Main function for initializing the map and table
-export function setupMapAndTable (dataUrl, specificTableCfg) {
-  const TABLE_CFG = { ...commonTableCfg, ...specificTableCfg }
+export function setupMapAndTable (dataUrl) {
   const { map, layerGroups } = createMap()
   d3.json(dataUrl, function (dataFromJson) {
     dataFromJson = Object.values(dataFromJson)

@@ -9,52 +9,7 @@
 <script type="module">
     import * as tableMapModule from './js/table_map.js'
     const dataUrl = '{{ data_url}}'
-    const tableCfg = {
-        columns:
-            [
-                {
-                    title: 'Name',
-                    field: 'name',
-                    headerFilter: 'input',
-                    formatter: function (cell) {
-                        return linkToDetailView(cell)
-                    }
-                },
-    {
-        title: 'Documents',
-            field: 'documents',
-                mutator: mutateDocumentField,
-                    headerFilter: 'input',
-                        formatter: function (cell) {
-                            return get_scrollable_cell(this, cell)
-                        },
-        tooltip: true
-    },
-    {
-        title: 'Nr. of Documents',
-            field: 'doc_count',
-                headerFilter: 'number',
-                    headerFilterPlaceholder: 'at least...',
-                        headerFilterFunc: '>='
-    },
-    {
-        title: 'Persons',
-            field: 'persons',
-                mutator: mutatePersonField,
-                    headerFilter: 'input',
-                        formatter: function (cell) {
-                            return get_scrollable_cell(this, cell)
-                        }
-    },
-    {
-        title: 'Nr. of Persons',
-            field: 'person_count',
-                headerFilter: 'number',
-                    headerFilterPlaceholder: 'at least...',
-                        headerFilterFunc: '>='
-    }
-        ]}
-    tableMapModule.setupMapAndTable(dataUrl, tableCfg)
+    tableMapModule.setupMapAndTable(dataUrl)
 </script>
 {% endblock scriptHeader %}
 {% block content %}
