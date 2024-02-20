@@ -12,9 +12,6 @@ const TABLE_CFG = {
   layout: 'fitColumns',
   tooltips: true,
   responsiveLayout: 'collapse',
-  persistence: {
-    headerFilter: true
-  },
   columns: [
     {
       title: 'Name',
