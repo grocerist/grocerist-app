@@ -24,9 +24,6 @@ const commonTableCfg = {
   initialSort: [
     { column: "name", dir: "asc" }
     ],
-  persistence: {
-      headerFilter: true
-  },
 }
 
 // mutator & formatter functions used by the columns in the table
