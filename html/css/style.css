@@ -461,3 +461,8 @@ div.good a {
 .highcharts-legend-item .highcharts-graph {
 	display: none;
 }
+
+.container {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}

@@ -44,7 +44,7 @@ def make_geojson(json_files):
                 geo_json["features"].append(gj_feature)
 
     with open(
-        os.path.join("html", "json_dumps", "location_gj.geojson"), "w", encoding="utf-8"
+        os.path.join("html", "json_dumps", "locations.json"), "w", encoding="utf-8"
     ) as fp:
         json.dump(geo_json, fp, ensure_ascii=False)
 
