@@ -18,18 +18,20 @@ nav.navbar ul.dropdown-menu {
     --documents-hover: #536e61c2;
     --persons: #79B4A9;
     --persons-hover: #79B4A9c2;
-    --mahalles: #cf7332;
-    --mahalles-hover: #cf7332c2;
-    --districts: #993333;
-    --districts-hover: #993333c2;
-    --karyes: #EDB183;
-    --karyes-hover: #EDB183c2;
-    --categories: #9CC69B;
-    --categories-hover: #9CC69Bc2;
-    --goods: #9cc288;
-    --goods-hover: #9cc288c2;
+    --goods: #cf7332;
+    --goods-hover: #cf7332c2;
+    --locations: #993333;
+    --locations-hover: #993333c2;
+    --categories: #235BAD;
+    --categories-hover: #235BADc2;
     --dashboard: #236FAD;
-    --dashboard-hover: #236FADc2;
+    --dashboard-hover: #2A5AB9c2;
+    --districts: #662222;
+    --districts-hover: #662222c2;
+    --mahalles: #CC6666;
+    --mahalles-hover: #CC6666c2;
+    --karyes: #994444;
+    --karyes-hover: #994444c2;
     --link: #000000;
     --link-hover: #6e6e6ec2;
     --footer-hover-background: #f2f2f2;
@@ -59,26 +61,12 @@ a[href="persons.html"] {
     color: var(--persons-hover);
  }
 } 
-a[href="neighbourhoods.html"] {
-    color: var(--mahalles);
+a[href="locations.html"] {
+    color: var(--locations);
  &:hover { 
-    color: var(--mahalles-hover);
+    color: var(--locations-hover);
  }
 }
-a[href="districts.html"] {
-    color: var(--districts);
- &:hover { 
-    color: var(--districts-hover);
- }
-}
-
-a[href="karyes.html"] {
-    color: var(--karyes);
- &:hover { 
-    color: var(--karyes-hover);
- }
-}
-
 a[href="categories.html"] {
     color: var(--categories);
  &:hover { 
@@ -135,33 +123,13 @@ div.persons h1 > a {
     }
 }
 
-div.mahalles h1 {
-    color: var(--mahalles);
+div.locations h1 {
+    color: var(--locations);
 }
-div.mahalles h1 > a {
-    color: var(--mahalles);
+div.locations h1 > a {
+    color: var(--locations);
     &:hover{
-        color: var(--mahalles-hover);
-    }
-}
-
-div.districts h1 {
-    color: var(--districts);
-}
-div.districts h1 > a {
-    color: var(--districts);
-    &:hover{
-        color: var(--districts-hover);
-    }
-}
-
-div.karyes h1 {
-    color: var(--karyes);
-}
-div.karyes h1 > a {
-    color: var(--karyes);
-    &:hover{
-        color: var(--karyes-hover);
+        color: var(--locations-hover);
     }
 }
 
@@ -214,30 +182,14 @@ div.persons div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
  }
 }
 
-/*mahalles page*/
+/*locations page*/
 div.mahalles div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--mahalles);
+    background-color: var(--locations);
  &:hover {
-    background-color: var(--mahalles-hover) !important;
+    background-color: var(--locations-hover) !important;
  }
 }
 
-/*districts page*/
-div.districts div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--districts);
-    color: white; 
- &:hover {
-    background-color: var(--districts-hover) !important;
- }
-}
-
-/*karyes page*/
-div.karyes div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--karyes);
- &:hover {
-    background-color: var(--karyes-hover) !important;
- }
-}
 
 /*categories page*/
 div.categories div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
@@ -286,43 +238,19 @@ div.persons div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--persons) !important;
 }
 
-/*mahalles footer*/
-div.mahalles div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--mahalles);
-    border-color: var(--mahalles);
+
+
+/*locationss footer*/
+div.locations div.tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--locations);
+    border-color: var(--locatios);
  &:hover {
     background-color: var(--footer-hover-background);
  }
 }
 
-div.mahalles div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--mahalles) !important;
-}
-
-/*districts footer*/
-div.districts div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--districts);
-    border-color: var(--districts);
- &:hover {
-    background-color: var(--footer-hover-background);
- }
-}
-
-div.districts div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--districts) !important;
-}
-
-/*karyes footer*/
-div.karyes div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--karyes);
-    border-color: var(--karyes);
- &:hover {
-    background-color: var(--footer-hover-background);
- }
-}
-
-div.karyes div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--karyes) !important;
+div.locations div.tabulator .tabulator-footer .tabulator-page:hover {
+    color: var(--locations) !important;
 }
 
 /*categories footer*/
