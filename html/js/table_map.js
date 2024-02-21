@@ -207,9 +207,12 @@ function setupEventHandlers (
       } else {
         map.setView(MAP_CFG.initialCoordinates, MAP_CFG.initialZoom)
       }
-
-      let markersToDisplay = rows.map(row => getCoordinates(rowData));
-
+      let markersToDisplay = rows.map(row => {
+        let rowData = row.getData();
+        let { lat, long } = getCoordinates(rowData);
+        return `${lat}${long}`;
+      });
+    
       // hide & display filtered markers
       Object.entries(existingCirclesByCoordinates).forEach(
         ([coordinateKey, baselayers]) => {
