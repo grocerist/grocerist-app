@@ -57,8 +57,13 @@ function linkToDocumentsDetailView (cell) {
 function linkToDetailView (cell) {
   var row = cell.getRow().getData()
   var cellData = cell.getData()
-  var groceristId = row.grocerist_id
+  console.log(row)
+  var groceristId = row.grocerist_id;
   var theLink = `<a href="${groceristId}.html">${cellData.name}</a>`
+  if (groceristId === undefined) {
+      groceristId = row.properties.grocerist_id;
+      var theLink = `<a href="${groceristId}.html">${cellData.properties.name}</a>`
+  }
   return theLink
 }
 

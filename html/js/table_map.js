@@ -25,7 +25,7 @@ const TABLE_CFG = {
   [
       {
           title: 'Name',
-          field: 'name',
+          field: 'properties.name',
           headerFilter: 'input',
           formatter: function (cell) {
               return linkToDetailView(cell)
@@ -33,7 +33,7 @@ const TABLE_CFG = {
       },
       {
           title: 'Documents',
-          field: 'documents',
+          field: 'properties.documents',
           mutator: mutateDocumentField,
           headerFilter: 'input',
           formatter: function (cell) {
@@ -43,14 +43,14 @@ const TABLE_CFG = {
       },
       {
           title: 'Nr. of Documents',
-          field: 'doc_count',
+          field: 'properties.doc_count',
           headerFilter: 'number',
           headerFilterPlaceholder: 'at least...',
           headerFilterFunc: '>='
       },
       {
           title: 'Persons',
-          field: 'persons',
+          field: 'properties.persons',
           mutator: mutatePersonField,
           headerFilter: 'input',
           formatter: function (cell) {
@@ -59,18 +59,18 @@ const TABLE_CFG = {
       },
       {
           title: 'Nr. of Persons',
-          field: 'person_count',
+          field: 'properties.person_count',
           headerFilter: 'number',
           headerFilterPlaceholder: 'at least...',
           headerFilterFunc: '>='
       },
       { title: 'Location Type', 
-      field: 'location_type', 
+      field: 'properties.location_type', 
       headerFilter: 'list',
-      headerFilterParams: { values: true } },
+      headerFilterParams: { valuesLookup: true } },
   ],
   initialSort: [
-    { column: "name", dir: "asc" }
+    { column: "properties.name", dir: "asc" }
     ],
   persistence: {
       headerFilter: true
@@ -280,15 +280,9 @@ function setupEventHandlers (
 export function setupMapAndTable (dataUrl) {
   const { map, layerGroups } = createMap()
   d3.json(dataUrl, function (dataFromJson) {
-    dataFromJson = Object.values(dataFromJson)
-    // adds doc and person count to the data 
-    // and removes items with an empty name (mostly found in the neighbourhoods table)
-    const tableData = dataFromJson.map(item => {
-      let enriched = item
-      enriched['doc_count'] = item.documents.length
-      enriched['person_count'] = item.persons.length
-      return enriched
-    }).filter(item => item.name.trim() !== "");
+    // remove items with an empty name (mostly found in the neighbourhoods table)
+    const tableData = Object.values(dataFromJson)[1].filter(item => item.properties.name.trim() !== "");
+    console.log(tableData)
     TABLE_CFG.data = tableData
     const table = createTable(TABLE_CFG)
     table.on('tableBuilt', function () {
