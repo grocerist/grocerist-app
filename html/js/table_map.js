@@ -17,68 +17,66 @@ const TABLE_CFG = {
   height: '60vh',
   layout: 'fitColumns',
   width: '100%',
-  pagination:true,
-  paginationSize:15,
+  pagination: true,
+  paginationSize: 15,
   headerFilterLiveFilterDelay: 600,
   responsiveLayout: 'collapse',
-  columns:
-  [
-      {
-          title: 'Name',
-          field: 'properties.name',
-          headerFilter: 'input',
-          formatter: function (cell) {
-              return linkToDetailView(cell)
-          }
+  columns: [
+    {
+      title: 'Name',
+      field: 'properties.name',
+      headerFilter: 'input',
+      formatter: function (cell) {
+        return linkToDetailView(cell)
+      }
+    },
+    {
+      title: 'Documents',
+      field: 'properties.documents',
+      mutator: mutateDocumentField,
+      headerFilter: 'input',
+      formatter: function (cell) {
+        return get_scrollable_cell(this, cell)
       },
-      {
-          title: 'Documents',
-          field: 'properties.documents',
-          mutator: mutateDocumentField,
-          headerFilter: 'input',
-          formatter: function (cell) {
-              return get_scrollable_cell(this, cell)
-          },
-          tooltip: true
-      },
-      {
-          title: 'Nr. of Documents',
-          field: 'properties.doc_count',
-          headerFilter: 'number',
-          headerFilterPlaceholder: 'at least...',
-          headerFilterFunc: '>='
-      },
-      {
-          title: 'Persons',
-          field: 'properties.persons',
-          mutator: mutatePersonField,
-          headerFilter: 'input',
-          formatter: function (cell) {
-              return get_scrollable_cell(this, cell)
-          }
-      },
-      {
-          title: 'Nr. of Persons',
-          field: 'properties.person_count',
-          headerFilter: 'number',
-          headerFilterPlaceholder: 'at least...',
-          headerFilterFunc: '>='
-      },
-      { title: 'Location Type', 
-      field: 'properties.location_type', 
+      tooltip: true
+    },
+    {
+      title: 'Nr. of Documents',
+      field: 'properties.doc_count',
+      headerFilter: 'number',
+      headerFilterPlaceholder: 'at least...',
+      headerFilterFunc: '>='
+    },
+    {
+      title: 'Persons',
+      field: 'properties.persons',
+      mutator: mutatePersonField,
+      headerFilter: 'input',
+      formatter: function (cell) {
+        return get_scrollable_cell(this, cell)
+      }
+    },
+    {
+      title: 'Nr. of Persons',
+      field: 'properties.person_count',
+      headerFilter: 'number',
+      headerFilterPlaceholder: 'at least...',
+      headerFilterFunc: '>='
+    },
+    {
+      title: 'Location Type',
+      field: 'properties.location_type',
       headerFilter: 'list',
-      headerFilterParams: { valuesLookup: true } },
+      headerFilterParams: { valuesLookup: true }
+    }
   ],
-  initialSort: [
-    { column: "properties.name", dir: "asc" }
-    ],
+  initialSort: [{ column: 'properties.name', dir: 'asc' }],
   persistence: {
-      headerFilter: true
-  },
+    headerFilter: true
+  }
 }
 
 // mutator & formatter functions used by the columns in the table
-
 
 // Function for initializing the (empty) map
 function createMap () {
@@ -110,11 +108,25 @@ function createMap () {
   return { map, layerGroups }
 }
 
-// Functions for creating and initializing the table
+// Function for creating
 function createTable (TABLE_CFG) {
   console.log('loading table')
   const table = new Tabulator('#places_table', TABLE_CFG)
   return table
+}
+
+// Function to create a marker
+function createMarker (lat, long, radius, color) {
+  return L.circleMarker([lat, long], { radius: radius, color: color })
+}
+
+// Function to get coordinate key from row data
+function getCoordinates (rowData) {
+  // order of coordinates in geojson is long, lat
+  // order of coordinates in leaflet is lat, long
+  let { coordinates } = rowData.geometry
+  let [long, lat] = coordinates
+  return { lat, long };
 }
 
 function createMarkerLayers (table, layerGroups) {
@@ -123,16 +135,15 @@ function createMarkerLayers (table, layerGroups) {
   let existingCirclesByCoordinates = {}
   rows.forEach(row => {
     let rowData = row.getData()
-    if (rowData.lat) {
-      let coordinateKey = rowData.lat + rowData.long
-
+    if (rowData.geometry.coordinates) {
+      let { lat, long } = getCoordinates(rowData);
+      let coordinateKey = `${lat}${long}`;
       // create markers for doc count
-      let docsRadius = rowData.doc_count / 2
-      let docsMarker = L.circleMarker([rowData.lat, rowData.long], {radius: docsRadius, color: "#536e61"})
-
+      let docsRadius = rowData.properties.doc_count / 2
+      let docsMarker = createMarker(lat, long, docsRadius / 2, '#536e61')
       // create markers for person count
-      let persRadius = rowData.person_count / 2
-      let persMarker = L.circleMarker([rowData.lat, rowData.long], {radius: persRadius, color: "#79B4A9"})
+      let persRadius = rowData.properties.person_count / 2
+      let persMarker = createMarker(lat, long, persRadius, '#79B4A9')
 
       // store markers in existingCirclesByCoordinates
       existingCirclesByCoordinates[coordinateKey] = {
@@ -142,10 +153,10 @@ function createMarkerLayers (table, layerGroups) {
 
       function onEachFeature (rowData) {
         let popupContent = `
-          <h3><a href="${rowData.grocerist_id}.html">${rowData.name}<a/></h3>
+          <h3><a href="${rowData.properties.grocerist_id}.html">${rowData.properties.name}<a/></h3>
           <ul>
-          <li>${rowData.doc_count} related <a href="documents.html">Documents</a></li>
-          <li>${rowData.person_count} related <a href="persons.html">Persons</a></li>
+          <li>${rowData.properties.doc_count} related <a href="documents.html">Documents</a></li>
+          <li>${rowData.properties.person_count} related <a href="persons.html">Persons</a></li>
           </ul>
           `
 
@@ -189,19 +200,16 @@ function setupEventHandlers (
       // zooming in on first result if filtered table contains only a few rows
       if (rows.length < 4 && rows.length > 0) {
         let rowData = rows[0].getData()
-        let coordinateKey = rowData.lat + rowData.long
+        let { lat, long } = getCoordinates(rowData);
+        let coordinateKey = `${lat}${long}`;
         zoomToPointFromRowData(rowData, map, existingCirclesByCoordinates)
         displayedMarkers.push(coordinateKey)
       } else {
         map.setView(MAP_CFG.initialCoordinates, MAP_CFG.initialZoom)
       }
 
-      let markersToDisplay = []
-      rows.forEach(row => {
-        let rowData = row.getData()
-        let coordinateKey = rowData.lat + rowData.long
-        markersToDisplay.push(coordinateKey)
-      })
+      let markersToDisplay = rows.map(row => getCoordinates(rowData));
+
       // hide & display filtered markers
       Object.entries(existingCirclesByCoordinates).forEach(
         ([coordinateKey, baselayers]) => {
@@ -239,12 +247,13 @@ function setupEventHandlers (
   }
 
   function zoomToPointFromRowData (rowData, map, existingCirclesByCoordinates) {
-    if (rowData.lat) {
+    if (rowData.geometry.coordinates) {
       let activeLayer = LayerManager.getActiveLayer()
-      let coordinateKey = rowData.lat + rowData.long
+      let { lat, long } = getCoordinates(rowData);
+      let coordinateKey = `${lat}${long}`;
       let marker = existingCirclesByCoordinates[coordinateKey][activeLayer]
       marker.openPopup()
-      map.setView([rowData.lat, rowData.long], MAP_CFG.onRowClickZoom)
+      map.setView([lat, long], MAP_CFG.onRowClickZoom)
     } else {
       // close all open popups when resetting the map
       map.closePopup()
@@ -281,8 +290,9 @@ export function setupMapAndTable (dataUrl) {
   const { map, layerGroups } = createMap()
   d3.json(dataUrl, function (dataFromJson) {
     // remove items with an empty name (mostly found in the neighbourhoods table)
-    const tableData = Object.values(dataFromJson)[1].filter(item => item.properties.name.trim() !== "");
-    console.log(tableData)
+    const tableData = Object.values(dataFromJson)[1].filter(
+      item => item.properties.name.trim() !== ''
+    )
     TABLE_CFG.data = tableData
     const table = createTable(TABLE_CFG)
     table.on('tableBuilt', function () {
