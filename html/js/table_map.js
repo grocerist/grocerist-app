@@ -5,6 +5,7 @@ const MAP_CFG = {
   initialCoordinates: [41.01224, 28.976018],
   baseMapUrl: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
   maxZoom: 20,
+  minZoom: 1, 
   onRowClickZoom: 16,
   divId: 'map',
   attribution:
@@ -155,7 +156,7 @@ function createMarkerLayers (table, layerGroups) {
       // using the same color for both document and person count markers
       let color = getColorByLocationType(rowData.properties.location_type);
       let docsRadius = rowData.properties.doc_count / 2
-      let docsMarker = createMarker(lat, long, docsRadius / 2, color)
+      let docsMarker = createMarker(lat, long, docsRadius, color)
       // create markers for person count
       let persRadius = rowData.properties.person_count / 2
       let persMarker = createMarker(lat, long, persRadius, color)
