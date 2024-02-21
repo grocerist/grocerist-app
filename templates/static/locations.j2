@@ -1,0 +1,30 @@
+{% extends "templates/partials/base.j2" %}
+{% block title %}Browse Locations {% endblock title %}
+{% block page_description %}
+<meta name="description" content="{{ project_data.project_sub_title }}">
+{% endblock page_description %}
+{% block scriptHeader %}
+{% include "templates/partials/tabulator.j2" %}
+{% include "templates/partials/leaflet.j2" %}
+<script type="module">
+    import * as tableMapModule from './js/table_map.js'
+    const dataUrl = 'json_dumps/locations.json'
+    tableMapModule.setupMapAndTable(dataUrl)
+</script>
+{% endblock scriptHeader %}
+{% block content %}
+<div class="container locations">
+    <h1 class="text-center">
+        {% include "templates/partials/link_to_top.j2" %}
+        Locations</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="map"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="places_table"></div>
+        </div>
+    </div>
+    {% endblock content%}
