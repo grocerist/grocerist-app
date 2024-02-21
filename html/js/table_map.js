@@ -129,6 +129,19 @@ function getCoordinates (rowData) {
   return { lat, long };
 }
 
+function getColorByLocationType(locationType) {
+  switch (locationType) {
+    case 'District':
+      return '#662222'; 
+    case 'Mahalle':
+      return '#CC6666';
+    case 'Karye':
+      return '#994444';
+    default:
+      return '#000000'; // default color if locationType doesn't match any case
+  }
+}
+
 function createMarkerLayers (table, layerGroups) {
   console.log('creating markers')
   let rows = table.getRows()
@@ -139,11 +152,13 @@ function createMarkerLayers (table, layerGroups) {
       let { lat, long } = getCoordinates(rowData);
       let coordinateKey = `${lat}${long}`;
       // create markers for doc count
+      // using the same color for both document and person count markers
+      let color = getColorByLocationType(rowData.properties.location_type);
       let docsRadius = rowData.properties.doc_count / 2
-      let docsMarker = createMarker(lat, long, docsRadius / 2, '#536e61')
+      let docsMarker = createMarker(lat, long, docsRadius / 2, color)
       // create markers for person count
       let persRadius = rowData.properties.person_count / 2
-      let persMarker = createMarker(lat, long, persRadius, '#79B4A9')
+      let persMarker = createMarker(lat, long, persRadius, color)
 
       // store markers in existingCirclesByCoordinates
       existingCirclesByCoordinates[coordinateKey] = {
