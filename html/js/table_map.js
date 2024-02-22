@@ -5,6 +5,7 @@ const MAP_CFG = {
   initialCoordinates: [41.01224, 28.976018],
   baseMapUrl: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
   maxZoom: 20,
+  minZoom: 1,
   onRowClickZoom: 16,
   divId: 'map',
   attribution:
@@ -13,21 +14,83 @@ const MAP_CFG = {
 }
 
 // Common config settings for table
-const commonTableCfg = {
+const TABLE_CFG = {
   height: '60vh',
   layout: 'fitColumns',
   width: '100%',
-  pagination:true,
-  paginationSize:15,
+  pagination: true,
+  paginationSize: 15,
   headerFilterLiveFilterDelay: 600,
   responsiveLayout: 'collapse',
-  initialSort: [
-    { column: "name", dir: "asc" }
-    ],
+  columns: [
+    {
+      title: 'Name',
+      field: 'properties.name',
+      headerFilter: 'input',
+      formatter: function (cell) {
+        return linkToDetailView(cell)
+      }
+    },
+    {
+      title: 'Documents',
+      field: 'properties.documents',
+      mutator: mutateDocumentField,
+      headerFilter: 'input',
+      formatter: function (cell) {
+        return get_scrollable_cell(this, cell)
+      },
+      tooltip: true
+    },
+    {
+      title: 'Nr. of Documents',
+      field: 'properties.doc_count',
+      headerFilter: 'number',
+      headerFilterPlaceholder: 'at least...',
+      headerFilterFunc: '>='
+    },
+    {
+      title: 'Persons',
+      field: 'properties.persons',
+      mutator: mutatePersonField,
+      headerFilter: 'input',
+      formatter: function (cell) {
+        return get_scrollable_cell(this, cell)
+      }
+    },
+    {
+      title: 'Nr. of Persons',
+      field: 'properties.person_count',
+      headerFilter: 'number',
+      headerFilterPlaceholder: 'at least...',
+      headerFilterFunc: '>='
+    },
+    {
+      title: 'Location Type',
+      field: 'properties.location_type',
+      headerFilter: 'list',
+      headerFilterParams: { valuesLookup: true }
+    }
+  ],
+  initialSort: [{ column: 'properties.name', dir: 'asc' }],
+  persistence: {
+    headerFilter: true
+  }
 }
 
-// mutator & formatter functions used by the columns in the table
+// Legend for the map
+function addLegend (map) {
+  var legend = L.control({ position: 'bottomleft' })
 
+  legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'legend')
+    let locationTypes = ['District', 'Mahalle', 'Karye']
+    locationTypes.map(locationType => {
+      div.innerHTML += `<i style="background:${getColorByLocationType(locationType)}"></i><span>${locationType}</span><br>`;
+    });
+    return div
+  }
+  legend.addTo(map)
+}
 
 // Function for initializing the (empty) map
 function createMap () {
@@ -48,22 +111,68 @@ function createMap () {
   const persMarkerLayer = new L.layerGroup()
   // this is for the page gui / switch for toggling overlays
   const layerGroups = {
-    'number of documents': docsMarkerLayer,
-    'number of persons': persMarkerLayer
+    'number of related documents': docsMarkerLayer,
+    'number of related persons': persMarkerLayer
   }
   docsMarkerLayer.addTo(map)
   // persMarkerLayer.addTo(map);
   // passing the overlays as baselayers so they will be mutually exclusive
   const layerControl = L.control.layers(layerGroups, null, { collapsed: false })
   layerControl.addTo(map)
+  addLegend(map)
   return { map, layerGroups }
 }
 
-// Functions for creating and initializing the table
+// Function for creating table
 function createTable (TABLE_CFG) {
   console.log('loading table')
   const table = new Tabulator('#places_table', TABLE_CFG)
   return table
+}
+
+// Function to create a marker
+function createMarker (lat, long, radius, color) {
+  return L.circleMarker([lat, long], { radius: radius, color: color })
+}
+
+// Function to get coordinate key from row data
+function getCoordinates (rowData) {
+  // order of coordinates in geojson is long, lat
+  // order of coordinates in leaflet is lat, long
+  let { coordinates } = rowData.geometry
+  let [long, lat] = coordinates
+  return { lat, long }
+}
+
+function getColorByLocationType (locationType) {
+  switch (locationType) {
+    case 'District':
+      return '#5ec65a'
+    case 'Mahalle':
+      return '#467C27'
+    case 'Karye':
+      return '#4e99c8'
+    case 'Quarter':
+      return '#3875c1'
+    case 'Address':
+      return '#6A6EDF'
+    case 'Nahiye':
+      return '#7d5faa'
+    default:
+      return '#000000' // default color if locationType doesn't match any case
+  }
+}
+
+function addPopup (rowData) {
+  let popupContent = `
+    <h3><a style="color:${getColorByLocationType(rowData.properties.location_type)}" href="${rowData.properties.grocerist_id}.html">${rowData.properties.name}<a/></h3>
+    <ul>
+    <li>${rowData.properties.doc_count} related documents</a></li>
+    <li>${rowData.properties.person_count} related persons</a></li>
+    </ul>
+    `
+
+  return popupContent
 }
 
 function createMarkerLayers (table, layerGroups) {
@@ -72,40 +181,29 @@ function createMarkerLayers (table, layerGroups) {
   let existingCirclesByCoordinates = {}
   rows.forEach(row => {
     let rowData = row.getData()
-    if (rowData.lat) {
-      let coordinateKey = rowData.lat + rowData.long
-
+    if (rowData.geometry.coordinates) {
+      let { lat, long } = getCoordinates(rowData)
+      let coordinateKey = `${lat}${long}`
       // create markers for doc count
-      let docsRadius = rowData.doc_count / 2
-      let docsMarker = L.circleMarker([rowData.lat, rowData.long], {radius: docsRadius, color: "#536e61"})
-
+      // using the same color for both document and person count markers
+      let color = getColorByLocationType(rowData.properties.location_type)
+      let docsRadius = rowData.properties.doc_count / 2
+      let docsMarker = createMarker(lat, long, docsRadius, color)
       // create markers for person count
-      let persRadius = rowData.person_count / 2
-      let persMarker = L.circleMarker([rowData.lat, rowData.long], {radius: persRadius, color: "#79B4A9"})
+      let persRadius = rowData.properties.person_count / 2
+      let persMarker = createMarker(lat, long, persRadius, color)
 
       // store markers in existingCirclesByCoordinates
       existingCirclesByCoordinates[coordinateKey] = {
-        'number of documents': docsMarker,
-        'number of persons': persMarker
+        'number of related documents': docsMarker,
+        'number of related persons': persMarker
       }
 
-      function onEachFeature (rowData) {
-        let popupContent = `
-          <h3><a href="${rowData.grocerist_id}.html">${rowData.name}<a/></h3>
-          <ul>
-          <li>${rowData.doc_count} related <a href="documents.html">Documents</a></li>
-          <li>${rowData.person_count} related <a href="persons.html">Persons</a></li>
-          </ul>
-          `
-
-        return popupContent
-      }
-
-      docsMarker.bindPopup(onEachFeature(rowData))
-      persMarker.bindPopup(onEachFeature(rowData))
+      docsMarker.bindPopup(addPopup(rowData))
+      persMarker.bindPopup(addPopup(rowData))
       // add markers to respective layerGroups
-      docsMarker.addTo(layerGroups['number of documents'])
-      persMarker.addTo(layerGroups['number of persons'])
+      docsMarker.addTo(layerGroups['number of related documents'])
+      persMarker.addTo(layerGroups['number of related persons'])
     }
   })
   return existingCirclesByCoordinates
@@ -118,7 +216,7 @@ function setupEventHandlers (
   layerGroups
 ) {
   const LayerManager = {
-    activeLayer: 'number of documents',
+    activeLayer: 'number of related documents',
 
     setActiveLayer: function () {
       // Toggle between marker layers
@@ -138,31 +236,31 @@ function setupEventHandlers (
       // zooming in on first result if filtered table contains only a few rows
       if (rows.length < 4 && rows.length > 0) {
         let rowData = rows[0].getData()
-        let coordinateKey = rowData.lat + rowData.long
+        let { lat, long } = getCoordinates(rowData)
+        let coordinateKey = `${lat}${long}`
         zoomToPointFromRowData(rowData, map, existingCirclesByCoordinates)
         displayedMarkers.push(coordinateKey)
       } else {
         map.setView(MAP_CFG.initialCoordinates, MAP_CFG.initialZoom)
       }
-
-      let markersToDisplay = []
-      rows.forEach(row => {
+      let markersToDisplay = rows.map(row => {
         let rowData = row.getData()
-        let coordinateKey = rowData.lat + rowData.long
-        markersToDisplay.push(coordinateKey)
+        let { lat, long } = getCoordinates(rowData)
+        return `${lat}${long}`
       })
+
       // hide & display filtered markers
       Object.entries(existingCirclesByCoordinates).forEach(
         ([coordinateKey, baselayers]) => {
-          let docsMarker = baselayers['number of documents']
-          let persMarker = baselayers['number of persons']
+          let docsMarker = baselayers['number of related documents']
+          let persMarker = baselayers['number of related persons']
           if (markersToDisplay.includes(coordinateKey)) {
             // this marker should be displayed
             if (!displayedMarkers.includes(coordinateKey)) {
               // it is not beeing displayed
               // display it
-              layerGroups['number of documents'].addLayer(docsMarker)
-              layerGroups['number of persons'].addLayer(persMarker)
+              layerGroups['number of related documents'].addLayer(docsMarker)
+              layerGroups['number of related persons'].addLayer(persMarker)
               displayedMarkers.push(coordinateKey)
             }
           } else {
@@ -170,8 +268,8 @@ function setupEventHandlers (
             if (displayedMarkers.includes(coordinateKey)) {
               // it is not hidden
               // hide it
-              layerGroups['number of documents'].removeLayer(docsMarker)
-              layerGroups['number of persons'].removeLayer(persMarker)
+              layerGroups['number of related documents'].removeLayer(docsMarker)
+              layerGroups['number of related persons'].removeLayer(persMarker)
               let keyIndex = displayedMarkers.indexOf(coordinateKey)
               displayedMarkers.splice(keyIndex, 1)
             }
@@ -188,12 +286,13 @@ function setupEventHandlers (
   }
 
   function zoomToPointFromRowData (rowData, map, existingCirclesByCoordinates) {
-    if (rowData.lat) {
+    if (rowData.geometry.coordinates) {
       let activeLayer = LayerManager.getActiveLayer()
-      let coordinateKey = rowData.lat + rowData.long
+      let { lat, long } = getCoordinates(rowData)
+      let coordinateKey = `${lat}${long}`
       let marker = existingCirclesByCoordinates[coordinateKey][activeLayer]
       marker.openPopup()
-      map.setView([rowData.lat, rowData.long], MAP_CFG.onRowClickZoom)
+      map.setView([lat, long], MAP_CFG.onRowClickZoom)
     } else {
       // close all open popups when resetting the map
       map.closePopup()
@@ -226,19 +325,13 @@ function setupEventHandlers (
 }
 
 // Main function for initializing the map and table
-export function setupMapAndTable (dataUrl, specificTableCfg) {
-  const TABLE_CFG = { ...commonTableCfg, ...specificTableCfg }
+export function setupMapAndTable (dataUrl) {
   const { map, layerGroups } = createMap()
   d3.json(dataUrl, function (dataFromJson) {
-    dataFromJson = Object.values(dataFromJson)
-    // adds doc and person count to the data 
-    // and removes items with an empty name (mostly found in the neighbourhoods table)
-    const tableData = dataFromJson.map(item => {
-      let enriched = item
-      enriched['doc_count'] = item.documents.length
-      enriched['person_count'] = item.persons.length
-      return enriched
-    }).filter(item => item.name.trim() !== "");
+    // remove items with an empty name (mostly found in the neighbourhoods table)
+    const tableData = Object.values(dataFromJson)[1].filter(
+      item => item.properties.name.trim() !== ''
+    )
     TABLE_CFG.data = tableData
     const table = createTable(TABLE_CFG)
     table.on('tableBuilt', function () {
