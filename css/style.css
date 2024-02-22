@@ -18,18 +18,26 @@ nav.navbar ul.dropdown-menu {
     --documents-hover: #536e61c2;
     --persons: #79B4A9;
     --persons-hover: #79B4A9c2;
-    --mahalles: #cf7332;
-    --mahalles-hover: #cf7332c2;
-    --districts: #993333;
-    --districts-hover: #993333c2;
-    --karyes: #EDB183;
-    --karyes-hover: #EDB183c2;
-    --categories: #9CC69B;
-    --categories-hover: #9CC69Bc2;
-    --goods: #9cc288;
-    --goods-hover: #9cc288c2;
-    --dashboard: #236FAD;
-    --dashboard-hover: #236FADc2;
+    --goods: #cf7332;
+    --goods-hover: #cf7332c2;
+    --locations: #9cc288;
+    --locations-hover: #9cc288c2;
+    --categories: #EDB183;
+    --categories-hover: #EDB183c2;
+    --dashboard: #993333;
+    --dashboard-hover: #993333c2;
+    --district: #5ec65a;
+    --district-hover: #5ec65ac2;
+    --mahalle: #467C27;
+    --mahalle-hover: #467C27c2;
+    --karye: #4e99c8;
+    --karye-hover: #4e99c8c2;
+    --quarter: #3875c1;
+    --quarter-hover: #3875c1c2;
+    --address: #6A6EDF;
+    --address-hover: #6A6EDFc2;
+    --nahiye: #7d5faa;
+    --nahiye-hover: #7d5faac2;
     --link: #000000;
     --link-hover: #6e6e6ec2;
     --footer-hover-background: #f2f2f2;
@@ -59,26 +67,12 @@ a[href="persons.html"] {
     color: var(--persons-hover);
  }
 } 
-a[href="neighbourhoods.html"] {
-    color: var(--mahalles);
+a[href="locations.html"] {
+    color: var(--locations);
  &:hover { 
-    color: var(--mahalles-hover);
+    color: var(--locations-hover);
  }
 }
-a[href="districts.html"] {
-    color: var(--districts);
- &:hover { 
-    color: var(--districts-hover);
- }
-}
-
-a[href="karyes.html"] {
-    color: var(--karyes);
- &:hover { 
-    color: var(--karyes-hover);
- }
-}
-
 a[href="categories.html"] {
     color: var(--categories);
  &:hover { 
@@ -135,33 +129,13 @@ div.persons h1 > a {
     }
 }
 
-div.mahalles h1 {
-    color: var(--mahalles);
+div.locations h1 {
+    color: var(--locations);
 }
-div.mahalles h1 > a {
-    color: var(--mahalles);
+div.locations h1 > a {
+    color: var(--locations);
     &:hover{
-        color: var(--mahalles-hover);
-    }
-}
-
-div.districts h1 {
-    color: var(--districts);
-}
-div.districts h1 > a {
-    color: var(--districts);
-    &:hover{
-        color: var(--districts-hover);
-    }
-}
-
-div.karyes h1 {
-    color: var(--karyes);
-}
-div.karyes h1 > a {
-    color: var(--karyes);
-    &:hover{
-        color: var(--karyes-hover);
+        color: var(--locations-hover);
     }
 }
 
@@ -214,28 +188,11 @@ div.persons div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
  }
 }
 
-/*mahalles page*/
-div.mahalles div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--mahalles);
+/*locations page*/
+div.locations div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+    background-color: var(--locations);
  &:hover {
-    background-color: var(--mahalles-hover) !important;
- }
-}
-
-/*districts page*/
-div.districts div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--districts);
-    color: white; 
- &:hover {
-    background-color: var(--districts-hover) !important;
- }
-}
-
-/*karyes page*/
-div.karyes div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--karyes);
- &:hover {
-    background-color: var(--karyes-hover) !important;
+    background-color: var(--locations-hover) !important;
  }
 }
 
@@ -286,43 +243,17 @@ div.persons div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--persons) !important;
 }
 
-/*mahalles footer*/
-div.mahalles div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--mahalles);
-    border-color: var(--mahalles);
+/*locations footer*/
+div.locations div.tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--locations);
+    border-color: var(--locatios);
  &:hover {
     background-color: var(--footer-hover-background);
  }
 }
 
-div.mahalles div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--mahalles) !important;
-}
-
-/*districts footer*/
-div.districts div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--districts);
-    border-color: var(--districts);
- &:hover {
-    background-color: var(--footer-hover-background);
- }
-}
-
-div.districts div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--districts) !important;
-}
-
-/*karyes footer*/
-div.karyes div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--karyes);
-    border-color: var(--karyes);
- &:hover {
-    background-color: var(--footer-hover-background);
- }
-}
-
-div.karyes div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--karyes) !important;
+div.locations div.tabulator .tabulator-footer .tabulator-page:hover {
+    color: var(--locations) !important;
 }
 
 /*categories footer*/
@@ -389,42 +320,80 @@ div.person a {
  }
 }
 
-/*mahalle subpage*/
-div.mahalle h1 {
-    border-bottom: 3px solid var(--mahalles);
-    padding-bottom: 5px;
-}
-
-div.mahalle a {
-    color: var(--mahalles);
- &:hover {
-    color: var(--mahalles-hover);
- }
-}
-
 /*district subpage*/
 div.district h1 {
-    border-bottom: 3px solid var(--districts);
+    border-bottom: 3px solid var(--district);
     padding-bottom: 5px;
 }
 
 div.district a {
-    color: var(--districts);
+    color: var(--district);
  &:hover {
-    color: var(--districts-hover);
+    color: var(--district-hover);
  }
 }
 
 /*karye subpage*/
 div.karye h1 {
-    border-bottom: 3px solid var(--karyes);
+    border-bottom: 3px solid var(--karye);
     padding-bottom: 5px;
 }
 
 div.karye a {
-    color: var(--karyes);
+    color: var(--karye);
  &:hover {
-    color: var(--karyes-hover);
+    color: var(--karye-hover);
+ }
+}
+/*mahalle subpage*/
+div.mahalle h1 {
+    border-bottom: 3px solid var(--mahalle);
+    padding-bottom: 5px;
+}
+
+div.mahalle a {
+    color: var(--mahalle);
+ &:hover {
+    color: var(--mahalle-hover);
+ }
+}
+
+/*nahiye subpage*/
+div.nahiye h1 {
+    border-bottom: 3px solid var(--nahiye);
+    padding-bottom: 5px;
+}
+
+div.nahiye a {
+    color: var(--nahiye);
+ &:hover {
+    color: var(--nahiye-hover);
+ }
+}
+
+/*quarter subpage*/
+div.quarter h1 {
+    border-bottom: 3px solid var(--quarter);
+    padding-bottom: 5px;
+}
+
+div.quarter a {
+    color: var(--quarter);
+ &:hover {
+    color: var(--quarter-hover);
+ }
+}
+
+/*address subpage*/
+div.address h1 {
+    border-bottom: 3px solid var(--address);
+    padding-bottom: 5px;
+}
+
+div.address a {
+    color: var(--address);
+ &:hover {
+    color: var(--address-hover);
  }
 }
 
@@ -461,3 +430,34 @@ div.good a {
 .highcharts-legend-item .highcharts-graph {
 	display: none;
 }
+
+.container {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+/*Legend specific*/
+.legend {
+    padding: 6px 8px;
+    font: 14px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    /*border-radius: 5px;*/
+    line-height: 24px;
+    color: #555;
+  }
+  
+  .legend span {
+    position: relative;
+    bottom: 3px;
+  }
+  
+  .legend i {
+    width: 10px;
+    height: 10px;
+    float: left;
+    margin: 5px 5px 0 0;
+    border-radius: 50%;
+  }
+  

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Browse Karyes </title>
+    <title>Browse Locations </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
 <meta name="description" content="Grocers of Istanbul: Tracing Food Consumption">
@@ -27,58 +27,8 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script type="module">
     import * as tableMapModule from './js/table_map.js'
-    const dataUrl = 'json_dumps/karye.json'
-    const tableCfg = {
-        columns:
-            [
-                {
-                    title: 'Name',
-                    field: 'name',
-                    headerFilter: 'input',
-                    formatter: function (cell) {
-                        return linkToDetailView(cell)
-                    }
-                },
-                
-            {
-                title: "Notes", field: "notes", headerFilter: "input", formatter: "html"
-            },
-
-    {
-        title: 'Documents',
-            field: 'documents',
-                mutator: mutateDocumentField,
-                    headerFilter: 'input',
-                        formatter: function (cell) {
-                            return get_scrollable_cell(this, cell)
-                        },
-        tooltip: true
-    },
-    {
-        title: 'Nr. of Documents',
-            field: 'doc_count',
-                headerFilter: 'number',
-                    headerFilterPlaceholder: 'at least...',
-                        headerFilterFunc: '>='
-    },
-    {
-        title: 'Persons',
-            field: 'persons',
-                mutator: mutatePersonField,
-                    headerFilter: 'input',
-                        formatter: function (cell) {
-                            return get_scrollable_cell(this, cell)
-                        }
-    },
-    {
-        title: 'Nr. of Persons',
-            field: 'person_count',
-                headerFilter: 'number',
-                    headerFilterPlaceholder: 'at least...',
-                        headerFilterFunc: '>='
-    }
-        ]}
-    tableMapModule.setupMapAndTable(dataUrl, tableCfg)
+    const dataUrl = 'json_dumps/locations.json'
+    tableMapModule.setupMapAndTable(dataUrl)
 </script>
 
 </head>
@@ -110,9 +60,7 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="documents.html">Documents</a></li>
             <li><a class="dropdown-item" href="persons.html">Grocers</a></li>
-            <li><a class="dropdown-item" href="neighbourhoods.html"><i>Mahalle</i>s</a></li>
-            <li><a class="dropdown-item" href="districts.html">Districts</a></li>
-            <li><a class="dropdown-item" href="karyes.html"><i>Karye</i>s</a></li>
+            <li><a class="dropdown-item" href="locations.html">Locations</a></li>
             <li><a class="dropdown-item" href="categories.html">Grocery Categories</a></li>
             <li><a class="dropdown-item" href="goods.html">Groceries</a></li>
             <li><a class="dropdown-item" href="dashboard.html">Dashboard</a></li>
@@ -129,7 +77,7 @@
     <main class="flex-shrink-0">
         <div class="container-fluid">
             
-<div class="container karyes">
+<div class="container locations">
     <h1 class="text-center">
             <a class="icon-link icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);"
         href="index.html">
@@ -139,7 +87,7 @@
                 d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708z" />
         </svg>
     </a>
-        Karyes</h1>
+        Locations</h1>
     <div class="row">
         <div class="col-md-12">
             <div id="map"></div>
