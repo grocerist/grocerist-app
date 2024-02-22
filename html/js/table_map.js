@@ -78,22 +78,15 @@ const TABLE_CFG = {
 }
 
 // Legend for the map
-function addLegendLegend (map) {
+function addLegend (map) {
   var legend = L.control({ position: 'bottomleft' })
 
   legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'legend')
-    div.innerHTML += '<h4>Tegnforklaring</h4>'
-    div.innerHTML += '<i style="background: #477AC2"></i><span>Water</span><br>'
-    div.innerHTML +=
-      '<i style="background: #448D40"></i><span>Forest</span><br>'
-    div.innerHTML += '<i style="background: #E6E696"></i><span>Land</span><br>'
-    div.innerHTML +=
-      '<i style="background: #E8E6E0"></i><span>Residential</span><br>'
-    div.innerHTML += '<i style="background: #FFFFFF"></i><span>Ice</span><br>'
-    div.innerHTML +=
-      '<i class="icon" style="background-image: url(https://d30y9cdsu7xlg0.cloudfront.net/png/194515-200.png);background-repeat: no-repeat;"></i><span>Grænse</span><br>'
-
+    let locationTypes = ['District', 'Mahalle', 'Karye']
+    locationTypes.map(locationType => {
+      div.innerHTML += `<i style="background:${getColorByLocationType(locationType)}"></i><span>${locationType}</span><br>`;
+    });
     return div
   }
   legend.addTo(map)
@@ -118,14 +111,15 @@ function createMap () {
   const persMarkerLayer = new L.layerGroup()
   // this is for the page gui / switch for toggling overlays
   const layerGroups = {
-    'number of documents': docsMarkerLayer,
-    'number of persons': persMarkerLayer
+    'number of related documents': docsMarkerLayer,
+    'number of related persons': persMarkerLayer
   }
   docsMarkerLayer.addTo(map)
   // persMarkerLayer.addTo(map);
   // passing the overlays as baselayers so they will be mutually exclusive
   const layerControl = L.control.layers(layerGroups, null, { collapsed: false })
   layerControl.addTo(map)
+  addLegend(map)
   return { map, layerGroups }
 }
 
@@ -171,10 +165,10 @@ function getColorByLocationType (locationType) {
 
 function addPopup (rowData) {
   let popupContent = `
-    <h3><a href="${rowData.properties.grocerist_id}.html">${rowData.properties.name}<a/></h3>
+    <h3><a style="color:${getColorByLocationType(rowData.properties.location_type)}" href="${rowData.properties.grocerist_id}.html">${rowData.properties.name}<a/></h3>
     <ul>
-    <li>${rowData.properties.doc_count} related <a href="documents.html">Documents</a></li>
-    <li>${rowData.properties.person_count} related <a href="persons.html">Persons</a></li>
+    <li>${rowData.properties.doc_count} related documents</a></li>
+    <li>${rowData.properties.person_count} related persons</a></li>
     </ul>
     `
 
@@ -201,15 +195,15 @@ function createMarkerLayers (table, layerGroups) {
 
       // store markers in existingCirclesByCoordinates
       existingCirclesByCoordinates[coordinateKey] = {
-        'number of documents': docsMarker,
-        'number of persons': persMarker
+        'number of related documents': docsMarker,
+        'number of related persons': persMarker
       }
 
       docsMarker.bindPopup(addPopup(rowData))
       persMarker.bindPopup(addPopup(rowData))
       // add markers to respective layerGroups
-      docsMarker.addTo(layerGroups['number of documents'])
-      persMarker.addTo(layerGroups['number of persons'])
+      docsMarker.addTo(layerGroups['number of related documents'])
+      persMarker.addTo(layerGroups['number of related persons'])
     }
   })
   return existingCirclesByCoordinates
@@ -222,7 +216,7 @@ function setupEventHandlers (
   layerGroups
 ) {
   const LayerManager = {
-    activeLayer: 'number of documents',
+    activeLayer: 'number of related documents',
 
     setActiveLayer: function () {
       // Toggle between marker layers
@@ -258,15 +252,15 @@ function setupEventHandlers (
       // hide & display filtered markers
       Object.entries(existingCirclesByCoordinates).forEach(
         ([coordinateKey, baselayers]) => {
-          let docsMarker = baselayers['number of documents']
-          let persMarker = baselayers['number of persons']
+          let docsMarker = baselayers['number of related documents']
+          let persMarker = baselayers['number of related persons']
           if (markersToDisplay.includes(coordinateKey)) {
             // this marker should be displayed
             if (!displayedMarkers.includes(coordinateKey)) {
               // it is not beeing displayed
               // display it
-              layerGroups['number of documents'].addLayer(docsMarker)
-              layerGroups['number of persons'].addLayer(persMarker)
+              layerGroups['number of related documents'].addLayer(docsMarker)
+              layerGroups['number of related persons'].addLayer(persMarker)
               displayedMarkers.push(coordinateKey)
             }
           } else {
@@ -274,8 +268,8 @@ function setupEventHandlers (
             if (displayedMarkers.includes(coordinateKey)) {
               // it is not hidden
               // hide it
-              layerGroups['number of documents'].removeLayer(docsMarker)
-              layerGroups['number of persons'].removeLayer(persMarker)
+              layerGroups['number of related documents'].removeLayer(docsMarker)
+              layerGroups['number of related persons'].removeLayer(persMarker)
               let keyIndex = displayedMarkers.indexOf(coordinateKey)
               displayedMarkers.splice(keyIndex, 1)
             }
