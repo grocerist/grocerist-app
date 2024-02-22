@@ -20,18 +20,24 @@ nav.navbar ul.dropdown-menu {
     --persons-hover: #79B4A9c2;
     --goods: #cf7332;
     --goods-hover: #cf7332c2;
-    --locations: #993333;
-    --locations-hover: #993333c2;
-    --categories: #235BAD;
-    --categories-hover: #235BADc2;
-    --dashboard: #236FAD;
-    --dashboard-hover: #2A5AB9c2;
-    --districts: #662222;
-    --districts-hover: #662222c2;
-    --mahalles: #CC6666;
-    --mahalles-hover: #CC6666c2;
-    --karyes: #994444;
-    --karyes-hover: #994444c2;
+    --locations: #9cc288;
+    --locations-hover: #9cc288c2;
+    --categories: #EDB183;
+    --categories-hover: #EDB183c2;
+    --dashboard: #993333;
+    --dashboard-hover: #993333c2;
+    --district: #5ec65a;
+    --district-hover: #5ec65ac2;
+    --mahalle: #467C27;
+    --mahalle-hover: #467C27c2;
+    --karye: #4e99c8;
+    --karye-hover: #4e99c8c2;
+    --quarter: #3875c1;
+    --quarter-hover: #3875c1c2;
+    --address: #6A6EDF;
+    --address-hover: #6A6EDFc2;
+    --nahiye: #7d5faa;
+    --nahiye-hover: #7d5faac2;
     --link: #000000;
     --link-hover: #6e6e6ec2;
     --footer-hover-background: #f2f2f2;
@@ -183,7 +189,7 @@ div.persons div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
 }
 
 /*locations page*/
-div.mahalles div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+div.locations div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     background-color: var(--locations);
  &:hover {
     background-color: var(--locations-hover) !important;
@@ -238,9 +244,7 @@ div.persons div.tabulator .tabulator-footer .tabulator-page:hover {
     color: var(--persons) !important;
 }
 
-
-
-/*locationss footer*/
+/*locations footer*/
 div.locations div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--locations);
     border-color: var(--locatios);
@@ -317,42 +321,80 @@ div.person a {
  }
 }
 
-/*mahalle subpage*/
-div.mahalle h1 {
-    border-bottom: 3px solid var(--mahalles);
-    padding-bottom: 5px;
-}
-
-div.mahalle a {
-    color: var(--mahalles);
- &:hover {
-    color: var(--mahalles-hover);
- }
-}
-
 /*district subpage*/
 div.district h1 {
-    border-bottom: 3px solid var(--districts);
+    border-bottom: 3px solid var(--district);
     padding-bottom: 5px;
 }
 
 div.district a {
-    color: var(--districts);
+    color: var(--district);
  &:hover {
-    color: var(--districts-hover);
+    color: var(--district-hover);
  }
 }
 
 /*karye subpage*/
 div.karye h1 {
-    border-bottom: 3px solid var(--karyes);
+    border-bottom: 3px solid var(--karye);
     padding-bottom: 5px;
 }
 
 div.karye a {
-    color: var(--karyes);
+    color: var(--karye);
  &:hover {
-    color: var(--karyes-hover);
+    color: var(--karye-hover);
+ }
+}
+/*mahalle subpage*/
+div.mahalle h1 {
+    border-bottom: 3px solid var(--mahalle);
+    padding-bottom: 5px;
+}
+
+div.mahalle a {
+    color: var(--mahalle);
+ &:hover {
+    color: var(--mahalle-hover);
+ }
+}
+
+/*nahiye subpage*/
+div.nahiye h1 {
+    border-bottom: 3px solid var(--nahiye);
+    padding-bottom: 5px;
+}
+
+div.nahiye a {
+    color: var(--nahiye);
+ &:hover {
+    color: var(--nahiye-hover);
+ }
+}
+
+/*quarter subpage*/
+div.quarter h1 {
+    border-bottom: 3px solid var(--quarter);
+    padding-bottom: 5px;
+}
+
+div.quarter a {
+    color: var(--quarter);
+ &:hover {
+    color: var(--quarter-hover);
+ }
+}
+
+/*address subpage*/
+div.address h1 {
+    border-bottom: 3px solid var(--address);
+    padding-bottom: 5px;
+}
+
+div.address a {
+    color: var(--address);
+ &:hover {
+    color: var(--address-hover);
  }
 }
 

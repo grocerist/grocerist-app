@@ -133,11 +133,17 @@ function getCoordinates (rowData) {
 function getColorByLocationType(locationType) {
   switch (locationType) {
     case 'District':
-      return '#662222'; 
+      return '#5ec65a'; 
     case 'Mahalle':
-      return '#CC6666';
+      return '#467C27';
     case 'Karye':
-      return '#994444';
+      return '#4e99c8';
+    case 'Quarter':
+      return '#3875c1'; 
+    case 'Address':
+      return '#6A6EDF';
+    case 'Nahiye':
+      return '#7d5faa';
     default:
       return '#000000'; // default color if locationType doesn't match any case
   }
