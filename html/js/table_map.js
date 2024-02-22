@@ -34,7 +34,12 @@ const TABLE_CFG = {
     {
       title: 'Documents',
       field: 'properties.documents',
-      mutator: mutateDocumentField,
+      mutator: linkList,
+        mutatorParams: {
+          urlPrefix: 'document__',
+          idField: 'id',
+          nameField: 'value'
+        },
       headerFilter: 'input',
       formatter: function (cell) {
         return get_scrollable_cell(this, cell)
@@ -51,7 +56,11 @@ const TABLE_CFG = {
     {
       title: 'Persons',
       field: 'properties.persons',
-      mutator: mutatePersonField,
+      mutatorParams: {
+        urlPrefix: '',
+        idField: 'grocerist_id',
+        nameField: 'name'
+      },
       headerFilter: 'input',
       formatter: function (cell) {
         return get_scrollable_cell(this, cell)
