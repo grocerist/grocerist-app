@@ -19,9 +19,6 @@ d3.json(dataUrl, function (data) {
         height: 800,
         tooltips: true,
         data: tableData,
-        persistence: {
-            headerFilter: true,
-        },
         columns: [
             {
                 title: "Name", field: "name", headerFilter: "input", formatter: function (cell) {
