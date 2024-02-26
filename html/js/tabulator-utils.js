@@ -1,4 +1,4 @@
-function get_scrollable_cell (renderer, cell, cell_html_string ) {
+function get_scrollable_cell (renderer, cell, cell_html_string) {
   // by @cfhaak, https://github.com/NestroyCA/nestroyca-astro-base/blob/main/src/pages/places.astro#L80
   if (cell_html_string === undefined) {
     cell_html_string = cell.getValue()
@@ -11,22 +11,22 @@ function get_scrollable_cell (renderer, cell, cell_html_string ) {
   return final_val
 }
 
-function linkListFormatter(cell, formatterParams, onRendered) {
-  let value = cell.getValue();
-  if (value){
-    let output = value
+function linkListFormatter (cell, formatterParams, onRendered) {
+  let value = cell.getValue()
+  let output = value
     .map(item => {
-      return `<li><a href="${formatterParams.urlPrefix}${item[formatterParams.idField]}.html">${item[formatterParams.nameField]}</a></li>`;
+      return `<li><a href="${formatterParams.urlPrefix}${
+        item[formatterParams.idField]
+      }.html">${item[formatterParams.nameField]}</a></li>`
     })
-    .join(' ');
-    output = `<ul class="list-unstyled">${output}</ul>`
-    let renderer = this
-    if (formatterParams.scrollable === true) {
-      output = get_scrollable_cell(renderer, cell, output);
-    }
-
-  return output;
+    .join(' ')
+  output = `<ul class="list-unstyled">${output}</ul>`
+  let renderer = this
+  if (formatterParams.scrollable === true) {
+    output = get_scrollable_cell(renderer, cell, output)
   }
+
+  return output
 }
 
 function mutateSelectField (value, data, type, params, component) {
@@ -38,29 +38,29 @@ function mutateSelectField (value, data, type, params, component) {
   return `${output}`
 }
 
-
 function linkList (value, data, type, params, component) {
   let output = value
     .map(item => {
-      return `<li><a href="${params.urlPrefix}${item[params.idField]}.html">${item[params.nameField]}</a></li>`;
+      return `<li><a href="${params.urlPrefix}${item[params.idField]}.html">${
+        item[params.nameField]
+      }</a></li>`
     })
-    .join(' ');
-  return `<ul class="list-unstyled">${output}</ul>`;
+    .join(' ')
+  return `<ul class="list-unstyled">${output}</ul>`
 }
 
 // for the first column, the name is a link to the detail view
-function linkToDetailView(cell) {
-  var row = cell.getRow().getData();
-  var cellData = cell.getData();
-  var groceristId = row.grocerist_id;
+function linkToDetailView (cell) {
+  var row = cell.getRow().getData()
+  var cellData = cell.getData()
+  var groceristId = row.grocerist_id
   // for documents, name = shelfmark
-  var linkText = cellData.name ? cellData.name : cellData.shelfmark;
-  var theLink = `<a href="${groceristId}.html">${linkText}</a>`;
+  var linkText = cellData.name ? cellData.name : cellData.shelfmark
+  var theLink = `<a href="${groceristId}.html">${linkText}</a>`
   // for locations, the id is in the properties (geoJSON)
   if (groceristId === undefined) {
-    groceristId = row.properties.grocerist_id;
-    theLink = `<a href="${groceristId}.html">${cellData.properties.name}</a>`;
+    groceristId = row.properties.grocerist_id
+    theLink = `<a href="${groceristId}.html">${cellData.properties.name}</a>`
   }
-  return theLink;
+  return theLink
 }
-

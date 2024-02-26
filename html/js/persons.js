@@ -24,9 +24,9 @@ const TABLE_CFG = {
       field: 'religion',
       mutator: mutateSelectField,
       formatter: 'html',
-      headerFilter: 'select',
-      headerFilterFunc: '=',
-      headerFilterParams: {valuesLookup:'religion', sort: 'asc'}
+      headerFilter: 'list',
+      headerFilterFunc: 'in',
+      headerFilterParams: {valuesLookup:'religion', sort: 'asc', multiselect:true,}
     },
     {
       title: 'Documents',
@@ -252,17 +252,12 @@ function calculateDistrictData (rows) {
   // get the districts (html list elements) from each row
   rows.forEach(row => {
     let rowData = row.getData()
-    let htmlString = rowData.district
-    let textValues = Array.from(
-      new DOMParser()
-        .parseFromString(htmlString, 'text/html')
-        .querySelectorAll('li a'),
-      value => value.textContent.trim()
-    )
-    if (textValues.length === 0) {
+    let districtData = rowData.district
+    let districtNames = districtData.map(item => item.value);
+    if (districtNames.length === 0) {
       districtCount['Unknown'] = (districtCount['Unknown'] || 0) + 1
     } else {
-      textValues.forEach(value => {
+      districtNames.forEach(value => {
         districtCount[value] = (districtCount[value] || 0) + 1
       })
     }
