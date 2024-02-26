@@ -1,4 +1,4 @@
-function get_scrollable_cell (table, cell, cell_html_string ) {
+function get_scrollable_cell (renderer, cell, cell_html_string ) {
   // by @cfhaak, https://github.com/NestroyCA/nestroyca-astro-base/blob/main/src/pages/places.astro#L80
   if (cell_html_string === undefined) {
     cell_html_string = cell.getValue()
@@ -7,7 +7,7 @@ function get_scrollable_cell (table, cell, cell_html_string ) {
   cell_html_element.style.whiteSpace = 'pre-wrap'
   cell_html_element.style.overflow = 'auto'
   cell_html_element.style.maxHeight = '100px'
-  let final_val = table.emptyToSpace(cell_html_string)
+  let final_val = renderer.emptyToSpace(cell_html_string)
   return final_val
 }
 
@@ -19,10 +19,10 @@ function linkListFormatter(cell, formatterParams, onRendered) {
     })
     .join(' ');
     output = `<ul class="list-unstyled">${output}</ul>`
-    onRendered(function() {
-    if (formatterParams.table) {
-      output = get_scrollable_cell(formatterParams.table, cell);
-    }})
+    let renderer = this
+    if (formatterParams.scrollable === true) {
+      output = get_scrollable_cell(renderer, cell, output);
+    }
 
   return output;
 }

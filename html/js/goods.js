@@ -29,17 +29,14 @@ d3.json(dataUrl, function (data) {
       {
         title: 'Documents',
         field: 'documents',
-        mutator: linkList,
+        mutator: linkListFormatter,
         mutatorParams: {
+          scrollable: true,
           urlPrefix: 'document__',
           idField: 'id',
           nameField: 'value'
         },
         headerFilter: 'input',
-        formatter: function (cell) {
-          return get_scrollable_cell(this, cell)
-        },
-        tooltip: true
       },
       {
         title: 'Nr. of Documents',

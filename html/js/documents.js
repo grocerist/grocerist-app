@@ -51,17 +51,14 @@ d3.json(dataUrl, function (data) {
       {
         title: 'Groceries',
         field: 'goods',
-        mutator: linkList,
-        mutatorParams: {
+        formatter: linkListFormatter,
+        formatterParams: {
+          scrollable: true,
           urlPrefix: '',
           idField: 'grocerist_id',
           nameField: 'name'
         },
         headerFilter: 'input',
-        formatter: function (cell) {
-          return get_scrollable_cell(this, cell)
-        },
-        tooltip: true
       },
       {
         title: 'District',

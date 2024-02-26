@@ -26,7 +26,7 @@ d3.json(dataUrl, function (data) {
         // mutator: linkList,
         formatter: linkListFormatter,
         formatterParams: {
-          table: table,
+          scrollable: true,
           urlPrefix: '',
           idField: 'grocerist_id',
           nameField: 'name'
@@ -42,17 +42,14 @@ d3.json(dataUrl, function (data) {
       {
         title: 'Documents',
         field: 'documents',
-        mutator: linkList,
-        mutatorParams: {
+        formatter: linkListFormatter,
+        formatterParams: {
+          scrollable: true,
           urlPrefix: '',
           idField: 'grocerist_id',
           nameField: 'name'
         },
         headerFilter: 'input',
-        formatter: function (cell) {
-          return get_scrollable_cell(this, cell)
-        },
-        tooltip: true
       },
       {
         title: '# Docs',

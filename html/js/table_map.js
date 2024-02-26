@@ -34,16 +34,13 @@ const TABLE_CFG = {
     {
       title: 'Documents',
       field: 'properties.documents',
-      mutator: linkList,
-        mutatorParams: {
+      formatter: linkListFormatter,
+        formatterParams: {
           urlPrefix: 'document__',
           idField: 'id',
           nameField: 'value'
         },
       headerFilter: 'input',
-      formatter: function (cell) {
-        return get_scrollable_cell(this, cell)
-      },
       tooltip: true
     },
     {
@@ -56,16 +53,14 @@ const TABLE_CFG = {
     {
       title: 'Persons',
       field: 'properties.persons',
-      mutator: linkList,
-      mutatorParams: {
+      formatter: linkListFormatter,
+      formatterParams: {
+        scrollable: true,
         urlPrefix: '',
         idField: 'grocerist_id',
         nameField: 'name'
       },
       headerFilter: 'input',
-      formatter: function (cell) {
-        return get_scrollable_cell(this, cell)
-      }
     },
     {
       title: 'Nr. of Persons',
