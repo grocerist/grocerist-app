@@ -37,7 +37,7 @@ const TABLE_CFG = {
           idField: 'id',
           nameField: 'value'
         },
-      headerFilter: 'input',
+      headerFilter: 'input'
     },
     {
       title: 'District',
@@ -48,7 +48,7 @@ const TABLE_CFG = {
         idField: 'id',
         nameField: 'value'
       },
-      headerFilter: 'input',
+      headerFilter: 'input'
     },
     {
       title: 'Mahalle',

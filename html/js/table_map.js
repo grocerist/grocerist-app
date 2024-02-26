@@ -58,9 +58,9 @@ const TABLE_CFG = {
         scrollable: true,
         urlPrefix: '',
         idField: 'grocerist_id',
-        nameField: 'name'
+        nameField: 'value'
       },
-      headerFilter: 'input',
+      headerFilter: 'input'
     },
     {
       title: 'Nr. of Persons',

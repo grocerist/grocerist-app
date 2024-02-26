@@ -25,7 +25,6 @@ function linkListFormatter (cell, formatterParams, onRendered) {
   if (formatterParams.scrollable === true) {
     output = get_scrollable_cell(renderer, cell, output)
   }
-
   return output
 }
 
