@@ -49,6 +49,61 @@ const TABLE_CFG = {
         nameField: 'value'
       },
       headerFilter: 'input',
+    },
+    {
+      title: 'Mahalle',
+      field: 'neighbourhood',
+      formatter: linkListFormatter,
+      formatterParams: {
+        urlPrefix: 'neighbourhood__',
+        idField: 'id',
+        nameField: 'value'
+      },
+      headerFilter: 'input'
+    },
+    {
+      title: 'Karye',
+      field: 'karye',
+      formatter: linkListFormatter,
+      formatterParams: {
+        urlPrefix: 'karye__',
+        idField: 'id',
+        nameField: 'value'
+      },
+      headerFilter: 'input'
+    },
+    {
+      title: 'Nahiye',
+      field: 'nahiye',
+      formatter: linkListFormatter,
+      formatterParams: {
+        urlPrefix: 'nahiye__',
+        idField: 'id',
+        nameField: 'value'
+      },
+      headerFilter: 'input'
+    },
+    {
+      title: 'Quarter',
+      field: 'quarter',
+      formatter: linkListFormatter,
+      formatterParams: {
+        urlPrefix: 'quarter__',
+        idField: 'id',
+        nameField: 'value'
+      },
+      headerFilter: 'input'
+    },
+    {
+      title: 'Address',
+      field: 'address',
+      formatter: linkListFormatter,
+      formatterParams: {
+        urlPrefix: 'address__',
+        idField: 'id',
+        nameField: 'value'
+      },
+      headerFilter: 'input'
     }
   ],
   footerElement:
