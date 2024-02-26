@@ -56,6 +56,7 @@ const TABLE_CFG = {
     {
       title: 'Persons',
       field: 'properties.persons',
+      mutator: linkList,
       mutatorParams: {
         urlPrefix: '',
         idField: 'grocerist_id',

@@ -27,7 +27,6 @@ d3.json(dataUrl, function (data) {
           nameField: 'name'
         },
         headerFilter: 'input',
-        formatter: 'html'
       },
       {
         title: 'Transcript',
