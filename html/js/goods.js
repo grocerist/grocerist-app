@@ -29,8 +29,8 @@ d3.json(dataUrl, function (data) {
       {
         title: 'Documents',
         field: 'documents',
-        mutator: linkListFormatter,
-        mutatorParams: {
+        formatter: linkListFormatter,
+        formatterParams: {
           scrollable: true,
           urlPrefix: 'document__',
           idField: 'id',

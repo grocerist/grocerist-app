@@ -13,7 +13,8 @@ function get_scrollable_cell (renderer, cell, cell_html_string ) {
 
 function linkListFormatter(cell, formatterParams, onRendered) {
   let value = cell.getValue();
-  let output = value
+  if (value){
+    let output = value
     .map(item => {
       return `<li><a href="${formatterParams.urlPrefix}${item[formatterParams.idField]}.html">${item[formatterParams.nameField]}</a></li>`;
     })
@@ -25,6 +26,7 @@ function linkListFormatter(cell, formatterParams, onRendered) {
     }
 
   return output;
+  }
 }
 
 function mutateSelectField (value, data, type, params, component) {

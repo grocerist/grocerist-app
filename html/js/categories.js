@@ -23,7 +23,6 @@ d3.json(dataUrl, function (data) {
       {
         title: 'Groceries',
         field: 'goods',
-        // mutator: linkList,
         formatter: linkListFormatter,
         formatterParams: {
           scrollable: true,
