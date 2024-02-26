@@ -17,9 +17,7 @@ const TABLE_CFG = {
       title: 'Name',
       field: 'name',
       headerFilter: 'input',
-      formatter: function (cell) {
-        return linkToDetailView(cell)
-      }
+      formatter: linkToDetailView
     },
     {
       title: 'Religion',
@@ -33,26 +31,24 @@ const TABLE_CFG = {
     {
       title: 'Documents',
       field: 'documents',
-      mutator: linkList,
-        mutatorParams: {
+      formatter: linkListFormatter,
+        formatterParams: {
           urlPrefix: 'document__',
           idField: 'id',
           nameField: 'value'
         },
       headerFilter: 'input',
-      formatter: 'html'
     },
     {
       title: 'District',
       field: 'district',
-      mutator: linkList,
-      mutatorParams: {
+     formatter: linkListFormatter,
+      formatterParams: {
         urlPrefix: 'district__',
         idField: 'id',
         nameField: 'value'
       },
       headerFilter: 'input',
-      formatter: 'html'
     }
   ],
   footerElement:

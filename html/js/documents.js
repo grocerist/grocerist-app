@@ -15,15 +15,13 @@ d3.json(dataUrl, function (data) {
         title: 'Shelfmark',
         field: 'shelfmark',
         headerFilter: 'input',
-        formatter: function (cell) {
-          return linkToDetailView(cell)
-        }
+        formatter: linkToDetailView
       },
       {
         title: 'Bakkal/Grocer',
         field: 'main_person',
-        mutator: linkList,
-        mutatorParams: {
+        formatter: linkListFormatter,
+        formatterParams: {
           urlPrefix: '',
           idField: 'grocerist_id',
           nameField: 'name'
@@ -69,80 +67,69 @@ d3.json(dataUrl, function (data) {
       {
         title: 'District',
         field: 'district',
-        mutator: linkList,
-        mutatorParams: {
+        formatter: linkListFormatter,
+        formatterParams: {
           urlPrefix: 'district__',
           idField: 'id',
           nameField: 'value'
         },
-        headerFilter: 'list',
-        headerFilterParams: { valuesLookup: true },
-        formatter: 'html'
+        headerFilter: 'input',
       },
       {
         title: 'Mahalle',
         field: 'neighbourhood',
-        mutator: linkList,
-        mutatorParams: {
+        headerFilter: 'input',
+        formatter: linkListFormatter,
+        formatterParams: {
           urlPrefix: 'neighbourhood__',
           idField: 'id',
           nameField: 'value'
         },
-        headerFilter: 'list',
-        headerFilterParams: { valuesLookup: true },
-        formatter: 'html'
       },
       {
         title: 'Karye',
         field: 'karye',
-        mutator: linkList,
-        mutatorParams: {
+        formatter: linkListFormatter,
+        formatterParams: {
           urlPrefix: 'karye__',
           idField: 'id',
           nameField: 'value'
         },
-        headerFilter: 'list',
-        headerFilterParams: { valuesLookup: true },
-        formatter: 'html'
+        headerFilter: 'input',
+
       },
       {
         title: 'Nahiye',
         field: 'nahiye',
-        mutator: linkList,
-        mutatorParams: {
-            urlPrefix: 'nahiye__',
-            idField: 'id',
-            nameField: 'value'
-          },
-        headerFilter: 'list',
-        headerFilterParams: { valuesLookup: true },
-        formatter: 'html'
+        formatter: linkListFormatter,
+        formatterParams: {
+          urlPrefix: 'nahiye__',
+          idField: 'id',
+          nameField: 'value'
+        },
+        headerFilter: 'input',
       },
       {
         title: 'Quarter',
         field: 'quarter',
-        mutator: linkList,
-        mutatorParams: {
+        formatter: linkListFormatter,
+        formatterParams: {
           urlPrefix: 'quarter__',
           idField: 'id',
           nameField: 'value'
         },
-        headerFilter: 'list',
-        headerFilterParams: { valuesLookup: true },
-        formatter: 'html'
+        headerFilter: 'input',
       },
       {
         title: 'Address',
         field: 'address',
-        mutator: linkList,
-        mutatorParams: {
+        formatter: linkListFormatter,
+        formatterParams: {
           urlPrefix: 'address__',
           idField: 'id',
           nameField: 'value'
         },
-        headerFilter: 'list',
-        headerFilterParams: { valuesLookup: true },
-        formatter: 'html'
+        headerFilter: 'input',
       }
     ],
     footerElement:

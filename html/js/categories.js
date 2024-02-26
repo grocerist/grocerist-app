@@ -17,24 +17,22 @@ d3.json(dataUrl, function (data) {
         title: 'Grocery Category',
         field: 'name',
         headerFilter: 'input',
-        formatter: function (cell) {
-          return linkToDetailView(cell)
-        },
+        formatter:  linkToDetailView,
         bottomCalc: 'count'
       },
       {
         title: 'Groceries',
         field: 'goods',
-        mutator: linkList,
-        mutatorParams: {
+        // mutator: linkList,
+        formatter: linkListFormatter,
+        formatterParams: {
+          table: table,
           urlPrefix: '',
           idField: 'grocerist_id',
           nameField: 'name'
         },
         headerFilter: 'input',
-        formatter: function (cell) {
-          return get_scrollable_cell(this, cell)
-        }
+        
       },
       {
         title: '# Groceries',

@@ -53,8 +53,8 @@ d3.json(dataUrl, function (data) {
         field: 'has_category',
         headerFilter: 'input',
         formatter: 'html',
-        mutator: linkList,
-        mutatorParams: {
+        formatter: linkListFormatter,
+        formatterParams: {
           urlPrefix: 'category__',
           idField: 'id',
           nameField: 'value'
