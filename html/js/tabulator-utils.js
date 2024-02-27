@@ -72,3 +72,13 @@ function linkToDetailView (cell) {
   }
   return theLink
 }
+// custom headerFilter for cells with arrays of objects
+function customHeaderFilter (headerValue, rowValue, rowData, filterParams) {
+  //headerValue - the value of the header filter element
+  //rowValue - the value of the column in this row
+  //rowData - the data for the row being filtered
+  //filterParams - params object passed to the headerFilterFuncParams property
+  return rowValue.some(function (item) {
+    return item.value.toLowerCase().includes(headerValue.toLowerCase())
+  })
+}
