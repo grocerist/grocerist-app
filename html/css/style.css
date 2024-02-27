@@ -426,6 +426,12 @@ div.good a {
 
 /* end of subpages */
 
+.subtitle {
+    padding: 0 3% 0 3%;
+    text-align: justify;
+    color: 	#696969
+}
+
 /* removes the stroke thorugh the symbols in the legend of Highcharts graph */
 .highcharts-legend-item .highcharts-graph {
 	display: none;
@@ -460,4 +466,3 @@ div.good a {
     margin: 5px 5px 0 0;
     border-radius: 50%;
   }
-  
