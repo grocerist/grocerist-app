@@ -51,7 +51,7 @@ const TABLE_CFG = {
       headerFilter: 'input'
     },
     {
-      title: 'Mahalle',
+      title: '<i>Mahalle</i>',
       field: 'neighbourhood',
       formatter: linkListFormatter,
       formatterParams: {
@@ -62,7 +62,7 @@ const TABLE_CFG = {
       headerFilter: 'input'
     },
     {
-      title: 'Karye',
+      title: '<i>Karye</i>',
       field: 'karye',
       formatter: linkListFormatter,
       formatterParams: {
@@ -73,7 +73,7 @@ const TABLE_CFG = {
       headerFilter: 'input'
     },
     {
-      title: 'Nahiye',
+      title: '<i>Nahiye</i>',
       field: 'nahiye',
       formatter: linkListFormatter,
       formatterParams: {

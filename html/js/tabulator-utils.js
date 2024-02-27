@@ -48,6 +48,15 @@ function linkList (value, data, type, params, component) {
   return `<ul class="list-unstyled">${output}</ul>`
 }
 
+function makeItalic (value) {
+  let turkishWords = ['Nahiye', 'Mahalle', 'Karye'];
+  output = value.getValue()
+  if (turkishWords.includes(output)) {
+    output = '<i>'+value.getValue()+'</i>';
+  }
+  return output;
+}
+
 // for the first column, the name is a link to the detail view
 function linkToDetailView (cell) {
   var row = cell.getRow().getData()

@@ -18,7 +18,7 @@ d3.json(dataUrl, function (data) {
         formatter: linkToDetailView
       },
       {
-        title: 'Bakkal/Grocer',
+        title: '<i>Bakkal</i>/Grocer',
         field: 'main_person',
         formatter: linkListFormatter,
         formatterParams: {
@@ -58,7 +58,7 @@ d3.json(dataUrl, function (data) {
           idField: 'grocerist_id',
           nameField: 'name'
         },
-        headerFilter: 'input',
+        headerFilter: 'input'
       },
       {
         title: 'District',
@@ -69,10 +69,10 @@ d3.json(dataUrl, function (data) {
           idField: 'id',
           nameField: 'value'
         },
-        headerFilter: 'input',
+        headerFilter: 'input'
       },
       {
-        title: 'Mahalle',
+        title: '<i>Mahalle</i>',
         field: 'neighbourhood',
         headerFilter: 'input',
         formatter: linkListFormatter,
@@ -83,7 +83,7 @@ d3.json(dataUrl, function (data) {
         },
       },
       {
-        title: 'Karye',
+        title: '<i>Karye</i>',
         field: 'karye',
         formatter: linkListFormatter,
         formatterParams: {
@@ -91,11 +91,11 @@ d3.json(dataUrl, function (data) {
           idField: 'id',
           nameField: 'value'
         },
-        headerFilter: 'input',
+        headerFilter: 'input'
 
       },
       {
-        title: 'Nahiye',
+        title: '<i>Nahiye</i>',
         field: 'nahiye',
         formatter: linkListFormatter,
         formatterParams: {
@@ -103,7 +103,7 @@ d3.json(dataUrl, function (data) {
           idField: 'id',
           nameField: 'value'
         },
-        headerFilter: 'input',
+        headerFilter: 'input'
       },
       {
         title: 'Quarter',
@@ -114,7 +114,7 @@ d3.json(dataUrl, function (data) {
           idField: 'id',
           nameField: 'value'
         },
-        headerFilter: 'input',
+        headerFilter: 'input'
       },
       {
         title: 'Address',
@@ -125,7 +125,7 @@ d3.json(dataUrl, function (data) {
           idField: 'id',
           nameField: 'value'
         },
-        headerFilter: 'input',
+        headerFilter: 'input'
       }
     ],
     footerElement:

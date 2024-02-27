@@ -19,21 +19,21 @@
                 {% endif %}
 
                 {% if object.neighbourhood %}
-                <dt>Neighbourhood</dt>
+                <dt><i>Mahalle</i></dt>
                 {% for x in object.neighbourhood %}
                 <dd class="ms-5"><a href="neighbourhood__{{ x.id }}.html">{{ x.value }}</a></dd>
                 {% endfor %}
                 {% endif %}
 
                 {% if object.karye %}
-                <dt>Karye</dt>
+                <dt><i>Karye</i></dt>
                 {% for x in object.karye %}
                 <dd class="ms-5"><a href="karye__{{ x.id }}.html"></a>{{ x.value }}</dd>
                 {% endfor %}
                 {% endif %}
 
                 {% if object.nahiye %}
-                <dt>Nahiye</dt>
+                <dt><i>Nahiye</i></dt>
                 {% for x in object.nahiye %}
                 <dd class="ms-5"><a href="nahiye__{{ x.id }}.html"></a>{{ x.value }}</dd>
                 {% endfor %}

@@ -72,6 +72,7 @@ const TABLE_CFG = {
     {
       title: 'Location Type',
       field: 'properties.location_type',
+      formatter: makeItalic, 
       headerFilter: 'list',
       headerFilterParams: { valuesLookup: true }
     }
@@ -89,13 +90,20 @@ function addLegend (map) {
   legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'legend')
     let locationTypes = ['District', 'Mahalle', 'Karye']
+    let locationTypesItalic = ['Mahalle', 'Karye']
     locationTypes.map(locationType => {
-      div.innerHTML += `<i style="background:${getColorByLocationType(locationType)}"></i><span>${locationType}</span><br>`;
+      div.innerHTML += `<div style= "background:${getColorByLocationType(locationType)}"></div>`;
+      if (locationTypesItalic.includes(locationType)) {
+        div.innerHTML += `<span><i>${locationType}</i></span><br>`;
+      } else {
+        div.innerHTML += `<span>${locationType}</span><br>`;
+      }
     });
     return div
   }
   legend.addTo(map)
 }
+
 
 // Function for initializing the (empty) map
 function createMap () {
