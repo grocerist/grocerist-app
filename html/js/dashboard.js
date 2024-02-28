@@ -1,6 +1,6 @@
 const dataUrl = 'json_dumps/charts.json'
 const titleStyle =  {
-        color: '#236FAD',
+        color: '#993333',
         fontWeight: 'bold',
         fontSize: '30px'
       }
@@ -221,7 +221,7 @@ d3.json(dataUrl, function (data) {
 
   createPieChart('container religion_chart', 'Religion', relChartData)
   createColumnChart(
-    'container categories_chart',
+    'container_categories_chart',
     'Grocery Categories',
     catChartData,
     drilldownData
@@ -231,14 +231,14 @@ d3.json(dataUrl, function (data) {
   setVisibilityForFirstElement(normalizedTimeChartData)
 
   createSplineChart(
-    'container time_chart',
+    'container_time_chart',
     'Category Mentions Over Time',
     'Number of Documents',
     timeChartData,
     ' documents'
   )
   createSplineChart(
-    'container normalized_time_chart',
+    'container_normalized_time_chart',
     'Category Mentions Over Time: Document Percentage by Decade',
     'Percentage of Documents from a Decade',
     normalizedTimeChartData,
