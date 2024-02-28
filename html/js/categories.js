@@ -23,15 +23,14 @@ d3.json(dataUrl, function (data) {
       {
         title: 'Groceries',
         field: 'goods',
-        formatter: linkListFormatter,
+        ...linkListColumnSettings,
         formatterParams: {
           scrollable: true,
           urlPrefix: '',
           idField: 'grocerist_id',
           nameField: 'name'
         },
-        headerFilter: 'input',
-        
+        headerFilterFuncParams: { nameField: 'name' },
       },
       {
         title: '# Groceries',
@@ -41,14 +40,13 @@ d3.json(dataUrl, function (data) {
       {
         title: 'Documents',
         field: 'documents',
-        formatter: linkListFormatter,
+        ...linkListColumnSettings,
         formatterParams: {
           scrollable: true,
           urlPrefix: '',
           idField: 'grocerist_id',
           nameField: 'name'
         },
-        headerFilter: 'input',
       },
       {
         title: '# Docs',

@@ -41,7 +41,6 @@ const TABLE_CFG = {
           nameField: 'value'
         },
       headerFilter: 'input',
-      tooltip: true
     },
     {
       title: 'Nr. of Documents',
@@ -53,14 +52,13 @@ const TABLE_CFG = {
     {
       title: 'Persons',
       field: 'properties.persons',
-      formatter: linkListFormatter,
+      ...linkListColumnSettings,
       formatterParams: {
         scrollable: true,
         urlPrefix: '',
         idField: 'grocerist_id',
         nameField: 'value'
       },
-      headerFilter: 'input'
     },
     {
       title: 'Nr. of Persons',
@@ -78,9 +76,6 @@ const TABLE_CFG = {
     }
   ],
   initialSort: [{ column: 'properties.name', dir: 'asc' }],
-  persistence: {
-    headerFilter: true
-  }
 }
 
 // Legend for the map

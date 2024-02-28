@@ -7,7 +7,7 @@
 {% include "templates/partials/tabulator.j2" %}
 {% include "templates/partials/leaflet.j2" %}
 <script type="module">
-    import * as tableMapModule from './js/table_map.js'
+    import * as tableMapModule from './js/locations.js'
     const dataUrl = 'json_dumps/locations.json'
     tableMapModule.setupMapAndTable(dataUrl)
 </script>

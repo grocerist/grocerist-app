@@ -22,21 +22,18 @@ d3.json(dataUrl, function (data) {
         title: 'Name',
         field: 'name',
         headerFilter: 'input',
-        formatter: function (cell) {
-          return linkToDetailView(cell)
-        }
+        formatter: linkToDetailView
       },
       {
         title: 'Documents',
         field: 'documents',
-        formatter: linkListFormatter,
+        ...linkListColumnSettings,
         formatterParams: {
           scrollable: true,
           urlPrefix: 'document__',
           idField: 'id',
           nameField: 'value'
         },
-        headerFilter: 'input',
       },
       {
         title: 'Nr. of Documents',
@@ -48,9 +45,7 @@ d3.json(dataUrl, function (data) {
       {
         title: 'Categories',
         field: 'has_category',
-        headerFilter: 'input',
-        formatter: 'html',
-        formatter: linkListFormatter,
+        ...linkListColumnSettings,
         formatterParams: {
           urlPrefix: 'category__',
           idField: 'id',

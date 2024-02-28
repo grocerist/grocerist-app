@@ -26,84 +26,81 @@ const TABLE_CFG = {
       formatter: 'html',
       headerFilter: 'list',
       headerFilterFunc: 'in',
-      headerFilterParams: {valuesLookup:'religion', sort: 'asc', multiselect:true,}
+      headerFilterParams: {
+        valuesLookup: 'religion',
+        sort: 'asc',
+        multiselect: true
+      }
     },
     {
       title: 'Documents',
       field: 'documents',
-      formatter: linkListFormatter,
-        formatterParams: {
-          urlPrefix: 'document__',
-          idField: 'id',
-          nameField: 'value'
-        },
-      headerFilter: 'input'
+      ...linkListColumnSettings,
+      formatterParams: {
+        urlPrefix: 'document__',
+        idField: 'id',
+        nameField: 'value'
+      }
     },
     {
       title: 'District',
       field: 'district',
-     formatter: linkListFormatter,
+      ...linkListColumnSettings,
       formatterParams: {
         urlPrefix: 'district__',
         idField: 'id',
         nameField: 'value'
-      },
-      headerFilter: 'input'
+      }
     },
     {
       title: '<i>Mahalle</i>',
       field: 'neighbourhood',
-      formatter: linkListFormatter,
+      ...linkListColumnSettings,
       formatterParams: {
         urlPrefix: 'neighbourhood__',
         idField: 'id',
         nameField: 'value'
-      },
-      headerFilter: 'input'
+      }
     },
     {
       title: '<i>Karye</i>',
       field: 'karye',
-      formatter: linkListFormatter,
+      ...linkListColumnSettings,
       formatterParams: {
         urlPrefix: 'karye__',
         idField: 'id',
         nameField: 'value'
-      },
-      headerFilter: 'input'
+      }
     },
     {
       title: '<i>Nahiye</i>',
       field: 'nahiye',
-      formatter: linkListFormatter,
+      ...linkListColumnSettings,
       formatterParams: {
         urlPrefix: 'nahiye__',
         idField: 'id',
         nameField: 'value'
-      },
-      headerFilter: 'input'
+      }
     },
     {
       title: 'Quarter',
       field: 'quarter',
-      formatter: linkListFormatter,
+      ...linkListColumnSettings,
       formatterParams: {
         urlPrefix: 'quarter__',
         idField: 'id',
         nameField: 'value'
-      },
-      headerFilter: 'input'
+      }
     },
     {
       title: 'Address',
       field: 'address',
-      formatter: linkListFormatter,
+      ...linkListColumnSettings,
       formatterParams: {
         urlPrefix: 'address__',
         idField: 'id',
         nameField: 'value'
-      },
-      headerFilter: 'input'
+      }
     }
   ],
   footerElement:
@@ -111,7 +108,6 @@ const TABLE_CFG = {
     'Showing <span id="search_count"></span> results out of <span id="total_count"></span> ' +
     '</span>'
 }
-
 
 function generateChartsFromTable (rows, table) {
   let religionsResults = calculateReligionData(rows)
@@ -137,13 +133,15 @@ function createPieChart (containerId, title, data, table) {
         cursor: 'pointer',
         point: {
           events: {
-            click: function(){
+            click: function () {
               if (this.name === 'Unknown') {
-              //nothing happens
-            } else {
-              table.setHeaderFilterValue('religion', this.name)
-            }}
-        }},
+                //nothing happens
+              } else {
+                table.setHeaderFilterValue('religion', [this.name])
+              }
+            }
+          }
+        },
         dataLabels: {
           enabled: true
         }
@@ -253,7 +251,7 @@ function calculateDistrictData (rows) {
   rows.forEach(row => {
     let rowData = row.getData()
     let districtData = rowData.district
-    let districtNames = districtData.map(item => item.value);
+    let districtNames = districtData.map(item => item.value)
     if (districtNames.length === 0) {
       districtCount['Unknown'] = (districtCount['Unknown'] || 0) + 1
     } else {

@@ -74,11 +74,21 @@ function linkToDetailView (cell) {
 }
 // custom headerFilter for cells with arrays of objects
 function customHeaderFilter (headerValue, rowValue, rowData, filterParams) {
-  //headerValue - the value of the header filter element
-  //rowValue - the value of the column in this row
-  //rowData - the data for the row being filtered
-  //filterParams - params object passed to the headerFilterFuncParams property
-  return rowValue.some(function (item) {
+  // for columns where the name of the items is not in the "value" field, 
+  // the line headerFilterFuncParams: { nameField: 'name' } needs to be added to the column config
+  if (filterParams.nameField){
+    return rowValue.some(function (item) {
+      return item[filterParams.nameField].toLowerCase().includes(headerValue.toLowerCase())
+    })
+  } else {  return rowValue.some(function (item) {
     return item.value.toLowerCase().includes(headerValue.toLowerCase())
-  })
+  })}
+}
+
+// common settings for columns with arrays of objects
+const linkListColumnSettings = {
+  formatter: linkListFormatter,
+  headerFilter: 'input',
+  headerFilterFunc: customHeaderFilter,
+  sorter: 'array'
 }

@@ -1,5 +1,6 @@
 const dataUrl = 'json_dumps/documents.json'
 
+
 d3.json(dataUrl, function (data) {
   tableData = Object.values(data)
 
@@ -20,13 +21,13 @@ d3.json(dataUrl, function (data) {
       {
         title: '<i>Bakkal</i>/Grocer',
         field: 'main_person',
-        formatter: linkListFormatter,
+        ...linkListColumnSettings,
         formatterParams: {
           urlPrefix: '',
           idField: 'grocerist_id',
           nameField: 'name'
         },
-        headerFilter: 'input',
+        headerFilterFuncParams: { nameField: 'name' }
       },
       {
         title: 'Transcript',
@@ -51,81 +52,74 @@ d3.json(dataUrl, function (data) {
       {
         title: 'Groceries',
         field: 'goods',
-        formatter: linkListFormatter,
         formatterParams: {
           scrollable: true,
           urlPrefix: '',
           idField: 'grocerist_id',
           nameField: 'name'
         },
-        headerFilter: 'input'
+        ...linkListColumnSettings,
+        headerFilterFuncParams: { nameField: 'name' }
       },
       {
         title: 'District',
         field: 'district',
-        formatter: linkListFormatter,
+        ...linkListColumnSettings,
         formatterParams: {
           urlPrefix: 'district__',
           idField: 'id',
           nameField: 'value'
-        },
-        headerFilter: 'input'
+        }
       },
       {
         title: '<i>Mahalle</i>',
         field: 'neighbourhood',
-        headerFilter: 'input',
-        formatter: linkListFormatter,
+        ...linkListColumnSettings,
         formatterParams: {
           urlPrefix: 'neighbourhood__',
           idField: 'id',
           nameField: 'value'
-        },
+        }
       },
       {
         title: '<i>Karye</i>',
         field: 'karye',
-        formatter: linkListFormatter,
+        ...linkListColumnSettings,
         formatterParams: {
           urlPrefix: 'karye__',
           idField: 'id',
           nameField: 'value'
-        },
-        headerFilter: 'input'
-
+        }
       },
       {
         title: '<i>Nahiye</i>',
         field: 'nahiye',
-        formatter: linkListFormatter,
+        ...linkListColumnSettings,
         formatterParams: {
           urlPrefix: 'nahiye__',
           idField: 'id',
           nameField: 'value'
-        },
-        headerFilter: 'input'
+        }
       },
       {
         title: 'Quarter',
         field: 'quarter',
-        formatter: linkListFormatter,
+        ...linkListColumnSettings,
         formatterParams: {
           urlPrefix: 'quarter__',
           idField: 'id',
           nameField: 'value'
-        },
-        headerFilter: 'input'
+        }
       },
       {
         title: 'Address',
         field: 'address',
-        formatter: linkListFormatter,
+        ...linkListColumnSettings,
         formatterParams: {
           urlPrefix: 'address__',
           idField: 'id',
           nameField: 'value'
-        },
-        headerFilter: 'input'
+        }
       }
     ],
     footerElement:
