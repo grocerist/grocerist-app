@@ -437,6 +437,14 @@ div.good a {
 	display: none;
 }
 
+#container_religion_chart,
+#container_categories_chart,
+#container_time_chart,
+#container_normalized_time_chart {
+  width: 100%;
+  height: 400px;
+}
+
 .container {
     margin-top: 20px;
     margin-bottom: 50px;
@@ -446,6 +454,7 @@ div.good a {
 .legend {
     padding: 6px 8px;
     font: 14px Arial, Helvetica, sans-serif;
+    background: white;
     background: rgba(255, 255, 255, 0.8);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     /*border-radius: 5px;*/
@@ -458,7 +467,7 @@ div.good a {
     bottom: 3px;
   }
   
-  .legend div {
+  .legend i {
     width: 10px;
     height: 10px;
     float: left;
