@@ -34,12 +34,13 @@ const TABLE_CFG = {
     {
       title: 'Documents',
       field: 'properties.documents',
-      mutator: mutateDocumentField,
-      headerFilter: 'input',
-      formatter: function (cell) {
-        return get_scrollable_cell(this, cell)
-      },
-      tooltip: true
+      ...linkListColumnSettings,
+        formatterParams: {
+          scrollable: true,
+          urlPrefix: 'document__',
+          idField: 'id',
+          nameField: 'value'
+        },
     },
     {
       title: 'Nr. of Documents',
@@ -51,11 +52,13 @@ const TABLE_CFG = {
     {
       title: 'Persons',
       field: 'properties.persons',
-      mutator: mutatePersonField,
-      headerFilter: 'input',
-      formatter: function (cell) {
-        return get_scrollable_cell(this, cell)
-      }
+      ...linkListColumnSettings,
+      formatterParams: {
+        scrollable: true,
+        urlPrefix: '',
+        idField: 'grocerist_id',
+        nameField: 'value'
+      },
     },
     {
       title: 'Nr. of Persons',
@@ -67,14 +70,17 @@ const TABLE_CFG = {
     {
       title: 'Location Type',
       field: 'properties.location_type',
+      formatter: makeItalic, 
       headerFilter: 'list',
-      headerFilterParams: { valuesLookup: true }
+      headerFilterFunc: 'in',
+      headerFilterParams: { 
+        valuesLookup: true,
+        multiselect: true,
+        itemFormatter: makeItalic
+      }
     }
   ],
   initialSort: [{ column: 'properties.name', dir: 'asc' }],
-  persistence: {
-    headerFilter: true
-  }
 }
 
 // Legend for the map
@@ -84,13 +90,20 @@ function addLegend (map) {
   legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'legend')
     let locationTypes = ['District', 'Mahalle', 'Karye']
+    let locationTypesItalic = ['Mahalle', 'Karye']
     locationTypes.map(locationType => {
-      div.innerHTML += `<i style="background:${getColorByLocationType(locationType)}"></i><span>${locationType}</span><br>`;
+      div.innerHTML += `<div style= "background:${getColorByLocationType(locationType)}"></div>`;
+      if (locationTypesItalic.includes(locationType)) {
+        div.innerHTML += `<span><i>${locationType}</i></span><br>`;
+      } else {
+        div.innerHTML += `<span>${locationType}</span><br>`;
+      }
     });
     return div
   }
   legend.addTo(map)
 }
+
 
 // Function for initializing the (empty) map
 function createMap () {

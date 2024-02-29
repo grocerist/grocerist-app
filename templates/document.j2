@@ -12,23 +12,44 @@
             <h2><i class="bi bi-geo-alt"></i> Location</h2>
             <dl>
                 {% if object.district %}
-                <dt>Districts</dt>
+                <dt>District</dt>
                 {% for x in object.district %}
                 <dd class="ms-5"><a href="district__{{ x.id }}.html">{{ x.value }}</a></dd>
                 {% endfor %}
                 {% endif %}
 
                 {% if object.neighbourhood %}
-                <dt>Neighbourhoods</dt>
+                <dt><i>Mahalle</i></dt>
                 {% for x in object.neighbourhood %}
                 <dd class="ms-5"><a href="neighbourhood__{{ x.id }}.html">{{ x.value }}</a></dd>
                 {% endfor %}
                 {% endif %}
 
                 {% if object.karye %}
-                <dt>Karye</dt>
+                <dt><i>Karye</i></dt>
                 {% for x in object.karye %}
-                <dd class="ms-5">{{ x.value }}</dd>
+                <dd class="ms-5"><a href="karye__{{ x.id }}.html"></a>{{ x.value }}</dd>
+                {% endfor %}
+                {% endif %}
+
+                {% if object.nahiye %}
+                <dt><i>Nahiye</i></dt>
+                {% for x in object.nahiye %}
+                <dd class="ms-5"><a href="nahiye__{{ x.id }}.html"></a>{{ x.value }}</dd>
+                {% endfor %}
+                {% endif %}
+
+                {% if object.quarter %}
+                <dt>Quarter</dt>
+                {% for x in object.quarter %}
+                <dd class="ms-5"><a href="quarter__{{ x.id }}.html"></a>{{ x.value }}</dd>
+                {% endfor %}
+                {% endif %}
+
+                {% if object.address %}
+                <dt>Address</dt>
+                {% for x in object.address %}
+                <dd class="ms-5"><a href="address__{{ x.id }}.html"></a>{{ x.value }}</dd>
                 {% endfor %}
                 {% endif %}
             </dl>

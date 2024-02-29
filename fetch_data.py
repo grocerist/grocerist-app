@@ -11,11 +11,14 @@ github_url = (
 
 file_list = [
     "categories.json",
-    "districts.json",
     "documents.json",
     "goods.json",
+    "districts.json",
     "karye.json",
     "neighbourhoods.json",
+    "nahiye.json",
+    "quarter.json",
+    "address.json",
     "persons.json",
 ]
 
