@@ -34,13 +34,13 @@ const TABLE_CFG = {
     {
       title: 'Documents',
       field: 'properties.documents',
-      formatter: linkListFormatter,
+      ...linkListColumnSettings,
         formatterParams: {
+          scrollable: true,
           urlPrefix: 'document__',
           idField: 'id',
           nameField: 'value'
         },
-      headerFilter: 'input',
     },
     {
       title: 'Nr. of Documents',
@@ -72,7 +72,12 @@ const TABLE_CFG = {
       field: 'properties.location_type',
       formatter: makeItalic, 
       headerFilter: 'list',
-      headerFilterParams: { valuesLookup: true }
+      headerFilterFunc: 'in',
+      headerFilterParams: { 
+        valuesLookup: true,
+        multiselect: true,
+        itemFormatter: makeItalic
+      }
     }
   ],
   initialSort: [{ column: 'properties.name', dir: 'asc' }],

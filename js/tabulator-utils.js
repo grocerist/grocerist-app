@@ -50,9 +50,13 @@ function linkList (value, data, type, params, component) {
 
 function makeItalic (value) {
   let turkishWords = ['Nahiye', 'Mahalle', 'Karye'];
-  output = value.getValue()
+  if (typeof value === 'string') { //headerfilter case
+    output = value; 
+  } else {                         //tab cell case
+    output = value.getValue();  
+  }
   if (turkishWords.includes(output)) {
-    output = '<i>'+value.getValue()+'</i>';
+    output = '<i>'+output+'</i>';
   }
   return output;
 }
