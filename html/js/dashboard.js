@@ -16,7 +16,6 @@ function createPieChart (containerId, title, data) {
       type: 'pie'
     },
     title: {
-
       text: title,
       style: titleStyle
     },
@@ -219,7 +218,7 @@ d3.json(dataUrl, function (data) {
     ]
   })
 
-  createPieChart('container religion_chart', 'Religion', relChartData)
+  createPieChart('container_religion_chart', 'Religion', relChartData)
   createColumnChart(
     'container_categories_chart',
     'Grocery Categories',
