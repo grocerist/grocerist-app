@@ -192,8 +192,12 @@
         attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    const marker = L.marker([41.0404400000, 28.9611900000]).addTo(map)
-        .bindPopup('<strong>Kulaksız</strong>').openPopup();
+    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    let style = window.getComputedStyle(linkElement);
+    let color = style.getPropertyValue('color');
+    let radius = [{'id': 49, 'value': 'İSTM.ŞSC.14.d. 496 / 35b-3 (a)'}].length * 2
+    const marker = L.circleMarker([41.0404400000, 28.9611900000], {radius: radius, color: color}).addTo(map)
+        .bindPopup('<strong >Kulaksız</strong>').openPopup();
 </script>
 
 

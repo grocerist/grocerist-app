@@ -192,8 +192,12 @@
         attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    const marker = L.marker([41.0327500000, None]).addTo(map)
-        .bindPopup('<strong>Lonca</strong>').openPopup();
+    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    let style = window.getComputedStyle(linkElement);
+    let color = style.getPropertyValue('color');
+    let radius = [{'id': 134, 'value': 'İSTM.ŞSC.15.d. 164 / 8b-1 (c)'}].length * 2
+    const marker = L.circleMarker([41.0327500000, None], {radius: radius, color: color}).addTo(map)
+        .bindPopup('<strong >Lonca</strong>').openPopup();
 </script>
 
 

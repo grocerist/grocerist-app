@@ -192,8 +192,12 @@
         attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    const marker = L.marker([40.9889460000, 29.0227000000]).addTo(map)
-        .bindPopup('<strong>Yeniçeşme</strong>').openPopup();
+    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    let style = window.getComputedStyle(linkElement);
+    let color = style.getPropertyValue('color');
+    let radius = [{'id': 112, 'value': 'İSTM.ŞSC.06.d. 578/53b-1'}].length * 2
+    const marker = L.circleMarker([40.9889460000, 29.0227000000], {radius: radius, color: color}).addTo(map)
+        .bindPopup('<strong >Yeniçeşme</strong>').openPopup();
 </script>
 
 

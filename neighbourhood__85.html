@@ -192,8 +192,12 @@
         attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    const marker = L.marker([41.0226200000, 29.0234300000]).addTo(map)
-        .bindPopup('<strong>Dorbalı (Torbalı)</strong>').openPopup();
+    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    let style = window.getComputedStyle(linkElement);
+    let color = style.getPropertyValue('color');
+    let radius = [{'id': 132, 'value': 'İSTM.ŞSC.06.d.495 / 68a-2 (b)'}].length * 2
+    const marker = L.circleMarker([41.0226200000, 29.0234300000], {radius: radius, color: color}).addTo(map)
+        .bindPopup('<strong >Dorbalı (Torbalı)</strong>').openPopup();
 </script>
 
 

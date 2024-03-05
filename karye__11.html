@@ -194,8 +194,12 @@
         attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    const marker = L.marker([40.9586100000, 28.8389200000]).addTo(map)
-        .bindPopup('<strong>Ayastefanos</strong>').openPopup();
+    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    let style = window.getComputedStyle(linkElement);
+    let color = style.getPropertyValue('color');
+    let radius = [{'id': 94, 'value': 'İSTM.ŞSC.15.d. 170 / 111b-3 (a)'}].length * 2
+    const marker = L.circleMarker([40.9586100000, 28.8389200000], {radius: radius, color: color}).addTo(map)
+        .bindPopup('<strong >Ayastefanos</strong>').openPopup();
 </script>
 
 

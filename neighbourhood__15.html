@@ -202,8 +202,12 @@
         attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    const marker = L.marker([41.0098010000, 28.9654350000]).addTo(map)
-        .bindPopup('<strong>Sultan Bayezıd </strong>').openPopup();
+    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    let style = window.getComputedStyle(linkElement);
+    let color = style.getPropertyValue('color');
+    let radius = [{'id': 7, 'value': 'İSTM.ŞSC.14.d.212/ 34b-2'}, {'id': 10, 'value': 'İSTM.ŞSC.14.d.222 / 45a-2'}, {'id': 129, 'value': 'İSTM.ŞSC.06.d. 495 / 25a-1 (c)'}].length * 2
+    const marker = L.circleMarker([41.0098010000, 28.9654350000], {radius: radius, color: color}).addTo(map)
+        .bindPopup('<strong >Sultan Bayezıd </strong>').openPopup();
 </script>
 
 

@@ -196,8 +196,12 @@
         attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    const marker = L.marker([40.9910400000, 29.0292100000]).addTo(map)
-        .bindPopup('<strong>Kadı</strong>').openPopup();
+    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    let style = window.getComputedStyle(linkElement);
+    let color = style.getPropertyValue('color');
+    let radius = [{'id': 69, 'value': 'İSTM.ŞSC.06.d. 381 / 32b-3'}, {'id': 113, 'value': 'İSTM.ŞSC.06.d. 584/30a-1'}].length * 2
+    const marker = L.circleMarker([40.9910400000, 29.0292100000], {radius: radius, color: color}).addTo(map)
+        .bindPopup('<strong >Kadı</strong>').openPopup();
 </script>
 
 

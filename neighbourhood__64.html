@@ -192,8 +192,12 @@
         attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    const marker = L.marker([41.0177900000, 29.0202600000]).addTo(map)
-        .bindPopup('<strong>Debbağlar</strong>').openPopup();
+    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    let style = window.getComputedStyle(linkElement);
+    let color = style.getPropertyValue('color');
+    let radius = [{'id': 109, 'value': 'İSTM.ŞSC.06.d. 566/92b-1'}].length * 2
+    const marker = L.circleMarker([41.0177900000, 29.0202600000], {radius: radius, color: color}).addTo(map)
+        .bindPopup('<strong >Debbağlar</strong>').openPopup();
 </script>
 
 

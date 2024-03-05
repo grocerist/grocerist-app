@@ -194,8 +194,12 @@
         attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    const marker = L.marker([41.0424100000, 29.0062600000]).addTo(map)
-        .bindPopup('<strong>Sinan Paşa-i Kebir</strong>').openPopup();
+    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    let style = window.getComputedStyle(linkElement);
+    let color = style.getPropertyValue('color');
+    let radius = [{'id': 23, 'value': 'İSTM.ŞSC.14.d.254 / 76b-1'}].length * 2
+    const marker = L.circleMarker([41.0424100000, 29.0062600000], {radius: radius, color: color}).addTo(map)
+        .bindPopup('<strong >Sinan Paşa-i Kebir</strong>').openPopup();
 </script>
 
 

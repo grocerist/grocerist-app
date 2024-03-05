@@ -204,8 +204,12 @@
         attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    const marker = L.marker([41.0687200000, 29.0428600000]).addTo(map)
-        .bindPopup('<strong>Arnavud</strong>').openPopup();
+    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    let style = window.getComputedStyle(linkElement);
+    let color = style.getPropertyValue('color');
+    let radius = [{'id': 33, 'value': 'İSTM.ŞSC.14.d. 332/ 48a-1'}, {'id': 37, 'value': 'İSTM.ŞSC.14.d. 361/ 58b-2'}, {'id': 41, 'value': 'İSTM.ŞSC.14.d.400 / 55a-1'}, {'id': 51, 'value': 'İSTM.ŞSC.14.d. 507/20b-2'}].length * 2
+    const marker = L.circleMarker([41.0687200000, 29.0428600000], {radius: radius, color: color}).addTo(map)
+        .bindPopup('<strong >Arnavud</strong>').openPopup();
 </script>
 
 
