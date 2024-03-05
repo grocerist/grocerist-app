@@ -41,8 +41,12 @@
         attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    const marker = L.marker([{{ object.lat }}, {{ object.long }}]).addTo(map)
-        .bindPopup('<strong>{{ object.name }}</strong>').openPopup();
+    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    let style = window.getComputedStyle(linkElement);
+    let color = style.getPropertyValue('color');
+    let radius = {{ object.documents }}.length * 2
+    const marker = L.circleMarker([{{ object.lat }}, {{ object.long }}], {radius: radius, color: color}).addTo(map)
+        .bindPopup('<strong >{{ object.name }}</strong>').openPopup();
 </script>
 
 
