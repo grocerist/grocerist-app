@@ -110,8 +110,8 @@ const TABLE_CFG = {
 }
 
 const getColor = {
-  'Muslim' : '#536e61',
-  'Non muslim/Orthodox': '#9cc288',
+  'Muslim' : '#9cc288',
+  'Non muslim/Orthodox': '#536e61',
   'Non muslim/Armenian': '#cf7332',
   'Non muslim':'#EDB183',
   'Unknown' : '#993333'
