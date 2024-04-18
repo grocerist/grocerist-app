@@ -109,14 +109,6 @@ const TABLE_CFG = {
     '</span>'
 }
 
-const getColor = {
-  'Muslim' : '#9cc288',
-  'Non muslim/Orthodox': '#536e61',
-  'Non muslim/Armenian': '#cf7332',
-  'Non muslim':'#EDB183',
-  'Unknown' : '#993333'
-}
-
 function generateChartsFromTable (rows, table) {
   let religionsResults = calculateReligionData(rows)
   createPieChart('religion-chart', 'Religion', religionsResults, table)
@@ -159,10 +151,7 @@ function createPieChart (containerId, title, data, table) {
       {
         name: 'Percentage',
         colorByPoint: true,
-        data: data.map(item => ({
-          ...item,
-          color: getColor[item.name]
-        }))
+        data: data
       }
     ]
   })
