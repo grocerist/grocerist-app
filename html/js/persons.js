@@ -304,12 +304,7 @@ d3.json(dataUrl, function (data) {
 // Custom colors (default HighCharts list has too few)
 Highcharts.setOptions({
   colors: [
-    '#536e61',
     '#9CC69B',
-    '#cf7332',
-    '#993333',
-    '#9cc288',
-    '#EDB183',
     '#79B4A9',
     '#5E8B7E',
     '#A2CAB3',
