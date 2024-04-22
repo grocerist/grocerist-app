@@ -109,6 +109,14 @@ const TABLE_CFG = {
     '</span>'
 }
 
+const getColor = {
+  'Muslim' : '#9cc288',
+  'Non muslim/Orthodox': '#536e61',
+  'Non muslim/Armenian': '#cf7332',
+  'Non muslim':'#EDB183',
+  'Unknown' : '#993333'
+}
+
 function generateChartsFromTable (rows, table) {
   let religionsResults = calculateReligionData(rows)
   createPieChart('religion-chart', 'Religion', religionsResults, table)
@@ -151,7 +159,10 @@ function createPieChart (containerId, title, data, table) {
       {
         name: 'Percentage',
         colorByPoint: true,
-        data: data
+        data: data.map(item => ({
+          ...item,
+          color: getColor[item.name]
+        }))
       }
     ]
   })
@@ -293,12 +304,7 @@ d3.json(dataUrl, function (data) {
 // Custom colors (default HighCharts list has too few)
 Highcharts.setOptions({
   colors: [
-    '#536e61',
     '#9CC69B',
-    '#cf7332',
-    '#993333',
-    '#9cc288',
-    '#EDB183',
     '#79B4A9',
     '#5E8B7E',
     '#A2CAB3',
