@@ -120,6 +120,16 @@ d3.json(dataUrl, function (data) {
           idField: 'id',
           nameField: 'value'
         }
+      },
+      {
+        title: 'Year <i>Hicri</i>',
+        field: 'year_of_creation_hicri',
+        headerFilter: 'input'
+      },
+      {
+        title: 'Year <i>Miladi</i>',
+        field: 'year_of_creation_miladi',
+        headerFilter: 'input'
       }
     ],
     footerElement:

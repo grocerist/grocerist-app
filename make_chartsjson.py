@@ -88,9 +88,9 @@ docs_data = read_json_file("documents.json")
 
 # Extract years of creation from documents, excluding None values
 years_of_creation = [
-    int(doc["year_of_creation__hicri"])
+    int(doc["year_of_creation_hicri"])
     for doc in docs_data.values()
-    if doc.get("year_of_creation__hicri")
+    if doc.get("year_of_creation_hicri")
 ]
 
 # Create a sorted list of all the decades
@@ -106,7 +106,7 @@ for category in categories_data:
     category_name = category["name"]
     doc_list = [document["id"] for document in category["documents"]]
     for doc in doc_list:
-        year_of_creation = docs_data[doc].get("year_of_creation__hicri")
+        year_of_creation = docs_data[doc].get("year_of_creation_hicri")
         if year_of_creation is not None:
             decade = round_down_to_ten(int(year_of_creation))
             decade_dict[category_name][decade] += 1
