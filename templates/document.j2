@@ -54,7 +54,6 @@
                 {% endif %}
             </dl>
 
-
             <h2><i class="bi bi-person"></i> <i>Bakkal</i>/Grocer</h2>
             {% for x in object.main_person %}
             <dl>
@@ -68,14 +67,6 @@
                 <dd class="ms-5">{{ object.status_of_main_person.value }}</dd>
                 <dt>Type of ownership</dt>
                 <dd class="ms-5">{{ object.type_of_ownership.value }}</dd>
-            </dl>
-            {% endfor %}
-
-            <h2><i class="bi bi-people"></i> Further mentioned people</h2>
-            {% for x in object.mentioned_persons %}
-            <dl>
-                <dt>Role/Name</dt>
-                <dd class="ms-5">{{ x.value }}</dd>
             </dl>
             {% endfor %}
 
