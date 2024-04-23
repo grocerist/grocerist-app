@@ -2698,1720 +2698,572 @@
     }
   ],
   "categories_over_decades": {
-    "categories": [
-      "1110",
-      "1120",
-      "1130",
-      "1140",
-      "1150",
-      "1160",
-      "1170",
-      "1180",
-      "1190",
-      "1200",
-      "1210",
-      "1220",
-      "1230"
-    ],
+    "categories": [],
     "series": [
       {
         "name": "Animal Food",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          1,
-          2,
-          1,
-          6,
-          2,
-          2,
-          1,
-          2,
-          1,
-          1,
-          1,
-          2,
-          2
-        ]
+        "data": []
       },
       {
         "name": "Baking Goods",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          1,
-          9,
-          1,
-          7,
-          2,
-          2,
-          3,
-          0,
-          2,
-          1,
-          0,
-          2,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Beverages",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          1,
-          7,
-          0,
-          6,
-          2,
-          3,
-          4,
-          2,
-          4,
-          2,
-          0,
-          1,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Brine",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          0,
-          3,
-          0,
-          2,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          0
-        ]
+        "data": []
       },
       {
         "name": "Broom Assortment",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          0,
-          0,
-          0,
-          0,
-          1,
-          0,
-          1,
-          0,
-          2,
-          0,
-          0,
-          3,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Cheese Assortment",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          3,
-          8,
-          3,
-          8,
-          1,
-          2,
-          3,
-          1,
-          3,
-          2,
-          1,
-          2,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Condiments",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          3,
-          12,
-          3,
-          9,
-          2,
-          3,
-          3,
-          2,
-          5,
-          2,
-          1,
-          3,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Cooking Oils",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          3,
-          10,
-          3,
-          10,
-          2,
-          3,
-          3,
-          2,
-          5,
-          3,
-          1,
-          1,
-          3
-        ]
+        "data": []
       },
       {
         "name": "Dairy",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          3,
-          9,
-          4,
-          10,
-          2,
-          3,
-          3,
-          2,
-          4,
-          3,
-          1,
-          2,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Deli",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          3,
-          10,
-          1,
-          10,
-          2,
-          2,
-          2,
-          2,
-          4,
-          3,
-          0,
-          2,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Dried Fruits",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          3,
-          8,
-          3,
-          4,
-          1,
-          1,
-          2,
-          1,
-          2,
-          1,
-          0,
-          1,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Dried Goods",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          3,
-          12,
-          4,
-          9,
-          2,
-          3,
-          4,
-          2,
-          5,
-          2,
-          0,
-          4,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Durable Goods",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          2,
-          4,
-          1,
-          1,
-          1,
-          2,
-          2,
-          0,
-          2,
-          1,
-          1,
-          1,
-          1
-        ]
+        "data": []
       },
       {
         "name": "Fats",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          3,
-          10,
-          3,
-          10,
-          2,
-          3,
-          3,
-          2,
-          5,
-          3,
-          1,
-          1,
-          3
-        ]
+        "data": []
       },
       {
         "name": "Fig Assortment",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          1,
-          5,
-          2,
-          2,
-          1,
-          1,
-          1,
-          0,
-          1,
-          1,
-          0,
-          0,
-          3
-        ]
+        "data": []
       },
       {
         "name": "Fish Assortment",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          2,
-          2,
-          0,
-          4,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1
-        ]
+        "data": []
       },
       {
         "name": "Fresh Fruits",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          0,
-          1,
-          1,
-          1,
-          1,
-          1,
-          1,
-          0,
-          0,
-          1,
-          0,
-          0,
-          3
-        ]
+        "data": []
       },
       {
         "name": "Grains",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          3,
-          12,
-          3,
-          9,
-          2,
-          3,
-          4,
-          2,
-          5,
-          2,
-          0,
-          3,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Honey Assortment",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          2,
-          5,
-          1,
-          5,
-          1,
-          2,
-          1,
-          1,
-          3,
-          1,
-          0,
-          2,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Ingredients",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          3,
-          10,
-          1,
-          9,
-          2,
-          2,
-          3,
-          0,
-          5,
-          2,
-          1,
-          3,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Ka\u015fkaval Assortment",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          3,
-          7,
-          2,
-          5,
-          1,
-          2,
-          1,
-          1,
-          2,
-          0,
-          0,
-          1,
-          2
-        ]
+        "data": []
       },
       {
         "name": "Legumes",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          3,
-          9,
-          2,
-          9,
-          2,
-          2,
-          3,
-          1,
-          5,
-          2,
-          0,
-          3,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Molasses Assortment",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          2,
-          5,
-          0,
-          5,
-          2,
-          2,
-          2,
-          1,
-          4,
-          2,
-          0,
-          2,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Non-foods",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          3,
-          8,
-          2,
-          9,
-          2,
-          3,
-          3,
-          2,
-          5,
-          3,
-          1,
-          4,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Oil Assortment",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          2,
-          2
-        ]
+        "data": []
       },
       {
         "name": "Oil Seeds",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          3,
-          8,
-          3,
-          7,
-          1,
-          2,
-          3,
-          0,
-          3,
-          2,
-          0,
-          3,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Olive Assortment",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          3,
-          9,
-          2,
-          10,
-          1,
-          0,
-          2,
-          0,
-          3,
-          2,
-          0,
-          2,
-          3
-        ]
+        "data": []
       },
       {
         "name": "Pastrami Assortment",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          2
-        ]
+        "data": []
       },
       {
         "name": "Pickle",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          2,
-          3,
-          0,
-          2,
-          0,
-          1,
-          1,
-          0,
-          1,
-          0,
-          0,
-          0,
-          1
-        ]
+        "data": []
       },
       {
         "name": "Produce",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          2,
-          7,
-          2,
-          7,
-          2,
-          3,
-          3,
-          1,
-          4,
-          3,
-          1,
-          4,
-          3
-        ]
+        "data": []
       },
       {
         "name": "Raisin Assortment",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          3,
-          7,
-          2,
-          4,
-          0,
-          1,
-          2,
-          1,
-          2,
-          1,
-          0,
-          1,
-          3
-        ]
+        "data": []
       },
       {
         "name": "Rice Assortment",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          1,
-          0
-        ]
+        "data": []
       },
       {
         "name": "Snacks",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          3,
-          10,
-          3,
-          7,
-          1,
-          2,
-          3,
-          1,
-          3,
-          2,
-          0,
-          4,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Soap Assortment",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          2,
-          7,
-          0,
-          6,
-          1,
-          1,
-          2,
-          0,
-          2,
-          2,
-          0,
-          2,
-          3
-        ]
+        "data": []
       },
       {
         "name": "Sour Flavorings",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          3,
-          9,
-          1,
-          7,
-          1,
-          2,
-          3,
-          2,
-          5,
-          2,
-          1,
-          2,
-          3
-        ]
+        "data": []
       },
       {
         "name": "Spices and Add Ons",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          3,
-          11,
-          2,
-          9,
-          2,
-          2,
-          3,
-          2,
-          5,
-          2,
-          1,
-          2,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Sweeteners",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          3,
-          7,
-          1,
-          8,
-          2,
-          3,
-          2,
-          1,
-          5,
-          2,
-          0,
-          2,
-          4
-        ]
+        "data": []
       },
       {
         "name": "Utensils",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          3,
-          11,
-          4,
-          8,
-          3,
-          4,
-          5,
-          2,
-          5,
-          2,
-          1,
-          2,
-          3
-        ]
+        "data": []
       },
       {
         "name": "Vegetables",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          2,
-          7,
-          1,
-          7,
-          2,
-          3,
-          3,
-          1,
-          3,
-          3,
-          1,
-          4,
-          3
-        ]
+        "data": []
       },
       {
         "name": "Vermicelli Assortment",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          2,
-          1
-        ]
+        "data": []
       }
     ]
   },
   "normalized_categories_over_decades": {
-    "categories": [
-      "1110",
-      "1120",
-      "1130",
-      "1140",
-      "1150",
-      "1160",
-      "1170",
-      "1180",
-      "1190",
-      "1200",
-      "1210",
-      "1220",
-      "1230"
-    ],
+    "categories": [],
     "series": [
       {
         "name": "Animal Food",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          25.0,
-          13.33,
-          12.5,
-          50.0,
-          50.0,
-          28.57,
-          12.5,
-          28.57,
-          12.5,
-          25.0,
-          33.33,
-          18.18,
-          28.57
-        ]
+        "data": []
       },
       {
         "name": "Baking Goods",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          25.0,
-          60.0,
-          12.5,
-          58.33,
-          50.0,
-          28.57,
-          37.5,
-          0.0,
-          25.0,
-          25.0,
-          0.0,
-          18.18,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Beverages",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          25.0,
-          46.67,
-          0.0,
-          50.0,
-          50.0,
-          42.86,
-          50.0,
-          28.57,
-          50.0,
-          50.0,
-          0.0,
-          9.09,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Brine",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          0.0,
-          20.0,
-          0.0,
-          16.67,
-          0.0,
-          0.0,
-          12.5,
-          0.0,
-          12.5,
-          0.0,
-          0.0,
-          0.0,
-          0.0
-        ]
+        "data": []
       },
       {
         "name": "Broom Assortment",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          25.0,
-          0.0,
-          12.5,
-          0.0,
-          25.0,
-          0.0,
-          0.0,
-          27.27,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Cheese Assortment",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          75.0,
-          53.33,
-          37.5,
-          66.67,
-          25.0,
-          28.57,
-          37.5,
-          14.29,
-          37.5,
-          50.0,
-          33.33,
-          18.18,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Condiments",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          75.0,
-          80.0,
-          37.5,
-          75.0,
-          50.0,
-          42.86,
-          37.5,
-          28.57,
-          62.5,
-          50.0,
-          33.33,
-          27.27,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Cooking Oils",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          75.0,
-          66.67,
-          37.5,
-          83.33,
-          50.0,
-          42.86,
-          37.5,
-          28.57,
-          62.5,
-          75.0,
-          33.33,
-          9.09,
-          42.86
-        ]
+        "data": []
       },
       {
         "name": "Dairy",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          75.0,
-          60.0,
-          50.0,
-          83.33,
-          50.0,
-          42.86,
-          37.5,
-          28.57,
-          50.0,
-          75.0,
-          33.33,
-          18.18,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Deli",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          75.0,
-          66.67,
-          12.5,
-          83.33,
-          50.0,
-          28.57,
-          25.0,
-          28.57,
-          50.0,
-          75.0,
-          0.0,
-          18.18,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Dried Fruits",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          75.0,
-          53.33,
-          37.5,
-          33.33,
-          25.0,
-          14.29,
-          25.0,
-          14.29,
-          25.0,
-          25.0,
-          0.0,
-          9.09,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Dried Goods",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          75.0,
-          80.0,
-          50.0,
-          75.0,
-          50.0,
-          42.86,
-          50.0,
-          28.57,
-          62.5,
-          50.0,
-          0.0,
-          36.36,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Durable Goods",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          50.0,
-          26.67,
-          12.5,
-          8.33,
-          25.0,
-          28.57,
-          25.0,
-          0.0,
-          25.0,
-          25.0,
-          33.33,
-          9.09,
-          14.29
-        ]
+        "data": []
       },
       {
         "name": "Fats",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          75.0,
-          66.67,
-          37.5,
-          83.33,
-          50.0,
-          42.86,
-          37.5,
-          28.57,
-          62.5,
-          75.0,
-          33.33,
-          9.09,
-          42.86
-        ]
+        "data": []
       },
       {
         "name": "Fig Assortment",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          25.0,
-          33.33,
-          25.0,
-          16.67,
-          25.0,
-          14.29,
-          12.5,
-          0.0,
-          12.5,
-          25.0,
-          0.0,
-          0.0,
-          42.86
-        ]
+        "data": []
       },
       {
         "name": "Fish Assortment",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          50.0,
-          13.33,
-          0.0,
-          33.33,
-          25.0,
-          14.29,
-          12.5,
-          14.29,
-          12.5,
-          25.0,
-          33.33,
-          9.09,
-          14.29
-        ]
+        "data": []
       },
       {
         "name": "Fresh Fruits",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          0.0,
-          6.67,
-          12.5,
-          8.33,
-          25.0,
-          14.29,
-          12.5,
-          0.0,
-          0.0,
-          25.0,
-          0.0,
-          0.0,
-          42.86
-        ]
+        "data": []
       },
       {
         "name": "Grains",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          75.0,
-          80.0,
-          37.5,
-          75.0,
-          50.0,
-          42.86,
-          50.0,
-          28.57,
-          62.5,
-          50.0,
-          0.0,
-          27.27,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Honey Assortment",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          50.0,
-          33.33,
-          12.5,
-          41.67,
-          25.0,
-          28.57,
-          12.5,
-          14.29,
-          37.5,
-          25.0,
-          0.0,
-          18.18,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Ingredients",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          75.0,
-          66.67,
-          12.5,
-          75.0,
-          50.0,
-          28.57,
-          37.5,
-          0.0,
-          62.5,
-          50.0,
-          33.33,
-          27.27,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Ka\u015fkaval Assortment",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          75.0,
-          46.67,
-          25.0,
-          41.67,
-          25.0,
-          28.57,
-          12.5,
-          14.29,
-          25.0,
-          0.0,
-          0.0,
-          9.09,
-          28.57
-        ]
+        "data": []
       },
       {
         "name": "Legumes",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          75.0,
-          60.0,
-          25.0,
-          75.0,
-          50.0,
-          28.57,
-          37.5,
-          14.29,
-          62.5,
-          50.0,
-          0.0,
-          27.27,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Molasses Assortment",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          50.0,
-          33.33,
-          0.0,
-          41.67,
-          50.0,
-          28.57,
-          25.0,
-          14.29,
-          50.0,
-          50.0,
-          0.0,
-          18.18,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Non-foods",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          75.0,
-          53.33,
-          25.0,
-          75.0,
-          50.0,
-          42.86,
-          37.5,
-          28.57,
-          62.5,
-          75.0,
-          33.33,
-          36.36,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Oil Assortment",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          18.18,
-          28.57
-        ]
+        "data": []
       },
       {
         "name": "Oil Seeds",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          75.0,
-          53.33,
-          37.5,
-          58.33,
-          25.0,
-          28.57,
-          37.5,
-          0.0,
-          37.5,
-          50.0,
-          0.0,
-          27.27,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Olive Assortment",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          75.0,
-          60.0,
-          25.0,
-          83.33,
-          25.0,
-          0.0,
-          25.0,
-          0.0,
-          37.5,
-          50.0,
-          0.0,
-          18.18,
-          42.86
-        ]
+        "data": []
       },
       {
         "name": "Pastrami Assortment",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          9.09,
-          28.57
-        ]
+        "data": []
       },
       {
         "name": "Pickle",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          50.0,
-          20.0,
-          0.0,
-          16.67,
-          0.0,
-          14.29,
-          12.5,
-          0.0,
-          12.5,
-          0.0,
-          0.0,
-          0.0,
-          14.29
-        ]
+        "data": []
       },
       {
         "name": "Produce",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          50.0,
-          46.67,
-          25.0,
-          58.33,
-          50.0,
-          42.86,
-          37.5,
-          14.29,
-          50.0,
-          75.0,
-          33.33,
-          36.36,
-          42.86
-        ]
+        "data": []
       },
       {
         "name": "Raisin Assortment",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          75.0,
-          46.67,
-          25.0,
-          33.33,
-          0.0,
-          14.29,
-          25.0,
-          14.29,
-          25.0,
-          25.0,
-          0.0,
-          9.09,
-          42.86
-        ]
+        "data": []
       },
       {
         "name": "Rice Assortment",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          9.09,
-          0.0
-        ]
+        "data": []
       },
       {
         "name": "Snacks",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          75.0,
-          66.67,
-          37.5,
-          58.33,
-          25.0,
-          28.57,
-          37.5,
-          14.29,
-          37.5,
-          50.0,
-          0.0,
-          36.36,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Soap Assortment",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          50.0,
-          46.67,
-          0.0,
-          50.0,
-          25.0,
-          14.29,
-          25.0,
-          0.0,
-          25.0,
-          50.0,
-          0.0,
-          18.18,
-          42.86
-        ]
+        "data": []
       },
       {
         "name": "Sour Flavorings",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          75.0,
-          60.0,
-          12.5,
-          58.33,
-          25.0,
-          28.57,
-          37.5,
-          28.57,
-          62.5,
-          50.0,
-          33.33,
-          18.18,
-          42.86
-        ]
+        "data": []
       },
       {
         "name": "Spices and Add Ons",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          75.0,
-          73.33,
-          25.0,
-          75.0,
-          50.0,
-          28.57,
-          37.5,
-          28.57,
-          62.5,
-          50.0,
-          33.33,
-          18.18,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Sweeteners",
         "marker": {
           "symbol": "square"
         },
-        "data": [
-          75.0,
-          46.67,
-          12.5,
-          66.67,
-          50.0,
-          42.86,
-          25.0,
-          14.29,
-          62.5,
-          50.0,
-          0.0,
-          18.18,
-          57.14
-        ]
+        "data": []
       },
       {
         "name": "Utensils",
         "marker": {
           "symbol": "diamond"
         },
-        "data": [
-          75.0,
-          73.33,
-          50.0,
-          66.67,
-          75.0,
-          57.14,
-          62.5,
-          28.57,
-          62.5,
-          50.0,
-          33.33,
-          18.18,
-          42.86
-        ]
+        "data": []
       },
       {
         "name": "Vegetables",
         "marker": {
           "symbol": "circle"
         },
-        "data": [
-          50.0,
-          46.67,
-          12.5,
-          58.33,
-          50.0,
-          42.86,
-          37.5,
-          14.29,
-          37.5,
-          75.0,
-          33.33,
-          36.36,
-          42.86
-        ]
+        "data": []
       },
       {
         "name": "Vermicelli Assortment",
         "marker": {
           "symbol": "triangle"
         },
-        "data": [
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          0.0,
-          18.18,
-          14.29
-        ]
+        "data": []
       }
     ]
   }
