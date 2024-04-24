@@ -7,17 +7,54 @@
         {% endwith %}
         {{ object.name }}
     </h1>
-    <h2><i class="bi bi-geo-alt"></i> Categories</h2>
-    <dl>
-        {% for x in object.has_category %}
-        <dd class="ms-5"><a href="category__{{ x.id }}.html">{{ x.value }}</a></dd>
-        {% endfor %}
-    </dl>
-    <h2><i class="bi bi-archive"></i> Documents</h2>
-    <ul>
-        {% for x in object.documents %}
-        <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
-        {% endfor %}
-    </ul>
-</div>
+    <div class="row">
+        <div class="col">
+            <h2><i class="bi bi-geo-alt"></i> Categories</h2>
+            <dl>
+                {% for x in object.has_category %}
+                <dd class="ms-5"><a href="category__{{ x.id }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
+            </dl>
+            <h2><i class="bi bi-archive"></i> Documents</h2>
+            <ul>
+                {% for x in object.documents %}
+                <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col">
+            <h2>Map</h2>
+            <div id="map" style="height: 600px;" />
+        </div>
+    </div>
+</div>    
 {% endblock content %}
+{% block scripts2 %}
+{% if object.documents %}
+{% include "templates/partials/leaflet.j2" %}
+
+<script>
+    const initialCoordinates = [41.01224, 28.976018];
+    const initialZoom = 13;
+    const map = L.map('map').setView(initialCoordinates, initialZoom);
+
+    const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 20,
+        attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    }).addTo(map);
+
+    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    let style = window.getComputedStyle(linkElement);
+    let color = style.getPropertyValue('color');
+    None = null
+    for (let i = 0; i < {{ object.documents }}.length; i++) {
+        if ({{ object.documents }}[i].lat && {{ object.documents }}[i].long) {
+            const marker = L.circleMarker([{{ object.documents }}[i].lat, {{ object.documents }}[i].long], {color: color}).addTo(map)
+            .bindPopup('<strong >{{ object.name }}</strong>').openPopup();
+        }
+    }
+</script>
+
+
+{% endif %}
+{% endblock scripts2 %}
