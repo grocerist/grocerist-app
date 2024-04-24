@@ -76,7 +76,9 @@ function createColumnChart (containerId, title, data, drilldownData) {
         allowPointSelect: true,
         cursor: 'pointer',
         dataLabels: {
-          enabled: true
+          enabled: true,
+          overflow: 'none',
+          crop: false,
         }
       }
     },
