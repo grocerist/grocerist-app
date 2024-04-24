@@ -70,30 +70,31 @@ categories_series = [
         "name": dummy_category,
         "y": 100,
         "drilldown": dummy_category,
-    } for dummy_category in dummy_main_categories
+    }
+    for dummy_category in dummy_main_categories
 ]
 # For now, all dummy categories contain all the real categories
 categories_drilldown_level_1 = [
     {
         "name": dummy_category,
         "id": dummy_category,  # id to match drilldown category
-        "data": [{
-            "name": category["name"],
-            "y": category["doc_count"],
-            "drilldown": category["name"]
-        } for category in categories_data
+        "data": [
+            {
+                "name": category["name"],
+                "y": category["doc_count"],
+                "drilldown": category["name"],
+            }
+            for category in categories_data
         ],
-    } for dummy_category in dummy_main_categories
+    }
+    for dummy_category in dummy_main_categories
 ]
 categories_drilldown_level_2 = [
     {
         "name": category["name"],
         "id": category["name"],  # id to match drilldown category
         "data": [
-            {
-                "name": good["name"], 
-                "y": len(goods_data[good["id"]]["documents"])
-            }
+            {"name": good["name"], "y": len(goods_data[good["id"]]["documents"])}
             for good in category["goods"]
         ],
     }
