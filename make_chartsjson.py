@@ -62,26 +62,46 @@ goods_data = read_json_file("goods.json")
 
 # Categories and the number of documents they were mentioned in
 # and the same for each good (for drilldown chart)
-categories_results = [
+
+# Create some main categories as placeholders
+dummy_main_categories = ["Main category 1", "Main category 2", "Main category 3"]
+categories_series = [
     {
-        "name": category["name"],
-        "y": category["doc_count"],
-        "drilldown": category["name"],
-    }
-    for category in categories_data
+        "name": dummy_category,
+        "y": 100,
+        "drilldown": dummy_category,
+    } for dummy_category in dummy_main_categories
 ]
-categories_drilldown = [
+# For now, all dummy categories contain all the real categories
+categories_drilldown_level_1 = [
+    {
+        "name": dummy_category,
+        "id": dummy_category,  # id to match drilldown category
+        "data": [{
+            "name": category["name"],
+            "y": category["doc_count"],
+            "drilldown": category["name"]
+        } for category in categories_data
+        ],
+    } for dummy_category in dummy_main_categories
+]
+categories_drilldown_level_2 = [
     {
         "name": category["name"],
-        "id": category["name"],  # id for HighCharts
+        "id": category["name"],  # id to match drilldown category
         "data": [
-            [good["name"], len(goods_data[good["id"]]["documents"])]
+            {
+                "name": good["name"], 
+                "y": len(goods_data[good["id"]]["documents"])
+            }
             for good in category["goods"]
         ],
     }
     for category in categories_data
 ]
-
+# Combine the two levels of drilldown
+# it doesn't matter if they are in the same list, since Highcharts matches them by id
+categories_drilldown = categories_drilldown_level_1 + categories_drilldown_level_2
 
 # DATA FOR MENTIONS OVER DECADES CHART
 docs_data = read_json_file("documents.json")
@@ -145,7 +165,7 @@ normalized_decades_results = [
 result_json = json.dumps(
     {
         "religions": religions_results,
-        "categories": categories_results,
+        "categories": categories_series,
         "categories_drilldown": categories_drilldown,
         "categories_over_decades": {
             "categories": [str(decade) for decade in decades],
