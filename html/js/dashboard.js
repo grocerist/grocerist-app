@@ -84,7 +84,7 @@ function createColumnChart (containerId, title, data, drilldownData) {
     },
     series: [
       {
-        name: 'Grocery Categories',
+        name: 'Groceries by Category',
         dataSorting: {
           enabled: true,
           sortKey: 'name'
