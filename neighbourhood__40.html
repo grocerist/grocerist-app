@@ -194,7 +194,9 @@
         attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    // gets the color from the link to top in the heading and uses it for the marker
+    // (because each location type has a different colour)
+    let linkElement = document.querySelector(' h1 > a');
     let style = window.getComputedStyle(linkElement);
     let color = style.getPropertyValue('color');
     let radius = [{'id': 45, 'value': 'İSTM.ŞSC.14.d.433 / 74b-2'}].length * 2

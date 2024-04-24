@@ -212,7 +212,9 @@
         attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    // gets the color from the link to top in the heading and uses it for the marker
+    // (because each location type has a different colour)
+    let linkElement = document.querySelector(' h1 > a');
     let style = window.getComputedStyle(linkElement);
     let color = style.getPropertyValue('color');
     let radius = [{'id': 73, 'value': 'İSTM.ŞSC.06.d. 440 / 24b-1'}, {'id': 81, 'value': 'İSTM.ŞSC.06.d. 494 / 81a-1'}, {'id': 111, 'value': 'İSTM.ŞSC.06.d. 577/43b-1'}, {'id': 144, 'value': 'İSTM.ŞSC.06.d. 566/51a'}, {'id': 148, 'value': 'İSTM.ŞSC.06.d. 578/54a'}].length * 2
