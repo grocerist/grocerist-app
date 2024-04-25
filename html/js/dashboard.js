@@ -42,7 +42,8 @@ function createPieChart (containerId, title, data) {
 }
 
 function createColumnChart (containerId, title, data, drilldownData) {
-  Highcharts.chart(containerId, {
+  const select = document.getElementById("select-century")
+  const chart = Highcharts.chart(containerId, {
     chart: {
       type: 'column'
     },
@@ -104,6 +105,11 @@ function createColumnChart (containerId, title, data, drilldownData) {
       },
       series: drilldownData
     }
+  })
+  select.addEventListener("change", function() {
+    console.log(select.value)
+    //chart.series[0].setData([parsedData[select.value]])
+    chart.redraw()
   })
 }
 
