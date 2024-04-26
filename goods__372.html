@@ -76,23 +76,31 @@
         
         Arpa şariye
     </h1>
-    <h2><i class="bi bi-geo-alt"></i> Categories</h2>
-    <dl>
-        
-        <dd class="ms-5"><a href="category__6767.html">Grains</a></dd>
-        
-        <dd class="ms-5"><a href="category__6764.html">Dried Goods</a></dd>
-        
-        <dd class="ms-5"><a href="category__9880.html">Vermicelli Assortment</a></dd>
-        
-    </dl>
-    <h2><i class="bi bi-archive"></i> Documents</h2>
-    <ul>
-        
-        <li><a href="document__111.html">İSTM.ŞSC.06.d. 577/43b-1</a></li>
-        
-    </ul>
-</div>
+    <div class="row">
+        <div class="col">
+            <h2><i class="bi bi-geo-alt"></i> Categories</h2>
+            <dl>
+                
+                <dd class="ms-5"><a href="category__6767.html">Grains</a></dd>
+                
+                <dd class="ms-5"><a href="category__6764.html">Dried Goods</a></dd>
+                
+                <dd class="ms-5"><a href="category__9880.html">Vermicelli Assortment</a></dd>
+                
+            </dl>
+            <h2><i class="bi bi-archive"></i> Documents</h2>
+            <ul>
+                
+                <li><a href="document__111.html">İSTM.ŞSC.06.d. 577/43b-1</a></li>
+                
+            </ul>
+        </div>
+        <div class="col">
+            <h2><i class="bi bi-map"></i> Map</h2>
+            <div id="map" style="height: 600px;" />
+        </div>
+    </div>
+</div>    
 
         </div>
     </main>
@@ -176,7 +184,64 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
     
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script>
+    const initialCoordinates = [41.01224, 28.976018];
+    const initialZoom = 13;
+    let color18 = "#2b84ad";
+    let color19 = "#247d04";
+
+    var eighteenth_list = [];
+    var nineteenth_list = [];
+
+    None = null; //otherwise missing lat and long data of the object is inserted as None like a non-declared variable
+
+    let doc_list = [{'id': 111, 'value': 'İSTM.ŞSC.06.d. 577/43b-1'}];
+
+    for (let i = 0; i < doc_list.length; i++) {
+        if (doc_list[i].year_of_creation_miladi) {
+            let year = /\d{4}/.exec(doc_list[i].year_of_creation_miladi)[0]; //remove regex espression after simple year values are inserted in baserow
+            if (doc_list[i].lat && doc_list[i].long) {
+                if (year < 1801) {
+                    var eighteenth_marker = L.circleMarker([doc_list[i].lat, doc_list[i].long], {color: color18})
+                    .bindPopup("<strong><a href=document__"+doc_list[i].id+".html>"+doc_list[i].value+"</a></strong>").openPopup();
+                    eighteenth_list.push(eighteenth_marker);
+                } else if (year < 1901) {
+                    var nineteenth_marker = L.circleMarker([doc_list[i].lat, doc_list[i].long], {color: color19})
+                    .bindPopup("<strong><a href=document__"+doc_list[i].id+".html>"+doc_list[i].value+"</a></strong>").openPopup();
+                    nineteenth_list.push(nineteenth_marker);
+                }
+            }
+        } else {
+            console.warn("There is a document with a missing year: " + doc_list[i].value);
+        }
+    }
+
+    var eighteenth_century = L.layerGroup(eighteenth_list);
+    var nineteenth_century = L.layerGroup(nineteenth_list);
+
+    const baseMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 20,
+        attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    });
     
+    const map = L.map('map', {center: initialCoordinates, zoom: initialZoom, layers: [baseMap, eighteenth_century, nineteenth_century]});
+
+    const overlayMaps = {};
+    overlayMaps[`<span style=color:${color18}>18th century</span>`] = eighteenth_century;
+    overlayMaps[`<span style=color:${color19}>19th century</span>`] = nineteenth_century;
+    
+    const layerControl = L.control.layers(null, overlayMaps, {collapsed:false}).addTo(map);
+</script>
+
+
+
+
 </body>
 
 </html>
