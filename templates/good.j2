@@ -23,7 +23,7 @@
             </ul>
         </div>
         <div class="col">
-            <h2>Map</h2>
+            <h2><i class="bi bi-map"></i> Map</h2>
             <div id="map" style="height: 600px;" />
         </div>
     </div>
@@ -36,23 +36,50 @@
 <script>
     const initialCoordinates = [41.01224, 28.976018];
     const initialZoom = 13;
-    const map = L.map('map').setView(initialCoordinates, initialZoom);
+    let color18 = "#2b84ad";
+    let color19 = "#247d04";
 
-    const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        maxZoom: 20,
-        attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-    }).addTo(map);
+    var eighteenth_list = [];
+    var nineteenth_list = [];
 
-    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
-    let style = window.getComputedStyle(linkElement);
-    let color = style.getPropertyValue('color');
-    None = null
-    for (let i = 0; i < {{ object.documents }}.length; i++) {
-        if ({{ object.documents }}[i].lat && {{ object.documents }}[i].long) {
-            const marker = L.circleMarker([{{ object.documents }}[i].lat, {{ object.documents }}[i].long], {color: color}).addTo(map)
-            .bindPopup('<strong >{{ object.name }}</strong>').openPopup();
+    None = null; //otherwise missing lat and long data of the object is inserted as None like a non-declared variable
+
+    let doc_list = {{ object.documents }};
+
+    for (let i = 0; i < doc_list.length; i++) {
+        if (doc_list[i].year_of_creation_miladi) {
+            let year = /\d{4}/.exec(doc_list[i].year_of_creation_miladi)[0]; //remove regex espression after simple year values are inserted in baserow
+            if (doc_list[i].lat && doc_list[i].long) {
+                if (year < 1801) {
+                    var eighteenth_marker = L.circleMarker([doc_list[i].lat, doc_list[i].long], {color: color18})
+                    .bindPopup("<strong><a href=document__"+doc_list[i].id+".html>"+doc_list[i].value+"</a></strong>").openPopup();
+                    eighteenth_list.push(eighteenth_marker);
+                } else if (year < 1901) {
+                    var nineteenth_marker = L.circleMarker([doc_list[i].lat, doc_list[i].long], {color: color19})
+                    .bindPopup("<strong><a href=document__"+doc_list[i].id+".html>"+doc_list[i].value+"</a></strong>").openPopup();
+                    nineteenth_list.push(nineteenth_marker);
+                }
+            }
+        } else {
+            console.warn("There is a document with a missing year: " + doc_list[i].value);
         }
     }
+
+    var eighteenth_century = L.layerGroup(eighteenth_list);
+    var nineteenth_century = L.layerGroup(nineteenth_list);
+
+    const baseMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 20,
+        attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    });
+    
+    const map = L.map('map', {center: initialCoordinates, zoom: initialZoom, layers: [baseMap, eighteenth_century, nineteenth_century]});
+
+    const overlayMaps = {};
+    overlayMaps[`<span style=color:${color18}>18th century</span>`] = eighteenth_century;
+    overlayMaps[`<span style=color:${color19}>19th century</span>`] = nineteenth_century;
+    
+    const layerControl = L.control.layers(null, overlayMaps, {collapsed:false}).addTo(map);
 </script>
 
 
