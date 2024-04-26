@@ -9,5 +9,8 @@ python make_geojson.py
 echo "creating chart JSON"
 python make_chartsjson.py
 
+echo "creating goods JSON"
+python make_goodsjson.py
+
 echo "building the HTML files"
 python build.py
