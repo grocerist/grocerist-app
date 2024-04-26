@@ -25,4 +25,3 @@ with open(
 ) as result_file:
     goods_data = json.dumps(goods_data)
     result_file.write(goods_data)
-    
