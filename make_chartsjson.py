@@ -69,6 +69,26 @@ goods_data = read_json_file("goods.json")
 docs_data = read_json_file("documents.json")
 
 
+def extract_year(date):
+    if date is None or date == "":
+        return None
+    year = None
+    if "-" in date:
+        # format is YYYY-YYYY, so we take the first part
+        year = date.split("-")[0]
+    elif "/" in date:
+        # format is DD/MM/YYYY, so we take the last part
+        year = date.split("/")[2]
+    else:
+        year = date
+
+    try:
+        return int(year)
+    except ValueError:
+        print(f"Year is not a number: {year}")
+        return None
+
+
 def calculate_century_count(data_dict, docs_data):
     """
     Calculates the count of documents in each century for each category/grocery in the data dictionary.
@@ -85,9 +105,10 @@ def calculate_century_count(data_dict, docs_data):
         data_name = data["name"]
         doc_list = [str(document["id"]) for document in data["documents"]]
         for doc in doc_list:
-            year_of_creation = docs_data[doc].get("year_of_creation_miladi")
-            if year_of_creation is not None and year_of_creation != "":
-                century = calculate_century(int(year_of_creation.split("-")[0]))
+            date_of_creation = docs_data[doc].get("year_of_creation_miladi")
+            year = extract_year(date_of_creation)
+            if year is not None:
+                century = calculate_century(year)
                 # for now, the 1 document from the 17th century is not included
                 if century in [18, 19]:
                     century_dict[data_name][str(century)] += 1
@@ -142,11 +163,14 @@ categories_19_drilldown = generate_drilldown_data(
 # Extract years of creation from documents, excluding None values
 # For now, we're splitting the date string and taking the first part, will be fixed in the data later
 years_of_creation = [
-    int(doc["year_of_creation_miladi"].split("-")[0])
-    for doc in docs_data.values()
-    if doc.get("year_of_creation_miladi")
+    year
+    for year in (
+        extract_year(doc["year_of_creation_miladi"])
+        for doc in docs_data.values()
+        if doc.get("year_of_creation_miladi") is not None
+    )
+    if year is not None
 ]
-
 # Create a sorted list of all the decades
 decades = sorted(set(round_down_to_ten(year) for year in years_of_creation))
 
@@ -160,9 +184,10 @@ for category in categories_data:
     category_name = category["name"]
     doc_list = [document["id"] for document in category["documents"]]
     for doc in doc_list:
-        year_of_creation = docs_data[doc].get("year_of_creation_miladi")
-        if year_of_creation is not None and year_of_creation != "":
-            decade = round_down_to_ten(int(year_of_creation.split("-")[0]))
+        date_of_creation = docs_data[doc].get("year_of_creation_miladi")
+        year = extract_year(date_of_creation)
+        if year is not None:
+            decade = round_down_to_ten(year)
             decade_dict[category_name][decade] += 1
 
 # Normalize the counts to percentages
