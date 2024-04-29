@@ -69,7 +69,7 @@ function createColumnChart (containerId, title, data, century = 18) {
     tooltip: {
       headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
       pointFormat:
-        '<span style="color:{point.color}">{point.name}</span>: mentioned in <b>{point.y}</b> documents<br/>'
+      `<span style="color:{point.color}">{point.name}</span>: mentioned in <b>{point.y}</b> documents in the ${century}th century<br/>`
     },
     plotOptions: {
       series: {
@@ -90,7 +90,7 @@ function createColumnChart (containerId, title, data, century = 18) {
           sortKey: 'name'
         },
         colorByPoint: true,
-        data: data['categories_'+ century]
+        data: data['categories_' + century]
       }
     ],
     drilldown: {
@@ -132,7 +132,7 @@ function createSplineChart (containerId, title, yAxisTitle, data, tooltipText) {
         text: 'Decades'
       },
       labels: {
-        format: '{value} AH'
+        format: '{value}s'
       },
       categories: data[0]
     },
@@ -142,7 +142,7 @@ function createSplineChart (containerId, title, yAxisTitle, data, tooltipText) {
       }
     },
     tooltip: {
-      headerFormat: '<span>{point.key}</span> AH<br>',
+      headerFormat: '<span>{point.key}s</span><br>',
       pointFormat: `<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b>${tooltipText}<br/>`,
       shared: true
     },
@@ -219,11 +219,12 @@ d3.json(dataUrl, function (data) {
   })
 
   createPieChart('container_religion_chart', 'Religion', relChartData)
- let catChart = createColumnChart(
+  let catChart = createColumnChart(
     'container_categories_chart',
     'Groceries by Category',
     catChartData
   )
+  // Redraw the Groceries by Category chart when the century is changed
   const select = document.getElementById('select-century')
   select.addEventListener('change', () => {
     const century = select.value
@@ -231,7 +232,7 @@ d3.json(dataUrl, function (data) {
     catChart = createColumnChart(
       'container_categories_chart',
       'Groceries by Category',
-      catChartData, 
+      catChartData,
       century
     )
   })
@@ -245,7 +246,7 @@ d3.json(dataUrl, function (data) {
     'Category Mentions Over Time',
     'Number of Documents',
     timeChartData,
-    ' documents'
+    ' document(s)'
   )
   createSplineChart(
     'container_normalized_time_chart',

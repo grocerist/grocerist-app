@@ -21,19 +21,23 @@
         <div id="container_religion_chart"></div>
     </div><br><br>
     <div class="card">
+    <div id="container_select">
+    <label for="select-century">Select century:</label>
     <select id="select-century">
             <option value="18">18th century</option>
             <option value="19">19th century</option>
         </select>
-        <div id="container_categories_chart"></div>
+        </div>
+        <div id="container_categories_chart">
+            </div>
     </div><br><br>
     <div class="card"></div>
         <div id="container_time_chart"></div>
-    </div><br><br>
+    <br><br>
     <div class="card">
         <div id="container_normalized_time_chart"></div>
     </div>
-</div>
+</div></div>
 {% endblock content%}
 {% block scripts2 %}
 <script src="js/dashboard.js"></script>

@@ -78,7 +78,7 @@ def calculate_century_count(data_dict, docs_data):
         docs_data (dict): A dictionary containing information from the documents JSON.
 
     Returns:
-        dict: A dictionary containing the count of documents in each century for each data.
+        dict: A dictionary containing the count of documents in each century for each category/grocery.
     """
     century_dict = {data["name"]: {"18": 0, "19": 0} for data in data_dict}
     for data in data_dict:
