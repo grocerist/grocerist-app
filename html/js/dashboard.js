@@ -1,9 +1,9 @@
 const dataUrl = 'json_dumps/charts.json'
-const titleStyle =  {
-        color: '#993333',
-        fontWeight: 'bold',
-        fontSize: '30px'
-      }
+const titleStyle = {
+  color: '#993333',
+  fontWeight: 'bold',
+  fontSize: '30px'
+}
 function setVisibilityForFirstElement (chartData) {
   chartData[1].forEach((element, index) => {
     element.visible = index === 0 // Set visible: true for the first element, false for all others
@@ -41,8 +41,7 @@ function createPieChart (containerId, title, data) {
   })
 }
 
-function createColumnChart (containerId, title, data, drilldownData) {
-  const select = document.getElementById("select-century")
+function createColumnChart (containerId, title, data, century = 18) {
   const chart = Highcharts.chart(containerId, {
     chart: {
       type: 'column'
@@ -79,7 +78,7 @@ function createColumnChart (containerId, title, data, drilldownData) {
         dataLabels: {
           enabled: true,
           overflow: 'none',
-          crop: false,
+          crop: false
         }
       }
     },
@@ -91,7 +90,7 @@ function createColumnChart (containerId, title, data, drilldownData) {
           sortKey: 'name'
         },
         colorByPoint: true,
-        data: data
+        data: data['categories_'+ century]
       }
     ],
     drilldown: {
@@ -103,28 +102,17 @@ function createColumnChart (containerId, title, data, drilldownData) {
         color: '#000000',
         textDecoration: 'unset'
       },
-      series: drilldownData
+      series: data['drilldown_' + century]
     }
   })
-  select.addEventListener("change", function() {
-    console.log(select.value)
-    //chart.series[0].setData([parsedData[select.value]])
-    chart.redraw()
-  })
+  return chart
 }
 
-function createSplineChart (
-  containerId,
-  title,
-  yAxisTitle,
-  data,
-  tooltipText
-) {
+function createSplineChart (containerId, title, yAxisTitle, data, tooltipText) {
   return Highcharts.chart(containerId, {
     chart: {
       type: 'spline',
       zoomType: 'x'
-      
     },
     title: {
       text: title,
@@ -171,8 +159,12 @@ function createSplineChart (
 }
 d3.json(dataUrl, function (data) {
   const relChartData = Object.values(data.religions)
-  const catChartData = Object.values(data.categories)
-  const drilldownData = Object.values(data.categories_drilldown)
+  const catChartData = {
+    categories_18: Object.values(data.categories_18),
+    drilldown_18: Object.values(data.categories_18_drilldown),
+    categories_19: Object.values(data.categories_19),
+    drilldown_19: Object.values(data.categories_19_drilldown)
+  }
   const timeChartData = Object.values(data.categories_over_decades)
   const normalizedTimeChartData = Object.values(
     data.normalized_categories_over_decades
@@ -227,12 +219,23 @@ d3.json(dataUrl, function (data) {
   })
 
   createPieChart('container_religion_chart', 'Religion', relChartData)
-  createColumnChart(
+ let catChart = createColumnChart(
     'container_categories_chart',
-    'Grocery Categories',
-    catChartData,
-    drilldownData
+    'Groceries by Category',
+    catChartData
   )
+  const select = document.getElementById('select-century')
+  select.addEventListener('change', () => {
+    const century = select.value
+    catChart.destroy()
+    catChart = createColumnChart(
+      'container_categories_chart',
+      'Groceries by Category',
+      catChartData, 
+      century
+    )
+  })
+
   // Add visibility attribute for the spline charts
   setVisibilityForFirstElement(timeChartData)
   setVisibilityForFirstElement(normalizedTimeChartData)
