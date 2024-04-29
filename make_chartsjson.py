@@ -18,6 +18,13 @@ def round_down_to_ten(year):
     return (year // 10) * 10
 
 
+def calculate_century(year):
+    if year % 100 == 0:
+        return year // 100
+    else:
+        return year // 100 + 1
+
+
 # Calculate percentage and round it to the specified precision
 def calculate_percentage(count, total, precision=2):
     return round((count / total) * 100, precision)
@@ -59,38 +66,85 @@ religions_results = [
 # DATA FOR CATEGORIES CHART
 categories_data = read_json_file("categories.json")
 goods_data = read_json_file("goods.json")
-
-# Categories and the number of documents they were mentioned in
-# and the same for each good (for drilldown chart)
-categories_results = [
-    {
-        "name": category["name"],
-        "y": category["doc_count"],
-        "drilldown": category["name"],
-    }
-    for category in categories_data
-]
-categories_drilldown = [
-    {
-        "name": category["name"],
-        "id": category["name"],  # id for HighCharts
-        "data": [
-            [good["name"], len(goods_data[good["id"]]["documents"])]
-            for good in category["goods"]
-        ],
-    }
-    for category in categories_data
-]
-
-
-# DATA FOR MENTIONS OVER DECADES CHART
 docs_data = read_json_file("documents.json")
 
+
+def calculate_century_count(data_dict, docs_data):
+    """
+    Calculates the count of documents in each century for each category/grocery in the data dictionary.
+
+    Args:
+        data_dict (dict): A dictionary containing data from categories/goods JSON.
+        docs_data (dict): A dictionary containing information from the documents JSON.
+
+    Returns:
+        dict: A dictionary containing the count of documents in each century for each category/grocery.
+    """
+    century_dict = {data["name"]: {"18": 0, "19": 0} for data in data_dict}
+    for data in data_dict:
+        data_name = data["name"]
+        doc_list = [str(document["id"]) for document in data["documents"]]
+        for doc in doc_list:
+            year_of_creation = docs_data[doc].get("year_of_creation_miladi")
+            if year_of_creation is not None and year_of_creation != "":
+                century = calculate_century(int(year_of_creation.split("-")[0]))
+                # for now, the 1 document from the 17th century is not included
+                if century in [18, 19]:
+                    century_dict[data_name][str(century)] += 1
+    return century_dict
+
+
+def generate_category_data(century_dict, century):
+    return [
+        {
+            "name": category,
+            "y": century_dict[category][century],
+            "drilldown": category,
+        }
+        for category in century_dict
+    ]
+
+
+century_category_dict = calculate_century_count(categories_data, docs_data)
+century_goods_dict = calculate_century_count(goods_data.values(), docs_data)
+
+
+categories_18 = generate_category_data(century_category_dict, "18")
+categories_19 = generate_category_data(century_category_dict, "19")
+
+
+def generate_drilldown_data(
+    century_category_dict, century_goods_dict, categories_data, century
+):
+    return [
+        {
+            "name": category_name,
+            "id": category_name,  # id for HighCharts to match with drilldown series
+            "data": [
+                {"name": good["name"], "y": century_goods_dict[good["name"]][century]}
+                for category in categories_data
+                if category["name"] == category_name
+                for good in category["goods"]
+            ],
+        }
+        for category_name in century_category_dict
+    ]
+
+
+categories_18_drilldown = generate_drilldown_data(
+    century_category_dict, century_goods_dict, categories_data, "18"
+)
+categories_19_drilldown = generate_drilldown_data(
+    century_category_dict, century_goods_dict, categories_data, "19"
+)
+
+# DATA FOR MENTIONS OVER DECADES CHART
 # Extract years of creation from documents, excluding None values
+# For now, we're splitting the date string and taking the first part, will be fixed in the data later
 years_of_creation = [
-    int(doc["year_of_creation_hicri"])
+    int(doc["year_of_creation_miladi"].split("-")[0])
     for doc in docs_data.values()
-    if doc.get("year_of_creation_hicri")
+    if doc.get("year_of_creation_miladi")
 ]
 
 # Create a sorted list of all the decades
@@ -106,9 +160,9 @@ for category in categories_data:
     category_name = category["name"]
     doc_list = [document["id"] for document in category["documents"]]
     for doc in doc_list:
-        year_of_creation = docs_data[doc].get("year_of_creation_hicri")
-        if year_of_creation is not None:
-            decade = round_down_to_ten(int(year_of_creation))
+        year_of_creation = docs_data[doc].get("year_of_creation_miladi")
+        if year_of_creation is not None and year_of_creation != "":
+            decade = round_down_to_ten(int(year_of_creation.split("-")[0]))
             decade_dict[category_name][decade] += 1
 
 # Normalize the counts to percentages
@@ -145,8 +199,10 @@ normalized_decades_results = [
 result_json = json.dumps(
     {
         "religions": religions_results,
-        "categories": categories_results,
-        "categories_drilldown": categories_drilldown,
+        "categories_18": categories_18,
+        "categories_18_drilldown": categories_18_drilldown,
+        "categories_19": categories_19,
+        "categories_19_drilldown": categories_19_drilldown,
         "categories_over_decades": {
             "categories": [str(decade) for decade in decades],
             "series": decades_results,
