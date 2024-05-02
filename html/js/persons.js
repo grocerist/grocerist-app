@@ -121,7 +121,7 @@ function generateChartsFromTable (rows, table) {
   let religionsResults = calculateReligionData(rows)
   createPieChart('religion-chart', 'Religion', religionsResults, table)
   let locationResults = calculateLocationData(rows)
-  createColumnChart('location-chart', 'Districts', locationResults, table)
+  createColumnChart('location-chart', 'Districts', 'district', locationResults, table)
 }
 function createPieChart (containerId, title, data, table) {
   return Highcharts.chart(containerId, {
@@ -168,7 +168,7 @@ function createPieChart (containerId, title, data, table) {
   })
 }
 
-function createColumnChart (containerId, title, data, table) {
+function createColumnChart (containerId, title, locationType, data, table) {
   Highcharts.chart(containerId, {
     chart: {
       type: 'column'
@@ -205,7 +205,8 @@ function createColumnChart (containerId, title, data, table) {
               if (this.name === 'Unknown') {
                 // nothing happens
               } else {
-                table.setHeaderFilterValue('district', this.name)
+                // set the filter value for the column with the current location type
+                table.setHeaderFilterValue(locationType, this.name)
               }
             }
           }
@@ -304,13 +305,9 @@ d3.json(dataUrl, function (data) {
   select.addEventListener('change', () => {
     let rows = table.getRows()
     const locationType = select.value
-    //catChart.destroy()
-    console.log(locationType)
-    //destory the previous chart
-    //create the new chart based on the location type
     let title = select.options[select.selectedIndex].text
     let locationResults = calculateLocationData(rows, locationType)
-    createColumnChart('location-chart', title , locationResults, table)
+    createColumnChart('location-chart', title , locationType, locationResults, table)
   })
 })
 
