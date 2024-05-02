@@ -120,12 +120,12 @@ const getColor = {
 function generateChartsFromTable (rows, table) {
   let religionsResults = calculateReligionData(rows)
   createPieChart('religion-chart', 'Religion', religionsResults, table)
-  let districtResults = calculateDistrictData(rows)
-  createColumnChart('districts-chart', 'Districts', districtResults, table)
+  let locationResults = calculateLocationData(rows)
+  createColumnChart('location-chart', 'Districts', locationResults, table)
 }
 function createPieChart (containerId, title, data, table) {
   return Highcharts.chart(containerId, {
-    chart: {
+    chart: { 
       type: 'pie'
     },
     title: {
@@ -256,23 +256,24 @@ function calculateReligionData (rows) {
   return results
 }
 
-function calculateDistrictData (rows) {
-  let districtCount = {}
-  // get the districts (html list elements) from each row
+function calculateLocationData (rows, locationType = 'district') {
+  let locationCount = {}
+  // get the locations (html list elements) from each row
   rows.forEach(row => {
     let rowData = row.getData()
-    let districtData = rowData.district
-    let districtNames = districtData.map(item => item.value)
-    if (districtNames.length === 0) {
-      districtCount['Unknown'] = (districtCount['Unknown'] || 0) + 1
+    console.log(rowData)
+    let locationData = rowData[locationType]
+    let locationNames = locationData.map(item => item.value)
+    if (locationNames.length === 0) {
+      locationCount['Unknown'] = (locationCount['Unknown'] || 0) + 1
     } else {
-      districtNames.forEach(value => {
-        districtCount[value] = (districtCount[value] || 0) + 1
+      locationNames.forEach(value => {
+        locationCount[value] = (locationCount[value] || 0) + 1
       })
     }
   })
-  // Calculate the numbers for each district and store them in an array
-  let results = Object.entries(districtCount).map(([district, count]) => ({
+  // Calculate the numbers for each location type and store them in an array
+  let results = Object.entries(locationCount).map(([district, count]) => ({
     name: district,
     y: count
   }))
@@ -298,6 +299,18 @@ d3.json(dataUrl, function (data) {
   table.on('dataFiltered', function (_filters, rows) {
     $('#search_count').text(rows.length)
     generateChartsFromTable(rows, table)
+  })
+  const select = document.getElementById('select-location')
+  select.addEventListener('change', () => {
+    let rows = table.getRows()
+    const locationType = select.value
+    //catChart.destroy()
+    console.log(locationType)
+    //destory the previous chart
+    //create the new chart based on the location type
+    let title = select.options[select.selectedIndex].text
+    let locationResults = calculateLocationData(rows, locationType)
+    createColumnChart('location-chart', title , locationResults, table)
   })
 })
 
