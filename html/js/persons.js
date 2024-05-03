@@ -126,9 +126,8 @@ function generateChartsFromTable (rows, table) {
 // generate chart for selected location type
 function generateChartSelect(rows, table) {
   const locationType = locTypeSelect.value
-  let title = locTypeSelect.options[locTypeSelect.selectedIndex].text
   let locationResults = calculateLocationData(rows, locationType)
-  createColumnChart('location-chart', title, locationType, locationResults, table)
+  createColumnChart('location-chart', locationType, locationResults, table)
 }
 
 function createPieChart (containerId, title, data, table) {
@@ -176,7 +175,7 @@ function createPieChart (containerId, title, data, table) {
   })
 }
 
-function createColumnChart (containerId, title, locationType, data, table) {
+function createColumnChart (containerId, locationType, data, table) {
   Highcharts.chart(containerId, {
     chart: {
       type: 'column'
@@ -185,10 +184,7 @@ function createColumnChart (containerId, title, locationType, data, table) {
     legend: {
       enabled: false
     },
-    title: {
-      text: title,
-      style: titleStyle
-    },
+    title: false,
     xAxis: {
       type: 'category',
       reversed: true
