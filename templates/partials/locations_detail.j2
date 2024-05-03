@@ -9,6 +9,37 @@
     </h1>
     <div class="row">
         <div class="col">
+        {% if pagename != 'district'%}
+        <h2><i class="bi bi-geo-alt"></i> Upper administration unit</h2>
+        {% endif %}
+            <dl>
+                {% if object.upper_admin1 %}
+                <dt>District</dt>
+                <dd class="ms-5">{{ object.upper_admin1 }}</dd>
+                {% endif %}
+
+                {% if object.upper_admin2 %}
+                <dt><i>Nahiye</i></dt>
+                <dd class="ms-5">{{ object.upper_admin2 }} </dd>
+                {% endif %}
+
+                {% if object.upper_admin3 %}
+                <dt>Quarter</dt>
+                <dd class="ms-5">{{ object.upper_admin3 }}</dd>
+                {% endif %}
+
+                {% if object.upper_admin4 %}
+                <dt><i>Mahalle</i></dt>
+
+                <dd class="ms-5">{{ object.upper_admin4 }}</dd>
+                {% endif %}
+
+                {% if object.upper_admin5 %}
+                <dt><i>Karye</i></dt>
+                <dd class="ms-5">{{ object.upper_admin5 }} </dd>
+                {% endif %}
+            </dl>
+
             <h2><i class="bi bi-archive"></i> Documents</h2>
             <ul>
                 {% for x in object.documents %}
@@ -18,7 +49,7 @@
             <h2><i class="bi bi-person"></i> Persons</h2>
             <ul>
                 {% for x in object.persons %}
-                <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                <li><a href="person__{{ x.id }}.html">{{ x.value }}</a></li>
                 {% endfor %}
             </ul>
         </div>
@@ -34,11 +65,11 @@
 {% include "templates/partials/leaflet.j2" %}
 
 <script>
-    const map = L.map('map').setView([{{ object.lat }}, {{ object.long }}], 13);
+    const map = L.map('map').setView([{{ object.lat }}, { { object.long } }], 13);
 
     const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         maxZoom: 20,
-        attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
     // gets the color from the link to top in the heading and uses it for the marker
@@ -47,7 +78,7 @@
     let style = window.getComputedStyle(linkElement);
     let color = style.getPropertyValue('color');
     let radius = {{ object.documents }}.length * 2
-    const marker = L.circleMarker([{{ object.lat }}, {{ object.long }}], {radius: radius, color: color}).addTo(map)
+    const marker = L.circleMarker([{{ object.lat }}, { { object.long } }], { radius: radius, color: color }).addTo(map)
         .bindPopup('<strong >{{ object.name }}</strong>').openPopup();
 </script>
 
