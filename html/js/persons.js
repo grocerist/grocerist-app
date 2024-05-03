@@ -4,7 +4,7 @@ const titleStyle = {
   fontWeight: 'bold',
   fontSize: '20px'
 }
-
+const locTypeSelect = document.getElementById('select-location')
 const TABLE_CFG = {
   pagination: true,
   paginationSize: 15,
@@ -117,12 +117,20 @@ const getColor = {
   'Unknown' : '#993333'
 }
 
+// generate both charts
 function generateChartsFromTable (rows, table) {
   let religionsResults = calculateReligionData(rows)
   createPieChart('religion-chart', 'Religion', religionsResults, table)
-  let locationResults = calculateLocationData(rows)
-  createColumnChart('location-chart', 'Districts', 'district', locationResults, table)
+  generateChartSelect(rows, table)
 }
+// generate chart for selected location type
+function generateChartSelect(rows, table) {
+  const locationType = locTypeSelect.value
+  let title = locTypeSelect.options[locTypeSelect.selectedIndex].text
+  let locationResults = calculateLocationData(rows, locationType)
+  createColumnChart('location-chart', title, locationType, locationResults, table)
+}
+
 function createPieChart (containerId, title, data, table) {
   return Highcharts.chart(containerId, {
     chart: { 
@@ -301,13 +309,10 @@ d3.json(dataUrl, function (data) {
     $('#search_count').text(rows.length)
     generateChartsFromTable(rows, table)
   })
-  const select = document.getElementById('select-location')
-  select.addEventListener('change', () => {
+
+  locTypeSelect.addEventListener('change', () => {
     let rows = table.getRows()
-    const locationType = select.value
-    let title = select.options[select.selectedIndex].text
-    let locationResults = calculateLocationData(rows, locationType)
-    createColumnChart('location-chart', title , locationType, locationResults, table)
+    generateChartSelect(rows, table)
   })
 })
 
