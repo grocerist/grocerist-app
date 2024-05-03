@@ -4,7 +4,7 @@ const titleStyle = {
   fontWeight: 'bold',
   fontSize: '20px'
 }
-
+const locTypeSelect = document.getElementById('select-location')
 const TABLE_CFG = {
   pagination: true,
   paginationSize: 15,
@@ -117,15 +117,22 @@ const getColor = {
   'Unknown' : '#993333'
 }
 
+// generate both charts
 function generateChartsFromTable (rows, table) {
   let religionsResults = calculateReligionData(rows)
   createPieChart('religion-chart', 'Religion', religionsResults, table)
-  let districtResults = calculateDistrictData(rows)
-  createColumnChart('districts-chart', 'Districts', districtResults, table)
+  generateChartSelect(rows, table)
 }
+// generate chart for selected location type
+function generateChartSelect(rows, table) {
+  const locationType = locTypeSelect.value
+  let locationResults = calculateLocationData(rows, locationType)
+  createColumnChart('location-chart', locationType, locationResults, table)
+}
+
 function createPieChart (containerId, title, data, table) {
   return Highcharts.chart(containerId, {
-    chart: {
+    chart: { 
       type: 'pie'
     },
     title: {
@@ -168,7 +175,7 @@ function createPieChart (containerId, title, data, table) {
   })
 }
 
-function createColumnChart (containerId, title, data, table) {
+function createColumnChart (containerId, locationType, data, table) {
   Highcharts.chart(containerId, {
     chart: {
       type: 'column'
@@ -177,10 +184,7 @@ function createColumnChart (containerId, title, data, table) {
     legend: {
       enabled: false
     },
-    title: {
-      text: title,
-      style: titleStyle
-    },
+    title: false,
     xAxis: {
       type: 'category',
       reversed: true
@@ -205,7 +209,8 @@ function createColumnChart (containerId, title, data, table) {
               if (this.name === 'Unknown') {
                 // nothing happens
               } else {
-                table.setHeaderFilterValue('district', this.name)
+                // set the filter value for the column with the current location type
+                table.setHeaderFilterValue(locationType, this.name)
               }
             }
           }
@@ -256,23 +261,24 @@ function calculateReligionData (rows) {
   return results
 }
 
-function calculateDistrictData (rows) {
-  let districtCount = {}
-  // get the districts (html list elements) from each row
+function calculateLocationData (rows, locationType = 'district') {
+  let locationCount = {}
+  // get the locations (html list elements) from each row
   rows.forEach(row => {
     let rowData = row.getData()
-    let districtData = rowData.district
-    let districtNames = districtData.map(item => item.value)
-    if (districtNames.length === 0) {
-      districtCount['Unknown'] = (districtCount['Unknown'] || 0) + 1
+    console.log(rowData)
+    let locationData = rowData[locationType]
+    let locationNames = locationData.map(item => item.value)
+    if (locationNames.length === 0) {
+      locationCount['Unknown'] = (locationCount['Unknown'] || 0) + 1
     } else {
-      districtNames.forEach(value => {
-        districtCount[value] = (districtCount[value] || 0) + 1
+      locationNames.forEach(value => {
+        locationCount[value] = (locationCount[value] || 0) + 1
       })
     }
   })
-  // Calculate the numbers for each district and store them in an array
-  let results = Object.entries(districtCount).map(([district, count]) => ({
+  // Calculate the numbers for each location type and store them in an array
+  let results = Object.entries(locationCount).map(([district, count]) => ({
     name: district,
     y: count
   }))
@@ -298,6 +304,11 @@ d3.json(dataUrl, function (data) {
   table.on('dataFiltered', function (_filters, rows) {
     $('#search_count').text(rows.length)
     generateChartsFromTable(rows, table)
+  })
+
+  locTypeSelect.addEventListener('change', () => {
+    let rows = table.getRows()
+    generateChartSelect(rows, table)
   })
 })
 
