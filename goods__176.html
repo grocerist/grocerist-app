@@ -78,6 +78,17 @@
     </h1>
     <div class="row">
         <div class="col">
+            
+            <h2><i class="bi bi-card-text"></i> Translation</h2>
+            <dl>
+                <dd class="ms-5"><b>Anason</b>
+                
+                |
+                Anison</dd>
+                
+            </dl>
+            
+            
             <h2><i class="bi bi-geo-alt"></i> Categories</h2>
             <dl>
                 
@@ -203,7 +214,7 @@
 
     for (let i = 0; i < doc_list.length; i++) {
         if (doc_list[i].year_of_creation_miladi) {
-            let year = /\d{4}/.exec(doc_list[i].year_of_creation_miladi)[0]; //remove regex espression after simple year values are inserted in baserow
+            let year = /\d{4}/.exec(doc_list[i].year_of_creation_miladi)[0]; //remove regex expression after simple year values are inserted in baserow
             if (doc_list[i].lat && doc_list[i].long) {
                 if (year < 1801) {
                     var eighteenth_marker = L.circleMarker([doc_list[i].lat, doc_list[i].long], {color: color18})
