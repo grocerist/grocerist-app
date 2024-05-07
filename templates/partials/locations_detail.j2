@@ -15,28 +15,37 @@
             <dl>
                 {% if object.upper_admin1 %}
                 <dt>District</dt>
-                <dd class="ms-5">{{ object.upper_admin1 }}</dd>
+                {% for x in object.upper_admin1 %}
+                <dd class="ms-5"><a href="district__{{ x.ids['database_table_1492'] }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
                 {% endif %}
 
                 {% if object.upper_admin2 %}
                 <dt><i>Nahiye</i></dt>
-                <dd class="ms-5">{{ object.upper_admin2 }} </dd>
+                {% for x in object.upper_admin2 %}
+                <dd class="ms-5"><a href="nahiye__{{ x.ids['database_table_2979'] }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
                 {% endif %}
 
                 {% if object.upper_admin3 %}
                 <dt>Quarter</dt>
-                <dd class="ms-5">{{ object.upper_admin3 }}</dd>
+                {% for x in object.upper_admin3 %}
+                <dd class="ms-5"><a href="quarter__{{ x.ids['database_table_2977'] }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
                 {% endif %}
 
                 {% if object.upper_admin4 %}
                 <dt><i>Mahalle</i></dt>
-
-                <dd class="ms-5">{{ object.upper_admin4 }}</dd>
+                {% for x in object.upper_admin4 %}
+                <dd class="ms-5"><a href="neighbourhood__{{ x.ids['database_table_1493'] }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
                 {% endif %}
 
                 {% if object.upper_admin5 %}
                 <dt><i>Karye</i></dt>
-                <dd class="ms-5">{{ object.upper_admin5 }} </dd>
+                {% for x in object.upper_admin5 %}
+                <dd class="ms-5"><a href="karye__{{ x.ids['database_table_1520'] }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
                 {% endif %}
             </dl>
 
