@@ -37,28 +37,19 @@ function mutateSelectField (value, data, type, params, component) {
   return `${output}`
 }
 
-function linkList (value, data, type, params, component) {
-  let output = value
-    .map(item => {
-      return `<li><a href="${params.urlPrefix}${item[params.idField]}.html">${
-        item[params.nameField]
-      }</a></li>`
-    })
-    .join(' ')
-  return `<ul class="list-unstyled">${output}</ul>`
-}
-
 function makeItalic (value) {
-  let turkishWords = ['Nahiye', 'Mahalle', 'Karye'];
-  if (typeof value === 'string') { //headerfilter case
-    output = value; 
-  } else {                         //tab cell case
-    output = value.getValue();  
+  let turkishWords = ['Nahiye', 'Mahalle', 'Karye']
+  if (typeof value === 'string') {
+    //headerfilter case
+    output = value
+  } else {
+    //tab cell case
+    output = value.getValue()
   }
   if (turkishWords.includes(output)) {
-    output = '<i>'+output+'</i>';
+    output = '<i>' + output + '</i>'
   }
-  return output;
+  return output
 }
 
 // for the first column, the name is a link to the detail view
@@ -78,15 +69,19 @@ function linkToDetailView (cell) {
 }
 // custom headerFilter for cells with arrays of objects
 function customHeaderFilter (headerValue, rowValue, rowData, filterParams) {
-  // for columns where the name of the items is not in the "value" field, 
+  // for columns where the name of the items is not in the "value" field,
   // the line headerFilterFuncParams: { nameField: 'name' } needs to be added to the column config
-  if (filterParams.nameField){
+  if (filterParams.nameField) {
     return rowValue.some(function (item) {
-      return item[filterParams.nameField].toLowerCase().includes(headerValue.toLowerCase())
+      return item[filterParams.nameField]
+        .toLowerCase()
+        .includes(headerValue.toLowerCase())
     })
-  } else {  return rowValue.some(function (item) {
-    return item.value.toLowerCase().includes(headerValue.toLowerCase())
-  })}
+  } else {
+    return rowValue.some(function (item) {
+      return item.value.toLowerCase().includes(headerValue.toLowerCase())
+    })
+  }
 }
 
 // common settings for columns with arrays of objects
