@@ -17,6 +17,11 @@ def read_json_file(file_name):
 def round_down_to_ten(year):
     return (year // 10) * 10
 
+def calculate_century(year):
+    if year % 100 == 0:
+        return year // 100
+    else:
+        return year // 100 + 1
 
 # Calculate percentage and round it to the specified precision
 def calculate_percentage(count, total, precision=2):
@@ -57,21 +62,110 @@ religions_results = [
 ]
 
 # DATA FOR CATEGORIES CHART
-categories_data = read_json_file("categories.json")
-goods_data = read_json_file("goods.json")
-
 # Categories and the number of documents they were mentioned in
 # and the same for each good (for drilldown chart)
+categories_data = read_json_file("categories.json")
+goods_data = read_json_file("goods.json")
+docs_data = read_json_file("documents.json")
 
+def extract_year(date):
+    if date is None or date == "":
+        return None
+    year = None
+    if "-" in date:
+        # format is YYYY-YYYY, so we take the first part
+        year = date.split("-")[0]
+    elif "/" in date:
+        # format is DD/MM/YYYY, so we take the last part
+        year = date.split("/")[2]
+    else:
+        year = date
+
+    try:
+        return int(year)
+    except ValueError:
+        print(f"Year is not a number: {year}")
+        return None
+
+
+def calculate_century_count(data_dict, docs_data):
+    """
+    Calculates the count of documents in each century for each category/grocery in the data dictionary.
+
+    Args:
+        data_dict (dict): A dictionary containing data from categories/goods JSON.
+        docs_data (dict): A dictionary containing information from the documents JSON.
+
+    Returns:
+        dict: A dictionary containing the count of documents in each century for each category/grocery.
+    """
+    century_dict = {data["name"]: {"18": 0, "19": 0} for data in data_dict}
+    for data in data_dict:
+        data_name = data["name"]
+        doc_list = [str(document["id"]) for document in data["documents"]]
+        for doc in doc_list:
+            date_of_creation = docs_data[doc].get("year_of_creation_miladi")
+            year = extract_year(date_of_creation)
+            if year is not None:
+                century = calculate_century(year)
+                # for now, the 1 document from the 17th century is not included
+                if century in [18, 19]:
+                    century_dict[data_name][str(century)] += 1
+    return century_dict
+
+def generate_category_data(century_dict, century):
+    return [
+        {
+            "name": category,
+            "y": century_dict[category][century],
+            "drilldown": category,
+        }
+        for category in century_dict
+    ]
+
+
+century_category_dict = calculate_century_count(categories_data, docs_data)
+century_goods_dict = calculate_century_count(goods_data.values(), docs_data)
+
+
+categories_18 = generate_category_data(century_category_dict, "18")
+categories_19 = generate_category_data(century_category_dict, "19")
+
+def generate_drilldown_data(
+    century_category_dict, century_goods_dict, categories_data, century
+):
+    return [
+        {
+            "name": category_name,
+            "id": category_name,  # id for HighCharts to match with drilldown series
+            "data": [
+                {"name": good["name"], "y": century_goods_dict[good["name"]][century]}
+                for category in categories_data
+                if category["name"] == category_name
+                for good in category["goods"]
+            ],
+        }
+        for category_name in century_category_dict
+    ]
+
+
+categories_18_drilldown = generate_drilldown_data(
+    century_category_dict, century_goods_dict, categories_data, "18"
+)
+categories_19_drilldown = generate_drilldown_data(
+    century_category_dict, century_goods_dict, categories_data, "19"
+)
+
+#### Old code
 # Create some main categories as placeholders
 dummy_main_categories = ["Main category 1", "Main category 2", "Main category 3"]
 categories_series = [
     {
-        "name": dummy_category,
+        "name": main_category,
         "y": 100,
-        "drilldown": dummy_category,
+        "drilldown": main_category,
     }
-    for dummy_category in dummy_main_categories
+    for main_category in dummy_main_categories
 ]
 # For now, all dummy categories contain all the real categories
 categories_drilldown_level_1 = [
