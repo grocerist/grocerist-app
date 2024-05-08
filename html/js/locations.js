@@ -55,8 +55,8 @@ const TABLE_CFG = {
       ...linkListColumnSettings,
       formatterParams: {
         scrollable: true,
-        urlPrefix: '',
-        idField: 'grocerist_id',
+        urlPrefix: 'person__',
+        idField: 'id',
         nameField: 'value'
       },
     },
