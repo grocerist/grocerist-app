@@ -224,18 +224,6 @@
       "id": "Oil Seeds",
       "data": [
         {
-          "name": "Kestane (Chestnut)",
-          "y": 3
-        },
-        {
-          "name": "F\u0131nd\u0131k",
-          "y": 26
-        },
-        {
-          "name": "F\u0131st\u0131k",
-          "y": 12
-        },
-        {
           "name": "Badem",
           "y": 8
         },
@@ -248,8 +236,20 @@
           "y": 10
         },
         {
+          "name": "F\u0131st\u0131k",
+          "y": 12
+        },
+        {
+          "name": "Kestane (Chestnut)",
+          "y": 3
+        },
+        {
           "name": "Kabuklu ac\u0131badem",
           "y": 0
+        },
+        {
+          "name": "F\u0131nd\u0131k",
+          "y": 26
         }
       ]
     },
@@ -257,6 +257,10 @@
       "name": "Snacks",
       "id": "Snacks",
       "data": [
+        {
+          "name": "K\u0131z\u0131l",
+          "y": 2
+        },
         {
           "name": "Beylerce",
           "y": 9
@@ -266,71 +270,11 @@
           "y": 5
         },
         {
-          "name": "Siyah",
-          "y": 7
-        },
-        {
-          "name": "Kuru \u00fcz\u00fcm",
-          "y": 3
-        },
-        {
-          "name": "Kiraz kurusu (Dried cherry)",
-          "y": 0
-        },
-        {
-          "name": "Ceviz",
-          "y": 10
-        },
-        {
-          "name": "Leblebi (Roasted chickpea)",
-          "y": 0
-        },
-        {
-          "name": "Kabuklu ac\u0131badem",
-          "y": 0
-        },
-        {
           "name": "Razaki",
           "y": 7
         },
         {
-          "name": "F\u0131nd\u0131k i\u00e7i (Nutmeat)",
-          "y": 0
-        },
-        {
-          "name": "Kestane (Chestnut)",
-          "y": 3
-        },
-        {
-          "name": "K\u00fcfter",
-          "y": 2
-        },
-        {
-          "name": "Lob inciri (Lob fig)",
-          "y": 0
-        },
-        {
-          "name": "K\u0131z\u0131l",
-          "y": 2
-        },
-        {
-          "name": "F\u0131st\u0131k",
-          "y": 12
-        },
-        {
-          "name": "Pestil",
-          "y": 2
-        },
-        {
-          "name": "Kabuklu badem",
-          "y": 0
-        },
-        {
-          "name": "Sar\u0131ca inciri (Sar\u0131ca fig)",
-          "y": 1
-        },
-        {
-          "name": "\u0130\u011fde (Oleaster)",
+          "name": "Leblebi (Roasted chickpea)",
           "y": 0
         },
         {
@@ -338,19 +282,75 @@
           "y": 8
         },
         {
-          "name": "F\u0131nd\u0131k",
-          "y": 26
+          "name": "Pestil",
+          "y": 2
         },
         {
-          "name": "Armut kurusu (Dried pear)",
+          "name": "Ceviz",
+          "y": 10
+        },
+        {
+          "name": "Kuru \u00fcz\u00fcm",
+          "y": 3
+        },
+        {
+          "name": "Lob inciri (Lob fig)",
           "y": 0
+        },
+        {
+          "name": "Siyah",
+          "y": 7
+        },
+        {
+          "name": "Sar\u0131ca inciri (Sar\u0131ca fig)",
+          "y": 1
         },
         {
           "name": "\u0130ncir",
           "y": 13
         },
         {
+          "name": "Armut kurusu (Dried pear)",
+          "y": 0
+        },
+        {
+          "name": "F\u0131nd\u0131k",
+          "y": 26
+        },
+        {
           "name": "K\u0131z\u0131lc\u0131k kurusu (Cornelian cherry)",
+          "y": 0
+        },
+        {
+          "name": "K\u00fcfter",
+          "y": 2
+        },
+        {
+          "name": "Kiraz kurusu (Dried cherry)",
+          "y": 0
+        },
+        {
+          "name": "F\u0131nd\u0131k i\u00e7i (Nutmeat)",
+          "y": 0
+        },
+        {
+          "name": "F\u0131st\u0131k",
+          "y": 12
+        },
+        {
+          "name": "Kestane (Chestnut)",
+          "y": 3
+        },
+        {
+          "name": "\u0130\u011fde (Oleaster)",
+          "y": 0
+        },
+        {
+          "name": "Kabuklu badem",
+          "y": 0
+        },
+        {
+          "name": "Kabuklu ac\u0131badem",
           "y": 0
         }
       ]
@@ -360,7 +360,19 @@
       "id": "Cooking Oils",
       "data": [
         {
+          "name": "Revgan-\u0131 Leh",
+          "y": 0
+        },
+        {
           "name": "Dolama Ya\u011f\u0131",
+          "y": 0
+        },
+        {
+          "name": "Zeytin ya\u011f\u0131",
+          "y": 37
+        },
+        {
+          "name": "\u00c7alg\u0131 revgan-\u0131 sade",
           "y": 0
         },
         {
@@ -368,36 +380,24 @@
           "y": 2
         },
         {
-          "name": "Revgan-\u0131 Leh",
-          "y": 0
+          "name": "Sadeya\u011f",
+          "y": 33
         },
         {
           "name": "Don ya\u011f\u0131",
           "y": 4
         },
         {
-          "name": "Susam ya\u011f\u0131",
-          "y": 5
-        },
-        {
-          "name": "Zeytin ya\u011f\u0131",
-          "y": 37
-        },
-        {
-          "name": "Sadeya\u011f",
-          "y": 33
-        },
-        {
           "name": "Kak\u0131rdak",
-          "y": 0
-        },
-        {
-          "name": "\u00c7alg\u0131 revgan-\u0131 sade",
           "y": 0
         },
         {
           "name": "Bezir ya\u011f\u0131",
           "y": 1
+        },
+        {
+          "name": "Susam ya\u011f\u0131",
+          "y": 5
         }
       ]
     },
@@ -406,7 +406,19 @@
       "id": "Fats",
       "data": [
         {
+          "name": "Revgan-\u0131 Leh",
+          "y": 0
+        },
+        {
           "name": "Dolama Ya\u011f\u0131",
+          "y": 0
+        },
+        {
+          "name": "Zeytin ya\u011f\u0131",
+          "y": 37
+        },
+        {
+          "name": "\u00c7alg\u0131 revgan-\u0131 sade",
           "y": 0
         },
         {
@@ -414,31 +426,15 @@
           "y": 2
         },
         {
-          "name": "Revgan-\u0131 Leh",
-          "y": 0
+          "name": "Sadeya\u011f",
+          "y": 33
         },
         {
           "name": "Don ya\u011f\u0131",
           "y": 4
         },
         {
-          "name": "Susam ya\u011f\u0131",
-          "y": 5
-        },
-        {
-          "name": "Zeytin ya\u011f\u0131",
-          "y": 37
-        },
-        {
-          "name": "Sadeya\u011f",
-          "y": 33
-        },
-        {
           "name": "Kak\u0131rdak",
-          "y": 0
-        },
-        {
-          "name": "\u00c7alg\u0131 revgan-\u0131 sade",
           "y": 0
         },
         {
@@ -448,6 +444,10 @@
         {
           "name": "Tahin (Tahini)",
           "y": 0
+        },
+        {
+          "name": "Susam ya\u011f\u0131",
+          "y": 5
         }
       ]
     },
@@ -456,7 +456,7 @@
       "id": "Dairy",
       "data": [
         {
-          "name": "Yo\u011furt (Yogurt)",
+          "name": "Taze peynir",
           "y": 1
         },
         {
@@ -464,19 +464,15 @@
           "y": 2
         },
         {
-          "name": "Mudurnu peyniri",
-          "y": 1
+          "name": "Yumurta",
+          "y": 4
         },
         {
-          "name": "Tulum peyniri",
-          "y": 20
+          "name": "Yo\u011furt (Yogurt)",
+          "y": 1
         },
         {
           "name": "Ke\u00e7i peyniri (Goat cheese)",
-          "y": 1
-        },
-        {
-          "name": "Taze peynir",
           "y": 1
         },
         {
@@ -484,35 +480,7 @@
           "y": 0
         },
         {
-          "name": "Dil peyniri",
-          "y": 1
-        },
-        {
-          "name": "Peynir (Cheese)",
-          "y": 3
-        },
-        {
-          "name": "Leh ka\u015fkaval\u0131",
-          "y": 0
-        },
-        {
-          "name": "\u00c7orlu ka\u015fkaval\u0131",
-          "y": 0
-        },
-        {
-          "name": "Sadeya\u011f",
-          "y": 33
-        },
-        {
-          "name": "Torba yo\u011furt",
-          "y": 1
-        },
-        {
-          "name": "\u00c7orlu peyniri (\u00c7orlu cheese)",
-          "y": 2
-        },
-        {
-          "name": "Yerli ka\u015fkaval",
+          "name": "Ka\u015far peyniri",
           "y": 0
         },
         {
@@ -520,20 +488,52 @@
           "y": 0
         },
         {
-          "name": "Karag\u00fcmr\u00fck tulum peyniri",
+          "name": "Leh ka\u015fkaval\u0131",
           "y": 0
+        },
+        {
+          "name": "Sadeya\u011f",
+          "y": 33
         },
         {
           "name": "Ka\u015fkaval",
           "y": 23
         },
         {
-          "name": "Ka\u015far peyniri",
+          "name": "Tulum peyniri",
+          "y": 20
+        },
+        {
+          "name": "Mudurnu peyniri",
+          "y": 1
+        },
+        {
+          "name": "Torba yo\u011furt",
+          "y": 1
+        },
+        {
+          "name": "Karag\u00fcmr\u00fck tulum peyniri",
           "y": 0
         },
         {
-          "name": "Yumurta",
-          "y": 4
+          "name": "Dil peyniri",
+          "y": 1
+        },
+        {
+          "name": "Yerli ka\u015fkaval",
+          "y": 0
+        },
+        {
+          "name": "Peynir (Cheese)",
+          "y": 3
+        },
+        {
+          "name": "\u00c7orlu ka\u015fkaval\u0131",
+          "y": 0
+        },
+        {
+          "name": "\u00c7orlu peyniri (\u00c7orlu cheese)",
+          "y": 2
         }
       ]
     },
@@ -542,27 +542,19 @@
       "id": "Cheese Assortment",
       "data": [
         {
-          "name": "Tulum peyniri",
-          "y": 20
+          "name": "Peynir (Cheese)",
+          "y": 3
         },
         {
-          "name": "Yerli ka\u015fkaval",
-          "y": 0
-        },
-        {
-          "name": "Balkan cheese",
-          "y": 0
+          "name": "Taze peynir",
+          "y": 1
         },
         {
           "name": "Ke\u00e7i peyniri (Goat cheese)",
           "y": 1
         },
         {
-          "name": "Peynir (Cheese)",
-          "y": 3
-        },
-        {
-          "name": "Leh ka\u015fkaval\u0131",
+          "name": "Ka\u015far peyniri",
           "y": 0
         },
         {
@@ -570,23 +562,27 @@
           "y": 0
         },
         {
-          "name": "Salamura peynir",
-          "y": 2
-        },
-        {
-          "name": "Mudurnu peyniri",
-          "y": 1
-        },
-        {
-          "name": "Taze peynir",
-          "y": 1
+          "name": "Leh ka\u015fkaval\u0131",
+          "y": 0
         },
         {
           "name": "Ka\u015fkaval",
           "y": 23
         },
         {
-          "name": "Ka\u015far peyniri",
+          "name": "Salamura peynir",
+          "y": 2
+        },
+        {
+          "name": "Tulum peyniri",
+          "y": 20
+        },
+        {
+          "name": "Mudurnu peyniri",
+          "y": 1
+        },
+        {
+          "name": "Balkan cheese",
           "y": 0
         },
         {
@@ -600,6 +596,10 @@
         {
           "name": "Dil peyniri",
           "y": 1
+        },
+        {
+          "name": "Yerli ka\u015fkaval",
+          "y": 0
         }
       ]
     },
@@ -608,11 +608,11 @@
       "id": "Ka\u015fkaval Assortment",
       "data": [
         {
-          "name": "Yerli ka\u015fkaval",
+          "name": "\u00c7orlu ka\u015fkaval\u0131",
           "y": 0
         },
         {
-          "name": "\u00c7orlu ka\u015fkaval\u0131",
+          "name": "Leh ka\u015fkaval\u0131",
           "y": 0
         },
         {
@@ -620,7 +620,7 @@
           "y": 23
         },
         {
-          "name": "Leh ka\u015fkaval\u0131",
+          "name": "Yerli ka\u015fkaval",
           "y": 0
         }
       ]
@@ -630,103 +630,11 @@
       "id": "Dried Goods",
       "data": [
         {
-          "name": "Tarhana",
-          "y": 0
-        },
-        {
-          "name": "Beylerce",
-          "y": 9
-        },
-        {
-          "name": "B\u00f6\u011fr\u00fclce",
-          "y": 23
-        },
-        {
-          "name": "Edremit siyah\u0131",
-          "y": 0
-        },
-        {
-          "name": "M\u0131s\u0131r pirinci",
-          "y": 0
-        },
-        {
-          "name": "\u00dcz\u00fcm",
-          "y": 5
-        },
-        {
-          "name": "Alaca bakla",
-          "y": 0
-        },
-        {
-          "name": "Siyah",
-          "y": 7
-        },
-        {
           "name": "K\u0131z\u0131l \u015eariyye",
           "y": 0
         },
         {
-          "name": "Kuru \u00fcz\u00fcm",
-          "y": 3
-        },
-        {
-          "name": "Bakla (Broad bean)",
-          "y": 4
-        },
-        {
-          "name": "Arpa \u015fariye",
-          "y": 0
-        },
-        {
-          "name": "Kiraz kurusu (Dried cherry)",
-          "y": 0
-        },
-        {
-          "name": "Leblebi (Roasted chickpea)",
-          "y": 0
-        },
-        {
-          "name": "Razaki",
-          "y": 7
-        },
-        {
-          "name": "Bulgur",
-          "y": 11
-        },
-        {
-          "name": "Nohut",
-          "y": 26
-        },
-        {
-          "name": "Ke\u00e7iboynuzu / Harnup",
-          "y": 4
-        },
-        {
-          "name": "Kenevir tohumu",
-          "y": 3
-        },
-        {
-          "name": "Anadolu pirinci",
-          "y": 0
-        },
-        {
-          "name": "Erik",
-          "y": 1
-        },
-        {
-          "name": "K\u00fcfter",
-          "y": 2
-        },
-        {
-          "name": "Fasulye (Bean)",
-          "y": 4
-        },
-        {
-          "name": "\u015eorbal\u0131k arpa",
-          "y": 0
-        },
-        {
-          "name": "Lob inciri (Lob fig)",
+          "name": "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
           "y": 0
         },
         {
@@ -734,11 +642,23 @@
           "y": 2
         },
         {
-          "name": "Pestil",
-          "y": 2
+          "name": "Beylerce",
+          "y": 9
         },
         {
-          "name": "Edremit siyah\u0131 \u00fcz\u00fcm",
+          "name": "Razaki",
+          "y": 7
+        },
+        {
+          "name": "Ke\u00e7iboynuzu / Harnup",
+          "y": 4
+        },
+        {
+          "name": "\u00dcz\u00fcm",
+          "y": 5
+        },
+        {
+          "name": "Leblebi (Roasted chickpea)",
           "y": 0
         },
         {
@@ -746,44 +666,100 @@
           "y": 0
         },
         {
-          "name": "\u015eair",
-          "y": 16
+          "name": "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
+          "y": 0
         },
         {
-          "name": "Pirin\u00e7",
-          "y": 38
+          "name": "Nohut",
+          "y": 26
         },
         {
           "name": "Bu\u011fday",
           "y": 6
         },
         {
+          "name": "\u015eariye",
+          "y": 23
+        },
+        {
+          "name": "Pirin\u00e7",
+          "y": 38
+        },
+        {
+          "name": "Pestil",
+          "y": 2
+        },
+        {
+          "name": "Anadolu pirinci",
+          "y": 0
+        },
+        {
+          "name": "M\u0131s\u0131r pirinci",
+          "y": 0
+        },
+        {
+          "name": "B\u00f6\u011fr\u00fclce",
+          "y": 23
+        },
+        {
+          "name": "Erik",
+          "y": 1
+        },
+        {
+          "name": "Kuru \u00fcz\u00fcm",
+          "y": 3
+        },
+        {
+          "name": "Bulgur",
+          "y": 11
+        },
+        {
           "name": "Peksimet",
           "y": 1
+        },
+        {
+          "name": "Edremit siyah\u0131 \u00fcz\u00fcm",
+          "y": 0
+        },
+        {
+          "name": "Edremit siyah\u0131",
+          "y": 0
+        },
+        {
+          "name": "Lob inciri (Lob fig)",
+          "y": 0
+        },
+        {
+          "name": "\u0130zmir siyah\u0131 \u00fcz\u00fcm",
+          "y": 3
+        },
+        {
+          "name": "Karadeniz m\u0131s\u0131r\u0131",
+          "y": 0
+        },
+        {
+          "name": "Siyah",
+          "y": 7
+        },
+        {
+          "name": "Kenevir tohumu",
+          "y": 3
         },
         {
           "name": "Sar\u0131ca inciri (Sar\u0131ca fig)",
           "y": 1
         },
         {
-          "name": "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
+          "name": "\u0130ncir",
+          "y": 13
+        },
+        {
+          "name": "Tarhana",
           "y": 0
         },
         {
-          "name": "\u0130\u011fde (Oleaster)",
+          "name": "\u015eorbal\u0131k arpa",
           "y": 0
-        },
-        {
-          "name": "\u015eariye",
-          "y": 23
-        },
-        {
-          "name": "Mercimek",
-          "y": 19
-        },
-        {
-          "name": "\u0130zmir siyah\u0131 \u00fcz\u00fcm",
-          "y": 3
         },
         {
           "name": "Armut kurusu (Dried pear)",
@@ -794,20 +770,44 @@
           "y": 17
         },
         {
-          "name": "Karadeniz m\u0131s\u0131r\u0131",
-          "y": 0
-        },
-        {
-          "name": "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
-          "y": 0
-        },
-        {
-          "name": "\u0130ncir",
-          "y": 13
-        },
-        {
           "name": "K\u0131z\u0131lc\u0131k kurusu (Cornelian cherry)",
           "y": 0
+        },
+        {
+          "name": "Bakla (Broad bean)",
+          "y": 4
+        },
+        {
+          "name": "K\u00fcfter",
+          "y": 2
+        },
+        {
+          "name": "Alaca bakla",
+          "y": 0
+        },
+        {
+          "name": "Arpa \u015fariye",
+          "y": 0
+        },
+        {
+          "name": "Kiraz kurusu (Dried cherry)",
+          "y": 0
+        },
+        {
+          "name": "Mercimek",
+          "y": 19
+        },
+        {
+          "name": "\u0130\u011fde (Oleaster)",
+          "y": 0
+        },
+        {
+          "name": "Fasulye (Bean)",
+          "y": 4
+        },
+        {
+          "name": "\u015eair",
+          "y": 16
         }
       ]
     },
@@ -816,23 +816,7 @@
       "id": "Legumes",
       "data": [
         {
-          "name": "Mercimek",
-          "y": 19
-        },
-        {
-          "name": "Nohut",
-          "y": 26
-        },
-        {
-          "name": "B\u00f6\u011fr\u00fclce",
-          "y": 23
-        },
-        {
-          "name": "Kenevir tohumu",
-          "y": 3
-        },
-        {
-          "name": "Fasulye (Bean)",
+          "name": "Bakla (Broad bean)",
           "y": 4
         },
         {
@@ -840,12 +824,28 @@
           "y": 0
         },
         {
-          "name": "Bakla (Broad bean)",
-          "y": 4
+          "name": "Kenevir tohumu",
+          "y": 3
+        },
+        {
+          "name": "Mercimek",
+          "y": 19
+        },
+        {
+          "name": "B\u00f6\u011fr\u00fclce",
+          "y": 23
         },
         {
           "name": "Leblebi (Roasted chickpea)",
           "y": 0
+        },
+        {
+          "name": "Fasulye (Bean)",
+          "y": 4
+        },
+        {
+          "name": "Nohut",
+          "y": 26
         }
       ]
     },
@@ -854,16 +854,16 @@
       "id": "Grains",
       "data": [
         {
-          "name": "\u015eorbal\u0131k \u015fariye",
+          "name": "K\u0131z\u0131l \u015eariyye",
           "y": 0
         },
         {
-          "name": "Bulgur",
-          "y": 11
+          "name": "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
+          "y": 0
         },
         {
-          "name": "\u015eair",
-          "y": 16
+          "name": "Karadeniz m\u0131s\u0131r\u0131",
+          "y": 0
         },
         {
           "name": "Pirin\u00e7",
@@ -874,19 +874,15 @@
           "y": 0
         },
         {
-          "name": "Bu\u011fday",
-          "y": 6
-        },
-        {
-          "name": "Daru",
-          "y": 17
-        },
-        {
-          "name": "M\u0131s\u0131r pirinci",
+          "name": "Arpa \u015fariye",
           "y": 0
         },
         {
-          "name": "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
+          "name": "\u015eariye",
+          "y": 23
+        },
+        {
+          "name": "M\u0131s\u0131r pirinci",
           "y": 0
         },
         {
@@ -894,20 +890,24 @@
           "y": 0
         },
         {
-          "name": "Karadeniz m\u0131s\u0131r\u0131",
+          "name": "Daru",
+          "y": 17
+        },
+        {
+          "name": "Bulgur",
+          "y": 11
+        },
+        {
+          "name": "\u015eorbal\u0131k \u015fariye",
           "y": 0
         },
         {
-          "name": "K\u0131z\u0131l \u015eariyye",
-          "y": 0
+          "name": "\u015eair",
+          "y": 16
         },
         {
-          "name": "Arpa \u015fariye",
-          "y": 0
-        },
-        {
-          "name": "\u015eariye",
-          "y": 23
+          "name": "Bu\u011fday",
+          "y": 6
         }
       ]
     },
@@ -916,71 +916,51 @@
       "id": "Dried Fruits",
       "data": [
         {
-          "name": "Beylerce",
-          "y": 9
+          "name": "K\u0131z\u0131l",
+          "y": 2
         },
         {
-          "name": "Edremit siyah\u0131",
-          "y": 0
+          "name": "Beylerce",
+          "y": 9
         },
         {
           "name": "\u00dcz\u00fcm",
           "y": 5
         },
         {
-          "name": "Siyah",
-          "y": 7
-        },
-        {
-          "name": "Kuru \u00fcz\u00fcm",
-          "y": 3
-        },
-        {
-          "name": "Kiraz kurusu (Dried cherry)",
-          "y": 0
-        },
-        {
-          "name": "Ho\u015fabl\u0131k \u00fcz\u00fcm",
-          "y": 0
-        },
-        {
           "name": "Razaki",
           "y": 7
-        },
-        {
-          "name": "Koca \u00fcz\u00fcm\u00fc",
-          "y": 0
         },
         {
           "name": "Ke\u00e7iboynuzu / Harnup",
           "y": 4
         },
         {
+          "name": "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
+          "y": 0
+        },
+        {
+          "name": "Koca \u00fcz\u00fcm\u00fc",
+          "y": 0
+        },
+        {
           "name": "Erik",
           "y": 1
         },
         {
-          "name": "Lob inciri (Lob fig)",
-          "y": 0
-        },
-        {
-          "name": "K\u0131z\u0131l",
-          "y": 2
+          "name": "Kuru \u00fcz\u00fcm",
+          "y": 3
         },
         {
           "name": "Edremit siyah\u0131 \u00fcz\u00fcm",
           "y": 0
         },
         {
-          "name": "Koca siyah \u00fcz\u00fcm",
+          "name": "Edremit siyah\u0131",
           "y": 0
         },
         {
-          "name": "Sar\u0131ca inciri (Sar\u0131ca fig)",
-          "y": 1
-        },
-        {
-          "name": "\u0130\u011fde (Oleaster)",
+          "name": "Lob inciri (Lob fig)",
           "y": 0
         },
         {
@@ -988,19 +968,39 @@
           "y": 3
         },
         {
-          "name": "Armut kurusu (Dried pear)",
+          "name": "Ho\u015fabl\u0131k \u00fcz\u00fcm",
           "y": 0
         },
         {
-          "name": "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
-          "y": 0
+          "name": "Siyah",
+          "y": 7
+        },
+        {
+          "name": "Sar\u0131ca inciri (Sar\u0131ca fig)",
+          "y": 1
         },
         {
           "name": "\u0130ncir",
           "y": 13
         },
         {
+          "name": "Armut kurusu (Dried pear)",
+          "y": 0
+        },
+        {
           "name": "K\u0131z\u0131lc\u0131k kurusu (Cornelian cherry)",
+          "y": 0
+        },
+        {
+          "name": "Kiraz kurusu (Dried cherry)",
+          "y": 0
+        },
+        {
+          "name": "Koca siyah \u00fcz\u00fcm",
+          "y": 0
+        },
+        {
+          "name": "\u0130\u011fde (Oleaster)",
           "y": 0
         }
       ]
@@ -1010,8 +1010,24 @@
       "id": "Raisin Assortment",
       "data": [
         {
-          "name": "Koca siyah \u00fcz\u00fcm",
+          "name": "\u0130zmir siyah\u0131 \u00fcz\u00fcm",
+          "y": 3
+        },
+        {
+          "name": "Ho\u015fabl\u0131k \u00fcz\u00fcm",
           "y": 0
+        },
+        {
+          "name": "\u00dcz\u00fcm",
+          "y": 5
+        },
+        {
+          "name": "Siyah",
+          "y": 7
+        },
+        {
+          "name": "K\u0131z\u0131l",
+          "y": 2
         },
         {
           "name": "Koca \u00fcz\u00fcm\u00fc",
@@ -1022,36 +1038,20 @@
           "y": 9
         },
         {
-          "name": "\u0130zmir siyah\u0131 \u00fcz\u00fcm",
-          "y": 3
-        },
-        {
-          "name": "\u00dcz\u00fcm",
-          "y": 5
-        },
-        {
-          "name": "K\u0131z\u0131l",
-          "y": 2
-        },
-        {
-          "name": "Siyah",
-          "y": 7
-        },
-        {
           "name": "Kuru \u00fcz\u00fcm",
           "y": 3
         },
         {
-          "name": "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
-          "y": 0
-        },
-        {
-          "name": "Ho\u015fabl\u0131k \u00fcz\u00fcm",
-          "y": 0
-        },
-        {
           "name": "Razaki",
           "y": 7
+        },
+        {
+          "name": "Koca siyah \u00fcz\u00fcm",
+          "y": 0
+        },
+        {
+          "name": "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
+          "y": 0
         },
         {
           "name": "Edremit siyah\u0131 \u00fcz\u00fcm",
@@ -1064,12 +1064,12 @@
       "id": "Fig Assortment",
       "data": [
         {
-          "name": "\u0130ncir",
-          "y": 13
-        },
-        {
           "name": "Lob inciri (Lob fig)",
           "y": 0
+        },
+        {
+          "name": "\u0130ncir",
+          "y": 13
         },
         {
           "name": "Sar\u0131ca inciri (Sar\u0131ca fig)",
@@ -1082,31 +1082,11 @@
       "id": "Condiments",
       "data": [
         {
-          "name": "\u0130nce tuz",
+          "name": "Peppercorn",
           "y": 0
         },
         {
-          "name": "Kefe tuzu",
-          "y": 16
-        },
-        {
-          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f tuz",
-          "y": 8
-        },
-        {
-          "name": "Kal\u0131n tuz",
-          "y": 0
-        },
-        {
-          "name": "Ku\u015fadas\u0131  bal\u0131",
-          "y": 1
-        },
-        {
-          "name": "Girit pekmezi / Cretan molasses",
-          "y": 1
-        },
-        {
-          "name": "Odun pekmezi",
+          "name": "G\u00f6me\u00e7 bal\u0131",
           "y": 1
         },
         {
@@ -1114,15 +1094,35 @@
           "y": 1
         },
         {
+          "name": "Kutu bal\u0131",
+          "y": 1
+        },
+        {
+          "name": "Sumak",
+          "y": 1
+        },
+        {
           "name": "Revak asel",
           "y": 0
+        },
+        {
+          "name": "Bal / Asel",
+          "y": 21
+        },
+        {
+          "name": "Pekmez",
+          "y": 22
+        },
+        {
+          "name": "Vinegar",
+          "y": 33
         },
         {
           "name": "Akdeniz bal\u0131",
           "y": 0
         },
         {
-          "name": "Peppercorn",
+          "name": "Tahin (Tahini)",
           "y": 0
         },
         {
@@ -1130,31 +1130,7 @@
           "y": 0
         },
         {
-          "name": "Yaprak tuzu",
-          "y": 0
-        },
-        {
-          "name": "Pekmez",
-          "y": 22
-        },
-        {
-          "name": "Kutu bal\u0131",
-          "y": 1
-        },
-        {
-          "name": "Hurda tuz",
-          "y": 3
-        },
-        {
-          "name": "Tahin (Tahini)",
-          "y": 0
-        },
-        {
-          "name": "Sumak",
-          "y": 1
-        },
-        {
-          "name": "G\u00f6me\u00e7 bal\u0131",
+          "name": "Girit pekmezi / Cretan molasses",
           "y": 1
         },
         {
@@ -1166,32 +1142,56 @@
           "y": 8
         },
         {
-          "name": "Anason (Aniseed)",
-          "y": 0
-        },
-        {
-          "name": "Bal / Asel",
-          "y": 21
-        },
-        {
-          "name": "K\u0131rm\u0131z\u0131 biber (Red pepper)",
-          "y": 0
-        },
-        {
-          "name": "Vinegar",
-          "y": 33
-        },
-        {
-          "name": "Limon suyu / Ab-\u0131 limon (Lemon juice)",
-          "y": 0
+          "name": "Hurda tuz",
+          "y": 3
         },
         {
           "name": "Eflak bal\u0131",
           "y": 2
         },
         {
+          "name": "Ku\u015fadas\u0131  bal\u0131",
+          "y": 1
+        },
+        {
+          "name": "Kefe tuzu",
+          "y": 16
+        },
+        {
+          "name": "K\u0131rm\u0131z\u0131 biber (Red pepper)",
+          "y": 0
+        },
+        {
+          "name": "Odun pekmezi",
+          "y": 1
+        },
+        {
+          "name": "Anason (Aniseed)",
+          "y": 0
+        },
+        {
+          "name": "Limon suyu / Ab-\u0131 limon (Lemon juice)",
+          "y": 0
+        },
+        {
+          "name": "Kal\u0131n tuz",
+          "y": 0
+        },
+        {
+          "name": "Yaprak tuzu",
+          "y": 0
+        },
+        {
+          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f tuz",
+          "y": 8
+        },
+        {
           "name": "Karadeniz bal\u0131",
           "y": 1
+        },
+        {
+          "name": "\u0130nce tuz",
+          "y": 0
         }
       ]
     },
@@ -1200,20 +1200,20 @@
       "id": "Molasses Assortment",
       "data": [
         {
-          "name": "Girit pekmezi / Cretan molasses",
-          "y": 1
-        },
-        {
-          "name": "Pekmez",
-          "y": 22
-        },
-        {
           "name": "Odun pekmezi",
           "y": 1
         },
         {
           "name": "\u00c7orlu pekmezi / \u00c7orlu molasses",
           "y": 1
+        },
+        {
+          "name": "Girit pekmezi / Cretan molasses",
+          "y": 1
+        },
+        {
+          "name": "Pekmez",
+          "y": 22
         }
       ]
     },
@@ -1222,11 +1222,39 @@
       "id": "Sweeteners",
       "data": [
         {
+          "name": "Bal / Asel",
+          "y": 21
+        },
+        {
           "name": "Eflak bal\u0131",
           "y": 2
         },
         {
+          "name": "Pekmez",
+          "y": 22
+        },
+        {
+          "name": "Odun pekmezi",
+          "y": 1
+        },
+        {
           "name": "G\u00f6me\u00e7 bal\u0131",
+          "y": 1
+        },
+        {
+          "name": "Odun asel",
+          "y": 0
+        },
+        {
+          "name": "\u00c7orlu pekmezi / \u00c7orlu molasses",
+          "y": 1
+        },
+        {
+          "name": "Revak asel",
+          "y": 0
+        },
+        {
+          "name": "Ku\u015fadas\u0131  bal\u0131",
           "y": 1
         },
         {
@@ -1234,39 +1262,11 @@
           "y": 0
         },
         {
-          "name": "Odun asel",
-          "y": 0
-        },
-        {
-          "name": "Pekmez",
-          "y": 22
-        },
-        {
-          "name": "Revak asel",
-          "y": 0
-        },
-        {
-          "name": "Bal / Asel",
-          "y": 21
-        },
-        {
-          "name": "Ku\u015fadas\u0131  bal\u0131",
-          "y": 1
-        },
-        {
-          "name": "Girit pekmezi / Cretan molasses",
-          "y": 1
-        },
-        {
-          "name": "Odun pekmezi",
-          "y": 1
-        },
-        {
           "name": "Karadeniz bal\u0131",
           "y": 1
         },
         {
-          "name": "\u00c7orlu pekmezi / \u00c7orlu molasses",
+          "name": "Girit pekmezi / Cretan molasses",
           "y": 1
         }
       ]
@@ -1276,8 +1276,16 @@
       "id": "Beverages",
       "data": [
         {
+          "name": "Ham sirke",
+          "y": 2
+        },
+        {
           "name": "Nardeng",
           "y": 24
+        },
+        {
+          "name": "Kahve",
+          "y": 2
         },
         {
           "name": "Ihlamur",
@@ -1285,14 +1293,6 @@
         },
         {
           "name": "Arak",
-          "y": 2
-        },
-        {
-          "name": "Ham sirke",
-          "y": 2
-        },
-        {
-          "name": "Kahve",
           "y": 2
         }
       ]
@@ -1302,12 +1302,16 @@
       "id": "Honey Assortment",
       "data": [
         {
-          "name": "G\u00f6me\u00e7 bal\u0131",
+          "name": "Bal / Asel",
+          "y": 21
+        },
+        {
+          "name": "Ku\u015fadas\u0131  bal\u0131",
           "y": 1
         },
         {
-          "name": "Akdeniz bal\u0131",
-          "y": 0
+          "name": "G\u00f6me\u00e7 bal\u0131",
+          "y": 1
         },
         {
           "name": "Odun asel",
@@ -1318,16 +1322,12 @@
           "y": 1
         },
         {
-          "name": "Bal / Asel",
-          "y": 21
-        },
-        {
-          "name": "Ku\u015fadas\u0131  bal\u0131",
-          "y": 1
-        },
-        {
           "name": "Eflak bal\u0131",
           "y": 2
+        },
+        {
+          "name": "Akdeniz bal\u0131",
+          "y": 0
         },
         {
           "name": "Karadeniz bal\u0131",
@@ -1344,20 +1344,20 @@
       "id": "Baking Goods",
       "data": [
         {
-          "name": "Ni\u015fasta",
-          "y": 24
-        },
-        {
-          "name": "Un / Dakik",
-          "y": 9
-        },
-        {
           "name": "Dakik-i vasat",
           "y": 0
         },
         {
+          "name": "Ni\u015fasta",
+          "y": 24
+        },
+        {
           "name": "Dakik-i has",
           "y": 0
+        },
+        {
+          "name": "Un / Dakik",
+          "y": 9
         }
       ]
     },
@@ -1366,39 +1366,19 @@
       "id": "Ingredients",
       "data": [
         {
-          "name": "Yaprak tuzu",
-          "y": 0
-        },
-        {
-          "name": "Ni\u015fasta",
-          "y": 24
-        },
-        {
-          "name": "Dakik-i vasat",
-          "y": 0
-        },
-        {
-          "name": "\u0130nce tuz",
-          "y": 0
-        },
-        {
-          "name": "Eflak tuzu",
-          "y": 12
-        },
-        {
           "name": "Kefe tuzu",
           "y": 16
         },
         {
-          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f tuz",
-          "y": 8
-        },
-        {
-          "name": "Un / Dakik",
-          "y": 9
+          "name": "Dakik-i has",
+          "y": 0
         },
         {
           "name": "Kal\u0131n tuz",
+          "y": 0
+        },
+        {
+          "name": "Dakik-i vasat",
           "y": 0
         },
         {
@@ -1406,19 +1386,39 @@
           "y": 3
         },
         {
-          "name": "K\u00f6y tuzu",
+          "name": "Tuz",
+          "y": 16
+        },
+        {
+          "name": "Yaprak tuzu",
           "y": 0
         },
         {
-          "name": "Tuz",
-          "y": 16
+          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f tuz",
+          "y": 8
+        },
+        {
+          "name": "Ni\u015fasta",
+          "y": 24
         },
         {
           "name": "Tahin (Tahini)",
           "y": 0
         },
         {
-          "name": "Dakik-i has",
+          "name": "Un / Dakik",
+          "y": 9
+        },
+        {
+          "name": "K\u00f6y tuzu",
+          "y": 0
+        },
+        {
+          "name": "Eflak tuzu",
+          "y": 12
+        },
+        {
+          "name": "\u0130nce tuz",
           "y": 0
         }
       ]
@@ -1428,23 +1428,7 @@
       "id": "Spices and Add Ons",
       "data": [
         {
-          "name": "\u0130nce tuz",
-          "y": 0
-        },
-        {
-          "name": "Kefe tuzu",
-          "y": 16
-        },
-        {
-          "name": "Kaya tuzu",
-          "y": 1
-        },
-        {
-          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f tuz",
-          "y": 8
-        },
-        {
-          "name": "Kal\u0131n tuz",
+          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f Leh tuzu",
           "y": 0
         },
         {
@@ -1452,44 +1436,20 @@
           "y": 3
         },
         {
-          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f Leh tuzu",
-          "y": 0
-        },
-        {
-          "name": "\u00c7\u00f6rek otu (Black sesame)",
+          "name": "Kaya tuzu",
           "y": 1
-        },
-        {
-          "name": "Gemlik tuzu",
-          "y": 0
-        },
-        {
-          "name": "Peppercorn",
-          "y": 0
-        },
-        {
-          "name": "K\u00f6y tuzu",
-          "y": 0
-        },
-        {
-          "name": "Tuz",
-          "y": 16
-        },
-        {
-          "name": "Yaprak tuzu",
-          "y": 0
-        },
-        {
-          "name": "Leh tuzu",
-          "y": 0
-        },
-        {
-          "name": "Hurda tuz",
-          "y": 3
         },
         {
           "name": "Sumak",
           "y": 1
+        },
+        {
+          "name": "Vinegar",
+          "y": 33
+        },
+        {
+          "name": "K\u00f6y tuzu",
+          "y": 0
         },
         {
           "name": "Eflak tuzu",
@@ -1500,16 +1460,56 @@
           "y": 8
         },
         {
-          "name": "Anason (Aniseed)",
+          "name": "Gemlik tuzu",
           "y": 0
+        },
+        {
+          "name": "\u00c7\u00f6rek otu (Black sesame)",
+          "y": 1
+        },
+        {
+          "name": "Hurda tuz",
+          "y": 3
+        },
+        {
+          "name": "Leh tuzu",
+          "y": 0
+        },
+        {
+          "name": "Kefe tuzu",
+          "y": 16
         },
         {
           "name": "K\u0131rm\u0131z\u0131 biber (Red pepper)",
           "y": 0
         },
         {
-          "name": "Vinegar",
-          "y": 33
+          "name": "Anason (Aniseed)",
+          "y": 0
+        },
+        {
+          "name": "Kal\u0131n tuz",
+          "y": 0
+        },
+        {
+          "name": "Tuz",
+          "y": 16
+        },
+        {
+          "name": "Yaprak tuzu",
+          "y": 0
+        },
+        {
+          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f tuz",
+          "y": 8
+        },
+        {
+          "name": "Peppercorn",
+          "y": 0
+        },
+        {
+          "name": "\u0130nce tuz",
+          "y": 0
         }
       ]
     },
@@ -1517,14 +1517,6 @@
       "name": "Sour Flavorings",
       "id": "Sour Flavorings",
       "data": [
-        {
-          "name": "Limon (Lemon)",
-          "y": 4
-        },
-        {
-          "name": "Biber tur\u015fusu (Pickled peppers)",
-          "y": 2
-        },
         {
           "name": "Lahana tur\u015fusu (Pickled cabbage)",
           "y": 1
@@ -1534,8 +1526,16 @@
           "y": 0
         },
         {
+          "name": "Biber tur\u015fusu (Pickled peppers)",
+          "y": 2
+        },
+        {
           "name": "Vinegar",
           "y": 33
+        },
+        {
+          "name": "Limon (Lemon)",
+          "y": 4
         }
       ]
     },
@@ -1544,48 +1544,36 @@
       "id": "Produce",
       "data": [
         {
-          "name": "Sapl\u0131 sar\u0131msak",
-          "y": 0
-        },
-        {
-          "name": "Limon (Lemon)",
-          "y": 4
-        },
-        {
-          "name": "Kaba so\u011fan",
+          "name": "Arpac\u0131k so\u011fan\u0131 (Pearl onion)",
           "y": 2
-        },
-        {
-          "name": "Nar (Pomegranate)",
-          "y": 1
-        },
-        {
-          "name": "Turp (Radish)",
-          "y": 1
-        },
-        {
-          "name": "Dolmal\u0131k yaprak",
-          "y": 0
-        },
-        {
-          "name": "Sar\u0131msak",
-          "y": 12
         },
         {
           "name": "So\u011fan",
           "y": 28
         },
         {
-          "name": "Arpac\u0131k so\u011fan\u0131 (Pearl onion)",
+          "name": "Kaba so\u011fan",
           "y": 2
         },
         {
-          "name": "Tur\u015fu yapra\u011f\u0131",
-          "y": 5
+          "name": "Sar\u0131msak",
+          "y": 12
+        },
+        {
+          "name": "Dolmal\u0131k yaprak",
+          "y": 0
+        },
+        {
+          "name": "Sapl\u0131 sar\u0131msak",
+          "y": 0
         },
         {
           "name": "Karpuz (Water melon)",
           "y": 2
+        },
+        {
+          "name": "Nar (Pomegranate)",
+          "y": 1
         },
         {
           "name": "Elma",
@@ -1594,6 +1582,18 @@
         {
           "name": "Hunnap",
           "y": 1
+        },
+        {
+          "name": "Turp (Radish)",
+          "y": 1
+        },
+        {
+          "name": "Tur\u015fu yapra\u011f\u0131",
+          "y": 5
+        },
+        {
+          "name": "Limon (Lemon)",
+          "y": 4
         }
       ]
     },
@@ -1602,28 +1602,28 @@
       "id": "Vegetables",
       "data": [
         {
-          "name": "Sapl\u0131 sar\u0131msak",
-          "y": 0
-        },
-        {
-          "name": "Kaba so\u011fan",
-          "y": 2
-        },
-        {
-          "name": "Turp (Radish)",
-          "y": 1
-        },
-        {
-          "name": "Sar\u0131msak",
-          "y": 12
-        },
-        {
           "name": "Arpac\u0131k so\u011fan\u0131 (Pearl onion)",
           "y": 2
         },
         {
           "name": "So\u011fan",
           "y": 28
+        },
+        {
+          "name": "Kaba so\u011fan",
+          "y": 2
+        },
+        {
+          "name": "Sar\u0131msak",
+          "y": 12
+        },
+        {
+          "name": "Sapl\u0131 sar\u0131msak",
+          "y": 0
+        },
+        {
+          "name": "Turp (Radish)",
+          "y": 1
         }
       ]
     },
@@ -1632,36 +1632,36 @@
       "id": "Olive Assortment",
       "data": [
         {
-          "name": "Trilye zeytini",
-          "y": 10
-        },
-        {
-          "name": "Gemlik zeytini (Gemlik olives)",
-          "y": 0
-        },
-        {
-          "name": "Zeytin",
-          "y": 18
-        },
-        {
-          "name": "Girit zeytini (Createn olives)",
-          "y": 0
+          "name": "K\u0131rm\u0131z\u0131 sele zeytini (Red dried olives)",
+          "y": 1
         },
         {
           "name": "K\u00fcflenmi\u015f zeytun",
           "y": 1
         },
         {
-          "name": "K\u0131rm\u0131z\u0131 sele zeytini (Red dried olives)",
-          "y": 1
-        },
-        {
-          "name": "Karam\u00fcrsel zeytini (Karam\u00fcrsel olives)",
-          "y": 2
+          "name": "Zeytin",
+          "y": 18
         },
         {
           "name": "\u00c7\u00fcr\u00fck zeytun",
           "y": 0
+        },
+        {
+          "name": "Girit zeytini (Createn olives)",
+          "y": 0
+        },
+        {
+          "name": "Gemlik zeytini (Gemlik olives)",
+          "y": 0
+        },
+        {
+          "name": "Trilye zeytini",
+          "y": 10
+        },
+        {
+          "name": "Karam\u00fcrsel zeytini (Karam\u00fcrsel olives)",
+          "y": 2
         }
       ]
     },
@@ -1670,19 +1670,23 @@
       "id": "Deli",
       "data": [
         {
-          "name": "Trilye zeytini",
-          "y": 10
+          "name": "K\u0131rm\u0131z\u0131 sele zeytini (Red dried olives)",
+          "y": 1
         },
         {
-          "name": "Gemlik zeytini (Gemlik olives)",
-          "y": 0
+          "name": "Sucuk",
+          "y": 9
         },
         {
           "name": "Zeytin",
           "y": 18
         },
         {
-          "name": "Rumeli sucu\u011fu past\u0131rmas\u0131",
+          "name": "Past\u0131rma",
+          "y": 7
+        },
+        {
+          "name": "Kayseriye past\u0131rmas\u0131",
           "y": 0
         },
         {
@@ -1690,24 +1694,20 @@
           "y": 0
         },
         {
-          "name": "Kayseriye past\u0131rmas\u0131",
+          "name": "Rumeli sucu\u011fu past\u0131rmas\u0131",
           "y": 0
         },
         {
-          "name": "Past\u0131rma",
-          "y": 7
+          "name": "Gemlik zeytini (Gemlik olives)",
+          "y": 0
         },
         {
-          "name": "K\u0131rm\u0131z\u0131 sele zeytini (Red dried olives)",
-          "y": 1
+          "name": "Trilye zeytini",
+          "y": 10
         },
         {
           "name": "Karam\u00fcrsel zeytini (Karam\u00fcrsel olives)",
           "y": 2
-        },
-        {
-          "name": "Sucuk",
-          "y": 9
         }
       ]
     },
@@ -1720,132 +1720,12 @@
           "y": 3
         },
         {
-          "name": "Ka\u011f\u0131t (Paper)",
-          "y": 1
-        },
-        {
-          "name": "Saman",
-          "y": 1
-        },
-        {
-          "name": "Sabun (Soap)",
-          "y": 20
-        },
-        {
-          "name": "\u00c7al\u0131 s\u00fcp\u00fcrgesi",
-          "y": 0
-        },
-        {
-          "name": "L\u00fcle",
-          "y": 5
-        },
-        {
-          "name": "Trablus sabunun (Trablus soap)",
-          "y": 1
-        },
-        {
-          "name": "Girit sabunu (Cretan soap)",
-          "y": 1
-        },
-        {
-          "name": "\u00c7ar\u00e7ube ka\u011f\u0131d\u0131",
-          "y": 1
-        },
-        {
-          "name": "S\u00fcp\u00fcrge (Broom)",
-          "y": 4
-        },
-        {
-          "name": "Adi s\u00fcp\u00fcrge",
-          "y": 0
-        },
-        {
-          "name": "\u015eem-i revgan (Candle wax)",
-          "y": 7
-        },
-        {
-          "name": "\u00c7ingane s\u00fcp\u00fcrgesi",
-          "y": 0
-        },
-        {
-          "name": "\u015ei\u015fe mum (Bottled candle)",
-          "y": 0
-        },
-        {
-          "name": "Yaz\u0131 ka\u011f\u0131d\u0131",
-          "y": 1
-        },
-        {
-          "name": "Balmumu (Beeswax)",
-          "y": 0
-        },
-        {
-          "name": "\u0130zmir sabunu (\u0130zmir soap)",
-          "y": 1
-        },
-        {
-          "name": "Yapa\u011f\u0131 y\u00fcn",
-          "y": 1
-        },
-        {
-          "name": "Zift",
-          "y": 1
-        },
-        {
-          "name": "K\u0131zak ya\u011f\u0131",
-          "y": 1
-        },
-        {
-          "name": "Katran",
-          "y": 2
-        },
-        {
-          "name": "\u015eamad\u0131ra",
-          "y": 1
-        },
-        {
-          "name": "\u00c7akmak",
-          "y": 1
-        },
-        {
-          "name": "Demet odunu",
-          "y": 3
-        },
-        {
           "name": "K\u00f6m\u00fcr (Coal)",
           "y": 4
         },
         {
-          "name": "\u00c7\u0131ra (Firewood)",
-          "y": 2
-        },
-        {
-          "name": "Has\u0131r S\u00fcp\u00fcrgesi",
-          "y": 0
-        },
-        {
           "name": "Sicim (String)",
           "y": 5
-        },
-        {
-          "name": "Kav",
-          "y": 1
-        },
-        {
-          "name": "\u00c7akmak tozu",
-          "y": 1
-        },
-        {
-          "name": "Tem\u00fcr hurdas\u0131",
-          "y": 4
-        },
-        {
-          "name": "Kil",
-          "y": 0
-        },
-        {
-          "name": "Meydan s\u00fcp\u00fcrgesi",
-          "y": 0
         },
         {
           "name": "M\u0131s\u0131r ipli\u011fi",
@@ -1856,7 +1736,95 @@
           "y": 11
         },
         {
+          "name": "Girit sabunu (Cretan soap)",
+          "y": 1
+        },
+        {
+          "name": "\u00c7ingane s\u00fcp\u00fcrgesi",
+          "y": 0
+        },
+        {
+          "name": "S\u00fcp\u00fcrge (Broom)",
+          "y": 4
+        },
+        {
+          "name": "Trablus sabunun (Trablus soap)",
+          "y": 1
+        },
+        {
+          "name": "\u015ei\u015fe mum (Bottled candle)",
+          "y": 0
+        },
+        {
+          "name": "Katran",
+          "y": 2
+        },
+        {
+          "name": "\u00c7al\u0131 s\u00fcp\u00fcrgesi",
+          "y": 0
+        },
+        {
+          "name": "Saman",
+          "y": 1
+        },
+        {
+          "name": "\u00c7\u0131ra (Firewood)",
+          "y": 2
+        },
+        {
           "name": "Enfiye",
+          "y": 1
+        },
+        {
+          "name": "K\u0131zak ya\u011f\u0131",
+          "y": 1
+        },
+        {
+          "name": "Ka\u011f\u0131t (Paper)",
+          "y": 1
+        },
+        {
+          "name": "Kav",
+          "y": 1
+        },
+        {
+          "name": "Has\u0131r S\u00fcp\u00fcrgesi",
+          "y": 0
+        },
+        {
+          "name": "\u00c7akmak",
+          "y": 1
+        },
+        {
+          "name": "Adi s\u00fcp\u00fcrge",
+          "y": 0
+        },
+        {
+          "name": "Tem\u00fcr hurdas\u0131",
+          "y": 4
+        },
+        {
+          "name": "Meydan s\u00fcp\u00fcrgesi",
+          "y": 0
+        },
+        {
+          "name": "Tu\u011fla tozu (Brick dust)",
+          "y": 0
+        },
+        {
+          "name": "\u0130zmir sabunu (\u0130zmir soap)",
+          "y": 1
+        },
+        {
+          "name": "L\u00fcle",
+          "y": 5
+        },
+        {
+          "name": "\u015eamad\u0131ra",
+          "y": 1
+        },
+        {
+          "name": "Yaz\u0131 ka\u011f\u0131d\u0131",
           "y": 1
         },
         {
@@ -1864,8 +1832,40 @@
           "y": 16
         },
         {
-          "name": "Tu\u011fla tozu (Brick dust)",
+          "name": "Sabun (Soap)",
+          "y": 20
+        },
+        {
+          "name": "\u00c7akmak tozu",
+          "y": 1
+        },
+        {
+          "name": "Yapa\u011f\u0131 y\u00fcn",
+          "y": 1
+        },
+        {
+          "name": "Balmumu (Beeswax)",
           "y": 0
+        },
+        {
+          "name": "\u00c7ar\u00e7ube ka\u011f\u0131d\u0131",
+          "y": 1
+        },
+        {
+          "name": "Zift",
+          "y": 1
+        },
+        {
+          "name": "Demet odunu",
+          "y": 3
+        },
+        {
+          "name": "Kil",
+          "y": 0
+        },
+        {
+          "name": "\u015eem-i revgan (Candle wax)",
+          "y": 7
         }
       ]
     },
@@ -1874,19 +1874,7 @@
       "id": "Pickle",
       "data": [
         {
-          "name": "Tur\u015fu bal\u0131\u011f\u0131",
-          "y": 2
-        },
-        {
-          "name": "Tur\u015fu yapra\u011f\u0131",
-          "y": 5
-        },
-        {
-          "name": "Bal\u0131k tur\u015fusu",
-          "y": 1
-        },
-        {
-          "name": "Bal\u0131k salamuras\u0131",
+          "name": "Lahana tur\u015fusu (Pickled cabbage)",
           "y": 1
         },
         {
@@ -1894,15 +1882,27 @@
           "y": 1
         },
         {
+          "name": "Tur\u015fu bal\u0131\u011f\u0131",
+          "y": 2
+        },
+        {
+          "name": "Bal\u0131k tur\u015fusu",
+          "y": 1
+        },
+        {
           "name": "Biber tur\u015fusu (Pickled peppers)",
           "y": 2
+        },
+        {
+          "name": "Tur\u015fu yapra\u011f\u0131",
+          "y": 5
         },
         {
           "name": "Tur\u015fu",
           "y": 1
         },
         {
-          "name": "Lahana tur\u015fusu (Pickled cabbage)",
+          "name": "Bal\u0131k salamuras\u0131",
           "y": 1
         }
       ]
@@ -1912,7 +1912,15 @@
       "id": "Fish Assortment",
       "data": [
         {
-          "name": "Bal\u0131k tur\u015fusu",
+          "name": "Kolyarudya bal\u0131\u011f\u0131",
+          "y": 1
+        },
+        {
+          "name": "Mersin bal\u0131\u011f\u0131",
+          "y": 2
+        },
+        {
+          "name": "Kolyoz bal\u0131\u011f\u0131",
           "y": 1
         },
         {
@@ -1920,11 +1928,15 @@
           "y": 0
         },
         {
-          "name": "Mersin bal\u0131\u011f\u0131",
-          "y": 2
+          "name": "\u00c7iroz bal\u0131\u011f\u0131",
+          "y": 1
         },
         {
-          "name": "Kolyarudya bal\u0131\u011f\u0131",
+          "name": "Lakerda bal\u0131\u011f\u0131",
+          "y": 1
+        },
+        {
+          "name": "Bal\u0131k tur\u015fusu",
           "y": 1
         },
         {
@@ -1932,23 +1944,15 @@
           "y": 2
         },
         {
-          "name": "Sade bal\u0131k",
-          "y": 0
-        },
-        {
-          "name": "Lakerda bal\u0131\u011f\u0131",
-          "y": 1
+          "name": "\u00c7\u00fctre bal\u0131\u011f\u0131",
+          "y": 2
         },
         {
           "name": "Terkoz bal\u0131\u011f\u0131",
           "y": 1
         },
         {
-          "name": "\u00c7iroz bal\u0131\u011f\u0131",
-          "y": 1
-        },
-        {
-          "name": "Bal\u0131k salamuras\u0131",
+          "name": "Morina bal\u0131\u011f\u0131",
           "y": 1
         },
         {
@@ -1960,23 +1964,19 @@
           "y": 6
         },
         {
-          "name": "Uskumru bal\u0131\u011fu tur\u015fusu",
-          "y": 1
+          "name": "Tur\u015fu bal\u0131\u011f\u0131",
+          "y": 2
         },
         {
           "name": "Uskumru bal\u0131\u011f\u0131",
           "y": 1
         },
         {
-          "name": "Tur\u015fu bal\u0131\u011f\u0131",
-          "y": 2
+          "name": "Bal\u0131k salamuras\u0131",
+          "y": 1
         },
         {
-          "name": "\u00c7\u00fctre bal\u0131\u011f\u0131",
-          "y": 2
-        },
-        {
-          "name": "Kolyoz bal\u0131\u011f\u0131",
+          "name": "Uskumru bal\u0131\u011fu tur\u015fusu",
           "y": 1
         },
         {
@@ -1984,8 +1984,8 @@
           "y": 3
         },
         {
-          "name": "Morina bal\u0131\u011f\u0131",
-          "y": 1
+          "name": "Sade bal\u0131k",
+          "y": 0
         }
       ]
     },
@@ -1994,44 +1994,12 @@
       "id": "Animal Food",
       "data": [
         {
-          "name": "Terkoz bal\u0131\u011f\u0131",
-          "y": 1
-        },
-        {
-          "name": "\u00c7iroz bal\u0131\u011f\u0131",
-          "y": 1
-        },
-        {
-          "name": "Bal\u0131k",
-          "y": 0
-        },
-        {
-          "name": "Havyar",
-          "y": 6
-        },
-        {
-          "name": "\u00c7\u00fctre bal\u0131\u011f\u0131",
-          "y": 2
-        },
-        {
-          "name": "Sade bal\u0131k",
-          "y": 0
-        },
-        {
-          "name": "Mersin bal\u0131\u011f\u0131",
-          "y": 2
-        },
-        {
-          "name": "Kolyoz bal\u0131\u011f\u0131",
-          "y": 1
-        },
-        {
-          "name": "Uskumru bal\u0131\u011f\u0131",
-          "y": 1
-        },
-        {
           "name": "Kolyarudya bal\u0131\u011f\u0131",
           "y": 1
+        },
+        {
+          "name": "Sucuk",
+          "y": 9
         },
         {
           "name": "Past\u0131rma",
@@ -2042,20 +2010,52 @@
           "y": 2
         },
         {
+          "name": "\u00c7\u00fctre bal\u0131\u011f\u0131",
+          "y": 2
+        },
+        {
+          "name": "Uskumru bal\u0131\u011f\u0131",
+          "y": 1
+        },
+        {
           "name": "Tuzlu bal\u0131k",
           "y": 3
         },
         {
-          "name": "Kayseriye past\u0131rmas\u0131",
-          "y": 0
+          "name": "Terkoz bal\u0131\u011f\u0131",
+          "y": 1
         },
         {
           "name": "Morina bal\u0131\u011f\u0131",
           "y": 1
         },
         {
-          "name": "Sucuk",
-          "y": 9
+          "name": "Kayseriye past\u0131rmas\u0131",
+          "y": 0
+        },
+        {
+          "name": "Mersin bal\u0131\u011f\u0131",
+          "y": 2
+        },
+        {
+          "name": "Kolyoz bal\u0131\u011f\u0131",
+          "y": 1
+        },
+        {
+          "name": "Bal\u0131k",
+          "y": 0
+        },
+        {
+          "name": "\u00c7iroz bal\u0131\u011f\u0131",
+          "y": 1
+        },
+        {
+          "name": "Havyar",
+          "y": 6
+        },
+        {
+          "name": "Sade bal\u0131k",
+          "y": 0
         },
         {
           "name": "Lakerda bal\u0131\u011f\u0131",
@@ -2072,7 +2072,11 @@
           "y": 0
         },
         {
-          "name": "Bal\u0131k salamuras\u0131",
+          "name": "Salamura peynir",
+          "y": 2
+        },
+        {
+          "name": "Asma yapra\u011f\u0131",
           "y": 1
         },
         {
@@ -2080,11 +2084,7 @@
           "y": 5
         },
         {
-          "name": "Salamura peynir",
-          "y": 2
-        },
-        {
-          "name": "Asma yapra\u011f\u0131",
+          "name": "Bal\u0131k salamuras\u0131",
           "y": 1
         }
       ]
@@ -2104,24 +2104,24 @@
       "id": "Fresh Fruits",
       "data": [
         {
-          "name": "Limon (Lemon)",
-          "y": 4
+          "name": "Karpuz (Water melon)",
+          "y": 2
         },
         {
           "name": "Nar (Pomegranate)",
           "y": 1
         },
         {
-          "name": "Karpuz (Water melon)",
-          "y": 2
+          "name": "Hunnap",
+          "y": 1
         },
         {
           "name": "Elma",
           "y": 1
         },
         {
-          "name": "Hunnap",
-          "y": 1
+          "name": "Limon (Lemon)",
+          "y": 4
         }
       ]
     },
@@ -2130,11 +2130,11 @@
       "id": "Soap Assortment",
       "data": [
         {
-          "name": "Trablus sabunun (Trablus soap)",
-          "y": 1
+          "name": "Sabun (Soap)",
+          "y": 20
         },
         {
-          "name": "\u0130zmir sabunu (\u0130zmir soap)",
+          "name": "Trablus sabunun (Trablus soap)",
           "y": 1
         },
         {
@@ -2142,8 +2142,8 @@
           "y": 1
         },
         {
-          "name": "Sabun (Soap)",
-          "y": 20
+          "name": "\u0130zmir sabunu (\u0130zmir soap)",
+          "y": 1
         }
       ]
     },
@@ -2152,11 +2152,15 @@
       "id": "Broom Assortment",
       "data": [
         {
-          "name": "S\u00fcp\u00fcrge (Broom)",
-          "y": 4
+          "name": "Has\u0131r S\u00fcp\u00fcrgesi",
+          "y": 0
         },
         {
           "name": "Adi s\u00fcp\u00fcrge",
+          "y": 0
+        },
+        {
+          "name": "Meydan s\u00fcp\u00fcrgesi",
           "y": 0
         },
         {
@@ -2168,12 +2172,8 @@
           "y": 0
         },
         {
-          "name": "Has\u0131r S\u00fcp\u00fcrgesi",
-          "y": 0
-        },
-        {
-          "name": "Meydan s\u00fcp\u00fcrgesi",
-          "y": 0
+          "name": "S\u00fcp\u00fcrge (Broom)",
+          "y": 4
         }
       ]
     },
@@ -2196,11 +2196,11 @@
       "id": "Pastrami Assortment",
       "data": [
         {
-          "name": "Rumeli sucu\u011fu past\u0131rmas\u0131",
+          "name": "Kayseriye past\u0131rmas\u0131",
           "y": 0
         },
         {
-          "name": "Kayseriye past\u0131rmas\u0131",
+          "name": "Rumeli sucu\u011fu past\u0131rmas\u0131",
           "y": 0
         }
       ]
@@ -2224,11 +2224,7 @@
       "id": "Vermicelli Assortment",
       "data": [
         {
-          "name": "\u015eorbal\u0131k \u015fariye",
-          "y": 0
-        },
-        {
-          "name": "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
+          "name": "K\u0131z\u0131l \u015eariyye",
           "y": 0
         },
         {
@@ -2236,7 +2232,11 @@
           "y": 0
         },
         {
-          "name": "K\u0131z\u0131l \u015eariyye",
+          "name": "\u015eorbal\u0131k \u015fariye",
+          "y": 0
+        },
+        {
+          "name": "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
           "y": 0
         }
       ]
@@ -2445,18 +2445,6 @@
       "id": "Oil Seeds",
       "data": [
         {
-          "name": "Kestane (Chestnut)",
-          "y": 0
-        },
-        {
-          "name": "F\u0131nd\u0131k",
-          "y": 7
-        },
-        {
-          "name": "F\u0131st\u0131k",
-          "y": 1
-        },
-        {
           "name": "Badem",
           "y": 1
         },
@@ -2469,8 +2457,20 @@
           "y": 0
         },
         {
+          "name": "F\u0131st\u0131k",
+          "y": 1
+        },
+        {
+          "name": "Kestane (Chestnut)",
+          "y": 0
+        },
+        {
           "name": "Kabuklu ac\u0131badem",
           "y": 0
+        },
+        {
+          "name": "F\u0131nd\u0131k",
+          "y": 7
         }
       ]
     },
@@ -2478,6 +2478,10 @@
       "name": "Snacks",
       "id": "Snacks",
       "data": [
+        {
+          "name": "K\u0131z\u0131l",
+          "y": 0
+        },
         {
           "name": "Beylerce",
           "y": 0
@@ -2487,55 +2491,15 @@
           "y": 0
         },
         {
-          "name": "Siyah",
-          "y": 0
-        },
-        {
-          "name": "Kuru \u00fcz\u00fcm",
-          "y": 0
-        },
-        {
-          "name": "Kiraz kurusu (Dried cherry)",
-          "y": 0
-        },
-        {
-          "name": "Ceviz",
-          "y": 0
+          "name": "Razaki",
+          "y": 1
         },
         {
           "name": "Leblebi (Roasted chickpea)",
           "y": 1
         },
         {
-          "name": "Kabuklu ac\u0131badem",
-          "y": 0
-        },
-        {
-          "name": "Razaki",
-          "y": 1
-        },
-        {
-          "name": "F\u0131nd\u0131k i\u00e7i (Nutmeat)",
-          "y": 1
-        },
-        {
-          "name": "Kestane (Chestnut)",
-          "y": 0
-        },
-        {
-          "name": "K\u00fcfter",
-          "y": 1
-        },
-        {
-          "name": "Lob inciri (Lob fig)",
-          "y": 0
-        },
-        {
-          "name": "K\u0131z\u0131l",
-          "y": 0
-        },
-        {
-          "name": "F\u0131st\u0131k",
+          "name": "Badem",
           "y": 1
         },
         {
@@ -2543,27 +2507,23 @@
           "y": 1
         },
         {
-          "name": "Kabuklu badem",
-          "y": 1
+          "name": "Ceviz",
+          "y": 0
+        },
+        {
+          "name": "Kuru \u00fcz\u00fcm",
+          "y": 0
+        },
+        {
+          "name": "Lob inciri (Lob fig)",
+          "y": 0
+        },
+        {
+          "name": "Siyah",
+          "y": 0
         },
         {
           "name": "Sar\u0131ca inciri (Sar\u0131ca fig)",
-          "y": 0
-        },
-        {
-          "name": "\u0130\u011fde (Oleaster)",
-          "y": 0
-        },
-        {
-          "name": "Badem",
-          "y": 1
-        },
-        {
-          "name": "F\u0131nd\u0131k",
-          "y": 7
-        },
-        {
-          "name": "Armut kurusu (Dried pear)",
           "y": 0
         },
         {
@@ -2571,7 +2531,47 @@
           "y": 3
         },
         {
+          "name": "Armut kurusu (Dried pear)",
+          "y": 0
+        },
+        {
+          "name": "F\u0131nd\u0131k",
+          "y": 7
+        },
+        {
           "name": "K\u0131z\u0131lc\u0131k kurusu (Cornelian cherry)",
+          "y": 0
+        },
+        {
+          "name": "K\u00fcfter",
+          "y": 1
+        },
+        {
+          "name": "Kiraz kurusu (Dried cherry)",
+          "y": 0
+        },
+        {
+          "name": "F\u0131nd\u0131k i\u00e7i (Nutmeat)",
+          "y": 1
+        },
+        {
+          "name": "F\u0131st\u0131k",
+          "y": 1
+        },
+        {
+          "name": "Kestane (Chestnut)",
+          "y": 0
+        },
+        {
+          "name": "\u0130\u011fde (Oleaster)",
+          "y": 0
+        },
+        {
+          "name": "Kabuklu badem",
+          "y": 1
+        },
+        {
+          "name": "Kabuklu ac\u0131badem",
           "y": 0
         }
       ]
@@ -2581,23 +2581,11 @@
       "id": "Cooking Oils",
       "data": [
         {
-          "name": "Dolama Ya\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Revgan-\u0131 \u00e7ervi\u015f",
-          "y": 3
-        },
-        {
           "name": "Revgan-\u0131 Leh",
           "y": 0
         },
         {
-          "name": "Don ya\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Susam ya\u011f\u0131",
+          "name": "Dolama Ya\u011f\u0131",
           "y": 0
         },
         {
@@ -2605,19 +2593,31 @@
           "y": 2
         },
         {
+          "name": "\u00c7alg\u0131 revgan-\u0131 sade",
+          "y": 0
+        },
+        {
+          "name": "Revgan-\u0131 \u00e7ervi\u015f",
+          "y": 3
+        },
+        {
           "name": "Sadeya\u011f",
           "y": 2
+        },
+        {
+          "name": "Don ya\u011f\u0131",
+          "y": 0
         },
         {
           "name": "Kak\u0131rdak",
           "y": 0
         },
         {
-          "name": "\u00c7alg\u0131 revgan-\u0131 sade",
+          "name": "Bezir ya\u011f\u0131",
           "y": 0
         },
         {
-          "name": "Bezir ya\u011f\u0131",
+          "name": "Susam ya\u011f\u0131",
           "y": 0
         }
       ]
@@ -2627,23 +2627,11 @@
       "id": "Fats",
       "data": [
         {
-          "name": "Dolama Ya\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Revgan-\u0131 \u00e7ervi\u015f",
-          "y": 3
-        },
-        {
           "name": "Revgan-\u0131 Leh",
           "y": 0
         },
         {
-          "name": "Don ya\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Susam ya\u011f\u0131",
+          "name": "Dolama Ya\u011f\u0131",
           "y": 0
         },
         {
@@ -2651,15 +2639,23 @@
           "y": 2
         },
         {
+          "name": "\u00c7alg\u0131 revgan-\u0131 sade",
+          "y": 0
+        },
+        {
+          "name": "Revgan-\u0131 \u00e7ervi\u015f",
+          "y": 3
+        },
+        {
           "name": "Sadeya\u011f",
           "y": 2
         },
         {
-          "name": "Kak\u0131rdak",
+          "name": "Don ya\u011f\u0131",
           "y": 0
         },
         {
-          "name": "\u00c7alg\u0131 revgan-\u0131 sade",
+          "name": "Kak\u0131rdak",
           "y": 0
         },
         {
@@ -2669,6 +2665,10 @@
         {
           "name": "Tahin (Tahini)",
           "y": 0
+        },
+        {
+          "name": "Susam ya\u011f\u0131",
+          "y": 0
         }
       ]
     },
@@ -2677,7 +2677,7 @@
       "id": "Dairy",
       "data": [
         {
-          "name": "Yo\u011furt (Yogurt)",
+          "name": "Taze peynir",
           "y": 0
         },
         {
@@ -2685,19 +2685,15 @@
           "y": 0
         },
         {
-          "name": "Mudurnu peyniri",
-          "y": 0
+          "name": "Yumurta",
+          "y": 1
         },
         {
-          "name": "Tulum peyniri",
-          "y": 4
+          "name": "Yo\u011furt (Yogurt)",
+          "y": 0
         },
         {
           "name": "Ke\u00e7i peyniri (Goat cheese)",
-          "y": 0
-        },
-        {
-          "name": "Taze peynir",
           "y": 0
         },
         {
@@ -2705,19 +2701,15 @@
           "y": 0
         },
         {
-          "name": "Dil peyniri",
-          "y": 0
+          "name": "Ka\u015far peyniri",
+          "y": 2
         },
         {
-          "name": "Peynir (Cheese)",
-          "y": 0
+          "name": "Balkan cheese",
+          "y": 1
         },
         {
           "name": "Leh ka\u015fkaval\u0131",
-          "y": 0
-        },
-        {
-          "name": "\u00c7orlu ka\u015fkaval\u0131",
           "y": 0
         },
         {
@@ -2725,11 +2717,27 @@
           "y": 2
         },
         {
+          "name": "Ka\u015fkaval",
+          "y": 3
+        },
+        {
+          "name": "Tulum peyniri",
+          "y": 4
+        },
+        {
+          "name": "Mudurnu peyniri",
+          "y": 0
+        },
+        {
           "name": "Torba yo\u011furt",
           "y": 0
         },
         {
-          "name": "\u00c7orlu peyniri (\u00c7orlu cheese)",
+          "name": "Karag\u00fcmr\u00fck tulum peyniri",
+          "y": 1
+        },
+        {
+          "name": "Dil peyniri",
           "y": 0
         },
         {
@@ -2737,24 +2745,16 @@
           "y": 0
         },
         {
-          "name": "Balkan cheese",
-          "y": 1
+          "name": "Peynir (Cheese)",
+          "y": 0
         },
         {
-          "name": "Karag\u00fcmr\u00fck tulum peyniri",
-          "y": 1
+          "name": "\u00c7orlu ka\u015fkaval\u0131",
+          "y": 0
         },
         {
-          "name": "Ka\u015fkaval",
-          "y": 3
-        },
-        {
-          "name": "Ka\u015far peyniri",
-          "y": 2
-        },
-        {
-          "name": "Yumurta",
-          "y": 1
+          "name": "\u00c7orlu peyniri (\u00c7orlu cheese)",
+          "y": 0
         }
       ]
     },
@@ -2763,39 +2763,7 @@
       "id": "Cheese Assortment",
       "data": [
         {
-          "name": "Tulum peyniri",
-          "y": 4
-        },
-        {
-          "name": "Yerli ka\u015fkaval",
-          "y": 0
-        },
-        {
-          "name": "Balkan cheese",
-          "y": 1
-        },
-        {
-          "name": "Ke\u00e7i peyniri (Goat cheese)",
-          "y": 0
-        },
-        {
           "name": "Peynir (Cheese)",
-          "y": 0
-        },
-        {
-          "name": "Leh ka\u015fkaval\u0131",
-          "y": 0
-        },
-        {
-          "name": "\u00c7orlu ka\u015fkaval\u0131",
-          "y": 0
-        },
-        {
-          "name": "Salamura peynir",
-          "y": 0
-        },
-        {
-          "name": "Mudurnu peyniri",
           "y": 0
         },
         {
@@ -2803,12 +2771,40 @@
           "y": 0
         },
         {
-          "name": "Ka\u015fkaval",
-          "y": 3
+          "name": "Ke\u00e7i peyniri (Goat cheese)",
+          "y": 0
         },
         {
           "name": "Ka\u015far peyniri",
           "y": 2
+        },
+        {
+          "name": "\u00c7orlu ka\u015fkaval\u0131",
+          "y": 0
+        },
+        {
+          "name": "Leh ka\u015fkaval\u0131",
+          "y": 0
+        },
+        {
+          "name": "Ka\u015fkaval",
+          "y": 3
+        },
+        {
+          "name": "Salamura peynir",
+          "y": 0
+        },
+        {
+          "name": "Tulum peyniri",
+          "y": 4
+        },
+        {
+          "name": "Mudurnu peyniri",
+          "y": 0
+        },
+        {
+          "name": "Balkan cheese",
+          "y": 1
         },
         {
           "name": "Karag\u00fcmr\u00fck tulum peyniri",
@@ -2820,6 +2816,10 @@
         },
         {
           "name": "Dil peyniri",
+          "y": 0
+        },
+        {
+          "name": "Yerli ka\u015fkaval",
           "y": 0
         }
       ]
@@ -2829,11 +2829,11 @@
       "id": "Ka\u015fkaval Assortment",
       "data": [
         {
-          "name": "Yerli ka\u015fkaval",
+          "name": "\u00c7orlu ka\u015fkaval\u0131",
           "y": 0
         },
         {
-          "name": "\u00c7orlu ka\u015fkaval\u0131",
+          "name": "Leh ka\u015fkaval\u0131",
           "y": 0
         },
         {
@@ -2841,7 +2841,7 @@
           "y": 3
         },
         {
-          "name": "Leh ka\u015fkaval\u0131",
+          "name": "Yerli ka\u015fkaval",
           "y": 0
         }
       ]
@@ -2851,7 +2851,15 @@
       "id": "Dried Goods",
       "data": [
         {
-          "name": "Tarhana",
+          "name": "K\u0131z\u0131l \u015eariyye",
+          "y": 1
+        },
+        {
+          "name": "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
+          "y": 1
+        },
+        {
+          "name": "K\u0131z\u0131l",
           "y": 0
         },
         {
@@ -2859,47 +2867,15 @@
           "y": 0
         },
         {
-          "name": "B\u00f6\u011fr\u00fclce",
-          "y": 4
-        },
-        {
-          "name": "Edremit siyah\u0131",
-          "y": 0
-        },
-        {
-          "name": "M\u0131s\u0131r pirinci",
+          "name": "Razaki",
           "y": 1
         },
         {
-          "name": "\u00dcz\u00fcm",
-          "y": 0
-        },
-        {
-          "name": "Alaca bakla",
-          "y": 0
-        },
-        {
-          "name": "Siyah",
-          "y": 0
-        },
-        {
-          "name": "K\u0131z\u0131l \u015eariyye",
-          "y": 1
-        },
-        {
-          "name": "Kuru \u00fcz\u00fcm",
-          "y": 0
-        },
-        {
-          "name": "Bakla (Broad bean)",
+          "name": "Ke\u00e7iboynuzu / Harnup",
           "y": 3
         },
         {
-          "name": "Arpa \u015fariye",
-          "y": 1
-        },
-        {
-          "name": "Kiraz kurusu (Dried cherry)",
+          "name": "\u00dcz\u00fcm",
           "y": 0
         },
         {
@@ -2907,11 +2883,11 @@
           "y": 1
         },
         {
-          "name": "Razaki",
+          "name": "\u015eorbal\u0131k \u015fariye",
           "y": 1
         },
         {
-          "name": "Bulgur",
+          "name": "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
           "y": 2
         },
         {
@@ -2919,31 +2895,55 @@
           "y": 5
         },
         {
-          "name": "Ke\u00e7iboynuzu / Harnup",
+          "name": "Bu\u011fday",
+          "y": 1
+        },
+        {
+          "name": "\u015eariye",
           "y": 3
         },
         {
-          "name": "Kenevir tohumu",
-          "y": 0
+          "name": "Pirin\u00e7",
+          "y": 6
+        },
+        {
+          "name": "Pestil",
+          "y": 1
         },
         {
           "name": "Anadolu pirinci",
           "y": 1
         },
         {
+          "name": "M\u0131s\u0131r pirinci",
+          "y": 1
+        },
+        {
+          "name": "B\u00f6\u011fr\u00fclce",
+          "y": 4
+        },
+        {
           "name": "Erik",
           "y": 0
         },
         {
-          "name": "K\u00fcfter",
-          "y": 1
+          "name": "Kuru \u00fcz\u00fcm",
+          "y": 0
         },
         {
-          "name": "Fasulye (Bean)",
-          "y": 5
+          "name": "Bulgur",
+          "y": 2
         },
         {
-          "name": "\u015eorbal\u0131k arpa",
+          "name": "Peksimet",
+          "y": 0
+        },
+        {
+          "name": "Edremit siyah\u0131 \u00fcz\u00fcm",
+          "y": 0
+        },
+        {
+          "name": "Edremit siyah\u0131",
           "y": 0
         },
         {
@@ -2951,35 +2951,19 @@
           "y": 0
         },
         {
-          "name": "K\u0131z\u0131l",
+          "name": "\u0130zmir siyah\u0131 \u00fcz\u00fcm",
           "y": 0
         },
         {
-          "name": "Pestil",
-          "y": 1
-        },
-        {
-          "name": "Edremit siyah\u0131 \u00fcz\u00fcm",
+          "name": "Karadeniz m\u0131s\u0131r\u0131",
           "y": 0
         },
         {
-          "name": "\u015eorbal\u0131k \u015fariye",
-          "y": 1
-        },
-        {
-          "name": "\u015eair",
+          "name": "Siyah",
           "y": 0
         },
         {
-          "name": "Pirin\u00e7",
-          "y": 6
-        },
-        {
-          "name": "Bu\u011fday",
-          "y": 1
-        },
-        {
-          "name": "Peksimet",
+          "name": "Kenevir tohumu",
           "y": 0
         },
         {
@@ -2987,23 +2971,15 @@
           "y": 0
         },
         {
-          "name": "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
-          "y": 1
-        },
-        {
-          "name": "\u0130\u011fde (Oleaster)",
-          "y": 0
-        },
-        {
-          "name": "\u015eariye",
+          "name": "\u0130ncir",
           "y": 3
         },
         {
-          "name": "Mercimek",
-          "y": 5
+          "name": "Tarhana",
+          "y": 0
         },
         {
-          "name": "\u0130zmir siyah\u0131 \u00fcz\u00fcm",
+          "name": "\u015eorbal\u0131k arpa",
           "y": 0
         },
         {
@@ -3015,19 +2991,43 @@
           "y": 2
         },
         {
-          "name": "Karadeniz m\u0131s\u0131r\u0131",
+          "name": "K\u0131z\u0131lc\u0131k kurusu (Cornelian cherry)",
           "y": 0
         },
         {
-          "name": "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
-          "y": 2
-        },
-        {
-          "name": "\u0130ncir",
+          "name": "Bakla (Broad bean)",
           "y": 3
         },
         {
-          "name": "K\u0131z\u0131lc\u0131k kurusu (Cornelian cherry)",
+          "name": "K\u00fcfter",
+          "y": 1
+        },
+        {
+          "name": "Alaca bakla",
+          "y": 0
+        },
+        {
+          "name": "Arpa \u015fariye",
+          "y": 1
+        },
+        {
+          "name": "Kiraz kurusu (Dried cherry)",
+          "y": 0
+        },
+        {
+          "name": "Mercimek",
+          "y": 5
+        },
+        {
+          "name": "\u0130\u011fde (Oleaster)",
+          "y": 0
+        },
+        {
+          "name": "Fasulye (Bean)",
+          "y": 5
+        },
+        {
+          "name": "\u015eair",
           "y": 0
         }
       ]
@@ -3037,11 +3037,19 @@
       "id": "Legumes",
       "data": [
         {
-          "name": "Mercimek",
-          "y": 5
+          "name": "Bakla (Broad bean)",
+          "y": 3
         },
         {
-          "name": "Nohut",
+          "name": "Alaca bakla",
+          "y": 0
+        },
+        {
+          "name": "Kenevir tohumu",
+          "y": 0
+        },
+        {
+          "name": "Mercimek",
           "y": 5
         },
         {
@@ -3049,24 +3057,16 @@
           "y": 4
         },
         {
-          "name": "Kenevir tohumu",
-          "y": 0
+          "name": "Leblebi (Roasted chickpea)",
+          "y": 1
         },
         {
           "name": "Fasulye (Bean)",
           "y": 5
         },
         {
-          "name": "Alaca bakla",
-          "y": 0
-        },
-        {
-          "name": "Bakla (Broad bean)",
-          "y": 3
-        },
-        {
-          "name": "Leblebi (Roasted chickpea)",
-          "y": 1
+          "name": "Nohut",
+          "y": 5
         }
       ]
     },
@@ -3075,15 +3075,15 @@
       "id": "Grains",
       "data": [
         {
-          "name": "\u015eorbal\u0131k \u015fariye",
+          "name": "K\u0131z\u0131l \u015eariyye",
           "y": 1
         },
         {
-          "name": "Bulgur",
-          "y": 2
+          "name": "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
+          "y": 1
         },
         {
-          "name": "\u015eair",
+          "name": "Karadeniz m\u0131s\u0131r\u0131",
           "y": 0
         },
         {
@@ -3095,19 +3095,15 @@
           "y": 1
         },
         {
-          "name": "Bu\u011fday",
+          "name": "Arpa \u015fariye",
           "y": 1
         },
         {
-          "name": "Daru",
-          "y": 2
+          "name": "\u015eariye",
+          "y": 3
         },
         {
           "name": "M\u0131s\u0131r pirinci",
-          "y": 1
-        },
-        {
-          "name": "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
           "y": 1
         },
         {
@@ -3115,20 +3111,24 @@
           "y": 0
         },
         {
-          "name": "Karadeniz m\u0131s\u0131r\u0131",
+          "name": "Daru",
+          "y": 2
+        },
+        {
+          "name": "Bulgur",
+          "y": 2
+        },
+        {
+          "name": "\u015eorbal\u0131k \u015fariye",
+          "y": 1
+        },
+        {
+          "name": "\u015eair",
           "y": 0
         },
         {
-          "name": "K\u0131z\u0131l \u015eariyye",
+          "name": "Bu\u011fday",
           "y": 1
-        },
-        {
-          "name": "Arpa \u015fariye",
-          "y": 1
-        },
-        {
-          "name": "\u015eariye",
-          "y": 3
         }
       ]
     },
@@ -3137,11 +3137,11 @@
       "id": "Dried Fruits",
       "data": [
         {
-          "name": "Beylerce",
+          "name": "K\u0131z\u0131l",
           "y": 0
         },
         {
-          "name": "Edremit siyah\u0131",
+          "name": "Beylerce",
           "y": 0
         },
         {
@@ -3149,7 +3149,23 @@
           "y": 0
         },
         {
-          "name": "Siyah",
+          "name": "Razaki",
+          "y": 1
+        },
+        {
+          "name": "Ke\u00e7iboynuzu / Harnup",
+          "y": 3
+        },
+        {
+          "name": "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
+          "y": 2
+        },
+        {
+          "name": "Koca \u00fcz\u00fcm\u00fc",
+          "y": 2
+        },
+        {
+          "name": "Erik",
           "y": 0
         },
         {
@@ -3157,27 +3173,11 @@
           "y": 0
         },
         {
-          "name": "Kiraz kurusu (Dried cherry)",
+          "name": "Edremit siyah\u0131 \u00fcz\u00fcm",
           "y": 0
         },
         {
-          "name": "Ho\u015fabl\u0131k \u00fcz\u00fcm",
-          "y": 1
-        },
-        {
-          "name": "Razaki",
-          "y": 1
-        },
-        {
-          "name": "Koca \u00fcz\u00fcm\u00fc",
-          "y": 2
-        },
-        {
-          "name": "Ke\u00e7iboynuzu / Harnup",
-          "y": 3
-        },
-        {
-          "name": "Erik",
+          "name": "Edremit siyah\u0131",
           "y": 0
         },
         {
@@ -3185,11 +3185,35 @@
           "y": 0
         },
         {
-          "name": "K\u0131z\u0131l",
+          "name": "\u0130zmir siyah\u0131 \u00fcz\u00fcm",
           "y": 0
         },
         {
-          "name": "Edremit siyah\u0131 \u00fcz\u00fcm",
+          "name": "Ho\u015fabl\u0131k \u00fcz\u00fcm",
+          "y": 1
+        },
+        {
+          "name": "Siyah",
+          "y": 0
+        },
+        {
+          "name": "Sar\u0131ca inciri (Sar\u0131ca fig)",
+          "y": 0
+        },
+        {
+          "name": "\u0130ncir",
+          "y": 3
+        },
+        {
+          "name": "Armut kurusu (Dried pear)",
+          "y": 0
+        },
+        {
+          "name": "K\u0131z\u0131lc\u0131k kurusu (Cornelian cherry)",
+          "y": 0
+        },
+        {
+          "name": "Kiraz kurusu (Dried cherry)",
           "y": 0
         },
         {
@@ -3197,31 +3221,7 @@
           "y": 1
         },
         {
-          "name": "Sar\u0131ca inciri (Sar\u0131ca fig)",
-          "y": 0
-        },
-        {
           "name": "\u0130\u011fde (Oleaster)",
-          "y": 0
-        },
-        {
-          "name": "\u0130zmir siyah\u0131 \u00fcz\u00fcm",
-          "y": 0
-        },
-        {
-          "name": "Armut kurusu (Dried pear)",
-          "y": 0
-        },
-        {
-          "name": "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
-          "y": 2
-        },
-        {
-          "name": "\u0130ncir",
-          "y": 3
-        },
-        {
-          "name": "K\u0131z\u0131lc\u0131k kurusu (Cornelian cherry)",
           "y": 0
         }
       ]
@@ -3231,8 +3231,24 @@
       "id": "Raisin Assortment",
       "data": [
         {
-          "name": "Koca siyah \u00fcz\u00fcm",
+          "name": "\u0130zmir siyah\u0131 \u00fcz\u00fcm",
+          "y": 0
+        },
+        {
+          "name": "Ho\u015fabl\u0131k \u00fcz\u00fcm",
           "y": 1
+        },
+        {
+          "name": "\u00dcz\u00fcm",
+          "y": 0
+        },
+        {
+          "name": "Siyah",
+          "y": 0
+        },
+        {
+          "name": "K\u0131z\u0131l",
+          "y": 0
         },
         {
           "name": "Koca \u00fcz\u00fcm\u00fc",
@@ -3243,36 +3259,20 @@
           "y": 0
         },
         {
-          "name": "\u0130zmir siyah\u0131 \u00fcz\u00fcm",
-          "y": 0
-        },
-        {
-          "name": "\u00dcz\u00fcm",
-          "y": 0
-        },
-        {
-          "name": "K\u0131z\u0131l",
-          "y": 0
-        },
-        {
-          "name": "Siyah",
-          "y": 0
-        },
-        {
           "name": "Kuru \u00fcz\u00fcm",
           "y": 0
         },
         {
-          "name": "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
-          "y": 2
-        },
-        {
-          "name": "Ho\u015fabl\u0131k \u00fcz\u00fcm",
-          "y": 1
-        },
-        {
           "name": "Razaki",
           "y": 1
+        },
+        {
+          "name": "Koca siyah \u00fcz\u00fcm",
+          "y": 1
+        },
+        {
+          "name": "K\u0131rm\u0131z\u0131 \u00fcz\u00fcm",
+          "y": 2
         },
         {
           "name": "Edremit siyah\u0131 \u00fcz\u00fcm",
@@ -3285,12 +3285,12 @@
       "id": "Fig Assortment",
       "data": [
         {
-          "name": "\u0130ncir",
-          "y": 3
-        },
-        {
           "name": "Lob inciri (Lob fig)",
           "y": 0
+        },
+        {
+          "name": "\u0130ncir",
+          "y": 3
         },
         {
           "name": "Sar\u0131ca inciri (Sar\u0131ca fig)",
@@ -3303,31 +3303,11 @@
       "id": "Condiments",
       "data": [
         {
-          "name": "\u0130nce tuz",
-          "y": 2
-        },
-        {
-          "name": "Kefe tuzu",
-          "y": 0
-        },
-        {
-          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f tuz",
-          "y": 0
-        },
-        {
-          "name": "Kal\u0131n tuz",
+          "name": "Peppercorn",
           "y": 1
         },
         {
-          "name": "Ku\u015fadas\u0131  bal\u0131",
-          "y": 0
-        },
-        {
-          "name": "Girit pekmezi / Cretan molasses",
-          "y": 0
-        },
-        {
-          "name": "Odun pekmezi",
+          "name": "G\u00f6me\u00e7 bal\u0131",
           "y": 0
         },
         {
@@ -3335,39 +3315,7 @@
           "y": 0
         },
         {
-          "name": "Revak asel",
-          "y": 0
-        },
-        {
-          "name": "Akdeniz bal\u0131",
-          "y": 0
-        },
-        {
-          "name": "Peppercorn",
-          "y": 1
-        },
-        {
-          "name": "K\u00f6y tuzu",
-          "y": 1
-        },
-        {
-          "name": "Yaprak tuzu",
-          "y": 1
-        },
-        {
-          "name": "Pekmez",
-          "y": 6
-        },
-        {
           "name": "Kutu bal\u0131",
-          "y": 0
-        },
-        {
-          "name": "Hurda tuz",
-          "y": 0
-        },
-        {
-          "name": "Tahin (Tahini)",
           "y": 0
         },
         {
@@ -3375,7 +3323,35 @@
           "y": 0
         },
         {
-          "name": "G\u00f6me\u00e7 bal\u0131",
+          "name": "Revak asel",
+          "y": 0
+        },
+        {
+          "name": "Bal / Asel",
+          "y": 6
+        },
+        {
+          "name": "Pekmez",
+          "y": 6
+        },
+        {
+          "name": "Vinegar",
+          "y": 5
+        },
+        {
+          "name": "Akdeniz bal\u0131",
+          "y": 0
+        },
+        {
+          "name": "Tahin (Tahini)",
+          "y": 0
+        },
+        {
+          "name": "K\u00f6y tuzu",
+          "y": 1
+        },
+        {
+          "name": "Girit pekmezi / Cretan molasses",
           "y": 0
         },
         {
@@ -3387,23 +3363,7 @@
           "y": 3
         },
         {
-          "name": "Anason (Aniseed)",
-          "y": 0
-        },
-        {
-          "name": "Bal / Asel",
-          "y": 6
-        },
-        {
-          "name": "K\u0131rm\u0131z\u0131 biber (Red pepper)",
-          "y": 1
-        },
-        {
-          "name": "Vinegar",
-          "y": 5
-        },
-        {
-          "name": "Limon suyu / Ab-\u0131 limon (Lemon juice)",
+          "name": "Hurda tuz",
           "y": 0
         },
         {
@@ -3411,8 +3371,48 @@
           "y": 0
         },
         {
+          "name": "Ku\u015fadas\u0131  bal\u0131",
+          "y": 0
+        },
+        {
+          "name": "Kefe tuzu",
+          "y": 0
+        },
+        {
+          "name": "K\u0131rm\u0131z\u0131 biber (Red pepper)",
+          "y": 1
+        },
+        {
+          "name": "Odun pekmezi",
+          "y": 0
+        },
+        {
+          "name": "Anason (Aniseed)",
+          "y": 0
+        },
+        {
+          "name": "Limon suyu / Ab-\u0131 limon (Lemon juice)",
+          "y": 0
+        },
+        {
+          "name": "Kal\u0131n tuz",
+          "y": 1
+        },
+        {
+          "name": "Yaprak tuzu",
+          "y": 1
+        },
+        {
+          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f tuz",
+          "y": 0
+        },
+        {
           "name": "Karadeniz bal\u0131",
           "y": 0
+        },
+        {
+          "name": "\u0130nce tuz",
+          "y": 2
         }
       ]
     },
@@ -3421,20 +3421,20 @@
       "id": "Molasses Assortment",
       "data": [
         {
-          "name": "Girit pekmezi / Cretan molasses",
-          "y": 0
-        },
-        {
-          "name": "Pekmez",
-          "y": 6
-        },
-        {
           "name": "Odun pekmezi",
           "y": 0
         },
         {
           "name": "\u00c7orlu pekmezi / \u00c7orlu molasses",
           "y": 0
+        },
+        {
+          "name": "Girit pekmezi / Cretan molasses",
+          "y": 0
+        },
+        {
+          "name": "Pekmez",
+          "y": 6
         }
       ]
     },
@@ -3443,7 +3443,19 @@
       "id": "Sweeteners",
       "data": [
         {
+          "name": "Bal / Asel",
+          "y": 6
+        },
+        {
           "name": "Eflak bal\u0131",
+          "y": 0
+        },
+        {
+          "name": "Pekmez",
+          "y": 6
+        },
+        {
+          "name": "Odun pekmezi",
           "y": 0
         },
         {
@@ -3451,35 +3463,23 @@
           "y": 0
         },
         {
-          "name": "Akdeniz bal\u0131",
-          "y": 0
-        },
-        {
           "name": "Odun asel",
           "y": 2
         },
         {
-          "name": "Pekmez",
-          "y": 6
+          "name": "\u00c7orlu pekmezi / \u00c7orlu molasses",
+          "y": 0
         },
         {
           "name": "Revak asel",
           "y": 0
         },
         {
-          "name": "Bal / Asel",
-          "y": 6
-        },
-        {
           "name": "Ku\u015fadas\u0131  bal\u0131",
           "y": 0
         },
         {
-          "name": "Girit pekmezi / Cretan molasses",
-          "y": 0
-        },
-        {
-          "name": "Odun pekmezi",
+          "name": "Akdeniz bal\u0131",
           "y": 0
         },
         {
@@ -3487,7 +3487,7 @@
           "y": 0
         },
         {
-          "name": "\u00c7orlu pekmezi / \u00c7orlu molasses",
+          "name": "Girit pekmezi / Cretan molasses",
           "y": 0
         }
       ]
@@ -3497,8 +3497,16 @@
       "id": "Beverages",
       "data": [
         {
+          "name": "Ham sirke",
+          "y": 0
+        },
+        {
           "name": "Nardeng",
           "y": 5
+        },
+        {
+          "name": "Kahve",
+          "y": 0
         },
         {
           "name": "Ihlamur",
@@ -3506,14 +3514,6 @@
         },
         {
           "name": "Arak",
-          "y": 0
-        },
-        {
-          "name": "Ham sirke",
-          "y": 0
-        },
-        {
-          "name": "Kahve",
           "y": 0
         }
       ]
@@ -3523,11 +3523,15 @@
       "id": "Honey Assortment",
       "data": [
         {
-          "name": "G\u00f6me\u00e7 bal\u0131",
+          "name": "Bal / Asel",
+          "y": 6
+        },
+        {
+          "name": "Ku\u015fadas\u0131  bal\u0131",
           "y": 0
         },
         {
-          "name": "Akdeniz bal\u0131",
+          "name": "G\u00f6me\u00e7 bal\u0131",
           "y": 0
         },
         {
@@ -3539,15 +3543,11 @@
           "y": 0
         },
         {
-          "name": "Bal / Asel",
-          "y": 6
-        },
-        {
-          "name": "Ku\u015fadas\u0131  bal\u0131",
+          "name": "Eflak bal\u0131",
           "y": 0
         },
         {
-          "name": "Eflak bal\u0131",
+          "name": "Akdeniz bal\u0131",
           "y": 0
         },
         {
@@ -3565,20 +3565,20 @@
       "id": "Baking Goods",
       "data": [
         {
-          "name": "Ni\u015fasta",
-          "y": 4
-        },
-        {
-          "name": "Un / Dakik",
-          "y": 4
-        },
-        {
           "name": "Dakik-i vasat",
           "y": 1
         },
         {
+          "name": "Ni\u015fasta",
+          "y": 4
+        },
+        {
           "name": "Dakik-i has",
           "y": 2
+        },
+        {
+          "name": "Un / Dakik",
+          "y": 4
         }
       ]
     },
@@ -3587,39 +3587,19 @@
       "id": "Ingredients",
       "data": [
         {
-          "name": "Yaprak tuzu",
-          "y": 1
-        },
-        {
-          "name": "Ni\u015fasta",
-          "y": 4
-        },
-        {
-          "name": "Dakik-i vasat",
-          "y": 1
-        },
-        {
-          "name": "\u0130nce tuz",
-          "y": 2
-        },
-        {
-          "name": "Eflak tuzu",
-          "y": 0
-        },
-        {
           "name": "Kefe tuzu",
           "y": 0
         },
         {
-          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f tuz",
-          "y": 0
-        },
-        {
-          "name": "Un / Dakik",
-          "y": 4
+          "name": "Dakik-i has",
+          "y": 2
         },
         {
           "name": "Kal\u0131n tuz",
+          "y": 1
+        },
+        {
+          "name": "Dakik-i vasat",
           "y": 1
         },
         {
@@ -3627,19 +3607,39 @@
           "y": 0
         },
         {
-          "name": "K\u00f6y tuzu",
+          "name": "Tuz",
+          "y": 2
+        },
+        {
+          "name": "Yaprak tuzu",
           "y": 1
         },
         {
-          "name": "Tuz",
-          "y": 2
+          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f tuz",
+          "y": 0
+        },
+        {
+          "name": "Ni\u015fasta",
+          "y": 4
         },
         {
           "name": "Tahin (Tahini)",
           "y": 0
         },
         {
-          "name": "Dakik-i has",
+          "name": "Un / Dakik",
+          "y": 4
+        },
+        {
+          "name": "K\u00f6y tuzu",
+          "y": 1
+        },
+        {
+          "name": "Eflak tuzu",
+          "y": 0
+        },
+        {
+          "name": "\u0130nce tuz",
           "y": 2
         }
       ]
@@ -3649,68 +3649,28 @@
       "id": "Spices and Add Ons",
       "data": [
         {
-          "name": "\u0130nce tuz",
-          "y": 2
-        },
-        {
-          "name": "Kefe tuzu",
+          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f Leh tuzu",
           "y": 0
-        },
-        {
-          "name": "Kaya tuzu",
-          "y": 0
-        },
-        {
-          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f tuz",
-          "y": 0
-        },
-        {
-          "name": "Kal\u0131n tuz",
-          "y": 1
         },
         {
           "name": "Ku\u015f \u00fcz\u00fcm\u00fc",
           "y": 1
         },
         {
-          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f Leh tuzu",
-          "y": 0
-        },
-        {
-          "name": "\u00c7\u00f6rek otu (Black sesame)",
-          "y": 0
-        },
-        {
-          "name": "Gemlik tuzu",
-          "y": 0
-        },
-        {
-          "name": "Peppercorn",
-          "y": 1
-        },
-        {
-          "name": "K\u00f6y tuzu",
-          "y": 1
-        },
-        {
-          "name": "Tuz",
-          "y": 2
-        },
-        {
-          "name": "Yaprak tuzu",
-          "y": 1
-        },
-        {
-          "name": "Leh tuzu",
-          "y": 0
-        },
-        {
-          "name": "Hurda tuz",
+          "name": "Kaya tuzu",
           "y": 0
         },
         {
           "name": "Sumak",
           "y": 0
+        },
+        {
+          "name": "Vinegar",
+          "y": 5
+        },
+        {
+          "name": "K\u00f6y tuzu",
+          "y": 1
         },
         {
           "name": "Eflak tuzu",
@@ -3721,7 +3681,23 @@
           "y": 3
         },
         {
-          "name": "Anason (Aniseed)",
+          "name": "Gemlik tuzu",
+          "y": 0
+        },
+        {
+          "name": "\u00c7\u00f6rek otu (Black sesame)",
+          "y": 0
+        },
+        {
+          "name": "Hurda tuz",
+          "y": 0
+        },
+        {
+          "name": "Leh tuzu",
+          "y": 0
+        },
+        {
+          "name": "Kefe tuzu",
           "y": 0
         },
         {
@@ -3729,8 +3705,32 @@
           "y": 1
         },
         {
-          "name": "Vinegar",
-          "y": 5
+          "name": "Anason (Aniseed)",
+          "y": 0
+        },
+        {
+          "name": "Kal\u0131n tuz",
+          "y": 1
+        },
+        {
+          "name": "Tuz",
+          "y": 2
+        },
+        {
+          "name": "Yaprak tuzu",
+          "y": 1
+        },
+        {
+          "name": "D\u00f6\u011f\u00fclm\u00fc\u015f tuz",
+          "y": 0
+        },
+        {
+          "name": "Peppercorn",
+          "y": 1
+        },
+        {
+          "name": "\u0130nce tuz",
+          "y": 2
         }
       ]
     },
@@ -3738,14 +3738,6 @@
       "name": "Sour Flavorings",
       "id": "Sour Flavorings",
       "data": [
-        {
-          "name": "Limon (Lemon)",
-          "y": 3
-        },
-        {
-          "name": "Biber tur\u015fusu (Pickled peppers)",
-          "y": 1
-        },
         {
           "name": "Lahana tur\u015fusu (Pickled cabbage)",
           "y": 0
@@ -3755,8 +3747,16 @@
           "y": 0
         },
         {
+          "name": "Biber tur\u015fusu (Pickled peppers)",
+          "y": 1
+        },
+        {
           "name": "Vinegar",
           "y": 5
+        },
+        {
+          "name": "Limon (Lemon)",
+          "y": 3
         }
       ]
     },
@@ -3765,47 +3765,35 @@
       "id": "Produce",
       "data": [
         {
-          "name": "Sapl\u0131 sar\u0131msak",
-          "y": 2
-        },
-        {
-          "name": "Limon (Lemon)",
+          "name": "Arpac\u0131k so\u011fan\u0131 (Pearl onion)",
           "y": 3
-        },
-        {
-          "name": "Kaba so\u011fan",
-          "y": 4
-        },
-        {
-          "name": "Nar (Pomegranate)",
-          "y": 0
-        },
-        {
-          "name": "Turp (Radish)",
-          "y": 0
-        },
-        {
-          "name": "Dolmal\u0131k yaprak",
-          "y": 0
-        },
-        {
-          "name": "Sar\u0131msak",
-          "y": 5
         },
         {
           "name": "So\u011fan",
           "y": 4
         },
         {
-          "name": "Arpac\u0131k so\u011fan\u0131 (Pearl onion)",
-          "y": 3
+          "name": "Kaba so\u011fan",
+          "y": 4
         },
         {
-          "name": "Tur\u015fu yapra\u011f\u0131",
+          "name": "Sar\u0131msak",
+          "y": 5
+        },
+        {
+          "name": "Dolmal\u0131k yaprak",
           "y": 0
         },
         {
+          "name": "Sapl\u0131 sar\u0131msak",
+          "y": 2
+        },
+        {
           "name": "Karpuz (Water melon)",
+          "y": 0
+        },
+        {
+          "name": "Nar (Pomegranate)",
           "y": 0
         },
         {
@@ -3815,6 +3803,18 @@
         {
           "name": "Hunnap",
           "y": 0
+        },
+        {
+          "name": "Turp (Radish)",
+          "y": 0
+        },
+        {
+          "name": "Tur\u015fu yapra\u011f\u0131",
+          "y": 0
+        },
+        {
+          "name": "Limon (Lemon)",
+          "y": 3
         }
       ]
     },
@@ -3823,28 +3823,28 @@
       "id": "Vegetables",
       "data": [
         {
-          "name": "Sapl\u0131 sar\u0131msak",
-          "y": 2
-        },
-        {
-          "name": "Kaba so\u011fan",
-          "y": 4
-        },
-        {
-          "name": "Turp (Radish)",
-          "y": 0
-        },
-        {
-          "name": "Sar\u0131msak",
-          "y": 5
-        },
-        {
           "name": "Arpac\u0131k so\u011fan\u0131 (Pearl onion)",
           "y": 3
         },
         {
           "name": "So\u011fan",
           "y": 4
+        },
+        {
+          "name": "Kaba so\u011fan",
+          "y": 4
+        },
+        {
+          "name": "Sar\u0131msak",
+          "y": 5
+        },
+        {
+          "name": "Sapl\u0131 sar\u0131msak",
+          "y": 2
+        },
+        {
+          "name": "Turp (Radish)",
+          "y": 0
         }
       ]
     },
@@ -3853,19 +3853,7 @@
       "id": "Olive Assortment",
       "data": [
         {
-          "name": "Trilye zeytini",
-          "y": 0
-        },
-        {
-          "name": "Gemlik zeytini (Gemlik olives)",
-          "y": 0
-        },
-        {
-          "name": "Zeytin",
-          "y": 5
-        },
-        {
-          "name": "Girit zeytini (Createn olives)",
+          "name": "K\u0131rm\u0131z\u0131 sele zeytini (Red dried olives)",
           "y": 0
         },
         {
@@ -3873,15 +3861,27 @@
           "y": 0
         },
         {
-          "name": "K\u0131rm\u0131z\u0131 sele zeytini (Red dried olives)",
+          "name": "Zeytin",
+          "y": 5
+        },
+        {
+          "name": "\u00c7\u00fcr\u00fck zeytun",
+          "y": 0
+        },
+        {
+          "name": "Girit zeytini (Createn olives)",
+          "y": 0
+        },
+        {
+          "name": "Gemlik zeytini (Gemlik olives)",
+          "y": 0
+        },
+        {
+          "name": "Trilye zeytini",
           "y": 0
         },
         {
           "name": "Karam\u00fcrsel zeytini (Karam\u00fcrsel olives)",
-          "y": 0
-        },
-        {
-          "name": "\u00c7\u00fcr\u00fck zeytun",
           "y": 0
         }
       ]
@@ -3891,11 +3891,11 @@
       "id": "Deli",
       "data": [
         {
-          "name": "Trilye zeytini",
+          "name": "K\u0131rm\u0131z\u0131 sele zeytini (Red dried olives)",
           "y": 0
         },
         {
-          "name": "Gemlik zeytini (Gemlik olives)",
+          "name": "Sucuk",
           "y": 0
         },
         {
@@ -3903,31 +3903,31 @@
           "y": 5
         },
         {
-          "name": "Rumeli sucu\u011fu past\u0131rmas\u0131",
-          "y": 2
-        },
-        {
-          "name": "Girit zeytini (Createn olives)",
-          "y": 0
+          "name": "Past\u0131rma",
+          "y": 1
         },
         {
           "name": "Kayseriye past\u0131rmas\u0131",
           "y": 1
         },
         {
-          "name": "Past\u0131rma",
-          "y": 1
+          "name": "Girit zeytini (Createn olives)",
+          "y": 0
         },
         {
-          "name": "K\u0131rm\u0131z\u0131 sele zeytini (Red dried olives)",
+          "name": "Rumeli sucu\u011fu past\u0131rmas\u0131",
+          "y": 2
+        },
+        {
+          "name": "Gemlik zeytini (Gemlik olives)",
+          "y": 0
+        },
+        {
+          "name": "Trilye zeytini",
           "y": 0
         },
         {
           "name": "Karam\u00fcrsel zeytini (Karam\u00fcrsel olives)",
-          "y": 0
-        },
-        {
-          "name": "Sucuk",
           "y": 0
         }
       ]
@@ -3941,132 +3941,12 @@
           "y": 0
         },
         {
-          "name": "Ka\u011f\u0131t (Paper)",
-          "y": 2
-        },
-        {
-          "name": "Saman",
-          "y": 0
-        },
-        {
-          "name": "Sabun (Soap)",
-          "y": 5
-        },
-        {
-          "name": "\u00c7al\u0131 s\u00fcp\u00fcrgesi",
-          "y": 2
-        },
-        {
-          "name": "L\u00fcle",
-          "y": 0
-        },
-        {
-          "name": "Trablus sabunun (Trablus soap)",
-          "y": 0
-        },
-        {
-          "name": "Girit sabunu (Cretan soap)",
-          "y": 0
-        },
-        {
-          "name": "\u00c7ar\u00e7ube ka\u011f\u0131d\u0131",
-          "y": 1
-        },
-        {
-          "name": "S\u00fcp\u00fcrge (Broom)",
-          "y": 2
-        },
-        {
-          "name": "Adi s\u00fcp\u00fcrge",
-          "y": 1
-        },
-        {
-          "name": "\u015eem-i revgan (Candle wax)",
-          "y": 2
-        },
-        {
-          "name": "\u00c7ingane s\u00fcp\u00fcrgesi",
-          "y": 1
-        },
-        {
-          "name": "\u015ei\u015fe mum (Bottled candle)",
-          "y": 1
-        },
-        {
-          "name": "Yaz\u0131 ka\u011f\u0131d\u0131",
-          "y": 0
-        },
-        {
-          "name": "Balmumu (Beeswax)",
-          "y": 1
-        },
-        {
-          "name": "\u0130zmir sabunu (\u0130zmir soap)",
-          "y": 0
-        },
-        {
-          "name": "Yapa\u011f\u0131 y\u00fcn",
-          "y": 0
-        },
-        {
-          "name": "Zift",
-          "y": 0
-        },
-        {
-          "name": "K\u0131zak ya\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Katran",
-          "y": 2
-        },
-        {
-          "name": "\u015eamad\u0131ra",
-          "y": 0
-        },
-        {
-          "name": "\u00c7akmak",
-          "y": 0
-        },
-        {
-          "name": "Demet odunu",
-          "y": 0
-        },
-        {
           "name": "K\u00f6m\u00fcr (Coal)",
           "y": 0
         },
         {
-          "name": "\u00c7\u0131ra (Firewood)",
-          "y": 0
-        },
-        {
-          "name": "Has\u0131r S\u00fcp\u00fcrgesi",
-          "y": 4
-        },
-        {
           "name": "Sicim (String)",
           "y": 0
-        },
-        {
-          "name": "Kav",
-          "y": 0
-        },
-        {
-          "name": "\u00c7akmak tozu",
-          "y": 0
-        },
-        {
-          "name": "Tem\u00fcr hurdas\u0131",
-          "y": 0
-        },
-        {
-          "name": "Kil",
-          "y": 0
-        },
-        {
-          "name": "Meydan s\u00fcp\u00fcrgesi",
-          "y": 2
         },
         {
           "name": "M\u0131s\u0131r ipli\u011fi",
@@ -4077,7 +3957,95 @@
           "y": 1
         },
         {
+          "name": "Girit sabunu (Cretan soap)",
+          "y": 0
+        },
+        {
+          "name": "\u00c7ingane s\u00fcp\u00fcrgesi",
+          "y": 1
+        },
+        {
+          "name": "S\u00fcp\u00fcrge (Broom)",
+          "y": 2
+        },
+        {
+          "name": "Trablus sabunun (Trablus soap)",
+          "y": 0
+        },
+        {
+          "name": "\u015ei\u015fe mum (Bottled candle)",
+          "y": 1
+        },
+        {
+          "name": "Katran",
+          "y": 2
+        },
+        {
+          "name": "\u00c7al\u0131 s\u00fcp\u00fcrgesi",
+          "y": 2
+        },
+        {
+          "name": "Saman",
+          "y": 0
+        },
+        {
+          "name": "\u00c7\u0131ra (Firewood)",
+          "y": 0
+        },
+        {
           "name": "Enfiye",
+          "y": 0
+        },
+        {
+          "name": "K\u0131zak ya\u011f\u0131",
+          "y": 0
+        },
+        {
+          "name": "Ka\u011f\u0131t (Paper)",
+          "y": 2
+        },
+        {
+          "name": "Kav",
+          "y": 0
+        },
+        {
+          "name": "Has\u0131r S\u00fcp\u00fcrgesi",
+          "y": 4
+        },
+        {
+          "name": "\u00c7akmak",
+          "y": 0
+        },
+        {
+          "name": "Adi s\u00fcp\u00fcrge",
+          "y": 1
+        },
+        {
+          "name": "Tem\u00fcr hurdas\u0131",
+          "y": 0
+        },
+        {
+          "name": "Meydan s\u00fcp\u00fcrgesi",
+          "y": 2
+        },
+        {
+          "name": "Tu\u011fla tozu (Brick dust)",
+          "y": 0
+        },
+        {
+          "name": "\u0130zmir sabunu (\u0130zmir soap)",
+          "y": 0
+        },
+        {
+          "name": "L\u00fcle",
+          "y": 0
+        },
+        {
+          "name": "\u015eamad\u0131ra",
+          "y": 0
+        },
+        {
+          "name": "Yaz\u0131 ka\u011f\u0131d\u0131",
           "y": 0
         },
         {
@@ -4085,8 +4053,40 @@
           "y": 2
         },
         {
-          "name": "Tu\u011fla tozu (Brick dust)",
+          "name": "Sabun (Soap)",
+          "y": 5
+        },
+        {
+          "name": "\u00c7akmak tozu",
           "y": 0
+        },
+        {
+          "name": "Yapa\u011f\u0131 y\u00fcn",
+          "y": 0
+        },
+        {
+          "name": "Balmumu (Beeswax)",
+          "y": 1
+        },
+        {
+          "name": "\u00c7ar\u00e7ube ka\u011f\u0131d\u0131",
+          "y": 1
+        },
+        {
+          "name": "Zift",
+          "y": 0
+        },
+        {
+          "name": "Demet odunu",
+          "y": 0
+        },
+        {
+          "name": "Kil",
+          "y": 0
+        },
+        {
+          "name": "\u015eem-i revgan (Candle wax)",
+          "y": 2
         }
       ]
     },
@@ -4095,19 +4095,7 @@
       "id": "Pickle",
       "data": [
         {
-          "name": "Tur\u015fu bal\u0131\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Tur\u015fu yapra\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Bal\u0131k tur\u015fusu",
-          "y": 0
-        },
-        {
-          "name": "Bal\u0131k salamuras\u0131",
+          "name": "Lahana tur\u015fusu (Pickled cabbage)",
           "y": 0
         },
         {
@@ -4115,15 +4103,27 @@
           "y": 0
         },
         {
+          "name": "Tur\u015fu bal\u0131\u011f\u0131",
+          "y": 0
+        },
+        {
+          "name": "Bal\u0131k tur\u015fusu",
+          "y": 0
+        },
+        {
           "name": "Biber tur\u015fusu (Pickled peppers)",
           "y": 1
+        },
+        {
+          "name": "Tur\u015fu yapra\u011f\u0131",
+          "y": 0
         },
         {
           "name": "Tur\u015fu",
           "y": 0
         },
         {
-          "name": "Lahana tur\u015fusu (Pickled cabbage)",
+          "name": "Bal\u0131k salamuras\u0131",
           "y": 0
         }
       ]
@@ -4133,7 +4133,15 @@
       "id": "Fish Assortment",
       "data": [
         {
-          "name": "Bal\u0131k tur\u015fusu",
+          "name": "Kolyarudya bal\u0131\u011f\u0131",
+          "y": 0
+        },
+        {
+          "name": "Mersin bal\u0131\u011f\u0131",
+          "y": 0
+        },
+        {
+          "name": "Kolyoz bal\u0131\u011f\u0131",
           "y": 0
         },
         {
@@ -4141,19 +4149,7 @@
           "y": 2
         },
         {
-          "name": "Mersin bal\u0131\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Kolyarudya bal\u0131\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Sardalya (Sardine)",
-          "y": 1
-        },
-        {
-          "name": "Sade bal\u0131k",
+          "name": "\u00c7iroz bal\u0131\u011f\u0131",
           "y": 0
         },
         {
@@ -4161,15 +4157,23 @@
           "y": 0
         },
         {
+          "name": "Bal\u0131k tur\u015fusu",
+          "y": 0
+        },
+        {
+          "name": "Sardalya (Sardine)",
+          "y": 1
+        },
+        {
+          "name": "\u00c7\u00fctre bal\u0131\u011f\u0131",
+          "y": 0
+        },
+        {
           "name": "Terkoz bal\u0131\u011f\u0131",
           "y": 0
         },
         {
-          "name": "\u00c7iroz bal\u0131\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Bal\u0131k salamuras\u0131",
+          "name": "Morina bal\u0131\u011f\u0131",
           "y": 0
         },
         {
@@ -4181,7 +4185,7 @@
           "y": 1
         },
         {
-          "name": "Uskumru bal\u0131\u011fu tur\u015fusu",
+          "name": "Tur\u015fu bal\u0131\u011f\u0131",
           "y": 0
         },
         {
@@ -4189,15 +4193,11 @@
           "y": 0
         },
         {
-          "name": "Tur\u015fu bal\u0131\u011f\u0131",
+          "name": "Bal\u0131k salamuras\u0131",
           "y": 0
         },
         {
-          "name": "\u00c7\u00fctre bal\u0131\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Kolyoz bal\u0131\u011f\u0131",
+          "name": "Uskumru bal\u0131\u011fu tur\u015fusu",
           "y": 0
         },
         {
@@ -4205,7 +4205,7 @@
           "y": 0
         },
         {
-          "name": "Morina bal\u0131\u011f\u0131",
+          "name": "Sade bal\u0131k",
           "y": 0
         }
       ]
@@ -4215,43 +4215,11 @@
       "id": "Animal Food",
       "data": [
         {
-          "name": "Terkoz bal\u0131\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "\u00c7iroz bal\u0131\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Bal\u0131k",
-          "y": 0
-        },
-        {
-          "name": "Havyar",
-          "y": 1
-        },
-        {
-          "name": "\u00c7\u00fctre bal\u0131\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Sade bal\u0131k",
-          "y": 0
-        },
-        {
-          "name": "Mersin bal\u0131\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Kolyoz bal\u0131\u011f\u0131",
-          "y": 0
-        },
-        {
-          "name": "Uskumru bal\u0131\u011f\u0131",
-          "y": 0
-        },
-        {
           "name": "Kolyarudya bal\u0131\u011f\u0131",
+          "y": 0
+        },
+        {
+          "name": "Sucuk",
           "y": 0
         },
         {
@@ -4263,7 +4231,23 @@
           "y": 1
         },
         {
+          "name": "\u00c7\u00fctre bal\u0131\u011f\u0131",
+          "y": 0
+        },
+        {
+          "name": "Uskumru bal\u0131\u011f\u0131",
+          "y": 0
+        },
+        {
           "name": "Tuzlu bal\u0131k",
+          "y": 0
+        },
+        {
+          "name": "Terkoz bal\u0131\u011f\u0131",
+          "y": 0
+        },
+        {
+          "name": "Morina bal\u0131\u011f\u0131",
           "y": 0
         },
         {
@@ -4271,11 +4255,27 @@
           "y": 1
         },
         {
-          "name": "Morina bal\u0131\u011f\u0131",
+          "name": "Mersin bal\u0131\u011f\u0131",
           "y": 0
         },
         {
-          "name": "Sucuk",
+          "name": "Kolyoz bal\u0131\u011f\u0131",
+          "y": 0
+        },
+        {
+          "name": "Bal\u0131k",
+          "y": 0
+        },
+        {
+          "name": "\u00c7iroz bal\u0131\u011f\u0131",
+          "y": 0
+        },
+        {
+          "name": "Havyar",
+          "y": 1
+        },
+        {
+          "name": "Sade bal\u0131k",
           "y": 0
         },
         {
@@ -4293,7 +4293,11 @@
           "y": 0
         },
         {
-          "name": "Bal\u0131k salamuras\u0131",
+          "name": "Salamura peynir",
+          "y": 0
+        },
+        {
+          "name": "Asma yapra\u011f\u0131",
           "y": 0
         },
         {
@@ -4301,11 +4305,7 @@
           "y": 0
         },
         {
-          "name": "Salamura peynir",
-          "y": 0
-        },
-        {
-          "name": "Asma yapra\u011f\u0131",
+          "name": "Bal\u0131k salamuras\u0131",
           "y": 0
         }
       ]
@@ -4325,15 +4325,15 @@
       "id": "Fresh Fruits",
       "data": [
         {
-          "name": "Limon (Lemon)",
-          "y": 3
+          "name": "Karpuz (Water melon)",
+          "y": 0
         },
         {
           "name": "Nar (Pomegranate)",
           "y": 0
         },
         {
-          "name": "Karpuz (Water melon)",
+          "name": "Hunnap",
           "y": 0
         },
         {
@@ -4341,8 +4341,8 @@
           "y": 0
         },
         {
-          "name": "Hunnap",
-          "y": 0
+          "name": "Limon (Lemon)",
+          "y": 3
         }
       ]
     },
@@ -4351,11 +4351,11 @@
       "id": "Soap Assortment",
       "data": [
         {
-          "name": "Trablus sabunun (Trablus soap)",
-          "y": 0
+          "name": "Sabun (Soap)",
+          "y": 5
         },
         {
-          "name": "\u0130zmir sabunu (\u0130zmir soap)",
+          "name": "Trablus sabunun (Trablus soap)",
           "y": 0
         },
         {
@@ -4363,8 +4363,8 @@
           "y": 0
         },
         {
-          "name": "Sabun (Soap)",
-          "y": 5
+          "name": "\u0130zmir sabunu (\u0130zmir soap)",
+          "y": 0
         }
       ]
     },
@@ -4373,12 +4373,16 @@
       "id": "Broom Assortment",
       "data": [
         {
-          "name": "S\u00fcp\u00fcrge (Broom)",
-          "y": 2
+          "name": "Has\u0131r S\u00fcp\u00fcrgesi",
+          "y": 4
         },
         {
           "name": "Adi s\u00fcp\u00fcrge",
           "y": 1
+        },
+        {
+          "name": "Meydan s\u00fcp\u00fcrgesi",
+          "y": 2
         },
         {
           "name": "\u00c7al\u0131 s\u00fcp\u00fcrgesi",
@@ -4389,11 +4393,7 @@
           "y": 1
         },
         {
-          "name": "Has\u0131r S\u00fcp\u00fcrgesi",
-          "y": 4
-        },
-        {
-          "name": "Meydan s\u00fcp\u00fcrgesi",
+          "name": "S\u00fcp\u00fcrge (Broom)",
           "y": 2
         }
       ]
@@ -4417,12 +4417,12 @@
       "id": "Pastrami Assortment",
       "data": [
         {
-          "name": "Rumeli sucu\u011fu past\u0131rmas\u0131",
-          "y": 2
-        },
-        {
           "name": "Kayseriye past\u0131rmas\u0131",
           "y": 1
+        },
+        {
+          "name": "Rumeli sucu\u011fu past\u0131rmas\u0131",
+          "y": 2
         }
       ]
     },
@@ -4445,11 +4445,7 @@
       "id": "Vermicelli Assortment",
       "data": [
         {
-          "name": "\u015eorbal\u0131k \u015fariye",
-          "y": 1
-        },
-        {
-          "name": "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
+          "name": "K\u0131z\u0131l \u015eariyye",
           "y": 1
         },
         {
@@ -4457,7 +4453,11 @@
           "y": 1
         },
         {
-          "name": "K\u0131z\u0131l \u015eariyye",
+          "name": "\u015eorbal\u0131k \u015fariye",
+          "y": 1
+        },
+        {
+          "name": "D\u00f6\u011f\u00fclmi\u015f \u015eariyye",
           "y": 1
         }
       ]
