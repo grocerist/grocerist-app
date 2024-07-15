@@ -5,11 +5,11 @@
 {% endblock page_description %}
 
 {% block content %}
-<div class="container">
-    <h1 class="text-center">{{ project_data.project_title }}</h1>
-    <h3 class="text-center">{{ project_data.project_sub_title }}</h3>
-    <div>
-        <p class="subtitle">
+<div class="header pb-1">
+    <div class="container justify-content-center align-items-center">
+        <h1 class="text-center p-3">{{ project_data.project_title }}</h1>
+        <h3 class="text-center">{{ project_data.project_sub_title }}</h3>
+        <p class="description_text lh-lg p-1">
             The main objective of GrocerIST is to reveal and analyse the food
             consumption patterns of inhabitants in the eighteenth and nineteenth
             centuries in Istanbul through the use of grocers' (<i>bakkal</i>)
@@ -20,13 +20,14 @@
             circumstances of the empire.
         </p>
     </div>
+</div>
     {% set card_groups = [
     [
     {"title": "Documents", "icon": "bi-archive", "link": "documents.html", "description": "Browse Documents about
-    Grocers"},
-    {"title": "Grocers", "icon": "bi-people", "link": "persons.html", "description": "Browse Grocers"}
+    Grocers"}
     ],
     [
+    {"title": "Grocers", "icon": "bi-people", "link": "persons.html", "description": "Browse Grocers"},
     {"title": "Groceries", "icon": "bi-basket", "link": "goods.html", "description": "Browse Groceries"},
     {"title": "Locations", "icon": "bi-geo", "link": "locations.html", "description": "Browse Locations"}
     ],
@@ -42,7 +43,7 @@
         <div class="row pt-3">
             {% for card_data in card_group %}
             <div class="col">
-                <div class="card">
+                <div class="card index-card">
                     <div class="card-header">
                         <h3 class="text-center">{{ card_data.title }}</h3>
                     </div>

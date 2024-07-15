@@ -1,18 +1,3 @@
-img.footerimage {
-    width: 100%;
-    height: auto;
-    max-width: 180px;
-}
-
-#map {
-    height: 50vh;
-}
-
-/* navigation bar drop down menu will always be in front*/
-nav.navbar ul.dropdown-menu {
-    z-index: 2147483647;
-}
-
 :root {
     --documents: #536e61;
     --documents-hover: #536e61c2;
@@ -43,16 +28,66 @@ nav.navbar ul.dropdown-menu {
     --footer-hover-background: #f2f2f2;
 }
 
+#map {
+    height: 50vh;
+}
+
 /*
 document is built up as follows: 
 
+index page
 links to a specific page
 remaining links
 page headers
 tabulator headers
 tabulator footer
 subpages 
+highcharts specific
+legend specific
 */
+
+/* index page */
+/* navigation bar drop down menu will always be in front*/
+nav.navbar ul.dropdown-menu {
+    z-index: 2147483647;
+}
+
+.flex-shrink-0 {
+    background: url(istanbul2.png) no-repeat center center fixed; 
+    background-size: cover;
+}
+.container {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.header {
+    margin-top: 0px;
+    background-color: var(--persons);
+}
+
+.description_text {
+    text-align: justify;
+    color: 	white;
+}
+
+.card {
+    opacity: 0.92;
+    border-color: var(--persons);
+    border-width: 9px;
+}
+
+.card-header {
+    border: 0px;
+    background-color: white;
+}
+
+img.footerimage {
+    width: 100%;
+    height: auto;
+    max-width: 180px;
+}
+/* end index page */
 
 /* links to a specific page */
 a[href="documents.html"] {
@@ -168,7 +203,6 @@ div.dashboard h1 > a {
         color: var(--dashboard-hover);
     }
 }
-
 
 /* tabulator headers */
 /*documents page*/
@@ -426,16 +460,6 @@ div.good a {
 
 /* end of subpages */
 
-/* Index page */
-.subtitle {
-    padding: 0 3% 0 3%;
-    text-align: justify;
-    color: 	#696969
-}
-.container {
-    margin-top: 20px;
-    margin-bottom: 50px;
-}
 /* Highcharts specific */
 /* removes the stroke thorugh the symbols in the legend of Highcharts graph */
 .highcharts-legend-item .highcharts-graph {
