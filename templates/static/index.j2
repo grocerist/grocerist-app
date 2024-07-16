@@ -47,7 +47,7 @@ of groceries from the inheritance inventories", "img": "images/ist3c.png"},
     <div class="row pt-3">
         {% for card_data in card_group %}
         <div class="col">
-            <div class="card" style="background-image:url('css/{{card_data.img}}'">
+            <div class="card index-card" style="background-image:url('css/{{card_data.img}}'">
                 <div class="card-body">
                     <h3 class="card-title"><i class="bi {{ card_data.icon }}"></i> {{ card_data.title }}</h3>
                     <p class="card-text">{{ card_data.description }}</p>

@@ -77,7 +77,7 @@ nav.navbar ul.dropdown-menu {
     /* color: white; */
 }
 
-.card {
+.index-card {
     position: relative;
     display: flex;
     align-items: flex-end;
@@ -182,7 +182,7 @@ nav.navbar ul.dropdown-menu {
 }
 
 @media (hover: hover) and (min-width: 600px) {
-    .card:after {
+    .index-card:after {
         transform: translateY(0);
     }
 
@@ -197,8 +197,8 @@ nav.navbar ul.dropdown-menu {
         }
     }
 
-    .card:hover,
-    .card:focus-within {
+    .index-card:hover,
+    .index-card:focus-within {
         align-items: center;
 
         &:before {
@@ -220,7 +220,7 @@ nav.navbar ul.dropdown-menu {
         }
     }
 
-    .card:focus-within {
+    .index-card:focus-within {
 
         &:before,
         &:after,
