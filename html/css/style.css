@@ -58,10 +58,6 @@ nav.navbar ul.dropdown-menu {
     z-index: 2147483647;
 }
 
-/* .flex-shrink-0 {
-    background: url(istanbul2.png) no-repeat center center fixed; 
-    background-size: cover;
-} */
 .container {
     margin-top: 20px;
     margin-bottom: 50px;
@@ -74,7 +70,6 @@ nav.navbar ul.dropdown-menu {
 
 .description_text {
     text-align: justify;
-    /* color: white; */
 }
 
 .index-card {
@@ -83,7 +78,8 @@ nav.navbar ul.dropdown-menu {
     align-items: flex-end;
     overflow: hidden;
     padding: 1rem;
-    /* width: 100%; */
+    background-repeat: no-repeat;
+    background-position: center;
     height: 300px;
     text-align: center;
     color: whitesmoke;
@@ -173,15 +169,15 @@ nav.navbar ul.dropdown-menu {
     font-weight: bold;
     letter-spacing: 0.025rem;
     text-transform: uppercase;
-    background-color: black;
+    background-color: var(--documents);
     border: none;
 
     &:hover {
-        background-color: lighten(black, 5%);
+        background-color: lighten(var(--documents), 5%);
     }
 }
 
-@media (hover: hover) and (min-width: 600px) {
+@media (hover: hover) and (min-width: 576px) {
     .index-card:after {
         transform: translateY(0);
     }
