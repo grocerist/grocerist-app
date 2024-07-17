@@ -1,4 +1,5 @@
 :root {
+    --header: #d8b384;
     --documents: #536e61;
     --documents-hover: #536e61c2;
     --persons: #79B4A9;
@@ -169,11 +170,52 @@ nav.navbar ul.dropdown-menu {
     font-weight: bold;
     letter-spacing: 0.025rem;
     text-transform: uppercase;
-    background-color: var(--documents);
     border: none;
-
+    color: white;
     &:hover {
-        background-color: lighten(var(--documents), 5%);
+        color: white;
+    }
+}
+
+.card-body .btn.Documents{
+    background-color: var(--documents-hover);
+    &:hover {
+        background-color: var(--documents);
+    }
+}
+
+.card-body .btn.Grocers {
+    background-color: var(--persons-hover);
+    &:hover {
+        background-color: var(--persons);
+    }
+}
+
+.card-body .btn.Groceries {
+    background-color: var(--goods-hover);
+    &:hover {
+        background-color: var(--goods);
+    }
+}
+
+.card-body .btn.Locations {
+    background-color: var(--locations-hover);
+    &:hover {
+        background-color: var(--locations);
+    }
+}
+
+.card-body .btn.Grocery.Categories {
+    background-color: var(--categories-hover);
+    &:hover {
+        background-color: var(--categories);
+    }
+}
+
+.card-body .btn.Dashboard {
+    background-color: var(--dashboard-hover);
+    &:hover {
+        background-color: var(--dashboard);
     }
 }
 
