@@ -1,6 +1,6 @@
 const dataUrl = 'json_dumps/charts.json'
 const titleStyle = {
-  color: '#993333',
+  color: '#BA833B',
   fontWeight: 'bold',
   fontSize: '30px'
 }

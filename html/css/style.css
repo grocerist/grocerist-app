@@ -1,39 +1,14 @@
 :root {
-    --header: #d8b384;
-    --documents: #536e61;
-    --documents-hover: #536e61c2;
-    --persons: #79B4A9;
-    --persons-hover: #79B4A9c2;
-    --goods: #cf7332;
-    --goods-hover: #cf7332c2;
-    --locations: #9cc288;
-    --locations-hover: #9cc288c2;
-    --categories: #EDB183;
-    --categories-hover: #EDB183c2;
-    --dashboard: #993333;
-    --dashboard-hover: #993333c2;
-    --district: #5ec65a;
-    --district-hover: #5ec65ac2;
-    --mahalle: #467C27;
-    --mahalle-hover: #467C27c2;
-    --karye: #4e99c8;
-    --karye-hover: #4e99c8c2;
-    --quarter: #3875c1;
-    --quarter-hover: #3875c1c2;
-    --address: #6A6EDF;
-    --address-hover: #6A6EDFc2;
-    --nahiye: #7d5faa;
-    --nahiye-hover: #7d5faac2;
+    --main-first: #d8b384;
+    --main-first-hover: #d8b384c2;
+    --main-second: #BA833B;
+    --main-second-hover: #BA833Bc2;
     --link: #000000;
     --link-hover: #6e6e6ec2;
     --footer-hover-background: #f2f2f2;
     --d: 700ms;
     --e: cubic-bezier(0.19, 1, 0.22, 1);
 }
-
-/* * {
-    box-sizing: border-box;
-} */
 
 #map {
     height: 50vh;
@@ -43,12 +18,11 @@
 document is built up as follows: 
 
 index page
-links to a specific page
-remaining links
+links
 page headers
-tabulator headers
+tabulator header
 tabulator footer
-subpages 
+subpages
 highcharts specific
 legend specific
 */
@@ -66,7 +40,7 @@ nav.navbar ul.dropdown-menu {
 
 .header {
     margin-top: 0px;
-    background-color: var(--persons);
+    background-color: var(--main-first);
 }
 
 .description_text {
@@ -172,50 +146,10 @@ nav.navbar ul.dropdown-menu {
     text-transform: uppercase;
     border: none;
     color: white;
+    background-color: var(--main-first-hover);
     &:hover {
+        background-color: var(--main-first); /* color hover is reversed intentionally */
         color: white;
-    }
-}
-
-.card-body .btn.Documents{
-    background-color: var(--documents-hover);
-    &:hover {
-        background-color: var(--documents);
-    }
-}
-
-.card-body .btn.Grocers {
-    background-color: var(--persons-hover);
-    &:hover {
-        background-color: var(--persons);
-    }
-}
-
-.card-body .btn.Groceries {
-    background-color: var(--goods-hover);
-    &:hover {
-        background-color: var(--goods);
-    }
-}
-
-.card-body .btn.Locations {
-    background-color: var(--locations-hover);
-    &:hover {
-        background-color: var(--locations);
-    }
-}
-
-.card-body .btn.Grocery.Categories {
-    background-color: var(--categories-hover);
-    &:hover {
-        background-color: var(--categories);
-    }
-}
-
-.card-body .btn.Dashboard {
-    background-color: var(--dashboard-hover);
-    &:hover {
-        background-color: var(--dashboard);
     }
 }
 
@@ -277,56 +211,8 @@ img.footerimage {
 
 /* end index page */
 
-/* links to a specific page */
-a[href="documents.html"] {
-    color: var(--documents);
 
-    &:hover {
-        color: var(--documents-hover);
-    }
-}
-
-a[href="persons.html"] {
-    color: var(--persons);
-
-    &:hover {
-        color: var(--persons-hover);
-    }
-}
-
-a[href="locations.html"] {
-    color: var(--locations);
-
-    &:hover {
-        color: var(--locations-hover);
-    }
-}
-
-a[href="categories.html"] {
-    color: var(--categories);
-
-    &:hover {
-        color: var(--categories-hover);
-    }
-}
-
-a[href="goods.html"] {
-    color: var(--goods);
-
-    &:hover {
-        color: var(--goods-hover);
-    }
-}
-
-a[href="dashboard.html"] {
-    color: var(--dashboard);
-
-    &:hover {
-        color: var(--dashboard-hover);
-    }
-}
-
-/* remaining links */
+/* links */
 a {
     color: var(--link);
     text-decoration: unset;
@@ -337,360 +223,64 @@ a {
 }
 
 
-/* page headers */
+/* page header */
 h1 {
     text-decoration: unset;
 }
 
-div.documents h1 {
-    color: var(--documents);
-}
-
-div.documents h1>a {
-    color: var(--documents);
-
+div h1>a {
+    color: var(--main-second);
     &:hover {
-        color: var(--documents-hover);
+        color: var(--main-second-hover);
     }
 }
 
-div.persons h1 {
-    color: var(--persons);
-}
 
-div.persons h1>a {
-    color: var(--persons);
-
-    &:hover {
-        color: var(--persons-hover);
-    }
-}
-
-div.locations h1 {
-    color: var(--locations);
-}
-
-div.locations h1>a {
-    color: var(--locations);
-
-    &:hover {
-        color: var(--locations-hover);
-    }
-}
-
-div.categories h1 {
-    color: var(--categories);
-}
-
-div.categories h1>a {
-    color: var(--categories);
-
-    &:hover {
-        color: var(--categories-hover);
-    }
-}
-
-div.goods h1 {
-    color: var(--goods);
-}
-
-div.goods h1>a {
-    color: var(--goods);
-
-    &:hover {
-        color: var(--goods-hover);
-    }
-}
-
-div.dashboard h1 {
-    color: var(--dashboard);
-}
-
-div.dashboard h1>a {
-    color: var(--dashboard);
-
-    &:hover {
-        color: var(--dashboard-hover);
-    }
-}
-
-/* tabulator headers */
-/*documents page*/
-div.documents div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--documents);
+/* tabulator header */
+div div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+    background-color: var(--main-first);
     color: white;
-
     &:hover {
-        background-color: var(--documents-hover) !important;
+        background-color: var(--main-first-hover) !important;
     }
 }
-
-/*persons page*/
-div.persons div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--persons);
-
-    &:hover {
-        background-color: var(--persons-hover) !important;
-    }
-}
-
-/*locations page*/
-div.locations div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--locations);
-
-    &:hover {
-        background-color: var(--locations-hover) !important;
-    }
-}
-
-/*categories page*/
-div.categories div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--categories);
-
-    &:hover {
-        background-color: var(--categories-hover) !important;
-    }
-}
-
-/*goods page*/
-div.goods div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--goods);
-    color: white;
-
-    &:hover {
-        background-color: var(--goods-hover) !important;
-    }
-}
-
-/* end of tabulator headers */
 
 
 /* tabulator footer */
-/*documents footer*/
-div.documents div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--documents);
-    border-color: var(--documents);
-
+div div.tabulator .tabulator-footer .tabulator-page.active {
+    background-color: var(--main-first);
+    border-color: var(--main-first);
     &:hover {
         background-color: var(--footer-hover-background);
     }
 }
 
-div.documents div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--documents) !important;
+div div.tabulator .tabulator-footer .tabulator-page:hover {
+    color: var(--main-first) !important;
 }
-
-/*persons footer*/
-div.persons div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--persons);
-    border-color: var(--persons);
-
-    &:hover {
-        background-color: var(--footer-hover-background);
-    }
-}
-
-div.persons div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--persons) !important;
-}
-
-/*locations footer*/
-div.locations div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--locations);
-    border-color: var(--locatios);
-
-    &:hover {
-        background-color: var(--footer-hover-background);
-    }
-}
-
-div.locations div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--locations) !important;
-}
-
-/*categories footer*/
-div.categories div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--categories);
-    border-color: var(--categories);
-
-    &:hover {
-        background-color: var(--footer-hover-background);
-    }
-}
-
-div.categories div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--categories) !important;
-}
-
-/*goods footer*/
-div.goods div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--goods);
-    border-color: var(--goods);
-
-    &:hover {
-        background-color: var(--footer-hover-background);
-    }
-}
-
-div.goods div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--goods) !important;
-}
-
-/* end of tabulator footer */
 
 
 /* subpages */
-/*document subpage*/
-div.document h1 {
+div.subpage h1  {
     /*create line*/
-    border-bottom: 3px solid var(--documents);
+    border-bottom: 3px solid var(--main-first);
     padding-bottom: 5px;
 }
 
-div.document a {
-    color: var(--documents);
-
+div.subpage a {
+    color: var(--main-second);
     &:hover {
-        color: var(--documents-hover);
+        color: var(--main-second-hover);
     }
 }
 
-div.document .badge {
-    background-color: var(--documents) !important;
-
+div.subpage .badge {
+    background-color: var(--main-first) !important;
     &:hover {
-        background-color: var(--documents-hover) !important;
+        background-color: var(--main-first-hover) !important;
     }
 }
 
-/*person subpage*/
-div.person h1 {
-    border-bottom: 3px solid var(--persons);
-    padding-bottom: 5px;
-}
-
-div.person a {
-    color: var(--persons);
-
-    &:hover {
-        color: var(--persons-hover);
-    }
-}
-
-/*district subpage*/
-div.district h1 {
-    border-bottom: 3px solid var(--district);
-    padding-bottom: 5px;
-}
-
-div.district a {
-    color: var(--district);
-
-    &:hover {
-        color: var(--district-hover);
-    }
-}
-
-/*karye subpage*/
-div.karye h1 {
-    border-bottom: 3px solid var(--karye);
-    padding-bottom: 5px;
-}
-
-div.karye a {
-    color: var(--karye);
-
-    &:hover {
-        color: var(--karye-hover);
-    }
-}
-
-/*mahalle subpage*/
-div.mahalle h1 {
-    border-bottom: 3px solid var(--mahalle);
-    padding-bottom: 5px;
-}
-
-div.mahalle a {
-    color: var(--mahalle);
-
-    &:hover {
-        color: var(--mahalle-hover);
-    }
-}
-
-/*nahiye subpage*/
-div.nahiye h1 {
-    border-bottom: 3px solid var(--nahiye);
-    padding-bottom: 5px;
-}
-
-div.nahiye a {
-    color: var(--nahiye);
-
-    &:hover {
-        color: var(--nahiye-hover);
-    }
-}
-
-/*quarter subpage*/
-div.quarter h1 {
-    border-bottom: 3px solid var(--quarter);
-    padding-bottom: 5px;
-}
-
-div.quarter a {
-    color: var(--quarter);
-
-    &:hover {
-        color: var(--quarter-hover);
-    }
-}
-
-/*address subpage*/
-div.address h1 {
-    border-bottom: 3px solid var(--address);
-    padding-bottom: 5px;
-}
-
-div.address a {
-    color: var(--address);
-
-    &:hover {
-        color: var(--address-hover);
-    }
-}
-
-/*category subpage*/
-div.category h1 {
-    border-bottom: 3px solid var(--categories);
-    padding-bottom: 5px;
-}
-
-div.category a {
-    color: var(--categories);
-
-    &:hover {
-        color: var(--categories-hover);
-    }
-}
-
-/*good subpage*/
-div.good h1 {
-    border-bottom: 3px solid var(--goods);
-    padding-bottom: 5px;
-}
-
-div.good a {
-    color: var(--goods);
-
-    &:hover {
-        color: var(--goods-hover);
-    }
-}
-
-
-/* end of subpages */
 
 /* Highcharts specific */
 /* removes the stroke thorugh the symbols in the legend of Highcharts graph */
@@ -711,7 +301,7 @@ div.good a {
     margin-left: auto;
     margin-right: auto;
     width: auto;
-    color: #79B4A9;
+    color: var(--main-second);
     font-weight: bold;
     font-size: 20px;
     font-family: Helvetica, Arial, sans-serif;

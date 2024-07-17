@@ -1,6 +1,6 @@
 const dataUrl = 'json_dumps/persons.json'
 const titleStyle = {
-  color: '#79B4A9',
+  color: '#BA833B',
   fontWeight: 'bold',
   fontSize: '20px'
 }
