@@ -1,8 +1,10 @@
 :root {
-    --main-first: #d8b384;
-    --main-first-hover: #d8b384c2;
-    --main-second: #BA833B;
-    --main-second-hover: #BA833Bc2;
+    --primary: #d8b384;
+    --primary-hover: #d8b384c2;
+    --secondary: #BA833B;
+    --secondary-hover: #BA833Bc2;
+    --tabulator-primary: #fbf7f2;
+    --tabulator-secondary: #efe0cd;
     --link: #000000;
     --link-hover: #6e6e6ec2;
     --footer-hover-background: #f2f2f2;
@@ -40,7 +42,7 @@ nav.navbar ul.dropdown-menu {
 
 .header {
     margin-top: 0px;
-    background-color: var(--main-first);
+    background-color: var(--primary);
 }
 
 .description_text {
@@ -146,9 +148,11 @@ nav.navbar ul.dropdown-menu {
     text-transform: uppercase;
     border: none;
     color: white;
-    background-color: var(--main-first-hover);
+    background-color: var(--primary-hover);
+
     &:hover {
-        background-color: var(--main-first); /* color hover is reversed intentionally */
+        background-color: var(--primary);
+        /* color hover is reversed intentionally */
         color: white;
     }
 }
@@ -229,59 +233,84 @@ h1 {
 }
 
 div h1>a {
-    color: var(--main-second);
+    color: var(--secondary);
+
     &:hover {
-        color: var(--main-second-hover);
+        color: var(--secondary-hover);
     }
 }
 
+/*Custom Tabulator styles*/
+.tabulator-row.tabulator-row-even {
+    background-color: white;
+}
+
+.tabulator-row.tabulator-row-odd {
+    background-color: var(--tabulator-primary);
+}
+
+.tabulator-row.tabulator-selectable:hover {
+    background-color: var(--tabulator-secondary);
+}
 
 /* tabulator header */
-div div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--main-first);
+.tabulator-header-contents {
+    background-color: var(--primary);
+}
+
+.tabulator .tabulator-header {
+    border-bottom: 2px solid var(--primary);
+}
+
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+    background-color: var(--primary);
     color: white;
+
     &:hover {
-        background-color: var(--main-first-hover) !important;
+        background-color: var(--primary);
     }
 }
 
 .tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=none] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
     border-top: none;
-    border-bottom: 6px solid white !important;
+    border-bottom: 6px solid white;
 }
 
 /* tabulator footer */
-div div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--main-first);
-    border-color: var(--main-first);
+.tabulator .tabulator-footer .tabulator-paginator .tabulator-page.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+
     &:hover {
         background-color: var(--footer-hover-background);
     }
 }
 
-div div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--main-second) !important;
+.tabulator .tabulator-footer .tabulator-paginator .tabulator-page:hover {
+    color: var(--secondary);
 }
 
 
 /* subpages */
-div.subpage h1  {
+div.subpage h1 {
     /*create line*/
-    border-bottom: 3px solid var(--main-first);
+    border-bottom: 3px solid var(--primary);
     padding-bottom: 5px;
 }
 
 div.subpage a {
-    color: var(--main-second);
+    color: var(--secondary);
+
     &:hover {
-        color: var(--main-second-hover);
+        color: var(--secondary-hover);
     }
 }
 
 div.subpage .badge {
-    background-color: var(--main-first) !important;
+    background-color: var(--primary) !important;
+
     &:hover {
-        background-color: var(--main-first-hover) !important;
+        background-color: var(--primary-hover) !important;
     }
 }
 
@@ -305,7 +334,7 @@ div.subpage .badge {
     margin-left: auto;
     margin-right: auto;
     width: auto;
-    color: var(--main-second);
+    color: var(--secondary);
     font-weight: bold;
     font-size: 20px;
     font-family: Helvetica, Arial, sans-serif;
