@@ -245,6 +245,10 @@ div div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     }
 }
 
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=none] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
+    border-top: none;
+    border-bottom: 6px solid white !important;
+}
 
 /* tabulator footer */
 div div.tabulator .tabulator-footer .tabulator-page.active {
@@ -256,7 +260,7 @@ div div.tabulator .tabulator-footer .tabulator-page.active {
 }
 
 div div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--main-first) !important;
+    color: var(--main-second) !important;
 }
 
 
