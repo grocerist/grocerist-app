@@ -300,7 +300,6 @@ div.subpage h1 {
 
 div.subpage a {
     color: var(--secondary);
-
     &:hover {
         color: var(--secondary-hover);
     }
@@ -308,10 +307,13 @@ div.subpage a {
 
 div.subpage .badge {
     background-color: var(--primary) !important;
-
     &:hover {
         background-color: var(--primary-hover) !important;
     }
+}
+
+ul.no-bullets {
+    list-style-type: none;
 }
 
 
@@ -338,7 +340,12 @@ div.subpage .badge {
     font-weight: bold;
     font-size: 20px;
     font-family: Helvetica, Arial, sans-serif;
+    &:focus {
+        box-shadow: none;
+        border-color: var(--primary)
+    }
 }
+
 
 #container_select {
     padding: 10px 0 0 10px;
