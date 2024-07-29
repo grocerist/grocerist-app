@@ -78,7 +78,7 @@ def extract_year(date):
         year = date.split("-")[0]
     elif "/" in date:
         # format is DD/MM/YYYY, so we take the last part
-        if len(date.split("/")) > 2: 
+        if len(date.split("/")) > 2:
             year = date.split("/")[2]
         else:
             year = date
