@@ -5,6 +5,7 @@
     --secondary-hover: #BA833Bc2;
     --tabulator-primary: #fbf7f2;
     --tabulator-secondary: #efe0cd;
+    --tabulator-header-hover: #dfc29c;
     --link: #000000;
     --link-hover: #6e6e6ec2;
     --footer-hover-background: #f2f2f2;
@@ -267,7 +268,7 @@ div h1>a {
     color: white;
 
     &:hover {
-        background-color: var(--primary);
+        background-color: var(--tabulator-header-hover);
     }
 }
 
