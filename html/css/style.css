@@ -4,6 +4,13 @@ img.footerimage {
     max-width: 180px;
 }
 
+/* hide logos on small screens*/
+@media (max-width: 576px) {
+    img.footerimage {
+        display: none;
+    }
+}
+
 #map {
     height: 50vh;
 }
