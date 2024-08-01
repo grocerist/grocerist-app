@@ -5,11 +5,11 @@
 {% endblock page_description %}
 
 {% block content %}
-<div class="container">
-    <h1 class="text-center">{{ project_data.project_title }}</h1>
-    <h3 class="text-center">{{ project_data.project_sub_title }}</h3>
-    <div>
-        <p class="subtitle">
+<div class="header pb-1">
+    <div class="container justify-content-center align-items-center">
+        <h1 class="text-center p-3">{{ project_data.project_title }}</h1>
+        <h3 class="text-center">{{ project_data.project_sub_title }}</h3>
+        <p class="description_text lh-lg p-1">
             The main objective of GrocerIST is to reveal and analyse the food
             consumption patterns of inhabitants in the eighteenth and nineteenth
             centuries in Istanbul through the use of grocers' (<i>bakkal</i>)
@@ -20,44 +20,53 @@
             circumstances of the empire.
         </p>
     </div>
-    {% set card_groups = [
-    [
-    {"title": "Documents", "icon": "bi-archive", "link": "documents.html", "description": "Browse Documents about
-    Grocers"},
-    {"title": "Grocers", "icon": "bi-people", "link": "persons.html", "description": "Browse Grocers"}
-    ],
-    [
-    {"title": "Groceries", "icon": "bi-basket", "link": "goods.html", "description": "Browse Groceries"},
-    {"title": "Locations", "icon": "bi-geo", "link": "locations.html", "description": "Browse Locations"}
-    ],
-    [
-    {"title": "Grocery Categories", "icon": "bi-boxes", "link": "categories.html", "description": "Browse Categories of
-    Groceries"},
-    {"title": "Dashboard", "icon": "bi-bar-chart", "link": "dashboard.html", "description": "Browse Dashboard"},
-    ]
-    ] %}
+</div>
+{% set card_groups = [
+[
+{"title": "Documents", "icon": "bi-archive", "link": "documents.html", "button": "Browse Documents", "description": "A
+list of documents containing inheritance inventories", "img": "ist1c.png" }
+],
+[
+{"title": "Grocers", "icon": "bi-people", "link": "persons.html", "button": "Browse Grocers", "description": "A list of
+persons mentioned in the inheritance documents", "img": "ist2c.png"},
+{"title": "Groceries", "icon": "bi-basket", "link": "goods.html", "button": "Browse Groceries", "description": "A list
+of groceries from the inheritance inventories", "img": "ist3c.png"},
+{"title": "Locations", "icon": "bi-geo", "link": "locations.html", "button": "Browse Locations", "description":
+"Locations of grocers", "img": "ist4c.png"}
+],
+[
+{"title": "Grocery Categories", "icon": "bi-boxes", "link": "categories.html", "button": "Browse Grocery Categories",
+"description": "List of groceries by category", "img": "ist5c.png"},
+{"title": "Dashboard", "icon": "bi-bar-chart", "link": "dashboard.html", "button": "Browse Dashboard", "description":
+"Different charts and graphs about the data", "img": "ist6c.png"},
+]
+] %}
 
-    <div class="container">
-        {% for card_group in card_groups %}
-        <div class="row pt-3">
-            {% for card_data in card_group %}
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center">{{ card_data.title }}</h3>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-center">
-                            <a class="icon-link icon-link-hover" href="{{ card_data.link }}">
-                                <i class="bi {{ card_data.icon }}" style="font-size: 80px"></i>
-                            </a>
-                        </p>
-                        <p class="text-center">{{ card_data.description }}</p>
-                    </div>
+<div class="container">
+    {% for card_group in card_groups %}
+    {% if card_group|length == 1 %}
+    {% set col_class = "col-12" %}
+    {% elif card_group|length == 2 %}
+    {% set col_class = "col-sm-12 col-md-6" %}
+    {% else %}
+    {% set col_class = "col-sm-12 col-md-6 col-lg-4" %}
+    {% endif %}
+    <div class="row">
+        {% for card_data in card_group %}
+        {% if card_data.title == 'Locations' %}
+        {% set col_class = "col-md-12 col-lg-4" %}
+        {% endif %}
+        <div class="{{ col_class }} pb-3">
+            <div class="card index-card" style="background-image:url('images/{{card_data.img}}'">
+                <div class="card-body">
+                    <h3 class="card-title"><i class="bi {{ card_data.icon }}"></i> {{ card_data.title }}</h3>
+                    <p class="card-text">{{ card_data.description }}</p>
+                    <a href="{{ card_data.link }}" class="btn {{ card_data.title }}">{{ card_data.button }}</a>
                 </div>
             </div>
-            {% endfor %}
         </div>
         {% endfor %}
     </div>
-    {% endblock content %}
+    {% endfor %}
+</div>
+{% endblock content %}

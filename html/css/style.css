@@ -1,492 +1,337 @@
-img.footerimage {
-    width: 100%;
-    height: auto;
-    max-width: 180px;
-}
-
-/* hide logos on small screens*/
-@media (max-width: 576px) {
-    img.footerimage {
-        display: none;
-    }
+:root {
+    --primary: #d8b384;
+    --primary-hover: #d8b384c2;
+    --secondary: #BA833B;
+    --secondary-hover: #BA833Bc2;
+    --tabulator-primary: #fbf7f2;
+    --tabulator-secondary: #efe0cd;
+    --tabulator-header-hover: #dfc29c;
+    --link: #000000;
+    --link-hover: #6e6e6ec2;
+    --footer-hover-background: #f2f2f2;
+    --d: 700ms;
+    --e: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 #map {
     height: 50vh;
 }
 
+/*
+document is built up as follows: 
+
+index page
+links
+page headers
+tabulator header
+tabulator footer
+subpages
+highcharts specific
+legend specific
+*/
+
+/* index page */
 /* navigation bar drop down menu will always be in front*/
 nav.navbar ul.dropdown-menu {
     z-index: 2147483647;
 }
 
-:root {
-    --documents: #536e61;
-    --documents-hover: #536e61c2;
-    --persons: #79B4A9;
-    --persons-hover: #79B4A9c2;
-    --goods: #cf7332;
-    --goods-hover: #cf7332c2;
-    --locations: #9cc288;
-    --locations-hover: #9cc288c2;
-    --categories: #EDB183;
-    --categories-hover: #EDB183c2;
-    --dashboard: #993333;
-    --dashboard-hover: #993333c2;
-    --district: #5ec65a;
-    --district-hover: #5ec65ac2;
-    --mahalle: #467C27;
-    --mahalle-hover: #467C27c2;
-    --karye: #4e99c8;
-    --karye-hover: #4e99c8c2;
-    --quarter: #3875c1;
-    --quarter-hover: #3875c1c2;
-    --address: #6A6EDF;
-    --address-hover: #6A6EDFc2;
-    --nahiye: #7d5faa;
-    --nahiye-hover: #7d5faac2;
-    --link: #000000;
-    --link-hover: #6e6e6ec2;
-    --footer-hover-background: #f2f2f2;
+nav.navbar .dropdown-item:focus,
+nav.navbar .dropdown-item:active {
+    background-color: var(--primary);
 }
 
-/*
-document is built up as follows: 
+.container {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
 
-links to a specific page
-remaining links
-page headers
-tabulator headers
-tabulator footer
-subpages 
-*/
+.header {
+    margin-top: 0px;
+    background-color: var(--primary);
+}
 
-/* links to a specific page */
-a[href="documents.html"] {
-    color: var(--documents);
+.description_text {
+    text-align: justify;
+}
 
-    &:hover {
-        color: var(--documents-hover);
+.index-card {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    padding: 1rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 300px;
+    text-align: center;
+    color: whitesmoke;
+    background-color: whitesmoke;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1),
+        0 2px 2px rgba(0, 0, 0, 0.1),
+        0 4px 4px rgba(0, 0, 0, 0.1),
+        0 8px 8px rgba(0, 0, 0, 0.1),
+        0 16px 16px rgba(0, 0, 0, 0.1);
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 110%;
+        background-size: cover;
+        background-position: 0 0;
+        transition: transform calc(var(--d) * 1.5) var(--e);
+        pointer-events: none;
+    }
+
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 200%;
+        pointer-events: none;
+        background-image: linear-gradient(to bottom,
+                hsla(0, 0%, 0%, 0) 0%,
+                hsla(0, 0%, 0%, 0.009) 11.7%,
+                hsla(0, 0%, 0%, 0.034) 22.1%,
+                hsla(0, 0%, 0%, 0.072) 31.2%,
+                hsla(0, 0%, 0%, 0.123) 39.4%,
+                hsla(0, 0%, 0%, 0.182) 46.6%,
+                hsla(0, 0%, 0%, 0.249) 53.1%,
+                hsla(0, 0%, 0%, 0.320) 58.9%,
+                hsla(0, 0%, 0%, 0.394) 64.3%,
+                hsla(0, 0%, 0%, 0.468) 69.3%,
+                hsla(0, 0%, 0%, 0.540) 74.1%,
+                hsla(0, 0%, 0%, 0.607) 78.8%,
+                hsla(0, 0%, 0%, 0.668) 83.6%,
+                hsla(0, 0%, 0%, 0.721) 88.7%,
+                hsla(0, 0%, 0%, 0.762) 94.1%,
+                hsla(0, 0%, 0%, 0.790) 100%);
+        transform: translateY(-50%);
+        transition: transform calc(var(--d) * 2) var(--e);
     }
 }
 
-a[href="persons.html"] {
-    color: var(--persons);
+.card-body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    transition: transform var(--d) var(--e);
+    z-index: 1;
+}
+.card-title {
+    color: whitesmoke;
+    margin-top: 1.5rem;
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.card-text {
+    color: whitesmoke;
+    font-size: 1.125rem;
+    font-style: italic;
+    line-height: 1.35;
+
+}
+
+.card-body .btn {
+    cursor: pointer;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.65rem;
+    font-weight: bold;
+    letter-spacing: 0.025rem;
+    text-transform: uppercase;
+    border: none;
+    color: white;
+    background-color: var(--primary-hover);
 
     &:hover {
-        color: var(--persons-hover);
+        background-color: var(--primary);
+        /* color hover is reversed intentionally */
+        color: white;
     }
 }
 
-a[href="locations.html"] {
-    color: var(--locations);
+@media (hover: hover) and (min-width: 576px) {
+    .index-card:after {
+        transform: translateY(0);
+    }
 
-    &:hover {
-        color: var(--locations-hover);
+    .card-body {
+        transform: translateY(calc(100% - 5rem));
+        >*:not(.card-title) {
+            opacity: 0;
+            transform: translateY(1rem);
+            transition: transform var(--d) var(--e),
+                opacity var(--d) var(--e);
+        }
+    }
+
+    .index-card:hover,
+    .index-card:focus-within {
+        align-items: center;
+
+        &:before {
+            transform: translateY(-4%);
+        }
+
+        &:after {
+            transform: translateY(-50%);
+        }
+
+        .card-body {
+            transform: translateY(0);
+            >*:not(.card-title) {
+                opacity: 1;
+                transform: translateY(0);
+                transition-delay: calc(var(--d) / 8);
+            }
+        }
+    }
+
+    .index-card:focus-within {
+        &:before,
+        &:after,
+        .card-body,
+        .card-body>*:not(.card-title) {
+            transition-duration: 0s;
+        }
     }
 }
 
-a[href="categories.html"] {
-    color: var(--categories);
-
-    &:hover {
-        color: var(--categories-hover);
-    }
+img.footerimage {
+    width: 100%;
+    height: auto;
+    max-width: 180px;
 }
 
-a[href="goods.html"] {
-    color: var(--goods);
 
-    &:hover {
-        color: var(--goods-hover);
-    }
-}
 
-a[href="dashboard.html"] {
-    color: var(--dashboard);
-
-    &:hover {
-        color: var(--dashboard-hover);
-    }
-}
-
-/* remaining links */
+/* links */
 a {
     color: var(--link);
     text-decoration: unset;
+
 
     &:hover {
         color: var(--link-hover);
     }
 }
 
-
-/* page headers */
+/* page header */
 h1 {
     text-decoration: unset;
 }
 
-div.documents h1 {
-    color: var(--documents);
-}
 
-div.documents h1>a {
-    color: var(--documents);
+div h1>a {
+    color: var(--secondary);
 
     &:hover {
-        color: var(--documents-hover);
+        color: var(--secondary-hover);
     }
 }
 
-div.persons h1 {
-    color: var(--persons);
+/*Custom Tabulator styles*/
+.tabulator-row.tabulator-row-even {
+    background-color: white;
 }
 
-div.persons h1>a {
-    color: var(--persons);
-
-    &:hover {
-        color: var(--persons-hover);
-    }
+.tabulator-row.tabulator-row-odd {
+    background-color: var(--tabulator-primary);
 }
 
-div.locations h1 {
-    color: var(--locations);
+.tabulator-row.tabulator-selectable:hover {
+    background-color: var(--tabulator-secondary);
 }
 
-div.locations h1>a {
-    color: var(--locations);
-
-    &:hover {
-        color: var(--locations-hover);
-    }
+.tabulator-edit-list .tabulator-edit-list-item.active {
+    color: #fff;
+    background: var(--primary);
 }
 
-div.categories h1 {
-    color: var(--categories);
+.tabulator-edit-list .tabulator-edit-list-item:hover {
+    cursor: pointer;
+    color: #fff;
+    background: var(--primary);
+
 }
 
-div.categories h1>a {
-    color: var(--categories);
-
-    &:hover {
-        color: var(--categories-hover);
-    }
+/* tabulator header */
+.tabulator-header-contents {
+    background-color: var(--primary);
 }
 
-div.goods h1 {
-    color: var(--goods);
+.tabulator .tabulator-header {
+    border-bottom: 2px solid var(--primary);
+
 }
 
-div.goods h1>a {
-    color: var(--goods);
-
-    &:hover {
-        color: var(--goods-hover);
-    }
-}
-
-div.dashboard h1 {
-    color: var(--dashboard);
-}
-
-div.dashboard h1>a {
-    color: var(--dashboard);
-
-    &:hover {
-        color: var(--dashboard-hover);
-    }
-}
-
-
-/* tabulator headers */
-/*documents page*/
-div.documents div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--documents);
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
+    background-color: var(--primary);
     color: white;
-
     &:hover {
-        background-color: var(--documents-hover) !important;
+        background-color: var(--tabulator-header-hover);
     }
 }
 
-/*persons page*/
-div.persons div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--persons);
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort=none] .tabulator-col-content .tabulator-col-sorter .tabulator-arrow {
+    border-top: none;
+    border-bottom: 6px solid white;
 
-    &:hover {
-        background-color: var(--persons-hover) !important;
-    }
 }
-
-/*locations page*/
-div.locations div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--locations);
-
-    &:hover {
-        background-color: var(--locations-hover) !important;
-    }
-}
-
-/*categories page*/
-div.categories div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--categories);
-
-    &:hover {
-        background-color: var(--categories-hover) !important;
-    }
-}
-
-/*goods page*/
-div.goods div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
-    background-color: var(--goods);
-    color: white;
-
-    &:hover {
-        background-color: var(--goods-hover) !important;
-    }
-}
-
-/* end of tabulator headers */
-
 
 /* tabulator footer */
-/*documents footer*/
-div.documents div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--documents);
-    border-color: var(--documents);
-
+.tabulator .tabulator-footer .tabulator-paginator .tabulator-page.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
     &:hover {
         background-color: var(--footer-hover-background);
     }
 }
 
-div.documents div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--documents) !important;
+.tabulator .tabulator-footer .tabulator-paginator .tabulator-page:hover {
+    color: var(--secondary);
 }
-
-/*persons footer*/
-div.persons div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--persons);
-    border-color: var(--persons);
-
-    &:hover {
-        background-color: var(--footer-hover-background);
-    }
-}
-
-div.persons div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--persons) !important;
-}
-
-/*locations footer*/
-div.locations div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--locations);
-    border-color: var(--locatios);
-
-    &:hover {
-        background-color: var(--footer-hover-background);
-    }
-}
-
-div.locations div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--locations) !important;
-}
-
-/*categories footer*/
-div.categories div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--categories);
-    border-color: var(--categories);
-
-    &:hover {
-        background-color: var(--footer-hover-background);
-    }
-}
-
-div.categories div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--categories) !important;
-}
-
-/*goods footer*/
-div.goods div.tabulator .tabulator-footer .tabulator-page.active {
-    background-color: var(--goods);
-    border-color: var(--goods);
-
-    &:hover {
-        background-color: var(--footer-hover-background);
-    }
-}
-
-div.goods div.tabulator .tabulator-footer .tabulator-page:hover {
-    color: var(--goods) !important;
-}
-
-/* end of tabulator footer */
 
 
 /* subpages */
-/*document subpage*/
-div.document h1 {
+div.subpage h1 {
     /*create line*/
-    border-bottom: 3px solid var(--documents);
+    border-bottom: 3px solid var(--primary);
     padding-bottom: 5px;
 }
 
-div.document a {
-    color: var(--documents);
+div.subpage a {
+    color: var(--secondary);
+
 
     &:hover {
-        color: var(--documents-hover);
-    }
-}
-
-div.document .badge {
-    background-color: var(--documents) !important;
-
-    &:hover {
-        background-color: var(--documents-hover) !important;
-    }
-}
-
-/*person subpage*/
-div.person h1 {
-    border-bottom: 3px solid var(--persons);
-    padding-bottom: 5px;
-}
-
-div.person a {
-    color: var(--persons);
-
-    &:hover {
-        color: var(--persons-hover);
-    }
-}
-
-/*district subpage*/
-div.district h1 {
-    border-bottom: 3px solid var(--district);
-    padding-bottom: 5px;
-}
-
-div.district a {
-    color: var(--district);
-
-    &:hover {
-        color: var(--district-hover);
-    }
-}
-
-/*karye subpage*/
-div.karye h1 {
-    border-bottom: 3px solid var(--karye);
-    padding-bottom: 5px;
-}
-
-div.karye a {
-    color: var(--karye);
-
-    &:hover {
-        color: var(--karye-hover);
-    }
-}
-
-/*mahalle subpage*/
-div.mahalle h1 {
-    border-bottom: 3px solid var(--mahalle);
-    padding-bottom: 5px;
-}
-
-div.mahalle a {
-    color: var(--mahalle);
-
-    &:hover {
-        color: var(--mahalle-hover);
-    }
-}
-
-/*nahiye subpage*/
-div.nahiye h1 {
-    border-bottom: 3px solid var(--nahiye);
-    padding-bottom: 5px;
-}
-
-div.nahiye a {
-    color: var(--nahiye);
-
-    &:hover {
-        color: var(--nahiye-hover);
-    }
-}
-
-/*quarter subpage*/
-div.quarter h1 {
-    border-bottom: 3px solid var(--quarter);
-    padding-bottom: 5px;
-}
-
-div.quarter a {
-    color: var(--quarter);
-
-    &:hover {
-        color: var(--quarter-hover);
-    }
-}
-
-/*address subpage*/
-div.address h1 {
-    border-bottom: 3px solid var(--address);
-    padding-bottom: 5px;
-}
-
-div.address a {
-    color: var(--address);
-
-    &:hover {
-        color: var(--address-hover);
-    }
-}
-
-/*category subpage*/
-div.category h1 {
-    border-bottom: 3px solid var(--categories);
-    padding-bottom: 5px;
-}
-
-div.category a {
-    color: var(--categories);
-
-    &:hover {
-        color: var(--categories-hover);
-    }
-}
-
-/*good subpage*/
-div.good h1 {
-    border-bottom: 3px solid var(--goods);
-    padding-bottom: 5px;
-}
-
-div.good a {
-    color: var(--goods);
-
-    &:hover {
-        color: var(--goods-hover);
+        color: var(--secondary-hover);
     }
 }
 
 
-/* end of subpages */
-
-/* Index page */
-.subtitle {
-    padding: 0 3% 0 3%;
-    text-align: justify;
-    color: #696969
+div.subpage .badge {
+    background-color: var(--primary) !important;
+    &:hover {
+        background-color: var(--primary-hover) !important;
+    }
 }
 
-.container {
-    margin-top: 20px;
-    margin-bottom: 50px;
+
+ul.no-bullets {
+    list-style-type: none;
 }
 
 /* Highcharts specific */
@@ -512,11 +357,17 @@ div.good a {
     margin-left: auto;
     margin-right: auto;
     width: auto;
-    color: #79B4A9;
+    color: var(--secondary);
     font-weight: bold;
     font-size: 20px;
     font-family: Helvetica, Arial, sans-serif;
+
+    &:focus {
+        box-shadow: none;
+        border-color: var(--primary)
+    }
 }
+
 
 #container_select {
     padding: 10px 0 0 10px;
