@@ -1,258 +1,235 @@
-const dataUrl = 'json_dumps/charts.json'
+const dataUrl = "json_dumps/charts.json";
 const titleStyle = {
-  color: '#BA833B',
-  fontWeight: 'bold',
-  fontSize: '30px'
-}
-function setVisibilityForFirstElement (chartData) {
+  color: "#BA833B",
+  fontWeight: "bold",
+  fontSize: "30px",
+};
+function setVisibilityForFirstElement(chartData) {
   chartData[1].forEach((element, index) => {
-    element.visible = index === 0 // Set visible: true for the first element, false for all others
-  })
+    element.visible = index === 0; // Set visible: true for the first element, false for all others
+  });
 }
 
-function createPieChart (containerId, title, data) {
+function createPieChart(containerId, title, data) {
   return Highcharts.chart(containerId, {
     chart: {
-      type: 'pie'
+      type: "pie",
     },
     title: {
       text: title,
-      style: titleStyle
+      style: titleStyle,
     },
     tooltip: {
-      valueSuffix: '%'
+      valueSuffix: "%",
     },
     plotOptions: {
       series: {
         allowPointSelect: true,
-        cursor: 'pointer',
+        cursor: "pointer",
         dataLabels: {
-          enabled: true
-        }
-      }
+          enabled: true,
+        },
+      },
     },
     series: [
       {
-        name: 'Percentage',
+        name: "Percentage",
         colorByPoint: true,
-        data: data
-      }
-    ]
-  })
+        data: data,
+      },
+    ],
+  });
 }
 
-function createColumnChart (containerId, title, data, century = 18) {
+function createColumnChart(containerId, title, data, century = 18) {
   const chart = Highcharts.chart(containerId, {
     chart: {
-      type: 'column'
+      type: "column",
     },
 
     legend: {
-      enabled: false
+      enabled: false,
     },
     title: {
       text: title,
-      style: titleStyle
+      style: titleStyle,
     },
     subtitle: {
-      text: 'Click the columns to view the groceries in that category'
+      text: "Click the columns to view the groceries in that category",
     },
     xAxis: {
-      type: 'category',
-      reversed: true
+      type: "category",
+      reversed: true,
     },
     yAxis: {
       title: {
-        text: 'Number of Documents'
-      }
+        text: "Number of Documents",
+      },
     },
     tooltip: {
       headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
-      pointFormat:
-      `<span style="color:{point.color}">{point.name}</span>: mentioned in <b>{point.y}</b> documents in the ${century}th century<br/>`
+      pointFormat: `<span style="color:{point.color}">{point.name}</span>: mentioned in <b>{point.y}</b> documents in the ${century}th century<br/>`,
     },
     plotOptions: {
       series: {
         allowPointSelect: true,
-        cursor: 'pointer',
+        cursor: "pointer",
         dataLabels: {
           enabled: true,
-          overflow: 'none',
-          crop: false
-        }
-      }
+          overflow: "none",
+          crop: false,
+        },
+      },
     },
     series: [
       {
-        name: 'Grocery Categories',
+        name: "Grocery Categories",
         dataSorting: {
           enabled: true,
-          sortKey: 'name'
+          sortKey: "name",
         },
         colorByPoint: true,
-        data: data['categories_' + century]
-      }
+        data: data["categories_" + century],
+      },
     ],
     drilldown: {
       activeAxisLabelStyle: {
-        color: '#000000',
-        textDecoration: 'unset'
+        color: "#000000",
+        textDecoration: "unset",
       },
       activeDataLabelStyle: {
-        color: '#000000',
-        textDecoration: 'unset'
+        color: "#000000",
+        textDecoration: "unset",
       },
-      series: data['drilldown_' + century]
-    }
-  })
-  return chart
+      series: data["drilldown_" + century],
+    },
+  });
+  return chart;
 }
 
-function createSplineChart (containerId, title, yAxisTitle, data, tooltipText) {
+function createSplineChart(containerId, title, yAxisTitle, data, tooltipText) {
   return Highcharts.chart(containerId, {
     chart: {
-      type: 'spline',
-      zoomType: 'x'
+      type: "spline",
+      zoomType: "x",
     },
     title: {
       text: title,
-      style: titleStyle
+      style: titleStyle,
     },
     subtitle: {
-      text: '(Select more categories to display their numbers, <br/> click and drag in the plot area to zoom in)'
+      text: "(Select more categories to display their numbers, <br/> click and drag in the plot area to zoom in)",
     },
     legend: {
       itemHiddenStyle: {
-        color: '#d3d3d3',
-        textDecoration: 'none'
-      }
+        color: "#d3d3d3",
+        textDecoration: "none",
+      },
     },
     xAxis: {
       title: {
-        text: 'Decades'
+        text: "Decades",
       },
       labels: {
-        format: '{value}s'
+        format: "{value}s",
       },
-      categories: data[0]
+      categories: data[0],
     },
     yAxis: {
       title: {
-        text: yAxisTitle
-      }
+        text: yAxisTitle,
+      },
     },
     tooltip: {
-      headerFormat: '<span>{point.key}s</span><br>',
+      headerFormat: "<span>{point.key}s</span><br>",
       pointFormat: `<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b>${tooltipText}<br/>`,
-      shared: true
+      shared: true,
     },
     plotOptions: {
       line: {
         dataLabels: {
-          enabled: true
+          enabled: true,
         },
-        enableMouseTracking: false
-      }
+        enableMouseTracking: false,
+      },
     },
-    series: data[1]
-  })
+    series: data[1],
+  });
 }
 d3.json(dataUrl, function (data) {
-  const relChartData = Object.values(data.religions)
+  const relChartData = Object.values(data.religions);
   const catChartData = {
     categories_18: Object.values(data.categories_18),
     drilldown_18: Object.values(data.categories_18_drilldown),
     categories_19: Object.values(data.categories_19),
-    drilldown_19: Object.values(data.categories_19_drilldown)
-  }
-  const timeChartData = Object.values(data.categories_over_decades)
+    drilldown_19: Object.values(data.categories_19_drilldown),
+  };
+  const timeChartData = Object.values(data.categories_over_decades);
   const normalizedTimeChartData = Object.values(
     data.normalized_categories_over_decades
-  )
+  );
 
   // Custom colors (default HighCharts list has too few)
   Highcharts.setOptions({
     colors: [
-      '#536e61',
-      '#9CC69B',
-      '#cf7332',
-      '#993333',
-      '#9cc288',
-      '#EDB183',
-      '#79B4A9',
-      '#5E8B7E',
-      '#A2CAB3',
-      '#E0A180',
-      '#CC9999',
-      '#BFD1B3',
-      '#D6BABA',
-      '#CCFF66',
-      '#FAD02E',
-      '#FF9966',
-      '#CC9966',
-      '#CCFFCC',
-      '#FFD633',
-      '#FF9966',
-      '#FFB366',
-      '#87CEEB',
-      '#AFEEEE',
-      '#FFDAB9',
-      '#F0E68C',
-      '#98FB98',
-      '#F08080',
-      '#20B2AA',
-      '#87CEFA',
-      '#9400D3',
-      '#66CDAA',
-      '#8A2BE2',
-      '#32CD32',
-      '#6495ED',
-      '#B8860B',
-      '#008080',
-      '#DC143C',
-      '#556B2F',
-      '#2F4F4F',
-      '#FF1493',
-      '#4B0082',
-      '#7FFF00'
-    ]
-  })
+      "#a6764d",
+      "#e8c28c",
+      "#d89090",
+      "#6f9ea8",
+      "#b3c0c4",
+      "#c9944a",
+      "#8b6c42",
+      "#f2d1a5",
+      "#ef8686",
+      "#c5d7e3",
+      "#5a8d92",
+      "#9cbab9",
+      "#e0a37b",
+      "#ba5a4d",
+      "#c3ab9f",
+      "#79a89f",
+      "#7d6d61",
+      "#d2beb3",
+      "#a0b0a9",
+      "#d4a07a",
+    ],
+  });
 
-  createPieChart('container_religion_chart', 'Religion', relChartData)
+  createPieChart("container_religion_chart", "Religion", relChartData);
   let catChart = createColumnChart(
-    'container_categories_chart',
-    'Groceries by Category',
+    "container_categories_chart",
+    "Groceries by Category",
     catChartData
-  )
+  );
   // Redraw the Groceries by Category chart when the century is changed
-  const select = document.getElementById('select-century')
-  select.addEventListener('change', () => {
-    const century = select.value
-    catChart.destroy()
+  const select = document.getElementById("select-century");
+  select.addEventListener("change", () => {
+    const century = select.value;
+    catChart.destroy();
     catChart = createColumnChart(
-      'container_categories_chart',
-      'Groceries by Category',
+      "container_categories_chart",
+      "Groceries by Category",
       catChartData,
       century
-    )
-  })
+    );
+  });
 
   // Add visibility attribute for the spline charts
-  setVisibilityForFirstElement(timeChartData)
-  setVisibilityForFirstElement(normalizedTimeChartData)
+  setVisibilityForFirstElement(timeChartData);
+  setVisibilityForFirstElement(normalizedTimeChartData);
 
   createSplineChart(
-    'container_time_chart',
-    'Category Mentions Over Time',
-    'Number of Documents',
+    "container_time_chart",
+    "Category Mentions Over Time",
+    "Number of Documents",
     timeChartData,
-    ' document(s)'
-  )
+    " document(s)"
+  );
   createSplineChart(
-    'container_normalized_time_chart',
-    'Category Mentions Over Time: Document Percentage by Decade',
-    'Percentage of Documents from a Decade',
+    "container_normalized_time_chart",
+    "Category Mentions Over Time: Document Percentage by Decade",
+    "Percentage of Documents from a Decade",
     normalizedTimeChartData,
-    '% of documents from this decade'
-  )
-})
+    "% of documents from this decade"
+  );
+});
