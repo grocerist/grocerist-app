@@ -8,6 +8,8 @@
     
 <meta name="description" content="Grocers of Istanbul: Tracing Food Consumption">
 
+    
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -15,8 +17,6 @@
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    
-    
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -49,9 +49,9 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="documents.html">Documents</a></li>
             <li><a class="dropdown-item" href="persons.html">Grocers</a></li>
+            <li><a class="dropdown-item" href="goods.html">Groceries</a></li>
             <li><a class="dropdown-item" href="locations.html">Locations</a></li>
             <li><a class="dropdown-item" href="categories.html">Grocery Categories</a></li>
-            <li><a class="dropdown-item" href="goods.html">Groceries</a></li>
             <li><a class="dropdown-item" href="dashboard.html">Dashboard</a></li>
           </ul>
         </li>
@@ -67,13 +67,12 @@
   </div>
 </nav>
     <main class="flex-shrink-0">
-        <div class="container-fluid">
-            
-<div class="container">
-    <h1 class="text-center">GrocerIST</h1>
-    <h3 class="text-center">Grocers of Istanbul: Tracing Food Consumption</h3>
-    <div>
-        <p class="subtitle">
+        
+<div class="header pb-1">
+    <div class="container justify-content-center align-items-center">
+        <h1 class="text-center p-3">GrocerIST</h1>
+        <h3 class="text-center">Grocers of Istanbul: Tracing Food Consumption</h3>
+        <p class="description_text lh-lg p-1">
             The main objective of GrocerIST is to reveal and analyse the food
             consumption patterns of inhabitants in the eighteenth and nineteenth
             centuries in Istanbul through the use of grocers' (<i>bakkal</i>)
@@ -84,123 +83,105 @@
             circumstances of the empire.
         </p>
     </div>
-    
+</div>
 
-    <div class="container">
+
+<div class="container">
+    
+    
+    
+    
+    <div class="row">
         
-        <div class="row pt-3">
-            
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center">Documents</h3>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-center">
-                            <a class="icon-link icon-link-hover" href="documents.html">
-                                <i class="bi bi-archive" style="font-size: 80px"></i>
-                            </a>
-                        </p>
-                        <p class="text-center">Browse Documents about
-    Grocers</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center">Grocers</h3>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-center">
-                            <a class="icon-link icon-link-hover" href="persons.html">
-                                <i class="bi bi-people" style="font-size: 80px"></i>
-                            </a>
-                        </p>
-                        <p class="text-center">Browse Grocers</p>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
         
-        <div class="row pt-3">
-            
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center">Groceries</h3>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-center">
-                            <a class="icon-link icon-link-hover" href="goods.html">
-                                <i class="bi bi-basket" style="font-size: 80px"></i>
-                            </a>
-                        </p>
-                        <p class="text-center">Browse Groceries</p>
-                    </div>
+        <div class="col-12 pb-3">
+            <div class="card index-card" style="background-image:url('images/ist1c.png'">
+                <div class="card-body">
+                    <h3 class="card-title"><i class="bi bi-archive"></i> Documents</h3>
+                    <p class="card-text">A
+list of documents containing inheritance inventories</p>
+                    <a href="documents.html" class="btn Documents">Browse Documents</a>
                 </div>
             </div>
-            
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center">Locations</h3>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-center">
-                            <a class="icon-link icon-link-hover" href="locations.html">
-                                <i class="bi bi-geo" style="font-size: 80px"></i>
-                            </a>
-                        </p>
-                        <p class="text-center">Browse Locations</p>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-        
-        <div class="row pt-3">
-            
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center">Grocery Categories</h3>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-center">
-                            <a class="icon-link icon-link-hover" href="categories.html">
-                                <i class="bi bi-boxes" style="font-size: 80px"></i>
-                            </a>
-                        </p>
-                        <p class="text-center">Browse Categories of
-    Groceries</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-center">Dashboard</h3>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-center">
-                            <a class="icon-link icon-link-hover" href="dashboard.html">
-                                <i class="bi bi-bar-chart" style="font-size: 80px"></i>
-                            </a>
-                        </p>
-                        <p class="text-center">Browse Dashboard</p>
-                    </div>
-                </div>
-            </div>
-            
         </div>
         
     </div>
     
+    
+    
+    
+    <div class="row">
+        
+        
+        <div class="col-sm-12 col-md-6 col-lg-4 pb-3">
+            <div class="card index-card" style="background-image:url('images/ist2c.png'">
+                <div class="card-body">
+                    <h3 class="card-title"><i class="bi bi-people"></i> Grocers</h3>
+                    <p class="card-text">A list of
+persons mentioned in the inheritance documents</p>
+                    <a href="persons.html" class="btn Grocers">Browse Grocers</a>
+                </div>
+            </div>
         </div>
+        
+        
+        <div class="col-sm-12 col-md-6 col-lg-4 pb-3">
+            <div class="card index-card" style="background-image:url('images/ist3c.png'">
+                <div class="card-body">
+                    <h3 class="card-title"><i class="bi bi-basket"></i> Groceries</h3>
+                    <p class="card-text">A list
+of groceries from the inheritance inventories</p>
+                    <a href="goods.html" class="btn Groceries">Browse Groceries</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
+        <div class="col-md-12 col-lg-4 pb-3">
+            <div class="card index-card" style="background-image:url('images/ist4c.png'">
+                <div class="card-body">
+                    <h3 class="card-title"><i class="bi bi-geo"></i> Locations</h3>
+                    <p class="card-text">Locations of grocers</p>
+                    <a href="locations.html" class="btn Locations">Browse Locations</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    
+    
+    
+    <div class="row">
+        
+        
+        <div class="col-sm-12 col-md-6 pb-3">
+            <div class="card index-card" style="background-image:url('images/ist5c.png'">
+                <div class="card-body">
+                    <h3 class="card-title"><i class="bi bi-boxes"></i> Grocery Categories</h3>
+                    <p class="card-text">List of groceries by category</p>
+                    <a href="categories.html" class="btn Grocery Categories">Browse Grocery Categories</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="col-sm-12 col-md-6 pb-3">
+            <div class="card index-card" style="background-image:url('images/ist6c.png'">
+                <div class="card-body">
+                    <h3 class="card-title"><i class="bi bi-bar-chart"></i> Dashboard</h3>
+                    <p class="card-text">Different charts and graphs about the data</p>
+                    <a href="dashboard.html" class="btn Dashboard">Browse Dashboard</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
+
     </main>
     <footer class="footer mt-auto p-3 bg-body-tertiary">
   <div class="container">
