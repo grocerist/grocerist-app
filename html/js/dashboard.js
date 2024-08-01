@@ -2,7 +2,7 @@ const dataUrl = "json_dumps/charts.json";
 const titleStyle = {
   color: "#993333",
   fontWeight: "bold",
-  fontSize: "30px",
+  fontSize: "1.5rem",
 };
 function setVisibilityForFirstElement(chartData) {
   chartData[1].forEach((element, index) => {
@@ -28,6 +28,10 @@ function createPieChart(containerId, title, data) {
         cursor: "pointer",
         dataLabels: {
           enabled: true,
+          distance: 30,
+          style: {
+            fontSize: "0.8rem",
+          },
         },
       },
     },
@@ -38,6 +42,30 @@ function createPieChart(containerId, title, data) {
         data: data,
       },
     ],
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 500,
+          },
+          chartOptions: {
+            title: {
+              style: { fontSize: "1rem" },
+            },
+            plotOptions: {
+              series: {
+                dataLabels: {
+                  distance: 10,
+                  style: {
+                    fontSize: "0.5rem",
+                  },
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
   });
 }
 
@@ -103,6 +131,24 @@ function createColumnChart(containerId, title, data, century = 18) {
       },
       series: data["drilldown_" + century],
     },
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 500,
+          },
+          chartOptions: {
+            title: {
+              style: { fontSize: "1rem" },
+            },
+            yAxis: {
+              labels: { align: "left", x: 0, y: -2 },
+              title: { text: "" },
+            },
+          },
+        },
+      ],
+    },
   });
   return chart;
 }
@@ -161,8 +207,15 @@ function createSplineChart(containerId, title, yAxisTitle, data, tooltipText) {
             maxWidth: 500,
           },
           chartOptions: {
+            title: {
+              style: { fontSize: "1rem" },
+            },
+            subtitle: {
+              text: "(Select more categories to display their numbers)",
+            },
             yAxis: {
-              labels: false,
+              labels: { align: "left", x: 0, y: -2 },
+              title: { text: "" },
             },
           },
         },

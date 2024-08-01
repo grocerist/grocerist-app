@@ -4,6 +4,13 @@ img.footerimage {
     max-width: 180px;
 }
 
+/* hide logos on small screens*/
+@media (max-width: 576px) {
+    img.footerimage {
+        display: none;
+    }
+}
+
 #map {
     height: 50vh;
 }
@@ -57,50 +64,60 @@ subpages
 /* links to a specific page */
 a[href="documents.html"] {
     color: var(--documents);
- &:hover { 
-    color: var(--documents-hover);
- }
+
+    &:hover {
+        color: var(--documents-hover);
+    }
 }
+
 a[href="persons.html"] {
     color: var(--persons);
- &:hover { 
-    color: var(--persons-hover);
- }
-} 
+
+    &:hover {
+        color: var(--persons-hover);
+    }
+}
+
 a[href="locations.html"] {
     color: var(--locations);
- &:hover { 
-    color: var(--locations-hover);
- }
+
+    &:hover {
+        color: var(--locations-hover);
+    }
 }
+
 a[href="categories.html"] {
     color: var(--categories);
- &:hover { 
-    color: var(--categories-hover);
- }
+
+    &:hover {
+        color: var(--categories-hover);
+    }
 }
 
 a[href="goods.html"] {
     color: var(--goods);
- &:hover { 
-    color: var(--goods-hover);
- }
+
+    &:hover {
+        color: var(--goods-hover);
+    }
 }
 
 a[href="dashboard.html"] {
     color: var(--dashboard);
- &:hover { 
-    color: var(--dashboard-hover);
- }
+
+    &:hover {
+        color: var(--dashboard-hover);
+    }
 }
 
 /* remaining links */
 a {
     color: var(--link);
     text-decoration: unset;
- &:hover {
-    color: var(--link-hover);
- }
+
+    &:hover {
+        color: var(--link-hover);
+    }
 }
 
 
@@ -112,9 +129,11 @@ h1 {
 div.documents h1 {
     color: var(--documents);
 }
-div.documents h1 > a {
+
+div.documents h1>a {
     color: var(--documents);
-    &:hover{
+
+    &:hover {
         color: var(--documents-hover);
     }
 }
@@ -122,9 +141,11 @@ div.documents h1 > a {
 div.persons h1 {
     color: var(--persons);
 }
-div.persons h1 > a {
+
+div.persons h1>a {
     color: var(--persons);
-    &:hover{
+
+    &:hover {
         color: var(--persons-hover);
     }
 }
@@ -132,9 +153,11 @@ div.persons h1 > a {
 div.locations h1 {
     color: var(--locations);
 }
-div.locations h1 > a {
+
+div.locations h1>a {
     color: var(--locations);
-    &:hover{
+
+    &:hover {
         color: var(--locations-hover);
     }
 }
@@ -142,9 +165,11 @@ div.locations h1 > a {
 div.categories h1 {
     color: var(--categories);
 }
-div.categories h1 > a {
+
+div.categories h1>a {
     color: var(--categories);
-    &:hover{
+
+    &:hover {
         color: var(--categories-hover);
     }
 }
@@ -152,9 +177,11 @@ div.categories h1 > a {
 div.goods h1 {
     color: var(--goods);
 }
-div.goods h1 > a {
+
+div.goods h1>a {
     color: var(--goods);
-    &:hover{
+
+    &:hover {
         color: var(--goods-hover);
     }
 }
@@ -162,9 +189,11 @@ div.goods h1 > a {
 div.dashboard h1 {
     color: var(--dashboard);
 }
-div.dashboard h1 > a {
+
+div.dashboard h1>a {
     color: var(--dashboard);
-    &:hover{
+
+    &:hover {
         color: var(--dashboard-hover);
     }
 }
@@ -174,43 +203,48 @@ div.dashboard h1 > a {
 /*documents page*/
 div.documents div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     background-color: var(--documents);
-    color: white; 
- &:hover {
-    background-color: var(--documents-hover) !important;
- }
+    color: white;
+
+    &:hover {
+        background-color: var(--documents-hover) !important;
+    }
 }
 
 /*persons page*/
 div.persons div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     background-color: var(--persons);
- &:hover {
-    background-color: var(--persons-hover) !important;
- }
+
+    &:hover {
+        background-color: var(--persons-hover) !important;
+    }
 }
 
 /*locations page*/
 div.locations div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     background-color: var(--locations);
- &:hover {
-    background-color: var(--locations-hover) !important;
- }
+
+    &:hover {
+        background-color: var(--locations-hover) !important;
+    }
 }
 
 /*categories page*/
 div.categories div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     background-color: var(--categories);
- &:hover {
-    background-color: var(--categories-hover) !important;
- }
+
+    &:hover {
+        background-color: var(--categories-hover) !important;
+    }
 }
 
 /*goods page*/
 div.goods div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     background-color: var(--goods);
     color: white;
- &:hover {
-    background-color: var(--goods-hover) !important;
- }
+
+    &:hover {
+        background-color: var(--goods-hover) !important;
+    }
 }
 
 /* end of tabulator headers */
@@ -221,9 +255,10 @@ div.goods div.tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
 div.documents div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--documents);
     border-color: var(--documents);
- &:hover {
-    background-color: var(--footer-hover-background);
- }
+
+    &:hover {
+        background-color: var(--footer-hover-background);
+    }
 }
 
 div.documents div.tabulator .tabulator-footer .tabulator-page:hover {
@@ -234,9 +269,10 @@ div.documents div.tabulator .tabulator-footer .tabulator-page:hover {
 div.persons div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--persons);
     border-color: var(--persons);
- &:hover {
-    background-color: var(--footer-hover-background);
- }
+
+    &:hover {
+        background-color: var(--footer-hover-background);
+    }
 }
 
 div.persons div.tabulator .tabulator-footer .tabulator-page:hover {
@@ -247,9 +283,10 @@ div.persons div.tabulator .tabulator-footer .tabulator-page:hover {
 div.locations div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--locations);
     border-color: var(--locatios);
- &:hover {
-    background-color: var(--footer-hover-background);
- }
+
+    &:hover {
+        background-color: var(--footer-hover-background);
+    }
 }
 
 div.locations div.tabulator .tabulator-footer .tabulator-page:hover {
@@ -260,9 +297,10 @@ div.locations div.tabulator .tabulator-footer .tabulator-page:hover {
 div.categories div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--categories);
     border-color: var(--categories);
- &:hover {
-    background-color: var(--footer-hover-background);
- }
+
+    &:hover {
+        background-color: var(--footer-hover-background);
+    }
 }
 
 div.categories div.tabulator .tabulator-footer .tabulator-page:hover {
@@ -273,9 +311,10 @@ div.categories div.tabulator .tabulator-footer .tabulator-page:hover {
 div.goods div.tabulator .tabulator-footer .tabulator-page.active {
     background-color: var(--goods);
     border-color: var(--goods);
- &:hover {
-    background-color: var(--footer-hover-background);
- }
+
+    &:hover {
+        background-color: var(--footer-hover-background);
+    }
 }
 
 div.goods div.tabulator .tabulator-footer .tabulator-page:hover {
@@ -295,16 +334,18 @@ div.document h1 {
 
 div.document a {
     color: var(--documents);
- &:hover {
-    color: var(--documents-hover);
- }
+
+    &:hover {
+        color: var(--documents-hover);
+    }
 }
 
 div.document .badge {
     background-color: var(--documents) !important;
- &:hover {
-    background-color: var(--documents-hover) !important;
- }
+
+    &:hover {
+        background-color: var(--documents-hover) !important;
+    }
 }
 
 /*person subpage*/
@@ -315,9 +356,10 @@ div.person h1 {
 
 div.person a {
     color: var(--persons);
- &:hover {
-    color: var(--persons-hover);
- }
+
+    &:hover {
+        color: var(--persons-hover);
+    }
 }
 
 /*district subpage*/
@@ -328,9 +370,10 @@ div.district h1 {
 
 div.district a {
     color: var(--district);
- &:hover {
-    color: var(--district-hover);
- }
+
+    &:hover {
+        color: var(--district-hover);
+    }
 }
 
 /*karye subpage*/
@@ -341,10 +384,12 @@ div.karye h1 {
 
 div.karye a {
     color: var(--karye);
- &:hover {
-    color: var(--karye-hover);
- }
+
+    &:hover {
+        color: var(--karye-hover);
+    }
 }
+
 /*mahalle subpage*/
 div.mahalle h1 {
     border-bottom: 3px solid var(--mahalle);
@@ -353,9 +398,10 @@ div.mahalle h1 {
 
 div.mahalle a {
     color: var(--mahalle);
- &:hover {
-    color: var(--mahalle-hover);
- }
+
+    &:hover {
+        color: var(--mahalle-hover);
+    }
 }
 
 /*nahiye subpage*/
@@ -366,9 +412,10 @@ div.nahiye h1 {
 
 div.nahiye a {
     color: var(--nahiye);
- &:hover {
-    color: var(--nahiye-hover);
- }
+
+    &:hover {
+        color: var(--nahiye-hover);
+    }
 }
 
 /*quarter subpage*/
@@ -379,9 +426,10 @@ div.quarter h1 {
 
 div.quarter a {
     color: var(--quarter);
- &:hover {
-    color: var(--quarter-hover);
- }
+
+    &:hover {
+        color: var(--quarter-hover);
+    }
 }
 
 /*address subpage*/
@@ -392,9 +440,10 @@ div.address h1 {
 
 div.address a {
     color: var(--address);
- &:hover {
-    color: var(--address-hover);
- }
+
+    &:hover {
+        color: var(--address-hover);
+    }
 }
 
 /*category subpage*/
@@ -405,9 +454,10 @@ div.category h1 {
 
 div.category a {
     color: var(--categories);
- &:hover {
-    color: var(--categories-hover);
- }
+
+    &:hover {
+        color: var(--categories-hover);
+    }
 }
 
 /*good subpage*/
@@ -418,9 +468,10 @@ div.good h1 {
 
 div.good a {
     color: var(--goods);
- &:hover {
-    color: var(--goods-hover);
- }
+
+    &:hover {
+        color: var(--goods-hover);
+    }
 }
 
 
@@ -430,25 +481,32 @@ div.good a {
 .subtitle {
     padding: 0 3% 0 3%;
     text-align: justify;
-    color: 	#696969
+    color: #696969
 }
+
 .container {
     margin-top: 20px;
     margin-bottom: 50px;
 }
+
 /* Highcharts specific */
 /* removes the stroke thorugh the symbols in the legend of Highcharts graph */
 .highcharts-legend-item .highcharts-graph {
-	display: none;
+    display: none;
 }
 
 #container_religion_chart,
-#container_categories_chart,
+#container_categories_chart {
+    width: 100%;
+    height: 400px;
+}
+
 #container_time_chart,
 #container_normalized_time_chart {
-  width: 100%;
-  height: 400px;
+    width: 100%;
+    height: 500px;
 }
+
 #select-location {
     display: block;
     margin-left: auto;
@@ -464,7 +522,7 @@ div.good a {
     padding: 10px 0 0 10px;
 }
 
-@media (min-width: 820px){
+@media (min-width: 820px) {
     #container_select {
         position: absolute;
         top: 0;
@@ -472,7 +530,7 @@ div.good a {
         width: auto;
         box-sizing: border-box;
         z-index: 100;
-        
+
     }
 }
 
@@ -486,17 +544,17 @@ div.good a {
     /*border-radius: 5px;*/
     line-height: 24px;
     color: #555;
-  }
-  
-  .legend span {
+}
+
+.legend span {
     position: relative;
     bottom: 3px;
-  }
-  
-  .legend div {
+}
+
+.legend div {
     width: 10px;
     height: 10px;
     float: left;
     margin: 5px 5px 0 0;
     border-radius: 50%;
-  }
+}
