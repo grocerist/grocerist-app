@@ -133,7 +133,7 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
 }));
 
 d3.json(dataUrl, function (data) {
-  tableData = Object.values(data);
+ tableData = Object.values(data).filter((item) => item.shelfmark !== "");
 
   var table = new Tabulator("#documents-table", {
     ...commonTableConfig,

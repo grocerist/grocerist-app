@@ -292,6 +292,7 @@ function calculateLocationData(rows, locationType = "district") {
   }));
   return results;
 }
+
 function createTable(tableConfig) {
   console.log("loading table");
   const table = new Tabulator("#persons-table", tableConfig);
@@ -299,16 +300,13 @@ function createTable(tableConfig) {
 }
 
 d3.json(dataUrl, function (data) {
-  tableData = Object.values(data);
+  tableData = Object.values(data).filter((item) => item.name !== "");
   tableConfig.data = tableData;
   const table = createTable(tableConfig);
   table.on("dataLoaded", function (data) {
-    console.log("Data loaded");
     $("#total_count").text(data.length);
   });
-
   table.on("dataFiltered", function (_filters, rows) {
-    console.log("Data filtered");
     $("#search_count").text(rows.length);
     generateChartsFromTable(rows, table);
   });

@@ -49,7 +49,7 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
   minWidth: 200,
 }));
 d3.json(dataUrl, function (data) {
-  data = Object.values(data);
+  data = Object.values(data).filter((item) => item.name !== "");
   let tableData = data.map((item) => {
     const enriched = item;
     enriched["doc_count"] = item.documents.length;
