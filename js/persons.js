@@ -4,105 +4,114 @@ const titleStyle = {
   fontWeight: "bold",
   fontSize: "20px",
 };
+const baseColumnDefinitions = [
+  {
+    title: "Name",
+    field: "name",
+    headerFilter: "input",
+    formatter: linkToDetailView,
+  },
+  {
+    title: "Religion",
+    field: "religion",
+    mutator: mutateSelectField,
+    formatter: "html",
+    headerFilter: "list",
+    headerFilterFunc: "in",
+    headerFilterParams: {
+      valuesLookup: "religion",
+      sort: "asc",
+      multiselect: true,
+    },
+  },
+  {
+    title: "Documents",
+    field: "documents",
+    ...linkListColumnSettings,
+    formatterParams: {
+      urlPrefix: "document__",
+      idField: "id",
+      nameField: "value",
+    },
+  },
+  {
+    title: "District",
+    field: "district",
+    ...linkListColumnSettings,
+    formatterParams: {
+      urlPrefix: "district__",
+      idField: "id",
+      nameField: "value",
+    },
+  },
+  {
+    title: "<i>Mahalle</i>",
+    field: "neighbourhood",
+    visible: false,
+    ...linkListColumnSettings,
+    formatterParams: {
+      urlPrefix: "neighbourhood__",
+      idField: "id",
+      nameField: "value",
+    },
+  },
+  {
+    title: "<i>Karye</i>",
+    field: "karye",
+    visible: false,
+    ...linkListColumnSettings,
+    formatterParams: {
+      urlPrefix: "karye__",
+      idField: "id",
+      nameField: "value",
+    },
+  },
+  {
+    title: "<i>Nahiye</i>",
+    field: "nahiye",
+    visible: false,
+    ...linkListColumnSettings,
+    formatterParams: {
+      urlPrefix: "nahiye__",
+      idField: "id",
+      nameField: "value",
+    },
+  },
+  {
+    title: "Quarter",
+    field: "quarter",
+    visible: false,
+    ...linkListColumnSettings,
+    formatterParams: {
+      urlPrefix: "quarter__",
+      idField: "id",
+      nameField: "value",
+    },
+  },
+  {
+    title: "Address",
+    field: "address",
+    visible: false,
+    ...linkListColumnSettings,
+    formatterParams: {
+      urlPrefix: "address__",
+      idField: "id",
+      nameField: "value",
+    },
+  },
+];
+
+// Add minWidth and visibility toggle to each column
+const columnDefinitions = baseColumnDefinitions.map((column) => ({
+  ...column,
+  headerMenu: headerMenu,
+  minWidth: 150,
+}));
+
 const locTypeSelect = document.getElementById("select-location");
-const TABLE_CFG = {
-  pagination: true,
-  paginationSize: 15,
-  height: 800,
-  layout: "fitColumns",
-  tooltips: true,
-  responsiveLayout: "collapse",
-  columns: [
-    {
-      title: "Name",
-      field: "name",
-      headerFilter: "input",
-      formatter: linkToDetailView,
-    },
-    {
-      title: "Religion",
-      field: "religion",
-      mutator: mutateSelectField,
-      formatter: "html",
-      headerFilter: "list",
-      headerFilterFunc: "in",
-      headerFilterParams: {
-        valuesLookup: "religion",
-        sort: "asc",
-        multiselect: true,
-      },
-    },
-    {
-      title: "Documents",
-      field: "documents",
-      ...linkListColumnSettings,
-      formatterParams: {
-        urlPrefix: "document__",
-        idField: "id",
-        nameField: "value",
-      },
-    },
-    {
-      title: "District",
-      field: "district",
-      ...linkListColumnSettings,
-      formatterParams: {
-        urlPrefix: "district__",
-        idField: "id",
-        nameField: "value",
-      },
-    },
-    {
-      title: "<i>Mahalle</i>",
-      field: "neighbourhood",
-      ...linkListColumnSettings,
-      formatterParams: {
-        urlPrefix: "neighbourhood__",
-        idField: "id",
-        nameField: "value",
-      },
-    },
-    {
-      title: "<i>Karye</i>",
-      field: "karye",
-      ...linkListColumnSettings,
-      formatterParams: {
-        urlPrefix: "karye__",
-        idField: "id",
-        nameField: "value",
-      },
-    },
-    {
-      title: "<i>Nahiye</i>",
-      field: "nahiye",
-      ...linkListColumnSettings,
-      formatterParams: {
-        urlPrefix: "nahiye__",
-        idField: "id",
-        nameField: "value",
-      },
-    },
-    {
-      title: "Quarter",
-      field: "quarter",
-      ...linkListColumnSettings,
-      formatterParams: {
-        urlPrefix: "quarter__",
-        idField: "id",
-        nameField: "value",
-      },
-    },
-    {
-      title: "Address",
-      field: "address",
-      ...linkListColumnSettings,
-      formatterParams: {
-        urlPrefix: "address__",
-        idField: "id",
-        nameField: "value",
-      },
-    },
-  ],
+const tableConfig = {
+  ...commonTableConfig,
+  columns: columnDefinitions,
   footerElement:
     '<span class="tabulator-counter float-left">' +
     'Showing <span id="search_count"></span> results out of <span id="total_count"></span> ' +
@@ -266,7 +275,6 @@ function calculateLocationData(rows, locationType = "district") {
   // get the locations (html list elements) from each row
   rows.forEach((row) => {
     let rowData = row.getData();
-    console.log(rowData);
     let locationData = rowData[locationType];
     let locationNames = locationData.map((item) => item.value);
     if (locationNames.length === 0) {
@@ -284,22 +292,19 @@ function calculateLocationData(rows, locationType = "district") {
   }));
   return results;
 }
-function createTable(TABLE_CFG) {
+
+function createTable(tableConfig) {
   console.log("loading table");
-  const table = new Tabulator("#persons-table", TABLE_CFG);
+  const table = new Tabulator("#persons-table", tableConfig);
   return table;
 }
 
 d3.json(dataUrl, function (data) {
   tableData = Object.values(data).filter((item) => item.name !== "");
-  TABLE_CFG.data = tableData;
-  const table = createTable(TABLE_CFG);
+  tableConfig.data = tableData;
+  const table = createTable(tableConfig);
   table.on("dataLoaded", function (data) {
     $("#total_count").text(data.length);
-  });
-  table.on("tableBuilt", function () {
-    let rows = table.getRows();
-    generateChartsFromTable(rows, table);
   });
   table.on("dataFiltered", function (_filters, rows) {
     $("#search_count").text(rows.length);
