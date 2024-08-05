@@ -1,0 +1,30 @@
+{% extends "templates/partials/base.j2" %}
+{% block title %}Team{% endblock title %}
+{% block page_description %}
+<meta name="description" content="{{ project_data.project_sub_title }}">
+{% endblock page_description %}
+
+{% block content %}
+<div class="container subpage">
+    <h1 class="text-center pb-2">
+        {% include "templates/partials/link_to_top.j2" %}
+        About the Project</h1>
+    <div class="mt-4 mx-auto about-text">
+        <p>GrocerIST is a cooperation project led by the University of Vienna with the ACDH-CH as an associated research
+            partner.</p>
+        <p>The main objective of GrocerIST is to reveal and analyse the food consumption patterns of inhabitants of
+            eighteenth and nineteenth century Istanbul through the use of grocers’ <i>(bakkal)</i> inheritance
+            inventories. By making comparisons across the centuries and different socio-economic conditions of the city,
+            this project intends to discuss the food consumption of Ottomans within the frameworks of the internal and
+            external political and socio-economic circumstances of the empire.</p>
+        <p>In order to systematically analyse a large quantity of archival material, a custom database is set up. The
+            results are fed into a dedicated web-application allowing to browse, query, visualise and map the different
+            data points. Transcriptions and facsimiles of the inheritance inventories are also accessible through this
+            web application.</p>
+        <p>GrocerIST is led by Yavuz Köse from the Department of Near Eastern Studies, University of Vienna and funded
+            by the FWF. The ACDH-CH is responsible for data modelling, data managing, data archiving and for developing
+            the database as well as the web application. All code produced in the course of this project can be found on
+            GitHub.</p>
+    </div>
+</div>
+{% endblock content%}

@@ -31,11 +31,13 @@ highcharts specific
 legend specific
 */
 
+.about-text {
+    max-width: 85ch;
+    overflow-wrap: break-word;
+}
 
 ul.custom-bullets {
     list-style: none;
-    margin-top: 20px;
-
 }
 
 ul.custom-bullets li {
