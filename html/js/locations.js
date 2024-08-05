@@ -328,13 +328,15 @@ function setupEventHandlers(
       previousZoom = map.getZoom();
     });
     map.on("zoomend", function () {
-      let zoomRatio = map.getZoom() / previousZoom;
+      let newZoom = map.getZoom();
+      let zoomRatio = Math.pow(2, newZoom - previousZoom);
       Object.entries(existingCirclesByCoordinates).forEach(
         ([coordinateKey, markersForEachBaselayer]) => {
           Object.values(markersForEachBaselayer).forEach((marker) => {
             // Adjust the circle radius based on the zoom ratio
             let currentSize = marker.getRadius();
-            marker.setRadius(currentSize * zoomRatio);
+            let newSize = currentSize * zoomRatio;
+            marker.setRadius(newSize);
           });
         }
       );
