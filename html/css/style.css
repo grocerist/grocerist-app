@@ -34,11 +34,14 @@ legend specific
 
 ul.custom-bullets {
     list-style: none;
+    margin-top: 20px;
+
 }
 
 ul.custom-bullets li {
     position: relative;
     padding-left: 25px;
+    margin-bottom: 10px;
 }
 
 ul.custom-bullets li::before {
