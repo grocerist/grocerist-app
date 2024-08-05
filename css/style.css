@@ -21,6 +21,7 @@
 document is built up as follows: 
 
 index page
+footer
 links
 page headers
 tabulator header
@@ -29,6 +30,29 @@ subpages
 highcharts specific
 legend specific
 */
+
+
+ul.custom-bullets {
+    list-style: none;
+    margin-top: 20px;
+
+}
+
+ul.custom-bullets li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+}
+
+ul.custom-bullets li::before {
+    content: "■";
+    color: var(--primary);
+    font-weight: bold;
+    display: inline-block;
+    width: 15px;
+    position: absolute;
+    left: 0;
+}
 
 /* index page */
 /* navigation bar drop down menu will always be in front*/
@@ -127,6 +151,7 @@ nav.navbar .dropdown-item:active {
     transition: transform var(--d) var(--e);
     z-index: 1;
 }
+
 .card-title {
     color: whitesmoke;
     margin-top: 1.5rem;
@@ -169,6 +194,7 @@ nav.navbar .dropdown-item:active {
 
     .card-body {
         transform: translateY(calc(100% - 5rem));
+
         >*:not(.card-title) {
             opacity: 0;
             transform: translateY(1rem);
@@ -191,6 +217,7 @@ nav.navbar .dropdown-item:active {
 
         .card-body {
             transform: translateY(0);
+
             >*:not(.card-title) {
                 opacity: 1;
                 transform: translateY(0);
@@ -200,6 +227,7 @@ nav.navbar .dropdown-item:active {
     }
 
     .index-card:focus-within {
+
         &:before,
         &:after,
         .card-body,
@@ -209,6 +237,7 @@ nav.navbar .dropdown-item:active {
     }
 }
 
+/*footer*/
 img.footerimage {
     width: 100%;
     height: auto;
@@ -280,6 +309,7 @@ div h1>a {
 .tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element {
     background-color: var(--primary);
     color: white;
+
     &:hover {
         background-color: var(--tabulator-header-hover);
     }
@@ -295,6 +325,7 @@ div h1>a {
 .tabulator .tabulator-footer .tabulator-paginator .tabulator-page.active {
     background-color: var(--primary);
     border-color: var(--primary);
+
     &:hover {
         background-color: var(--footer-hover-background);
     }
@@ -324,6 +355,7 @@ div.subpage a {
 
 div.subpage .badge {
     background-color: var(--primary) !important;
+
     &:hover {
         background-color: var(--primary-hover) !important;
     }
@@ -333,6 +365,7 @@ div.subpage .badge {
 ul.no-bullets {
     list-style-type: none;
 }
+
 
 /* Highcharts specific */
 /* removes the stroke thorugh the symbols in the legend of Highcharts graph */
