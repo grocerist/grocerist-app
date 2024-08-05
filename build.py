@@ -21,6 +21,16 @@ tei_dir = os.path.join(out_dir, "tei")
 with open("project.json", "r", encoding="utf-8") as f:
     project_data = json.load(f)
 
+# get imprint
+redmine_id = project_data["redmine_id"]
+imprint_url = f"https://imprint.acdh.oeaw.ac.at/{redmine_id}?locale=en"
+print(imprint_url)
+try:
+    r = requests.get(imprint_url)
+    project_data["imprint"] = r.content.decode("utf-8")
+except Exception as e:
+    project_data["imprint"] = e
+
 os.makedirs(out_dir, exist_ok=True)
 for x in glob.glob(f"{out_dir}/*.html"):
     os.unlink(x)
@@ -115,11 +125,16 @@ def buildSites(subpage, jsonFile, templateFile):
             f.write(template.render(context))
 
 
-buildSites("person", "persons.json", "./templates/person.j2")
-buildSites("district", "districts.json", "./templates/district.j2")
-buildSites("neighbourhood", "neighbourhoods.json", "./templates/neighbourhood.j2")
-buildSites("good", "goods.json", "./templates/good.j2")
-buildSites("karye", "karye.json", "./templates/karye.j2")
-buildSites("nahiye", "nahiye.json", "./templates/nahiye.j2")
-buildSites("quarter", "quarter.json", "./templates/quarter.j2")
-buildSites("address", "address.json", "./templates/address.j2")
+subpages = [
+    ("person", "persons.json", "./templates/person.j2"),
+    ("district", "districts.json", "./templates/district.j2"),
+    ("neighbourhood", "neighbourhoods.json", "./templates/neighbourhood.j2"),
+    ("good", "goods.json", "./templates/good.j2"),
+    ("karye", "karye.json", "./templates/karye.j2"),
+    ("nahiye", "nahiye.json", "./templates/nahiye.j2"),
+    ("quarter", "quarter.json", "./templates/quarter.j2"),
+    ("address", "address.json", "./templates/address.j2")
+]
+
+for data in subpages:
+    buildSites(*data)

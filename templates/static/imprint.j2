@@ -1,0 +1,19 @@
+{% extends "templates/partials/base.j2" %}
+
+{% block title %}Imprint{% endblock title %}
+
+{% block page_description %}
+<meta name="description" content="Imprint">
+{% endblock page_description %}
+
+
+
+{% block content %}
+<div class="container subpage pt-3">
+    <h1 class="text-center pb-2">
+        {% include "templates/partials/link_to_top.j2" %}
+        Imprint</h1>
+    {{ project_data.imprint|safe}}
+</div>
+
+{% endblock content %}
