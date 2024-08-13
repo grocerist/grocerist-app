@@ -36,15 +36,9 @@ jobs:
           cache: "pip"
       - run: pip install -r requirements.txt
       - name: Fetch data
-        run: python ./pyscripts/fetch_data.py
-      - name: Make GEOJSON
-        run: python ./pyscripts/make_geojson.py
-      - name: Make charts json
-        run: python ./pyscripts/make_chartsjson.py
-      - name: Make goods JSON
-        run: python ./pyscripts/make_goodsjson.py
+        run: python fetch_data.py
       - name: Build
-        run: python ./pyscripts/build.py
+        run: python build.py
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
