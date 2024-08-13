@@ -14,11 +14,13 @@ goods_data = read_json_file("goods.json")
 docs_data = read_json_file("documents.json")
 
 for key, value in goods_data.items():
-    if (value["documents"]):
+    if value["documents"]:
         for doc in value["documents"]:
             doc["lat"] = docs_data[str(doc["id"])].get("lat")
             doc["long"] = docs_data[str(doc["id"])].get("long")
-            doc["year_of_creation_miladi"] = docs_data[str(doc["id"])].get("year_of_creation_miladi")
+            doc["year_of_creation_miladi"] = docs_data[str(doc["id"])].get(
+                "year_of_creation_miladi"
+            )
 
 with open(
     os.path.join("html", "json_dumps", "goods.json"), "w", encoding="utf-8"
