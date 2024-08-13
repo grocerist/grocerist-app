@@ -58,12 +58,15 @@
     const eighteenth_list = [];
     const nineteenth_list = [];
 
+    // tojson filter is used to keep the data in json format
+    // e.g. preventing the null values from being converted to None during processing
     const doc_list = {{ object.documents | tojson | safe }};
 
-    const createMarker = (lat, long, color, id, value) => {
+    const createMarker = (lat, long, color, id, shelfmark, year) => {
         return L.circleMarker([lat, long], { color: color })
-            .bindPopup(`<strong><a href="document__${id}.html">${value}</a></strong>`)
-            .openPopup();
+            .bindPopup(`Mentioned in document <br>
+            <strong><a href="document__${id}.html">${shelfmark}</a></strong><br>
+            in ${year}`)
     };
 
     for (let i = 0; i < doc_list.length; i++) {
@@ -72,10 +75,10 @@
             const year = /\d{4}/.exec(doc.year_of_creation_miladi)[0]; //remove regex expression after simple year values are inserted in baserow
             if (doc.lat && doc.long) {
                 if (year < 1801) {
-                    const marker = createMarker(doc.lat, doc.long, color18, doc.id, doc.value);
+                    const marker = createMarker(doc.lat, doc.long, color18, doc.id, doc.value, year);
                     eighteenth_list.push(marker);
                 } else if (year < 1901) {
-                    const marker = createMarker(doc.lat, doc.long, color19, doc.id, doc.value);
+                    const marker = createMarker(doc.lat, doc.long, color19, doc.id, doc.value, year);
                     nineteenth_list.push(marker);
                 }
             }
