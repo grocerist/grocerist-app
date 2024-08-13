@@ -8,10 +8,10 @@ from acdh_tei_pyutils.tei import TeiReader
 import subprocess
 
 # Run additional scripts to generate or update json files
-helper_scripts = 'json_pyscripts'
+helper_scripts = "json_pyscripts"
 for script in os.listdir(helper_scripts):
     path = os.path.join(helper_scripts, script)
-    subprocess.run(['python', path])
+    subprocess.run(["python", path])
 
 templateLoader = jinja2.FileSystemLoader(searchpath=".")
 templateEnv = jinja2.Environment(loader=templateLoader)
@@ -33,10 +33,15 @@ redmine_id = project_data["redmine_id"]
 imprint_url = f"https://imprint.acdh.oeaw.ac.at/{redmine_id}?locale=en"
 print(imprint_url)
 try:
-    r = requests.get(imprint_url)
+    r = requests.get(imprint_url, timeout=2)
     project_data["imprint"] = r.content.decode("utf-8")
 except Exception as e:
-    project_data["imprint"] = e
+    project_data["imprint"] = (
+        """Due to temporary technical difficulties, the legal notice for this website cannot be displayed.
+        <br> However, general information can be found
+          in the imprint of the <a href="https://www.oeaw.ac.at/en/oeaw/imprint">Austrian Academy of Sciences</a>."""
+    )
+    print(e)
 
 os.makedirs(out_dir, exist_ok=True)
 for x in glob.glob(f"{out_dir}/*.html"):
@@ -140,7 +145,7 @@ subpages = [
     ("karye", "karye.json", "./templates/karye.j2"),
     ("nahiye", "nahiye.json", "./templates/nahiye.j2"),
     ("quarter", "quarter.json", "./templates/quarter.j2"),
-    ("address", "address.json", "./templates/address.j2")
+    ("address", "address.json", "./templates/address.j2"),
 ]
 
 for data in subpages:
