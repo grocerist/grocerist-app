@@ -37,10 +37,6 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Fetch data
         run: python fetch_data.py
-      - name: Make GEOJSON
-        run: python make_geojson.py
-      - name: Make charts json
-        run: python make_chartsjson.py
       - name: Build
         run: python build.py
       - name: Setup Pages

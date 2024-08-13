@@ -5,6 +5,13 @@ import json
 import requests
 import lxml.etree as ET
 from acdh_tei_pyutils.tei import TeiReader
+import subprocess
+
+# Run additional scripts to generate or update json files
+helper_scripts = 'json_pyscripts'
+for script in os.listdir(helper_scripts):
+    path = os.path.join(helper_scripts, script)
+    subprocess.run(['python', path])
 
 templateLoader = jinja2.FileSystemLoader(searchpath=".")
 templateEnv = jinja2.Environment(loader=templateLoader)
