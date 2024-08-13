@@ -14,6 +14,21 @@ const mapConfig = {
   subdomains: "abcd",
 };
 
+const overlays = {
+  "18th century": {
+    color: "#d4a07a",
+    name: `<span style="color:#d4a07a">18th century</span>`,
+  },
+  "19th century": {
+    color: "#8b6c42",
+    name: `<span style="color:#8b6c42">19th century</span>`,
+  },
+  "No data": {
+    color: "#ba5a4d",
+    name: `<span style="color:#ba5a4d">No data</span>`,
+  },
+};
+
 // Helper function to create and add layer groups to the map
 const createAndAddLayerGroup = (map, name) => {
   const layerGroup = new L.layerGroup();
@@ -35,32 +50,35 @@ function createMap() {
   // Add base map layer
   baseMapLayer.addTo(map);
 
-  // Create and add marker layers
-  const layerGroups = {
-    ...createAndAddLayerGroup(map, "18th century"),
-    ...createAndAddLayerGroup(map, "19th century"),
-    ...createAndAddLayerGroup(map, "No data"),
-  };
+  // Create and add marker layer groups from the overlays object
+  const layerGroups = {};
+  Object.values(overlays).forEach((data) => {
+    Object.assign(layerGroups, createAndAddLayerGroup(map, data.name));
+  });
 
   const layerControl = L.control.layers(null, layerGroups, {
     collapsed: false,
   });
   layerControl.addTo(map);
-  // addLegend(map);
   return { map, layerGroups };
 }
 // Function to create a marker
-function createMarker(lat, long, radius, color, markerID) {
-  return L.circleMarker([lat, long], {
-    radius: radius,
-    color: color,
-    markerID: markerID,
+function createMarker(lat, long, color) {
+  const customIcon = L.ExtraMarkers.icon({
+    icon: "bi-file-earmark-text",
+    markerColor: color,
+    shape: "circle",
+    prefix: "bi",
+    svg: true,
+    iconColor: "black",
   });
+  return L.marker([lat, long], { icon: customIcon });
 }
+
 function addPopup(rowData) {
   let popupContent = `
-    <h3><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}<a/></h3>
-    <p><b><i>Bakkal</i>/Grocer:</b> ${
+    <h5><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}<a/></h5>
+    <p><b><i>Bakkal</i> / Grocer:</b> ${
       rowData.main_person[0] ? rowData.main_person[0].name : "-"
     }</p>
     `;
@@ -254,28 +272,26 @@ function rowsToMarkers(rows, layerGroups) {
       } else {
         year = 2000;
       }
-      let color, radius, layer;
+      let color, layer;
       if (year <= 1800) {
-        color = "#2b84ad";
-        radius = 5;
-        layer = "18th century";
+        color = overlays["18th century"].color;
+        layer = overlays["18th century"].name;
       } else if (year <= 1900) {
-        color = "#247d04";
+        color = overlays["19th century"].color;
         radius = 10;
-        layer = "19th century";
+        layer = overlays["19th century"].name;
       } else {
-        color = "#000";
-        radius = 2;
-        layer = "No data";
+        color = overlays["No data"].color;
+        layer = overlays["No data"].name;
       }
-      let marker = createMarker(lat, long, radius, color);
+      let marker = createMarker(lat, long, color);
 
       // store each marker by the grocerist_id from the document
       let markerID = rowData.grocerist_id;
       markers[markerID] = marker;
 
-      // marker.bindPopup(label);
-      layerGroups[layer].addLayer(marker);
+      marker.bindPopup(addPopup(rowData));
+      marker.addTo(layerGroups[layer]);
     }
   });
   return markers;
@@ -285,11 +301,11 @@ function zoomToPointFromRowData(rowData, map, markers) {
   if (lat && long) {
     let markerId = rowData.grocerist_id;
     let marker = markers[markerId];
-    // marker.openPopup();
+    marker.openPopup();
     map.setView([lat, long], mapConfig.onRowClickZoom);
   } else {
     // close all open popups when resetting the map
-    // map.closePopup();
+    map.closePopup();
     map.setView(mapConfig.initialCoordinates, mapConfig.initialZoom);
   }
 }
