@@ -11,10 +11,55 @@
     --footer-hover-background: #f2f2f2;
     --d: 700ms;
     --e: cubic-bezier(0.19, 1, 0.22, 1);
+    --marker-size: 30px;
 }
 
 #map {
     height: 50vh;
+}
+
+.custom-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-marker-pin {
+    background: linear-gradient(145deg, #f2e3d1, #c9a77b);
+    width: 70%;
+    height: 70%;
+    border-width: 10%;
+    border-style: solid;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50% 100%;
+    border-bottom-left-radius: 100% 50%;
+    border-bottom-right-radius: 0%;
+    transform: rotate(45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.custom-marker-shadow {
+    /* background: #d6d4d4; */
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    height: 50%;
+    width: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: 25% 0 0 -25%;
+    transform: rotateX(55deg);
+    z-index: -2;
+    filter: blur(calc(var(--marker-size) / 15));
+    box-shadow: 0 0 calc(var(--marker-size) / 3) rgba(0, 0, 0, 0.5);
+}
+
+.custom-marker-pin i {
+    font-size: calc(var(--marker-size) / 3);
+    transform: rotate(-45deg);
 }
 
 /*

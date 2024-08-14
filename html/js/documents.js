@@ -2,8 +2,8 @@ const dataUrl = "json_dumps/documents.json";
 // ####### MAP CONFIG AND FUNCTIONS #######
 // Config settings for map
 const mapConfig = {
-  initialZoom: 10,
-  initialCoordinates: [41.01224, 28.976018],
+  initialZoom: 11,
+  initialCoordinates: [41.06, 29.00626],
   baseMapUrl: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
   maxZoom: 20,
   minZoom: 1,
@@ -14,28 +14,44 @@ const mapConfig = {
   subdomains: "abcd",
 };
 
-const overlays = {
-  "18th century": {
-    color: "#d4a07a",
-    name: `<span style="color:#d4a07a">18th century</span>`,
-  },
-  "19th century": {
-    color: "#8b6c42",
-    name: `<span style="color:#8b6c42">19th century</span>`,
-  },
-  "No data": {
-    color: "#ba5a4d",
-    name: `<span style="color:#ba5a4d">No data</span>`,
-  },
+const overlayColors = {
+  "18th century": "#ba5a4d",
+  "19th century": "#8b6c42",
+  "N/A": "#E9967A",
 };
 
 // Helper function to create and add layer groups to the map
-const createAndAddLayerGroup = (map, name) => {
+const createAndAddLayerGroup = (map, name, color) => {
   const layerGroup = new L.layerGroup();
+  const htmlName = `<span style="color:${color}">${name}</span>`;
   layerGroup.addTo(map);
-  return { [name]: layerGroup };
+  return { [htmlName]: layerGroup };
 };
 
+function resizeIconsOnZoom(map) {
+  let previousZoom;
+  map.on("zoomstart", function () {
+    previousZoom = map.getZoom();
+  });
+  map.on("zoomend", function () {
+    let newZoom = map.getZoom();
+    let zoomRatio = Math.pow(2, newZoom - previousZoom);
+    Object.values(markers).forEach((marker) => {
+      const icon = marker.options.icon;
+      // Adjust the icon size based on the zoom ratio
+      const currentSize = icon.options.iconSize;
+      const newSize = [currentSize[0] * zoomRatio, currentSize[1] * zoomRatio];
+      icon.options.iconSize = newSize;
+      icon.options.iconAnchor = [newSize[0] / 2, newSize[1]];
+      icon.options.popupAnchor = [0, -newSize[1] * 0.8];
+      document.documentElement.style.setProperty(
+        "--marker-size",
+        `${newSize[0]}px`
+      );
+      marker.setIcon(icon);
+    });
+  });
+}
 // Function for initializing the map
 function createMap() {
   console.log("loading map");
@@ -50,33 +66,34 @@ function createMap() {
   // Add base map layer
   baseMapLayer.addTo(map);
 
-  // Create and add marker layer groups from the overlays object
+  // Create and add marker layer groups from the overlayColors object
   const layerGroups = {};
-  Object.values(overlays).forEach((data) => {
-    Object.assign(layerGroups, createAndAddLayerGroup(map, data.name));
+  Object.entries(overlayColors).forEach(([name, color]) => {
+    Object.assign(layerGroups, createAndAddLayerGroup(map, name, color));
   });
 
   const layerControl = L.control.layers(null, layerGroups, {
     collapsed: false,
   });
   layerControl.addTo(map);
+  // resizeIconsOnZoom(map);
   return { map, layerGroups };
 }
-// Function to create a marker
-function createMarker(lat, long, color) {
-  const customIcon = L.ExtraMarkers.icon({
-    icon: "bi-file-earmark-text",
-    markerColor: color,
-    shape: "circle",
-    prefix: "bi",
-    svg: true,
-    iconColor: "black",
+// Function to create a custom css marker with an icon
+function createMarker(lat, long, color, icon) {
+  const customIcon = L.divIcon({
+    className: "custom-marker",
+    html: `<div class="custom-marker-pin" style="border-color:${color};"><i class="${icon}" style="color:${color}" ></i></div><div class="custom-marker-shadow"></div>
+    `,
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+    popupAnchor: [0, -21],
   });
   return L.marker([lat, long], { icon: customIcon });
 }
 
 function addPopup(rowData) {
-  let popupContent = `
+  const popupContent = `
     <h5><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}<a/></h5>
     <p><b><i>Bakkal</i> / Grocer:</b> ${
       rowData.main_person[0] ? rowData.main_person[0].name : "-"
@@ -238,7 +255,7 @@ const tableConfig = {
   ...commonTableConfig,
   headerFilterLiveFilterDelay: 600,
   columns: columnDefinitions,
-  // initialSort: [{ column: "properties.name", dir: "asc" }],
+  initialSort: [{ column: "shelfmark", dir: "asc" }],
   footerElement: `<span class="tabulator-counter float-left">
                     Showing <span id="search_count"></span> results out of <span id="total_count"></span>
                     </span>`,
@@ -263,8 +280,8 @@ function rowsToMarkers(rows, layerGroups) {
     layerGroup.clearLayers();
   });
   rows.forEach((row) => {
-    let rowData = row.getData();
-    let { lat, long } = getCoordinates(rowData);
+    const rowData = row.getData();
+    const { lat, long } = getCoordinates(rowData);
     if (lat && long) {
       let year;
       if (rowData.year_of_creation_miladi) {
@@ -272,22 +289,21 @@ function rowsToMarkers(rows, layerGroups) {
       } else {
         year = 2000;
       }
-      let color, layer;
+      let century;
       if (year <= 1800) {
-        color = overlays["18th century"].color;
-        layer = overlays["18th century"].name;
+        century = "18th century";
       } else if (year <= 1900) {
-        color = overlays["19th century"].color;
-        radius = 10;
-        layer = overlays["19th century"].name;
+        century = "19th century";
       } else {
-        color = overlays["No data"].color;
-        layer = overlays["No data"].name;
+        century = "N/A";
       }
-      let marker = createMarker(lat, long, color);
+      const color = overlayColors[century];
+      const layer = `<span style="color:${color}">${century}</span>`;
+      const icon = "bi bi-file-earmark-text-fill";
+      const marker = createMarker(lat, long, color, icon);
 
       // store each marker by the grocerist_id from the document
-      let markerID = rowData.grocerist_id;
+      const markerID = rowData.grocerist_id;
       markers[markerID] = marker;
 
       marker.bindPopup(addPopup(rowData));
@@ -297,10 +313,10 @@ function rowsToMarkers(rows, layerGroups) {
   return markers;
 }
 function zoomToPointFromRowData(rowData, map, markers) {
-  let { lat, long } = getCoordinates(rowData);
+  const { lat, long } = getCoordinates(rowData);
   if (lat && long) {
-    let markerId = rowData.grocerist_id;
-    let marker = markers[markerId];
+    const markerId = rowData.grocerist_id;
+    const marker = markers[markerId];
     marker.openPopup();
     map.setView([lat, long], mapConfig.onRowClickZoom);
   } else {
