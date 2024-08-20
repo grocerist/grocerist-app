@@ -14,9 +14,9 @@ const baseColumnDefinitions = [
     ...linkListColumnSettings,
     formatterParams: {
       scrollable: true,
-      urlPrefix: "",
-      idField: "grocerist_id",
-      nameField: "name",
+      urlPrefix: "goods__",
+      idField: "id",
+      nameField: "value",
     },
     headerFilterFuncParams: { nameField: "name" },
   },
@@ -33,7 +33,7 @@ const baseColumnDefinitions = [
       scrollable: true,
       urlPrefix: "",
       idField: "grocerist_id",
-      nameField: "name",
+      nameField: "shelfmark",
     },
   },
   {
@@ -48,8 +48,13 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
   minWidth: 150,
 }));
 d3.json(dataUrl, function (data) {
-  tableData = Object.values(data);
-
+  data = Object.values(data);
+  let tableData = data.map((item) => {
+    const enriched = item;
+    enriched["doc_count"] = item.documents.length;
+    enriched["good_count"] = item.goods.length;
+    return enriched;
+  });
   var table = new Tabulator("#categories-table", {
     ...commonTableConfig,
     data: tableData,
