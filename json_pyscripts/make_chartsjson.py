@@ -64,8 +64,8 @@ religions_results = [
 ]
 
 # DATA FOR CATEGORIES CHART
-categories_data = read_json_file("categories.json")
-goods_data = read_json_file("goods.json")
+categories_data = read_json_file("categories.json").values()
+goods_data = read_json_file("goods.json").values()
 docs_data = read_json_file("documents.json")
 
 
@@ -130,7 +130,7 @@ def generate_category_data(century_dict, century):
 
 
 century_category_dict = calculate_century_count(categories_data, docs_data)
-century_goods_dict = calculate_century_count(goods_data.values(), docs_data)
+century_goods_dict = calculate_century_count(goods_data, docs_data)
 
 
 categories_18 = generate_category_data(century_category_dict, "18")
@@ -145,7 +145,7 @@ def generate_drilldown_data(
             "name": category_name,
             "id": category_name,  # id for HighCharts to match with drilldown series
             "data": [
-                {"name": good["name"], "y": century_goods_dict[good["name"]][century]}
+                {"name": good["value"], "y": century_goods_dict[good["value"]][century]}
                 for category in categories_data
                 if category["name"] == category_name
                 for good in category["goods"]
@@ -187,7 +187,7 @@ for category in categories_data:
     category_name = category["name"]
     doc_list = [document["id"] for document in category["documents"]]
     for doc in doc_list:
-        date_of_creation = docs_data[doc].get("year_of_creation_miladi")
+        date_of_creation = docs_data[str(doc)].get("year_of_creation_miladi")
         year = extract_year(date_of_creation)
         if year is not None:
             decade = round_down_to_ten(year)
