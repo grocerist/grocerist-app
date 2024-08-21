@@ -1,23 +1,109 @@
 {% extends "templates/partials/base.j2" %}
 {% block content %}
-<div class="container good">
+<div class="container subpage">
     <h1 class="text-center">
         {% with parent_page = "goods" %}
         {% include "templates/partials/link_to_top.j2" %}
         {% endwith %}
         {{ object.name }}
     </h1>
-    <h2><i class="bi bi-geo-alt"></i> Categories</h2>
-    <dl>
-        {% for x in object.has_category %}
-        <dd class="ms-5"><a href="category__{{ x.id }}.html">{{ x.value }}</a></dd>
-        {% endfor %}
-    </dl>
-    <h2><i class="bi bi-archive"></i> Documents</h2>
-    <ul>
-        {% for x in object.documents %}
-        <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
-        {% endfor %}
-    </ul>
+    <div class="row">
+        <div class="col">
+            {% if object.turkish_names %}
+            <h2><i class="bi bi-card-text"></i> Translation</h2>
+            <dl>
+                <dd class="ms-5"><b>{{ object.turkish_names }}</b>
+                    {% if object.spelling_variations_and_synonyms %}
+                    |
+                    {{ object.spelling_variations_and_synonyms }}</dd>
+                {% endif %}
+            </dl>
+            {% endif %}
+            {% if object.notes %}
+            <h2><i class="bi bi-info-circle"></i> Description</h2>
+            <dl>
+                <dd class="ms-5">{{ object.notes }}</dd>
+            </dl>
+            {% endif %}
+            <h2><i class="bi bi-geo-alt"></i> Categories</h2>
+            <dl>
+                {% for x in object.has_category %}
+                <dd class="ms-5"><a href="category__{{ x.id }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
+            </dl>
+            <h2><i class="bi bi-archive"></i> Documents</h2>
+            <ul>
+                {% for x in object.documents %}
+                <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col">
+            <h2><i class="bi bi-map"></i> Map</h2>
+            <div id="map" style="height: 600px;" />
+        </div>
+    </div>
 </div>
 {% endblock content %}
+{% block scripts2 %}
+{% if object.documents %}
+{% include "templates/partials/leaflet.j2" %}
+
+<script>
+    const initialCoordinates = [41.01224, 28.976018];
+    const initialZoom = 12;
+    const color18 = "#d4a07a";
+    const color19 = "#8b6c42";
+
+    const eighteenth_list = [];
+    const nineteenth_list = [];
+
+    // tojson filter is used to keep the data in json format
+    // e.g. preventing the null values from being converted to None during processing
+    const doc_list = {{ object.documents | tojson | safe }};
+
+    const createMarker = (lat, long, color, id, shelfmark, year) => {
+        return L.circleMarker([lat, long], { color: color })
+            .bindPopup(`Mentioned in document <br>
+            <strong><a href="document__${id}.html">${shelfmark}</a></strong><br>
+            in ${year}`)
+    };
+
+    for (let i = 0; i < doc_list.length; i++) {
+        const doc = doc_list[i];
+        if (doc.year_of_creation_miladi) {
+            const year = /\d{4}/.exec(doc.year_of_creation_miladi)[0]; //remove regex expression after simple year values are inserted in baserow
+            if (doc.lat && doc.long) {
+                if (year < 1801) {
+                    const marker = createMarker(doc.lat, doc.long, color18, doc.id, doc.value, year);
+                    eighteenth_list.push(marker);
+                } else if (year < 1901) {
+                    const marker = createMarker(doc.lat, doc.long, color19, doc.id, doc.value, year);
+                    nineteenth_list.push(marker);
+                }
+            }
+        } else {
+            console.warn("There is a document with a missing year: " + doc_list[i].value);
+        }
+    }
+
+    const eighteenth_century = L.layerGroup(eighteenth_list);
+    const nineteenth_century = L.layerGroup(nineteenth_list);
+
+    const baseMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 20,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    });
+
+    const map = L.map('map', { center: initialCoordinates, zoom: initialZoom, layers: [baseMap, eighteenth_century, nineteenth_century] });
+
+    const overlayMaps = {};
+    overlayMaps[`<span style=color:${color18}>18th century</span>`] = eighteenth_century;
+    overlayMaps[`<span style=color:${color19}>19th century</span>`] = nineteenth_century;
+
+    L.control.layers(null, overlayMaps, { collapsed: false }).addTo(map);
+</script>
+
+
+{% endif %}
+{% endblock scripts2 %}

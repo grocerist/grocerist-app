@@ -12,23 +12,28 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 {% endblock scriptHeader %}
 {% block content %}
-<div class="container dashboard">
+<div class="container">
     <h1 class="text-center">
         {% include "templates/partials/link_to_top.j2" %}
         Dashboard</h1>
-        <br>
-    <div class="card">
-        <div id="container_religion_chart"></div>
-    </div><br><br>
-    <div class="card">
-        <div id="container_categories_chart"></div>
-    </div><br><br>
-    <div class="card">
-        <div id="container_time_chart"></div>
-    </div><br><br>
-    <div class="card">
-        <div id="container_normalized_time_chart"></div>
+    <br>
+    <div class="card pb-3 mb-3" id="container_religion_chart">
     </div>
+    <div class="card pb-3 mb-3">
+        <div id="container_select">
+            <label for="select-century">Select century:</label>
+            <select id="select-century">
+                <option value="18">18th century</option>
+                <option value="19">19th century</option>
+            </select>
+        </div>
+        <div id="container_categories_chart">
+        </div>
+    </div>
+    <div class="card pb-3 mb-3" id="container_time_chart"></div>
+    <div class="card pb-3 mb-3" id="container_normalized_time_chart">
+    </div>
+</div>
 </div>
 {% endblock content%}
 {% block scripts2 %}

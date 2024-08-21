@@ -1,6 +1,6 @@
 {% extends "templates/partials/base.j2" %}
 {% block content %}
-<div class="container {{ pagename }}">
+<div class="container subpage">
     <h1 class="text-center">
         {% with parent_page = parentpage %}
         {% include "templates/partials/link_to_top.j2" %}
@@ -9,6 +9,46 @@
     </h1>
     <div class="row">
         <div class="col">
+        {% if pagename != 'district'%}
+        <h2><i class="bi bi-geo-alt"></i> Upper administration unit</h2>
+        {% endif %}
+            <dl>
+                {% if object.upper_admin1 %}
+                <dt>District</dt>
+                {% for x in object.upper_admin1 %}
+                <dd class="ms-5"><a href="district__{{ x.ids['database_table_1492'] }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
+                {% endif %}
+
+                {% if object.upper_admin2 %}
+                <dt><i>Nahiye</i></dt>
+                {% for x in object.upper_admin2 %}
+                <dd class="ms-5"><a href="nahiye__{{ x.ids['database_table_2979'] }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
+                {% endif %}
+
+                {% if object.upper_admin3 %}
+                <dt>Quarter</dt>
+                {% for x in object.upper_admin3 %}
+                <dd class="ms-5"><a href="quarter__{{ x.ids['database_table_2977'] }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
+                {% endif %}
+
+                {% if object.upper_admin4 %}
+                <dt><i>Mahalle</i></dt>
+                {% for x in object.upper_admin4 %}
+                <dd class="ms-5"><a href="neighbourhood__{{ x.ids['database_table_1493'] }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
+                {% endif %}
+
+                {% if object.upper_admin5 %}
+                <dt><i>Karye</i></dt>
+                {% for x in object.upper_admin5 %}
+                <dd class="ms-5"><a href="karye__{{ x.ids['database_table_1520'] }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
+                {% endif %}
+            </dl>
+
             <h2><i class="bi bi-archive"></i> Documents</h2>
             <ul>
                 {% for x in object.documents %}
@@ -18,12 +58,12 @@
             <h2><i class="bi bi-person"></i> Persons</h2>
             <ul>
                 {% for x in object.persons %}
-                <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                <li><a href="person__{{ x.id }}.html">{{ x.value }}</a></li>
                 {% endfor %}
             </ul>
         </div>
         <div class="col">
-            <h2>Map</h2>
+            <h2><i class="bi bi-map"></i> Map</h2>
             <div id="map" style="height: 600px;" />
         </div>
     </div>
@@ -34,14 +74,16 @@
 {% include "templates/partials/leaflet.j2" %}
 
 <script>
-    const map = L.map('map').setView([{{ object.lat }}, {{ object.long }}], 13);
+    const map = L.map('map').setView([{{ object.lat }}, { { object.long } }], 13);
 
     const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         maxZoom: 20,
-        attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     }).addTo(map);
 
-    let linkElement = document.querySelector(' h1 > a'); // replace 'a' with your specific selector
+    // gets the color from the link to top in the heading and uses it for the marker
+    // (because each location type has a different colour)
+    let linkElement = document.querySelector(' h1 > a');
     let style = window.getComputedStyle(linkElement);
     let color = style.getPropertyValue('color');
     let radius = {{ object.documents }}.length * 2

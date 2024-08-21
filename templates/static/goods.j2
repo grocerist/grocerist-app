@@ -5,14 +5,14 @@
 {% endblock page_description %}
 
 {% block scriptHeader %}
-    {% include "templates/partials/tabulator.j2" %}
+{% include "templates/partials/tabulator.j2" %}
 {% endblock scriptHeader %}
 {% block content %}
-<div class="container goods">
+<div class="container">
     <h1 class="text-center">
-    {% include "templates/partials/link_to_top.j2" %}
-    Groceries</h1>
-    <div id="example-table"></div>
+        {% include "templates/partials/link_to_top.j2" %}
+        Groceries</h1>
+    <div id="goods-table"></div>
 </div>
 {% endblock content%}
 

@@ -1,5 +1,6 @@
 {
-    "project_title": "GrocerIST",
-    "project_sub_title": "Grocers of Istanbul: Tracing Food Consumption",
-    "github_url": "https://github.com/grocerist/grocerist-app"
+  "project_title": "GrocerIST",
+  "project_sub_title": "Grocers of Istanbul: Tracing Food Consumption",
+  "github_url": "https://github.com/grocerist/grocerist-app",
+  "redmine_id": "21450"
 }
