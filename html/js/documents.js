@@ -284,15 +284,21 @@ function rowsToMarkers(rows, layerGroups) {
     const { lat, long } = getCoordinates(rowData);
     if (lat && long) {
       let year;
-      if (rowData.year_of_creation_miladi) {
-        year = /\d{4}/.exec(rowData.year_of_creation_miladi)[0];
+      const date = rowData.creation_date_ISO;
+      if (date) {
+        const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+        if (isoDatePattern.test(date)) {
+          year = date.substring(0, 4);
+        } else {
+          year = null;
+        }
       } else {
-        year = 2000;
+        year = null;
       }
       let century;
-      if (year <= 1800) {
+      if (year !== null && year <= 1800) {
         century = "18th century";
-      } else if (year <= 1900) {
+      } else if (year !== null && year <= 1900) {
         century = "19th century";
       } else {
         century = "N/A";
