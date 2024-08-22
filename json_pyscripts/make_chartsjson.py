@@ -3,6 +3,7 @@ import os
 import json
 from collections import Counter
 import copy
+import datetime
 
 
 # Read JSON file
@@ -85,25 +86,14 @@ def create_nested_goods_dict(category_dict):
 
 
 def extract_year(date):
-    if date is None or date == "":
+    if not date:
         return None
-    year = None
-    if "-" in date:
-        # format is YYYY-YYYY, so we take the first part
-        year = date.split("-")[0]
-    elif "/" in date:
-        # format is DD/MM/YYYY, so we take the last part
-        if len(date.split("/")) > 2:
-            year = date.split("/")[2]
-        else:
-            year = date
-    else:
-        year = date
-
     try:
-        return int(year)
+        # Attempt to parse the date in ISO format
+        parsed_date = datetime.datetime.fromisoformat(date)
+        return parsed_date.year
     except ValueError:
-        print(f"Year is not a number: {year}")
+        # If parsing fails, return None
         return None
 
 
@@ -123,7 +113,7 @@ def calculate_century_count(data_dict, docs_data):
         data_name = data["name"]
         doc_list = [str(document["id"]) for document in data["documents"]]
         for doc in doc_list:
-            date_of_creation = docs_data[doc].get("year_of_creation_miladi")
+            date_of_creation = docs_data[doc].get("creation_date_ISO")
             year = extract_year(date_of_creation)
             if year is not None:
                 century = calculate_century(year)
@@ -217,11 +207,7 @@ docs_data = read_json_file("documents.json")
 # For now, we're splitting the date string and taking the first part, will be fixed in the data later
 years_of_creation = [
     year
-    for year in (
-        extract_year(doc["year_of_creation_miladi"])
-        for doc in docs_data.values()
-        if doc.get("year_of_creation_miladi") is not None
-    )
+    for year in (extract_year(doc["creation_date_ISO"]) for doc in docs_data.values())
     if year is not None
 ]
 
@@ -238,7 +224,7 @@ for main_category in categories_data:
     category_name = main_category["name"]
     doc_list = [document["id"] for document in main_category["documents"]]
     for doc in doc_list:
-        date_of_creation = docs_data[str(doc)].get("year_of_creation_miladi")
+        date_of_creation = docs_data[str(doc)].get("creation_date_ISO")
         year = extract_year(date_of_creation)
         if year is not None:
             decade = round_down_to_ten(year)

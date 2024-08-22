@@ -120,8 +120,8 @@ const baseColumnDefinitions = [
     headerFilter: "input",
   },
   {
-    title: "Year <i>Miladi</i>",
-    field: "year_of_creation_miladi",
+    title: "Date <i>Miladi</i>",
+    field: "creation_date_ISO",
     headerFilter: "input",
   },
 ];
@@ -133,7 +133,7 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
 }));
 
 d3.json(dataUrl, function (data) {
- tableData = Object.values(data).filter((item) => item.shelfmark !== "");
+  tableData = Object.values(data).filter((item) => item.shelfmark !== "");
 
   var table = new Tabulator("#documents-table", {
     ...commonTableConfig,
