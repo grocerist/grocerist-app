@@ -28,11 +28,6 @@ function createPieChart(containerId, title, data) {
         cursor: "pointer",
         dataLabels: {
           enabled: true,
-          distance: 30,
-          style: {
-            fontSize: "0.8rem",
-          },
-
         },
       },
     },

@@ -13,9 +13,9 @@
             <h2><i class="bi bi-card-text"></i> Translation</h2>
             <dl>
                 <dd class="ms-5"><b>{{ object.turkish_names }}</b>
-                {% if object.spelling_variations_and_synonyms %}
-                |
-                {{ object.spelling_variations_and_synonyms }}</dd>
+                    {% if object.spelling_variations_and_synonyms %}
+                    |
+                    {{ object.spelling_variations_and_synonyms }}</dd>
                 {% endif %}
             </dl>
             {% endif %}
@@ -43,7 +43,7 @@
             <div id="map" style="height: 600px;" />
         </div>
     </div>
-</div>    
+</div>
 {% endblock content %}
 {% block scripts2 %}
 {% if object.documents %}
@@ -51,29 +51,44 @@
 
 <script>
     const initialCoordinates = [41.01224, 28.976018];
-    const initialZoom = 13;
-    let color18 = "#2b84ad";
-    let color19 = "#247d04";
+    const initialZoom = 12;
+    const color18 = "#d4a07a";
+    const color19 = "#8b6c42";
 
-    var eighteenth_list = [];
-    var nineteenth_list = [];
+    const eighteenth_list = [];
+    const nineteenth_list = [];
 
-    None = null; //otherwise missing lat and long data of the object is inserted as None like a non-declared variable
+    // tojson filter is used to keep the data in json format
+    // e.g. preventing the null values from being converted to None during processing
+    const doc_list = {{ object.documents | tojson | safe }};
 
-    let doc_list = {{ object.documents }};
+    const createMarker = (lat, long, color, id, shelfmark, year) => {
+        return L.circleMarker([lat, long], { color: color })
+            .bindPopup(`Mentioned in document <br>
+            <strong><a href="document__${id}.html">${shelfmark}</a></strong><br>
+            in ${year}`)
+    };
 
     for (let i = 0; i < doc_list.length; i++) {
-        if (doc_list[i].year_of_creation_miladi) {
-            let year = /\d{4}/.exec(doc_list[i].year_of_creation_miladi)[0]; //remove regex expression after simple year values are inserted in baserow
-            if (doc_list[i].lat && doc_list[i].long) {
+        const doc = doc_list[i];
+        const date = doc.iso_date;
+        let year
+        if (date) {
+            // extract the year from date in ISO format YYYY-MM-DD.
+            const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+            if (isoDatePattern.test(date)) {
+                year = date.substring(0, 4);
+            }
+            else {
+                console.error("Invalid date format");
+            }
+            if (doc.lat && doc.long) {
                 if (year < 1801) {
-                    var eighteenth_marker = L.circleMarker([doc_list[i].lat, doc_list[i].long], {color: color18})
-                    .bindPopup("<strong><a href=document__"+doc_list[i].id+".html>"+doc_list[i].value+"</a></strong>").openPopup();
-                    eighteenth_list.push(eighteenth_marker);
+                    const marker = createMarker(doc.lat, doc.long, color18, doc.id, doc.value, year);
+                    eighteenth_list.push(marker);
                 } else if (year < 1901) {
-                    var nineteenth_marker = L.circleMarker([doc_list[i].lat, doc_list[i].long], {color: color19})
-                    .bindPopup("<strong><a href=document__"+doc_list[i].id+".html>"+doc_list[i].value+"</a></strong>").openPopup();
-                    nineteenth_list.push(nineteenth_marker);
+                    const marker = createMarker(doc.lat, doc.long, color19, doc.id, doc.value, year);
+                    nineteenth_list.push(marker);
                 }
             }
         } else {
@@ -81,21 +96,21 @@
         }
     }
 
-    var eighteenth_century = L.layerGroup(eighteenth_list);
-    var nineteenth_century = L.layerGroup(nineteenth_list);
+    const eighteenth_century = L.layerGroup(eighteenth_list);
+    const nineteenth_century = L.layerGroup(nineteenth_list);
 
     const baseMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         maxZoom: 20,
-        attribution:  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
     });
-    
-    const map = L.map('map', {center: initialCoordinates, zoom: initialZoom, layers: [baseMap, eighteenth_century, nineteenth_century]});
+
+    const map = L.map('map', { center: initialCoordinates, zoom: initialZoom, layers: [baseMap, eighteenth_century, nineteenth_century] });
 
     const overlayMaps = {};
     overlayMaps[`<span style=color:${color18}>18th century</span>`] = eighteenth_century;
     overlayMaps[`<span style=color:${color19}>19th century</span>`] = nineteenth_century;
-    
-    const layerControl = L.control.layers(null, overlayMaps, {collapsed:false}).addTo(map);
+
+    L.control.layers(null, overlayMaps, { collapsed: false }).addTo(map);
 </script>
 
 

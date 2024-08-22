@@ -37,7 +37,7 @@ const baseColumnDefinitions = [
   },
   {
     title: "Nr. of Categories",
-    field: "cat_cont",
+    field: "cat_count",
     headerFilter: "number",
     headerFilterPlaceholder: "at least...",
     headerFilterFunc: ">=",
@@ -53,7 +53,7 @@ d3.json(dataUrl, function (data) {
   let tableData = data.map((item) => {
     const enriched = item;
     enriched["doc_count"] = item.documents.length;
-    enriched["cat_cont"] = item.has_category.length;
+    enriched["cat_count"] = item.has_category.length;
     return enriched;
   });
 

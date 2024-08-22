@@ -3,6 +3,7 @@ import os
 import json
 from collections import Counter
 import copy
+import datetime
 
 
 # Read JSON file
@@ -64,31 +65,35 @@ religions_results = [
 ]
 
 # DATA FOR CATEGORIES CHART
-categories_data = read_json_file("categories.json")
-goods_data = read_json_file("goods.json")
+# Categories and the number of documents they were mentioned in
+# and the same for each good (for drilldown chart)
+categories_data = read_json_file("categories.json").values()
+goods_data = read_json_file("goods.json").values()
 docs_data = read_json_file("documents.json")
 
 
-def extract_year(date):
-    if date is None or date == "":
-        return None
-    year = None
-    if "-" in date:
-        # format is YYYY-YYYY, so we take the first part
-        year = date.split("-")[0]
-    elif "/" in date:
-        # format is DD/MM/YYYY, so we take the last part
-        if len(date.split("/")) > 2:
-            year = date.split("/")[2]
-        else:
-            year = date
-    else:
-        year = date
+def create_nested_goods_dict(category_dict):
+    nested_goods = {}
+    for data in category_dict:
+        if data["is_main_category"]:
+            nested_goods[data["name"]] = {}
+        if not data["is_main_category"]:
+            main_cat = data["part_of"][0]["value"]
+            if main_cat not in nested_goods:
+                nested_goods[main_cat] = {}
+            nested_goods[main_cat][data["name"]] = data["goods"]
+    return nested_goods
 
+
+def extract_year(date):
+    if not date:
+        return None
     try:
-        return int(year)
+        # Attempt to parse the date in ISO format
+        parsed_date = datetime.datetime.fromisoformat(date)
+        return parsed_date.year
     except ValueError:
-        print(f"Year is not a number: {year}")
+        # If parsing fails, return None
         return None
 
 
@@ -97,83 +102,115 @@ def calculate_century_count(data_dict, docs_data):
     Calculates the count of documents in each century for each category/grocery in the data dictionary.
 
     Args:
-        data_dict (dict): A dictionary containing data from categories/goods JSON.
+        data_dict (dict): A dictionary containing data from the goods JSON.
         docs_data (dict): A dictionary containing information from the documents JSON.
 
     Returns:
         dict: A dictionary containing the count of documents in each century for each category/grocery.
     """
-    century_dict = {data["name"]: {"18": 0, "19": 0} for data in data_dict}
+    century_dict = {data["name"]: {"18": set(), "19": set()} for data in data_dict}
     for data in data_dict:
         data_name = data["name"]
         doc_list = [str(document["id"]) for document in data["documents"]]
         for doc in doc_list:
-            date_of_creation = docs_data[doc].get("year_of_creation_miladi")
+            date_of_creation = docs_data[doc].get("creation_date_ISO")
             year = extract_year(date_of_creation)
             if year is not None:
                 century = calculate_century(year)
                 # for now, the 1 document from the 17th century is not included
                 if century in [18, 19]:
-                    century_dict[data_name][str(century)] += 1
+                    # century_dict[data_name][str(century)] += 1
+                    century_dict[data_name][str(century)].add(doc)
     return century_dict
 
 
-def generate_category_data(century_dict, century):
-    return [
-        {
-            "name": category,
-            "y": century_dict[category][century],
-            "drilldown": category,
+nested_goods_dict = create_nested_goods_dict(categories_data)
+century_goods_dict = calculate_century_count(goods_data, docs_data)
+
+categories_18 = {}
+categories_19 = {}
+for main_category in nested_goods_dict:
+    categories_18[main_category] = {}
+    categories_19[main_category] = {}
+    for sub_category in nested_goods_dict[main_category]:
+        categories_18[main_category][sub_category] = {}
+        categories_19[main_category][sub_category] = {}
+        for good in nested_goods_dict[main_category][sub_category]:
+            name = good["value"]
+            categories_18[main_category][sub_category][name] = century_goods_dict[name][
+                "18"
+            ]
+            categories_19[main_category][sub_category][name] = century_goods_dict[name][
+                "19"
+            ]
+
+
+def generate_drilldown_chart_data(categories_dict):
+    main_categories = []  # Data for all main categories
+    sub_categories_level = []  # Data for all subcategories
+    products_level = []  # Data for all products
+
+    for main_category in categories_dict:
+        main_category_doc_set = set()
+        column_data = {
+            "name": main_category,
+            "y": 0,  # placeholder
+            "drilldown": main_category,
         }
-        for category in century_dict
-    ]
-
-
-century_category_dict = calculate_century_count(categories_data, docs_data)
-century_goods_dict = calculate_century_count(goods_data.values(), docs_data)
-
-
-categories_18 = generate_category_data(century_category_dict, "18")
-categories_19 = generate_category_data(century_category_dict, "19")
-
-
-def generate_drilldown_data(
-    century_category_dict, century_goods_dict, categories_data, century
-):
-    return [
-        {
-            "name": category_name,
-            "id": category_name,  # id for HighCharts to match with drilldown series
-            "data": [
-                {"name": good["name"], "y": century_goods_dict[good["name"]][century]}
-                for category in categories_data
-                if category["name"] == category_name
-                for good in category["goods"]
-            ],
+        # data for the chart that will appear when clicking on a main category
+        drilldown_level1 = {
+            "name": main_category,
+            "id": main_category,  # id to match drilldown category
+            "data": [],
         }
-        for category_name in century_category_dict
-    ]
+        for sub_category in categories_dict[main_category]:
+            # data for the chart that will appear when clicking on a subcategory, showing the products
+            drilldown_level2 = {"name": sub_category, "id": sub_category, "data": []}
+            sub_category_doc_set = set()
+
+            for product in categories_dict[main_category][sub_category]:
+                drilldown_level2["data"].append(
+                    {
+                        "name": product,
+                        "y": len(categories_dict[main_category][sub_category][product]),
+                    }
+                )
+                for doc in categories_dict[main_category][sub_category][product]:
+                    sub_category_doc_set.add(doc)
+                    main_category_doc_set.add(doc)
+                products_level.append(drilldown_level2)
+
+            drilldown_level1["data"].append(
+                {
+                    "name": sub_category,
+                    "y": len(sub_category_doc_set),
+                    "drilldown": sub_category,
+                }
+            )
+        sub_categories_level.append(drilldown_level1)
+        column_data["y"] = len(main_category_doc_set)
+        main_categories.append(column_data)
+
+    # Combine the two levels of drilldown at the end,
+    # it doesn't matter if they are in the same list, since Highcharts matches them by id
+    drilldown_data = sub_categories_level + products_level
+    return main_categories, drilldown_data
 
 
-categories_18_drilldown = generate_drilldown_data(
-    century_category_dict, century_goods_dict, categories_data, "18"
-)
-categories_19_drilldown = generate_drilldown_data(
-    century_category_dict, century_goods_dict, categories_data, "19"
-)
+main_categories18, drill_down18 = generate_drilldown_chart_data(categories_18)
+main_categories19, drill_down19 = generate_drilldown_chart_data(categories_19)
 
 # DATA FOR MENTIONS OVER DECADES CHART
+docs_data = read_json_file("documents.json")
+
 # Extract years of creation from documents, excluding None values
 # For now, we're splitting the date string and taking the first part, will be fixed in the data later
 years_of_creation = [
     year
-    for year in (
-        extract_year(doc["year_of_creation_miladi"])
-        for doc in docs_data.values()
-        if doc.get("year_of_creation_miladi") is not None
-    )
+    for year in (extract_year(doc["creation_date_ISO"]) for doc in docs_data.values())
     if year is not None
 ]
+
 # Create a sorted list of all the decades
 decades = sorted(set(round_down_to_ten(year) for year in years_of_creation))
 
@@ -183,11 +220,11 @@ total_docs_per_decade = Counter(round_down_to_ten(year) for year in years_of_cre
 decade_dict = {
     category["name"]: {decade: 0 for decade in decades} for category in categories_data
 }
-for category in categories_data:
-    category_name = category["name"]
-    doc_list = [document["id"] for document in category["documents"]]
+for main_category in categories_data:
+    category_name = main_category["name"]
+    doc_list = [document["id"] for document in main_category["documents"]]
     for doc in doc_list:
-        date_of_creation = docs_data[doc].get("year_of_creation_miladi")
+        date_of_creation = docs_data[str(doc)].get("creation_date_ISO")
         year = extract_year(date_of_creation)
         if year is not None:
             decade = round_down_to_ten(year)
@@ -227,10 +264,10 @@ normalized_decades_results = [
 result_json = json.dumps(
     {
         "religions": religions_results,
-        "categories_18": categories_18,
-        "categories_18_drilldown": categories_18_drilldown,
-        "categories_19": categories_19,
-        "categories_19_drilldown": categories_19_drilldown,
+        "categories_18": main_categories18,
+        "categories_18_drilldown": drill_down18,
+        "categories_19": main_categories19,
+        "categories_19_drilldown": drill_down19,
         "categories_over_decades": {
             "categories": [str(decade) for decade in decades],
             "series": decades_results,
