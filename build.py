@@ -11,6 +11,7 @@ import subprocess
 helper_scripts = "json_pyscripts"
 for script in os.listdir(helper_scripts):
     path = os.path.join(helper_scripts, script)
+    print(f"running {path}")
     subprocess.run(["python", path])
 
 templateLoader = jinja2.FileSystemLoader(searchpath=".")

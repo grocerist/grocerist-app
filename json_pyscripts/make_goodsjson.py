@@ -18,9 +18,7 @@ for key, value in goods_data.items():
         for doc in value["documents"]:
             doc["lat"] = docs_data[str(doc["id"])].get("lat")
             doc["long"] = docs_data[str(doc["id"])].get("long")
-            doc["year_of_creation_miladi"] = docs_data[str(doc["id"])].get(
-                "year_of_creation_miladi"
-            )
+            doc["iso_date"] = docs_data[str(doc["id"])].get("creation_date_ISO")
 
 with open(
     os.path.join("html", "json_dumps", "goods.json"), "w", encoding="utf-8"

@@ -71,8 +71,16 @@
 
     for (let i = 0; i < doc_list.length; i++) {
         const doc = doc_list[i];
-        if (doc.year_of_creation_miladi) {
-            const year = /\d{4}/.exec(doc.year_of_creation_miladi)[0]; //remove regex expression after simple year values are inserted in baserow
+        date = doc.iso_date;
+        if (date) {
+            // extract the year from date in ISO format YYYY-MM-DD.
+            const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+            if (isoDatePattern.test(date)) {
+                const year = date.substring(0, 4);
+            }
+            else {
+                console.error("Invalid date format");
+            }
             if (doc.lat && doc.long) {
                 if (year < 1801) {
                     const marker = createMarker(doc.lat, doc.long, color18, doc.id, doc.value, year);
