@@ -2,16 +2,19 @@ const dataUrl = "json_dumps/documents.json";
 // ####### MAP CONFIG AND FUNCTIONS #######
 // Config settings for map
 const mapConfig = {
-  initialZoom: 11,
-  initialCoordinates: [41.06, 29.00626],
-  baseMapUrl: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-  maxZoom: 20,
-  minZoom: 1,
-  onRowClickZoom: 16,
+  // inital map state
+  initialZoom: 13,
+  initialCoordinates: [41.0286, 28.9852],
   divId: "map",
+  // L.map options
+  mapOptions: { maxZoom: 18, minZoom: 9 },
+  // L.tileLayer options
+  baseMapUrl: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
   attribution:
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
   subdomains: "abcd",
+  // other options
+  onRowClickZoom: 16,
 };
 
 const overlayColors = {
@@ -28,19 +31,31 @@ const createAndAddLayerGroup = (map, name, color) => {
   return { [htmlName]: layerGroup };
 };
 
-function resizeIconsOnZoom(map) {
+function resizeIconsOnZoom(map, markers) {
   let previousZoom;
+  const maxSize = 50;
   map.on("zoomstart", function () {
     previousZoom = map.getZoom();
   });
   map.on("zoomend", function () {
     let newZoom = map.getZoom();
     let zoomRatio = Math.pow(2, newZoom - previousZoom);
+    let dampingFactor = 0.2;
+    let adjustedZoomRatio = 1 + (zoomRatio - 1) * dampingFactor;
     Object.values(markers).forEach((marker) => {
       const icon = marker.options.icon;
       // Adjust the icon size based on the zoom ratio
       const currentSize = icon.options.iconSize;
-      const newSize = [currentSize[0] * zoomRatio, currentSize[1] * zoomRatio];
+      let newSize = [
+        currentSize[0] * adjustedZoomRatio,
+        currentSize[1] * adjustedZoomRatio,
+      ];
+
+      // Check if the new size exceeds the maximum size
+      if (newSize[0] > maxSize || newSize[1] > maxSize) {
+        newSize = [maxSize, maxSize];
+      }
+
       icon.options.iconSize = newSize;
       icon.options.iconAnchor = [newSize[0] / 2, newSize[1]];
       icon.options.popupAnchor = [0, -newSize[1] * 0.8];
@@ -55,12 +70,11 @@ function resizeIconsOnZoom(map) {
 // Function for initializing the map
 function createMap() {
   console.log("loading map");
-  const map = L.map(mapConfig.divId).setView(
+  const map = L.map(mapConfig.divId, mapConfig.mapOptions).setView(
     mapConfig.initialCoordinates,
     mapConfig.initialZoom
   );
   const baseMapLayer = L.tileLayer(mapConfig.baseMapUrl, {
-    maxZoom: mapConfig.maxZoom,
     attribution: mapConfig.attribution,
   });
   // Add base map layer
@@ -76,17 +90,16 @@ function createMap() {
     collapsed: false,
   });
   layerControl.addTo(map);
-  // resizeIconsOnZoom(map);
   return { map, layerGroups };
 }
 // Function to create a custom css marker with an icon
 function createMarker(lat, long, color, icon) {
   const customIcon = L.divIcon({
     className: "custom-marker",
-    html: `<div class="custom-marker-pin" style="border-color:${color};"><i class="${icon}" style="color:${color}" ></i></div><div class="custom-marker-shadow"></div>
+    html: `<div class="custom-marker-pin" style="background-color:${color};"><i class="${icon}" style="color:${color}" ></i></div><div class="custom-marker-shadow"></div>
     `,
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
     popupAnchor: [0, -21],
   });
   return L.marker([lat, long], { icon: customIcon });
@@ -273,8 +286,8 @@ function getCoordinates(rowData) {
   return { lat: rowData.lat, long: rowData.long };
 }
 
-function rowsToMarkers(rows, layerGroups) {
-  markers = {};
+function rowsToMarkers(map, rows, layerGroups) {
+  const allMarkers = {};
   // Clear all markers from the map and layer groups
   Object.values(layerGroups).forEach((layerGroup) => {
     layerGroup.clearLayers();
@@ -310,13 +323,13 @@ function rowsToMarkers(rows, layerGroups) {
 
       // store each marker by the grocerist_id from the document
       const markerID = rowData.grocerist_id;
-      markers[markerID] = marker;
-
+      allMarkers[markerID] = marker;
       marker.bindPopup(addPopup(rowData));
       marker.addTo(layerGroups[layer]);
     }
   });
-  return markers;
+  resizeIconsOnZoom(map, allMarkers);
+  return allMarkers;
 }
 function zoomToPointFromRowData(rowData, map, markers) {
   const { lat, long } = getCoordinates(rowData);
@@ -346,7 +359,7 @@ function setupMapAndTable(dataUrl) {
     });
     table.on("dataFiltered", function (_filters, rows) {
       $("#search_count").text(rows.length);
-      markers = rowsToMarkers(rows, layerGroups);
+      markers = rowsToMarkers(map, rows, layerGroups);
     });
     //eventlistener for click on row
     table.on("rowClick", (e, row) => {

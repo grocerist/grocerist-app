@@ -16,6 +16,8 @@
 
 #map {
     height: 50vh;
+    min-height: 300px;
+    max-height: 500px;
 }
 
 .custom-marker {
@@ -25,11 +27,8 @@
 }
 
 .custom-marker-pin {
-    background: linear-gradient(145deg, #f2e3d1, #c9a77b);
     width: 70%;
     height: 70%;
-    border-width: 10%;
-    border-style: solid;
     border-top-left-radius: 50%;
     border-top-right-radius: 50% 100%;
     border-bottom-left-radius: 100% 50%;
@@ -38,8 +37,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
+.custom-marker-pin::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 45%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 70%;
+    background: var(--tabulator-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .custom-marker-shadow {
     /* background: #d6d4d4; */
@@ -60,6 +74,10 @@
 .custom-marker-pin i {
     font-size: calc(var(--marker-size) / 3);
     transform: rotate(-45deg);
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 /*
