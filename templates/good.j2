@@ -71,12 +71,13 @@
 
     for (let i = 0; i < doc_list.length; i++) {
         const doc = doc_list[i];
-        date = doc.iso_date;
+        const date = doc.iso_date;
+        let year
         if (date) {
             // extract the year from date in ISO format YYYY-MM-DD.
             const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
             if (isoDatePattern.test(date)) {
-                const year = date.substring(0, 4);
+                year = date.substring(0, 4);
             }
             else {
                 console.error("Invalid date format");
