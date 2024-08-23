@@ -1,10 +1,11 @@
 const dataUrl = "json_dumps/documents.json";
+
 // ####### MAP CONFIG AND FUNCTIONS #######
 // Config settings for map
 const mapConfig = {
-  // inital map state
-  initialZoom: 13,
-  initialCoordinates: [41.0286, 28.9852],
+  // initial map state
+  initialZoom: 12,
+  initialCoordinates: [41.015137, 28.97953],
   divId: "map",
   // L.map options
   mapOptions: { maxZoom: 18, minZoom: 9 },
@@ -19,10 +20,10 @@ const mapConfig = {
 
 const overlayColors = {
   "18th century": "#ba5a4d",
-  "19th century": "#8b6c42",
-  "N/A": "#E9967A",
+  "19th century": "#a6764d",
+  "N/A": "#7d6d61",
 };
-
+// #5a8d92 #c9944a #c3ab9f #7d6d61
 // Helper function to create and add layer groups to the map
 const createAndAddLayerGroup = (map, name, color) => {
   const layerGroup = new L.layerGroup();
@@ -38,6 +39,7 @@ function resizeIconsOnZoom(map, markers) {
     previousZoom = map.getZoom();
   });
   map.on("zoomend", function () {
+    console.log("zoomend event");
     let newZoom = map.getZoom();
     let zoomRatio = Math.pow(2, newZoom - previousZoom);
     let dampingFactor = 0.2;
@@ -90,7 +92,22 @@ function createMap() {
     collapsed: false,
   });
   layerControl.addTo(map);
-  return { map, layerGroups };
+  // keepSpiderfied just keeps the markers from unspiderfying when clicked
+  const oms = new OverlappingMarkerSpiderfier(map, {
+    keepSpiderfied: true,
+    nearbyDistance: 1,
+  });
+  oms.addListener("spiderfy", function (array1, array2) {
+    array1.forEach((marker) => {
+      //console.log(marker);
+    });
+  });
+  oms.addListener("unspiderfy", function (array1, array2) {
+    array1.forEach((marker) => {
+      //console.log(marker);
+    });
+  });
+  return { map, layerGroups, oms };
 }
 // Function to create a custom css marker with an icon
 function createMarker(lat, long, color, icon) {
@@ -102,7 +119,7 @@ function createMarker(lat, long, color, icon) {
     iconAnchor: [16, 32],
     popupAnchor: [0, -21],
   });
-  return L.marker([lat, long], { icon: customIcon });
+  return L.marker([lat, long], { icon: customIcon, riseOnHover: true });
 }
 
 function addPopup(rowData) {
@@ -286,12 +303,16 @@ function getCoordinates(rowData) {
   return { lat: rowData.lat, long: rowData.long };
 }
 
-function rowsToMarkers(map, rows, layerGroups) {
-  const allMarkers = {};
+function rowsToMarkers(map, rows, layerGroups, oms) {
+  // Clear all markers from the overlapping marker spiderfier
+  oms.clearMarkers();
   // Clear all markers from the map and layer groups
   Object.values(layerGroups).forEach((layerGroup) => {
     layerGroup.clearLayers();
   });
+  // Since we have a limited set of markers, we (re)create all markers every time the table is filteres
+  const allMarkers = {};
+  let clicked = false;
   rows.forEach((row) => {
     const rowData = row.getData();
     const { lat, long } = getCoordinates(rowData);
@@ -326,6 +347,15 @@ function rowsToMarkers(map, rows, layerGroups) {
       allMarkers[markerID] = marker;
       marker.bindPopup(addPopup(rowData));
       marker.addTo(layerGroups[layer]);
+
+      oms.addMarker(marker);
+      // WATCHME: hacky solution for the only two overlapping markers for now
+      // must be adjusted in the future
+      if (markerID === "document__44" || markerID === "document__39") {
+        marker.fire("click");
+        marker.closePopup();
+        map.setView(mapConfig.initialCoordinates, mapConfig.initialZoom);
+      }
     }
   });
   resizeIconsOnZoom(map, allMarkers);
@@ -346,7 +376,7 @@ function zoomToPointFromRowData(rowData, map, markers) {
 }
 // Main function for initializing the map and table
 function setupMapAndTable(dataUrl) {
-  const { map, layerGroups } = createMap();
+  const { map, layerGroups, oms } = createMap();
   let markers = {};
   d3.json(dataUrl, function (dataFromJson) {
     const tableData = Object.values(dataFromJson).filter(
@@ -359,7 +389,7 @@ function setupMapAndTable(dataUrl) {
     });
     table.on("dataFiltered", function (_filters, rows) {
       $("#search_count").text(rows.length);
-      markers = rowsToMarkers(map, rows, layerGroups);
+      markers = rowsToMarkers(map, rows, layerGroups, oms);
     });
     //eventlistener for click on row
     table.on("rowClick", (e, row) => {
