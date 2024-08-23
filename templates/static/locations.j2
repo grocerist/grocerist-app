@@ -6,11 +6,6 @@
 {% block scriptHeader %}
 {% include "templates/partials/tabulator.j2" %}
 {% include "templates/partials/leaflet.j2" %}
-<script type="module">
-    import * as tableMapModule from './js/locations.js'
-    const dataUrl = 'json_dumps/locations.json'
-    tableMapModule.setupMapAndTable(dataUrl)
-</script>
 {% endblock scriptHeader %}
 {% block content %}
 <div class="container">
@@ -19,12 +14,10 @@
         Locations</h1>
     <div class="row">
         <div class="col-md-12">
-            <div id="map"></div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
             <div id="places_table"></div>
         </div>
     </div>
     {% endblock content%}
+    {% block scripts2 %}
+    <script src="js/locations.js"></script>
+    {% endblock scripts2 %}
