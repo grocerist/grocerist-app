@@ -1,4 +1,7 @@
 {% extends "templates/partials/base.j2" %}
+{% block scriptHeader %}
+{% include "templates/partials/leaflet.j2" %}
+{% endblock scriptHeader %}
 {% block content %}
 <div class="container subpage">
     <h1 class="text-center">
@@ -47,72 +50,37 @@
 {% endblock content %}
 {% block scripts2 %}
 {% if object.documents %}
-{% include "templates/partials/leaflet.j2" %}
 
 <script>
-    const initialCoordinates = [41.01224, 28.976018];
-    const initialZoom = 12;
-    const color18 = "#d4a07a";
-    const color19 = "#8b6c42";
-
-    const eighteenth_list = [];
-    const nineteenth_list = [];
+    const icon = "bi bi-basket-fill"
 
     // tojson filter is used to keep the data in json format
     // e.g. preventing the null values from being converted to None during processing
     const doc_list = {{ object.documents | tojson | safe }};
 
-    const createMarker = (lat, long, color, id, shelfmark, year) => {
-        return L.circleMarker([lat, long], { color: color })
-            .bindPopup(`Mentioned in document <br>
-            <strong><a href="document__${id}.html">${shelfmark}</a></strong><br>
-            in ${year}`)
-    };
+    const { map, layerGroups } = createMap();
 
+    // create markers for each document
     for (let i = 0; i < doc_list.length; i++) {
         const doc = doc_list[i];
-        const date = doc.iso_date;
-        let year
-        if (date) {
-            // extract the year from date in ISO format YYYY-MM-DD.
-            const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
-            if (isoDatePattern.test(date)) {
-                year = date.substring(0, 4);
-            }
-            else {
-                console.error("Invalid date format");
-            }
-            if (doc.lat && doc.long) {
-                if (year < 1801) {
-                    const marker = createMarker(doc.lat, doc.long, color18, doc.id, doc.value, year);
-                    eighteenth_list.push(marker);
-                } else if (year < 1901) {
-                    const marker = createMarker(doc.lat, doc.long, color19, doc.id, doc.value, year);
-                    nineteenth_list.push(marker);
-                }
-            }
-        } else {
-            console.warn("There is a document with a missing year: " + doc_list[i].value);
+        const year = getYearFromISODate(doc.iso_date);
+        if (doc.lat && doc.long) {
+            const yearText = year ? `in ${year}` : '';
+            const markerData = {
+                lat: doc.lat,
+                long: doc.long,
+                year: year,
+                popupContent: `<p>Mentioned in document <br>
+            <strong><a href="document__${doc.id}.html">${doc.value}</a></strong><br>
+            ${yearText}</p>`,
+                icon: "bi bi-basket3-fill",
+            };
+            const marker = createAndAddMarker(
+                markerData,
+                layerGroups
+            );
         }
     }
-
-    const eighteenth_century = L.layerGroup(eighteenth_list);
-    const nineteenth_century = L.layerGroup(nineteenth_list);
-
-    const baseMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        maxZoom: 20,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-    });
-
-    const map = L.map('map', { center: initialCoordinates, zoom: initialZoom, layers: [baseMap, eighteenth_century, nineteenth_century] });
-
-    const overlayMaps = {};
-    overlayMaps[`<span style=color:${color18}>18th century</span>`] = eighteenth_century;
-    overlayMaps[`<span style=color:${color19}>19th century</span>`] = nineteenth_century;
-
-    L.control.layers(null, overlayMaps, { collapsed: false }).addTo(map);
 </script>
-
-
 {% endif %}
 {% endblock scripts2 %}

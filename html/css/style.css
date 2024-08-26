@@ -11,7 +11,7 @@
     --footer-hover-background: #f2f2f2;
     --d: 700ms;
     --e: cubic-bezier(0.19, 1, 0.22, 1);
-    --marker-size: 30px;
+    --marker-size: 32px;
 }
 
 #map {
@@ -73,7 +73,6 @@
 
 .custom-marker-pin i {
     font-size: calc(var(--marker-size) / 3);
-    transform: rotate(-45deg);
     position: absolute;
     top: 45%;
     left: 45%;
