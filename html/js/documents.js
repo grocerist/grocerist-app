@@ -39,43 +39,6 @@ function resizeIconsOnZoom(map, markers) {
     });
   });
 }
-// Function for initializing the map
-function createMap() {
-  console.log("loading map");
-  const map = L.map(mapConfig.divId, mapConfig.mapOptions).setView(
-    mapConfig.initialCoordinates,
-    mapConfig.initialZoom
-  );
-  const baseMapLayer = L.tileLayer(mapConfig.baseMapUrl, {
-    attribution: mapConfig.attribution,
-  });
-  // Add base map layer
-  baseMapLayer.addTo(map);
-
-  // Create and add marker layer groups from the overlayColors object
-  const layerGroups = createAndAddLayerGroups(map, overlayColors);
-
-  const layerControl = L.control.layers(null, layerGroups, {
-    collapsed: false,
-  });
-  layerControl.addTo(map);
-  // keepSpiderfied just keeps the markers from unspiderfying when clicked
-  const oms = new OverlappingMarkerSpiderfier(map, {
-    keepSpiderfied: true,
-    nearbyDistance: 1,
-  });
-  oms.addListener("spiderfy", function (array1, array2) {
-    array1.forEach((marker) => {
-      //console.log(marker);
-    });
-  });
-  oms.addListener("unspiderfy", function (array1, array2) {
-    array1.forEach((marker) => {
-      //console.log(marker);
-    });
-  });
-  return { map, layerGroups, oms };
-}
 
 // ####### TABLE CONFIG AND FUNCTIONS #######
 const baseColumnDefinitions = [
@@ -273,7 +236,7 @@ function rowsToMarkers(map, rows, layerGroups, oms) {
         `,
         icon: "bi bi-file-earmark-text-fill",
       };
-      const marker = createAndAddMarkers(markerData, layerGroups);
+      const marker = createAndAddMarker(markerData, layerGroups);
 
       // store each marker by the grocerist_id from the document
       const markerID = rowData.grocerist_id;
@@ -307,7 +270,7 @@ function zoomToPointFromRowData(rowData, map, markers) {
 }
 // Main function for initializing the map and table
 function setupMapAndTable(dataUrl) {
-  const { map, layerGroups, oms } = createMap();
+  const { map, layerGroups, oms } = createMap({ useSpiderfier: true });
   let markers = {};
   d3.json(dataUrl, function (dataFromJson) {
     const tableData = Object.values(dataFromJson).filter(

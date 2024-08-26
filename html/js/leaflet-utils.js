@@ -39,6 +39,7 @@ function createMarker(lat, long, color, icon) {
     className: "custom-marker",
     html: `<div class="custom-marker-pin" style="background-color:${color};"><i class="${icon}" style="color:${color}" ></i></div><div class="custom-marker-shadow"></div>
     `,
+    // !! if iconSize is changed, markerSize variable in style.css has to be adjusted accordingly
     iconSize: [32, 32],
     iconAnchor: [16, 32],
     popupAnchor: [0, -21],
@@ -46,8 +47,8 @@ function createMarker(lat, long, color, icon) {
   return L.marker([lat, long], { icon: customIcon, riseOnHover: true });
 }
 
-// Function to process row data and create a marker
-function createAndAddMarkers(markerData, layerGroups) {
+// Function to create a marker and add it to the right layer group based on the year
+function createAndAddMarker(markerData, layerGroups) {
   const { lat, long, year, popupContent, icon } = markerData;
   let century;
   if (year !== null && year <= 1800) {
@@ -75,4 +76,38 @@ function getYearFromISODate(date) {
     }
   }
   return year;
+}
+
+// Function for initializing the map
+// Function for initializing the map
+function createMap(options = {}) {
+  console.log("loading map");
+  const map = L.map(mapConfig.divId, mapConfig.mapOptions).setView(
+    mapConfig.initialCoordinates,
+    mapConfig.initialZoom
+  );
+  const baseMapLayer = L.tileLayer(mapConfig.baseMapUrl, {
+    attribution: mapConfig.attribution,
+  });
+  // Add base map layer
+  baseMapLayer.addTo(map);
+
+  // Create and add marker layer groups from the overlayColors object
+  const layerGroups = createAndAddLayerGroups(map, overlayColors);
+
+  const layerControl = L.control.layers(null, layerGroups, {
+    collapsed: false,
+  });
+  layerControl.addTo(map);
+
+  let oms = null;
+  if (options.useSpiderfier) {
+    // keepSpiderfied just keeps the markers from unspiderfying when clicked
+    oms = new OverlappingMarkerSpiderfier(map, {
+      keepSpiderfied: true,
+      nearbyDistance: 1,
+    });
+  }
+
+  return { map, layerGroups, oms };
 }

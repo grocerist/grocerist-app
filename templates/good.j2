@@ -52,27 +52,14 @@
 {% if object.documents %}
 
 <script>
-    const color18 = "#d4a07a";
-    const color19 = "#8b6c42";
     const icon = "bi bi-basket-fill"
 
     // tojson filter is used to keep the data in json format
     // e.g. preventing the null values from being converted to None during processing
     const doc_list = {{ object.documents | tojson | safe }};
 
-    const map = L.map(mapConfig.divId, mapConfig.mapOptions).setView(
-        mapConfig.initialCoordinates,
-        mapConfig.initialZoom
-    );
-    const baseMap = L.tileLayer(mapConfig.baseMapUrl, {
-        attribution: mapConfig.attribution,
-    });
-    baseMap.addTo(map);
-    const layerGroups = createAndAddLayerGroups(map, overlayColors);
-    const layerControl = L.control.layers(null, layerGroups, {
-        collapsed: false,
-    });
-    layerControl.addTo(map);
+    const { map, layerGroups } = createMap();
+
     // create markers for each document
     for (let i = 0; i < doc_list.length; i++) {
         const doc = doc_list[i];
@@ -88,7 +75,7 @@
             ${yearText}</p>`,
                 icon: "bi bi-basket3-fill",
             };
-            const marker = createAndAddMarkers(
+            const marker = createAndAddMarker(
                 markerData,
                 layerGroups
             );
