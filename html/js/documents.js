@@ -1,36 +1,6 @@
 const dataUrl = "json_dumps/documents.json";
 
 // ####### MAP CONFIG AND FUNCTIONS #######
-// Config settings for map
-const mapConfig = {
-  // initial map state
-  initialZoom: 12,
-  initialCoordinates: [41.015137, 28.97953],
-  divId: "map",
-  // L.map options
-  mapOptions: { maxZoom: 18, minZoom: 9 },
-  // L.tileLayer options
-  baseMapUrl: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-  attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-  subdomains: "abcd",
-  // other options
-  onRowClickZoom: 16,
-};
-
-const overlayColors = {
-  "18th century": "#ba5a4d",
-  "19th century": "#a6764d",
-  "N/A": "#7d6d61",
-};
-// #5a8d92 #c9944a #c3ab9f #7d6d61
-// Helper function to create and add layer groups to the map
-const createAndAddLayerGroup = (map, name, color) => {
-  const layerGroup = new L.layerGroup();
-  const htmlName = `<span style="color:${color}">${name}</span>`;
-  layerGroup.addTo(map);
-  return { [htmlName]: layerGroup };
-};
 
 function resizeIconsOnZoom(map, markers) {
   let previousZoom;
@@ -83,10 +53,7 @@ function createMap() {
   baseMapLayer.addTo(map);
 
   // Create and add marker layer groups from the overlayColors object
-  const layerGroups = {};
-  Object.entries(overlayColors).forEach(([name, color]) => {
-    Object.assign(layerGroups, createAndAddLayerGroup(map, name, color));
-  });
+  const layerGroups = createAndAddLayerGroups(map, overlayColors);
 
   const layerControl = L.control.layers(null, layerGroups, {
     collapsed: false,
@@ -108,28 +75,6 @@ function createMap() {
     });
   });
   return { map, layerGroups, oms };
-}
-// Function to create a custom css marker with an icon
-function createMarker(lat, long, color, icon) {
-  const customIcon = L.divIcon({
-    className: "custom-marker",
-    html: `<div class="custom-marker-pin" style="background-color:${color};"><i class="${icon}" style="color:${color}" ></i></div><div class="custom-marker-shadow"></div>
-    `,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
-    popupAnchor: [0, -21],
-  });
-  return L.marker([lat, long], { icon: customIcon, riseOnHover: true });
-}
-
-function addPopup(rowData) {
-  const popupContent = `
-    <h5><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}<a/></h5>
-    <p><b><i>Bakkal</i> / Grocer:</b> ${
-      rowData.main_person[0] ? rowData.main_person[0].name : "-"
-    }</p>
-    `;
-  return popupContent;
 }
 
 // ####### TABLE CONFIG AND FUNCTIONS #######
@@ -312,41 +257,27 @@ function rowsToMarkers(map, rows, layerGroups, oms) {
   });
   // Since we have a limited set of markers, we (re)create all markers every time the table is filteres
   const allMarkers = {};
-  let clicked = false;
   rows.forEach((row) => {
     const rowData = row.getData();
-    const { lat, long } = getCoordinates(rowData);
-    if (lat && long) {
-      let year;
-      const date = rowData.creation_date_ISO;
-      if (date) {
-        const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
-        if (isoDatePattern.test(date)) {
-          year = date.substring(0, 4);
-        } else {
-          year = null;
-        }
-      } else {
-        year = null;
-      }
-      let century;
-      if (year !== null && year <= 1800) {
-        century = "18th century";
-      } else if (year !== null && year <= 1900) {
-        century = "19th century";
-      } else {
-        century = "N/A";
-      }
-      const color = overlayColors[century];
-      const layer = `<span style="color:${color}">${century}</span>`;
-      const icon = "bi bi-file-earmark-text-fill";
-      const marker = createMarker(lat, long, color, icon);
+    const date = rowData.creation_date_ISO;
+    if (rowData.lat && rowData.long) {
+      const markerData = {
+        lat: rowData.lat,
+        long: rowData.long,
+        year: getYearFromISODate(date),
+        popupContent: `
+        <h5><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}<a/></h5>
+        <p><b><i>Bakkal</i> / Grocer:</b> ${
+          rowData.main_person[0] ? rowData.main_person[0].name : "-"
+        }</p>
+        `,
+        icon: "bi bi-file-earmark-text-fill",
+      };
+      const marker = createAndAddMarkers(markerData, layerGroups);
 
       // store each marker by the grocerist_id from the document
       const markerID = rowData.grocerist_id;
       allMarkers[markerID] = marker;
-      marker.bindPopup(addPopup(rowData));
-      marker.addTo(layerGroups[layer]);
 
       oms.addMarker(marker);
       // WATCHME: hacky solution for the only two overlapping markers for now
