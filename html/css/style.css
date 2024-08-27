@@ -20,6 +20,10 @@
     max-height: 500px;
 }
 
+.leaflet-container a {
+    color: var(--secondary);
+}
+
 .custom-marker {
     display: flex;
     align-items: center;
