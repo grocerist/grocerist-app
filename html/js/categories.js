@@ -18,7 +18,6 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    headerFilterFuncParams: { nameField: "name" },
   },
   {
     title: "# Groceries",
@@ -35,6 +34,7 @@ const baseColumnDefinitions = [
       idField: "grocerist_id",
       nameField: "shelfmark",
     },
+    headerFilterFuncParams: { nameField: "shelfmark" },
   },
   {
     title: "# Docs",
