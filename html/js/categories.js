@@ -4,6 +4,7 @@ const baseColumnDefinitions = [
     title: "Grocery Category",
     field: "name",
     headerFilter: "input",
+    headerFilterFunc: childElementFilter,
     formatter: linkToDetailView,
     bottomCalc: "count",
     minWidth: 200,
@@ -47,6 +48,12 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
   ...column,
   minWidth: 150,
 }));
+
+function childElementFilter(headerValue, rowValue, rowData, filterParams) {
+  return JSON.stringify(rowData)
+    .toLowerCase()
+    .includes(headerValue.toLowerCase());
+}
 d3.json(dataUrl, function (data) {
   data = Object.values(data);
 
