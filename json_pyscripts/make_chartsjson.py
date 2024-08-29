@@ -108,7 +108,8 @@ def calculate_century_count(data_dict, docs_data):
     Returns:
         dict: A dictionary containing the count of documents in each century for each category/grocery.
     """
-    century_dict = {data["name"]: {"18": set(), "19": set()} for data in data_dict}
+    century_dict = {data["name"]: {"18": 0, "19": 0} for data in data_dict}
+    # century_dict = {data["name"]: {"18": set(), "19": set()} for data in data_dict}
     for data in data_dict:
         data_name = data["name"]
         doc_list = [str(document["id"]) for document in data["documents"]]
@@ -119,8 +120,8 @@ def calculate_century_count(data_dict, docs_data):
                 century = calculate_century(year)
                 # for now, the 1 document from the 17th century is not included
                 if century in [18, 19]:
-                    # century_dict[data_name][str(century)] += 1
-                    century_dict[data_name][str(century)].add(doc)
+                    century_dict[data_name][str(century)] += 1
+                    # century_dict[data_name][str(century)].add(doc)
     return century_dict
 
 
@@ -151,7 +152,8 @@ def generate_drilldown_chart_data(categories_dict):
     products_level = []  # Data for all products
 
     for main_category in categories_dict:
-        main_category_doc_set = set()
+        main_category_sum = 0
+        # main_category_doc_set = set()
         column_data = {
             "name": main_category,
             "y": 0,  # placeholder
@@ -166,29 +168,27 @@ def generate_drilldown_chart_data(categories_dict):
         for sub_category in categories_dict[main_category]:
             # data for the chart that will appear when clicking on a subcategory, showing the products
             drilldown_level2 = {"name": sub_category, "id": sub_category, "data": []}
-            sub_category_doc_set = set()
-
+            sub_category_sum = sum(
+                categories_dict[main_category][sub_category].values()
+            )
+            main_category_sum += sub_category_sum
+            drilldown_level1["data"].append(
+                {
+                    "name": sub_category,
+                    "y": sub_category_sum,
+                    "drilldown": sub_category,
+                }
+            )
             for product in categories_dict[main_category][sub_category]:
                 drilldown_level2["data"].append(
                     {
                         "name": product,
-                        "y": len(categories_dict[main_category][sub_category][product]),
+                        "y": categories_dict[main_category][sub_category][product],
                     }
                 )
-                for doc in categories_dict[main_category][sub_category][product]:
-                    sub_category_doc_set.add(doc)
-                    main_category_doc_set.add(doc)
                 products_level.append(drilldown_level2)
-
-            drilldown_level1["data"].append(
-                {
-                    "name": sub_category,
-                    "y": len(sub_category_doc_set),
-                    "drilldown": sub_category,
-                }
-            )
-        sub_categories_level.append(drilldown_level1)
-        column_data["y"] = len(main_category_doc_set)
+            sub_categories_level.append(drilldown_level1)
+        column_data["y"] = main_category_sum
         main_categories.append(column_data)
 
     # Combine the two levels of drilldown at the end,
