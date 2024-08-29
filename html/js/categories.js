@@ -48,12 +48,29 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
   ...column,
   minWidth: 150,
 }));
-
+let table;
 function childElementFilter(headerValue, rowValue, rowData, filterParams) {
-  return JSON.stringify(rowData)
-    .toLowerCase()
-    .includes(headerValue.toLowerCase());
+  //!! expanding while filter active will run the filter on the expanded rows
+  const searchValue = headerValue.toLowerCase();
+  // console.log(rowValue);
+  let match = false;
+  if (rowValue.toLowerCase().includes(searchValue)) {
+    match = true;
+  }
+  if (rowData._children) {
+    rowData._children.forEach((child) => {
+      if (child.name.toLowerCase().includes(headerValue.toLowerCase())) {
+        const row = table.getRow(rowData.id);
+        if (!row.isTreeExpanded()) {
+          row.treeExpand();
+        }
+        match = true;
+      }
+    });
+  }
+  return match;
 }
+
 d3.json(dataUrl, function (data) {
   data = Object.values(data);
 
@@ -87,11 +104,26 @@ d3.json(dataUrl, function (data) {
     }
   });
   const tableData = Object.values(hierarchicalData);
-  const table = new Tabulator("#categories-table", {
+  table = new Tabulator("#categories-table", {
     ...commonTableConfig,
     data: tableData,
     dataTree: true,
     columnCalcs: "both",
     columns: columnDefinitions,
+    // dataTreeExpandElement: `<i class="bi bi-caret-down-fill"></i>`,
+    // dataTreeCollapseElement: `<i class="bi bi-caret-up-fill"></i>`,
+  });
+  let tableBuilt = false;
+  table.on("tableBuilt", function () {
+    tableBuilt = true;
+  });
+  table.on("dataFiltered", function (filters, rows) {
+    if (tableBuilt && filters.length === 0) {
+      table.getRows().forEach((row) => {
+        if (row.isTreeExpanded()) {
+          row.treeCollapse();
+        }
+      });
+    }
   });
 });
