@@ -1,0 +1,21 @@
+{% extends "templates/partials/base.j2" %}
+{% block title %}Browse Utensils{% endblock title %}
+{% block page_description %}
+<meta name="description" content="{{ project_data.project_sub_title }}">
+{% endblock page_description %}
+
+{% block scriptHeader %}
+{% include "templates/partials/tabulator.j2" %}
+{% endblock scriptHeader %}
+{% block content %}
+<div class="container">
+    <h1 class="text-center">
+        {% include "templates/partials/link_to_top.j2" %}
+        Utensils</h1>
+    <div id="utensils-table"></div>
+</div>
+{% endblock content%}
+
+{% block scripts2 %}
+<script src="js/utensils.js"></script>
+{% endblock scripts2 %}
