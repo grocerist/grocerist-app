@@ -260,7 +260,7 @@ nav.navbar .dropdown-item:active {
     }
 
     .card-body {
-        transform: translateY(calc(100% - 5rem));
+        transform: translateY(calc(100% - 5.5rem));
 
         >*:not(.card-title) {
             opacity: 0;

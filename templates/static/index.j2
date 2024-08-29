@@ -31,10 +31,13 @@ list of documents containing inheritance inventories", "img": "ist1c.png" }
 persons mentioned in the inheritance documents", "img": "ist2c.png"},
 {"title": "Groceries", "icon": "bi-basket", "link": "goods.html", "button": "Browse Groceries", "description": "A list
 of groceries from the inheritance inventories", "img": "ist3c.png"},
-{"title": "Grocery&nbsp;Categories", "icon": "bi-boxes", "link": "categories.html", "button": "Browse Grocery Categories",
+{"title": "Grocery&nbsp;Categories", "icon": "bi-boxes", "link": "categories.html", "button": "Browse Grocery
+Categories",
 "description": "List of groceries by category", "img": "ist5c.png"}
 ],
 [
+{"title": "Utensils", "icon": "bi-bucket", "link": "utensils.html", "button": "Browse Utensils", "description":
+"List of utensils", "img": "ist4c.png"},
 {"title": "Locations", "icon": "bi-geo", "link": "locations.html", "button": "Browse Locations", "description":
 "Locations of grocers", "img": "ist4c.png"},
 {"title": "Dashboard", "icon": "bi-bar-chart", "link": "dashboard.html", "button": "Browse Dashboard", "description":
@@ -46,20 +49,20 @@ of groceries from the inheritance inventories", "img": "ist3c.png"},
     {% for card_group in card_groups %}
     {% if card_group|length == 1 %}
     {% set col_class = "col-12" %}
-    {% elif card_group|length == 2 %}
-    {% set col_class = "col-sm-12 col-md-6" %}
     {% else %}
     {% set col_class = "col-sm-12 col-md-6 col-lg-4" %}
     {% endif %}
     <div class="row">
         {% for card_data in card_group %}
-        {% if card_data.title == 'Grocery&nbsp;Categories' %}
+        {% if card_data.title == 'Grocery&nbsp;Categories' or card_data.title == 'Dashboard' %}
         {% set col_class = "col-md-12 col-lg-4" %}
         {% endif %}
         <div class="{{ col_class }} pb-3">
             <div class="card index-card" style="background-image:url('images/{{card_data.img}}')">
                 <div class="card-body">
-                    <h3 class="card-title"><i class="bi {{ card_data.icon }}"></i><p>{{ card_data.title }}</p></h3>
+                    <h3 class="card-title"><i class="bi {{ card_data.icon }}"></i>
+                        <p>{{ card_data.title }}</p>
+                    </h3>
                     <p class="card-text">{{ card_data.description }}</p>
                     <a href="{{ card_data.link }}" class="btn {{ card_data.title }}">{{ card_data.button }}</a>
                 </div>
