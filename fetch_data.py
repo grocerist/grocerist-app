@@ -20,6 +20,7 @@ file_list = [
     "quarter.json",
     "address.json",
     "persons.json",
+    "utensils.json",
 ]
 
 json_dumps = os.path.join("html", "json_dumps")
