@@ -1,0 +1,72 @@
+{% extends "templates/partials/base.j2" %}
+{% block scriptHeader %}
+{% include "templates/partials/leaflet.j2" %}
+{% endblock scriptHeader %}
+{% block content %}
+<div class="container subpage">
+    <h1 class="text-center">
+        {% with parent_page = "utensils" %}
+        {% include "templates/partials/link_to_top.j2" %}
+        {% endwith %}
+        {{ object.name }}
+    </h1>
+    <div class="row">
+        <div class="col">
+            {% if object.notes %}
+            <h2><i class="bi bi-info-circle"></i> Description</h2>
+            <dl>
+                <dd class="ms-5">{{ object.notes }}</dd>
+            </dl>
+            {% endif %}
+            <h2><i class="bi bi-archive"></i> Documents</h2>
+            <ul>
+                {% for x in object.documents %}
+                <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col">
+            <h2><i class="bi bi-map"></i> Map</h2>
+            <div id="map" style="height: 600px;" />
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block scripts2 %}
+{% if object.documents %}
+
+<script>
+    /*
+        const icon = "bi bi-basket-fill"
+    
+        // tojson filter is used to keep the data in json format
+        // e.g. preventing the null values from being converted to None during processing
+        const doc_list = {{ object.documents | tojson | safe }};
+    
+        const { map, layerGroups } = createMap();
+    
+        // create markers for each document
+        for (let i = 0; i < doc_list.length; i++) {
+            const doc = doc_list[i];
+            const year = getYearFromISODate(doc.iso_date);
+            if (doc.lat && doc.long) {
+                const yearText = year ? `in ${year}` : '';
+                const markerData = {
+                    lat: doc.lat,
+                    long: doc.long,
+                    year: year,
+                    popupContent: `<p>Mentioned in document <br>
+                <strong><a href="document__${doc.id}.html">${doc.value}</a></strong><br>
+                ${yearText}</p>`,
+                    icon: "bi bi-basket3-fill",
+                };
+                const marker = createAndAddMarker(
+                    markerData,
+                    layerGroups
+                );
+            }
+        }
+        */
+</script>
+{% endif %}
+{% endblock scripts2 %}
