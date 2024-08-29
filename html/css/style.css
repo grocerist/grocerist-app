@@ -410,6 +410,15 @@ div h1>a {
     color: var(--secondary);
 }
 
+/* color for data tree toggler*/
+.bi-caret-right-fill {
+    color: #bbb;
+    ;
+}
+
+.bi-caret-down-fill {
+    color: #666
+}
 
 /* subpages */
 div.subpage h1 {
