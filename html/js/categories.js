@@ -51,6 +51,7 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
 let table;
 function childElementFilter(headerValue, rowValue, rowData, filterParams) {
   //!! expanding while filter active will run the filter on the expanded rows
+  console.log("childElementFilter");
   const searchValue = headerValue.toLowerCase();
   // console.log(rowValue);
   let match = false;
@@ -110,20 +111,21 @@ d3.json(dataUrl, function (data) {
     dataTree: true,
     columnCalcs: "both",
     columns: columnDefinitions,
-    // dataTreeExpandElement: `<i class="bi bi-caret-down-fill"></i>`,
-    // dataTreeCollapseElement: `<i class="bi bi-caret-up-fill"></i>`,
+    dataTreeExpandElement: `<i class="bi bi-caret-right-fill"></i>`,
+    dataTreeCollapseElement: `<i class="bi bi-caret-down-fill"></i>`,
   });
-  let tableBuilt = false;
-  table.on("tableBuilt", function () {
-    tableBuilt = true;
-  });
+  let filtersApplied = false;
   table.on("dataFiltered", function (filters, rows) {
-    if (tableBuilt && filters.length === 0) {
+    // This code will only run when all previously applied filters are cleared
+    if (filtersApplied && filters.length === 0) {
       table.getRows().forEach((row) => {
+        console.log(row.isTreeExpanded());
         if (row.isTreeExpanded()) {
           row.treeCollapse();
         }
       });
     }
+    // Update the filtersApplied state
+    filtersApplied = filters.length > 0;
   });
 });
