@@ -220,15 +220,31 @@ total_docs_per_decade = Counter(round_down_to_ten(year) for year in years_of_cre
 decade_dict = {
     category["name"]: {decade: 0 for decade in decades} for category in categories_data
 }
-for main_category in categories_data:
-    category_name = main_category["name"]
-    doc_list = [document["id"] for document in main_category["documents"]]
+
+#initiate lists for ordered categories
+main_category_names = []
+sub_category_names = []
+
+for category in categories_data:
+    category_name = category["name"]
+    if category["is_main_category"]:
+        main_category_names.append(category_name)
+    else:
+        sub_category_names.append(category_name)
+    
+    doc_list = [document["id"] for document in category["documents"]]
     for doc in doc_list:
         date_of_creation = docs_data[str(doc)].get("creation_date_ISO")
         year = extract_year(date_of_creation)
         if year is not None:
             decade = round_down_to_ten(year)
             decade_dict[category_name][decade] += 1
+          
+# Create a list with 1) main categories in alphabetical order and 2) subcategories in alphabetical order
+main_category_names.sort()
+sub_category_names.sort()
+category_names = main_category_names
+category_names.extend(sub_category_names)
 
 # Normalize the counts to percentages
 normalized_decade_dict = copy.deepcopy(decade_dict)
@@ -238,6 +254,19 @@ for category_name, decade_counts in normalized_decade_dict.items():
         normalized_decade_dict[category_name][decade] = calculate_percentage(
             count, total_docs_in_decade
         )
+
+
+# Sort decade_dict on the basis of the category_names list
+sorted_decade_dict = dict()
+sorted_list = list((i, decade_dict.get(i)) for i in category_names)
+for i in sorted_list:
+    sorted_decade_dict.setdefault(i[0], i[1])
+
+# Sort normalized_decade_dict on the basis of the category_names list
+sorted_normalized_decade_dict = dict()
+sorted_list = list((i, normalized_decade_dict.get(i)) for i in category_names)
+for i in sorted_list:
+    sorted_normalized_decade_dict.setdefault(i[0], i[1])
 
 # Symbols for the time series chart
 symbols = ["square", "diamond", "circle", "triangle"]
@@ -249,7 +278,7 @@ decades_results = [
         "marker": {"symbol": next(symbol_cycle)},
         "data": list(decade_counts.values()),
     }
-    for category, decade_counts in sorted(decade_dict.items())
+    for category, decade_counts in sorted_decade_dict.items()
 ]
 normalized_decades_results = [
     {
@@ -257,7 +286,7 @@ normalized_decades_results = [
         "marker": {"symbol": next(symbol_cycle)},
         "data": list(decade_counts.values()),
     }
-    for category, decade_counts in sorted(normalized_decade_dict.items())
+    for category, decade_counts in sorted_normalized_decade_dict.items()
 ]
 
 # Convert the results to JSON format and write to a file
