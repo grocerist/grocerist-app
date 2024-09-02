@@ -79,7 +79,7 @@ function createColumnChart(containerId, title, data, century = 18) {
       style: titleStyle,
     },
     subtitle: {
-      text: "Click the columns to view the groceries in that category",
+      text: "Click the columns to see data about subcategories and/or groceries",
     },
     xAxis: {
       type: "category",
@@ -92,7 +92,8 @@ function createColumnChart(containerId, title, data, century = 18) {
     },
     tooltip: {
       headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
-      pointFormat: `<span style="color:{point.color}">{point.name}</span>: mentioned in <b>{point.y}</b> documents in the ${century}th century<br/>`,
+      pointFormat: `<span style="color:{point.color}">{point.name}</span>: mentioned <b>{point.y}</b> times <br>
+      in documents from the <i>${century}th century</i>`,
     },
     plotOptions: {
       series: {
