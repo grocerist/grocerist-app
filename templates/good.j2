@@ -52,7 +52,7 @@
 {% if object.documents %}
 
 <script>
-    const icon = "bi bi-basket-fill"
+    const icon = "bi bi-basket3-fill"
 
     // tojson filter is used to keep the data in json format
     // e.g. preventing the null values from being converted to None during processing
@@ -73,7 +73,7 @@
                 popupContent: `<p>Mentioned in document <br>
             <strong><a href="document__${doc.id}.html">${doc.value}</a></strong><br>
             ${yearText}</p>`,
-                icon: "bi bi-basket3-fill",
+                icon: icon,
             };
             const marker = createAndAddMarker(
                 markerData,
