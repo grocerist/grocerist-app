@@ -73,15 +73,40 @@ docs_data = read_json_file("documents.json")
 
 
 def create_nested_goods_dict(category_dict):
+    """
+    Create a nested dictionary of goods based on the given category dictionary.
+
+    Parameters:
+    - category_dict (dict): Dictionary containing the data from the categories json.
+
+    Returns:
+    - nested_goods (dict): A nested dictionary containing the goods categorized by main categories and subcategories.
+    NOTES
+    Structure of this dictionary:
+    main category: ->
+    "goods": list of goods that are directly under the main category,
+    "subcategories" -> subcategory: list of goods under the subcategory
+
+    "goods" would end up empty if all goods are in subcategories,
+    "subcategories" would be empty if all goods are directly under the main category
+    """
     nested_goods = {}
+    # First pass: Initialize main categories with goods
     for data in category_dict:
         if data["is_main_category"]:
-            nested_goods[data["name"]] = {}
+            nested_goods[data["name"]] = {"goods": data["goods"], "subcategories": {}}
+    # Second pass: Process subcategories
+    for data in category_dict:
         if not data["is_main_category"]:
             main_cat = data["part_of"][0]["value"]
-            if main_cat not in nested_goods:
-                nested_goods[main_cat] = {}
-            nested_goods[main_cat][data["name"]] = data["goods"]
+            # Add the subcategory and its goods under the main category
+            nested_goods[main_cat]["subcategories"][data["name"]] = data["goods"]
+            # Remove goods from the main category if they are in a subcategory
+            nested_goods[main_cat]["goods"] = [
+                good
+                for good in nested_goods[main_cat]["goods"]
+                if good not in data["goods"]
+            ]
     return nested_goods
 
 
@@ -109,7 +134,6 @@ def calculate_century_count(data_dict, docs_data):
         dict: A dictionary containing the count of documents in each century for each category/grocery.
     """
     century_dict = {data["name"]: {"18": 0, "19": 0} for data in data_dict}
-    # century_dict = {data["name"]: {"18": set(), "19": set()} for data in data_dict}
     for data in data_dict:
         data_name = data["name"]
         doc_list = [str(document["id"]) for document in data["documents"]]
@@ -121,29 +145,67 @@ def calculate_century_count(data_dict, docs_data):
                 # for now, the 1 document from the 17th century is not included
                 if century in [18, 19]:
                     century_dict[data_name][str(century)] += 1
-                    # century_dict[data_name][str(century)].add(doc)
     return century_dict
 
 
+def process_goods(goods, century_goods_dict, century):
+    processed_goods = {}
+    for good in goods:
+        name = good["value"]
+        processed_goods[name] = century_goods_dict[name][century]
+    return processed_goods
+
+
+def process_subcategories(subcategories, century_goods_dict, century):
+    processed_subcategories = {}
+    for sub_category, goods in subcategories.items():
+        processed_subcategories[sub_category] = process_goods(
+            goods, century_goods_dict, century
+        )
+    return processed_subcategories
+
+
+def combine_dictionaries(nested_goods_dict, century_goods_dict):
+    categories_18 = {}
+    categories_19 = {}
+
+    for main_category, data in nested_goods_dict.items():
+        categories_18[main_category] = {}
+        categories_19[main_category] = {}
+
+        # Process subcategories
+        if "subcategories" in data:
+            categories_18[main_category].update(
+                process_subcategories(data["subcategories"], century_goods_dict, "18")
+            )
+            categories_19[main_category].update(
+                process_subcategories(data["subcategories"], century_goods_dict, "19")
+            )
+
+        # Process goods with no subcategory
+        if "goods" in data:
+            categories_18[main_category].update(
+                process_goods(data["goods"], century_goods_dict, "18")
+            )
+            categories_19[main_category].update(
+                process_goods(data["goods"], century_goods_dict, "19")
+            )
+
+    return categories_18, categories_19
+
+
+# Example usage
+
+# Create a nested dictionary containing main categories, subcategories, and goods
 nested_goods_dict = create_nested_goods_dict(categories_data)
+
+# Calculate the number of documents in each century for each product
 century_goods_dict = calculate_century_count(goods_data, docs_data)
 
-categories_18 = {}
-categories_19 = {}
-for main_category in nested_goods_dict:
-    categories_18[main_category] = {}
-    categories_19[main_category] = {}
-    for sub_category in nested_goods_dict[main_category]:
-        categories_18[main_category][sub_category] = {}
-        categories_19[main_category][sub_category] = {}
-        for good in nested_goods_dict[main_category][sub_category]:
-            name = good["value"]
-            categories_18[main_category][sub_category][name] = century_goods_dict[name][
-                "18"
-            ]
-            categories_19[main_category][sub_category][name] = century_goods_dict[name][
-                "19"
-            ]
+# Combine the previous two dictionaries into one for each century
+categories_18, categories_19 = combine_dictionaries(
+    nested_goods_dict, century_goods_dict
+)
 
 
 def generate_drilldown_chart_data(categories_dict):
@@ -165,28 +227,49 @@ def generate_drilldown_chart_data(categories_dict):
             "id": main_category,  # id to match drilldown category
             "data": [],
         }
-        for sub_category in categories_dict[main_category]:
-            # data for the chart that will appear when clicking on a subcategory, showing the products
-            drilldown_level2 = {"name": sub_category, "id": sub_category, "data": []}
-            sub_category_sum = sum(
-                categories_dict[main_category][sub_category].values()
-            )
-            main_category_sum += sub_category_sum
-            drilldown_level1["data"].append(
-                {
-                    "name": sub_category,
-                    "y": sub_category_sum,
-                    "drilldown": sub_category,
-                }
-            )
-            for product in categories_dict[main_category][sub_category]:
-                drilldown_level2["data"].append(
+        for item in categories_dict[main_category]:
+            # Test if it's a subcategory or a product
+            if isinstance(categories_dict[main_category][item], dict):
+                sub_category = item
+                # calculate subcategory sum
+                sub_category_sum = sum(
+                    categories_dict[main_category][sub_category].values()
+                )
+                main_category_sum += sub_category_sum
+
+                drilldown_level1["data"].append(
                     {
-                        "name": product,
-                        "y": categories_dict[main_category][sub_category][product],
+                        "name": sub_category,
+                        "y": sub_category_sum,
+                        "drilldown": sub_category,
                     }
                 )
-                products_level.append(drilldown_level2)
+                # data for the chart that will appear when clicking on a subcategory, showing the products
+                drilldown_level2 = {
+                    "name": sub_category,
+                    "id": sub_category,
+                    "data": [],
+                }
+
+                for product in categories_dict[main_category][sub_category]:
+                    drilldown_level2["data"].append(
+                        {
+                            "name": product,
+                            "y": categories_dict[main_category][sub_category][product],
+                        }
+                    )
+                    products_level.append(drilldown_level2)
+
+            else:
+                # there is no drilldown level 2
+                count = categories_dict[main_category][item]
+                drilldown_level1["data"].append(
+                    {
+                        "name": item,
+                        "y": count,
+                    }
+                )
+                main_category_sum += count
             sub_categories_level.append(drilldown_level1)
         column_data["y"] = main_category_sum
         main_categories.append(column_data)
