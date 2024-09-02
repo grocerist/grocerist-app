@@ -31,29 +31,33 @@ def calculate_percentage(count, total, precision=2):
     return round((count / total) * 100, precision)
 
 
-# DATA FOR RELIGIONS CHART
-data = read_json_file("persons.json")
+# LOAD ALL NECESSARY JSON FILES
+persons_data = read_json_file("persons.json").values()
+categories_data = read_json_file("categories.json").values()
+goods_data = read_json_file("goods.json").values()
+docs_data = read_json_file("documents.json")
 
+# DATA FOR RELIGIONS CHART
 # Create a dictionary to store the count of persons per religion
 religion_count = {}
 
 # Iterate through each person in the data
-for person_id, person_data in data.items():
-    religion_entries = person_data.get("religion", [])
+for person in persons_data:
+    if person.get("name"):
+        religion_entries = person.get("religion", [])
+        if len(religion_entries) > 1:
+            # Create a combined key for persons with multiple religion values
+            religion_values = [entry.get("value", "") for entry in religion_entries]
+            religion_key = "|".join(religion_values)
 
-    if len(religion_entries) > 1:
-        # Create a combined key for persons with multiple religion values
-        religion_values = [entry.get("value", "") for entry in religion_entries]
-        religion_key = "|".join(religion_values)
-
-    elif len(religion_entries) == 1:
-        # If there's only one religion value, use it directly as the key
-        religion_key = religion_entries[0].get("value", "")
-    else:
-        # Handle the case where there are no religion entries
-        religion_key = "Unknown"
-    # Update the count for specific religion
-    religion_count[religion_key] = religion_count.get(religion_key, 0) + 1
+        elif len(religion_entries) == 1:
+            # If there's only one religion value, use it directly as the key
+            religion_key = religion_entries[0].get("value", "")
+        else:
+            # Handle the case where there are no religion entries
+            religion_key = "Unknown"
+        # Update the count for specific religion
+        religion_count[religion_key] = religion_count.get(religion_key, 0) + 1
 
 # Calculate the total number of persons
 total_persons = sum(religion_count.values())
@@ -67,9 +71,6 @@ religions_results = [
 # DATA FOR CATEGORIES CHART
 # Categories and the number of documents they were mentioned in
 # and the same for each good (for drilldown chart)
-categories_data = read_json_file("categories.json").values()
-goods_data = read_json_file("goods.json").values()
-docs_data = read_json_file("documents.json")
 
 
 def create_nested_goods_dict(category_dict):
@@ -201,7 +202,7 @@ main_categories18, drill_down18 = generate_drilldown_chart_data(categories_18)
 main_categories19, drill_down19 = generate_drilldown_chart_data(categories_19)
 
 # DATA FOR MENTIONS OVER DECADES CHART
-docs_data = read_json_file("documents.json")
+
 
 # Extract years of creation from documents, excluding None values
 # For now, we're splitting the date string and taking the first part, will be fixed in the data later
