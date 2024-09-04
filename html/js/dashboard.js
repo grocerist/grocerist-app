@@ -146,6 +146,13 @@ function createColumnChart(containerId, title, data, century = 18) {
         },
       ],
     },
+    exporting: {
+      //downloaded image will have this width * scale (2 by default)
+      sourceWidth: 900,
+      chartOptions: {
+        subtitle: null,
+      },
+    },
   });
   return chart;
 }
@@ -217,6 +224,14 @@ function createSplineChart(containerId, title, yAxisTitle, data, tooltipText) {
           },
         },
       ],
+    },
+    exporting: {
+      //downloaded image will have this width/height * scale (2 by default)
+      sourceWidth: 900,
+      sourceHeight: 500,
+      chartOptions: {
+        subtitle: null,
+      },
     },
   });
 }
