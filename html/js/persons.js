@@ -99,6 +99,17 @@ const baseColumnDefinitions = [
       nameField: "value",
     },
   },
+  {
+    title: "Century",
+    field: "century",
+    headerFilter: "list",
+    headerFilterFunc: "in",
+    headerFilterParams: {
+      valuesLookup: "century",
+      sort: "asc",
+      multiselect: true,
+    },
+  },
 ];
 
 // Add minWidth and visibility toggle to each column
@@ -122,7 +133,6 @@ const getColor = {
   "Muslim": "#6f9ea8",
   "Non muslim/Orthodox": "#a6764d",
   "Non muslim/Armenian": "#e8c28c",
-  "Non muslim": "#d89090",
   "Unknown": "#b3c0c4",
 };
 
@@ -200,16 +210,17 @@ function createColumnChart(containerId, locationType, data, table) {
     },
     yAxis: {
       title: {
-        text: "Persons",
+        text: "Grocers",
       },
     },
     tooltip: {
       headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
       pointFormat:
-        '<span style="color:{point.color}">{point.name}</span> <b>{point.y}</b> persons<br/>',
+        '<span style="color:{point.color}">{point.name}</span><br> <b>{point.y}</b> grocers<br/>',
     },
     plotOptions: {
       series: {
+        name: locationType,
         allowPointSelect: true,
         cursor: "pointer",
         point: {
@@ -231,7 +242,6 @@ function createColumnChart(containerId, locationType, data, table) {
     },
     series: [
       {
-        name: "Districts",
         dataSorting: {
           enabled: true,
           sortKey: "name",
@@ -275,7 +285,19 @@ function calculateLocationData(rows, locationType = "district") {
   // get the locations (html list elements) from each row
   rows.forEach((row) => {
     let rowData = row.getData();
-    let locationData = rowData[locationType];
+    console.log(rowData.century);
+    let locationData;
+    if (locationType === "neighbourhood/karye") {
+      if (rowData["neighbourhood"].length > 0 && rowData["karye"].length > 0) {
+        console.log(rowData["name"]);
+      }
+      locationData =
+        rowData["neighbourhood"].length !== 0
+          ? rowData["neighbourhood"]
+          : rowData["karye"];
+    } else {
+      locationData = rowData[locationType];
+    }
     let locationNames = locationData.map((item) => item.value);
     if (locationNames.length === 0) {
       locationCount["Unknown"] = (locationCount["Unknown"] || 0) + 1;
@@ -286,8 +308,8 @@ function calculateLocationData(rows, locationType = "district") {
     }
   });
   // Calculate the numbers for each location type and store them in an array
-  let results = Object.entries(locationCount).map(([district, count]) => ({
-    name: district,
+  let results = Object.entries(locationCount).map(([locationName, count]) => ({
+    name: locationName,
     y: count,
   }));
   return results;
