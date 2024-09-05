@@ -323,7 +323,7 @@ def flatten_list(lst):
     return flat_list
 
 
-# Create list of all categories in the correct order with main category, [sub 
+# Create list of all categories in the correct order with main category, [sub
 # categories], main category, [sub categories], ... still nested
 main_sub_category_names = {category: [] for category in main_category_names}
 
