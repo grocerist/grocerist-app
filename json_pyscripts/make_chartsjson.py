@@ -306,8 +306,11 @@ decade_dict = {
 }
 
 # Create list of names of main categories
-main_category_names = [category["name"] for category in categories_data if category["is_main_category"]]
+main_category_names = [
+    category["name"] for category in categories_data if category["is_main_category"]
+]
 main_category_names.sort()
+
 
 # function for flattening nested list
 def flatten_list(lst):
@@ -318,6 +321,7 @@ def flatten_list(lst):
         else:
             flat_list.append(item)
     return flat_list
+
 
 # Create list of all categories in the correct order with main category, [sub categories], main category, [sub categories], ... still nested
 main_sub_category_names = {category: [] for category in main_category_names}
@@ -372,32 +376,38 @@ symbols = ["square", "diamond", "circle", "triangle"]
 symbol_cycle = itertools.cycle(symbols)
 # Generate results for Highcharts, once with absolute counts, once with normalized
 decades_results = [
-    {
-        "name": category,
-        "marker": {"symbol": next(symbol_cycle)},
-        "data": list(decade_counts.values()),
-        "is_main_category": True
-    } if category in main_category_names else 
-    {
-        "name": category,
-        "marker": {"symbol": next(symbol_cycle)},
-        "data": list(decade_counts.values()),
-    }
+    (
+        {
+            "name": category,
+            "marker": {"symbol": next(symbol_cycle)},
+            "data": list(decade_counts.values()),
+            "is_main_category": True,
+        }
+        if category in main_category_names
+        else {
+            "name": category,
+            "marker": {"symbol": next(symbol_cycle)},
+            "data": list(decade_counts.values()),
+        }
+    )
     for category, decade_counts in sorted_decade_dict.items()
 ]
 
 normalized_decades_results = [
-    {
-        "name": category,
-        "marker": {"symbol": next(symbol_cycle)},
-        "data": list(decade_counts.values()),
-        "is_main_category": True
-    } if category in main_category_names else 
-    {
-        "name": category,
-        "marker": {"symbol": next(symbol_cycle)},
-        "data": list(decade_counts.values()),
-    }
+    (
+        {
+            "name": category,
+            "marker": {"symbol": next(symbol_cycle)},
+            "data": list(decade_counts.values()),
+            "is_main_category": True,
+        }
+        if category in main_category_names
+        else {
+            "name": category,
+            "marker": {"symbol": next(symbol_cycle)},
+            "data": list(decade_counts.values()),
+        }
+    )
     for category, decade_counts in sorted_normalized_decade_dict.items()
 ]
 
