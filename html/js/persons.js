@@ -322,7 +322,15 @@ function createTable(tableConfig) {
 }
 
 d3.json(dataUrl, function (data) {
-  tableData = Object.values(data).filter((item) => item.name !== "");
+  tableData = Object.values(data)
+    .filter((item) => item.name !== "")
+    // replace empty century values (NaN in Baserow) with null
+    .map((item) => {
+      if (isNaN(item.century)) {
+        item.century = null;
+      }
+      return item;
+    });
   tableConfig.data = tableData;
   const table = createTable(tableConfig);
   table.on("dataLoaded", function (data) {
