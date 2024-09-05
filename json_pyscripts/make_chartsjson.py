@@ -304,9 +304,41 @@ total_docs_per_decade = Counter(round_down_to_ten(year) for year in years_of_cre
 decade_dict = {
     category["name"]: {decade: 0 for decade in decades} for category in categories_data
 }
-for main_category in categories_data:
-    category_name = main_category["name"]
-    doc_list = [document["id"] for document in main_category["documents"]]
+
+# Create list of names of main categories
+main_category_names = [category["name"] for category in categories_data if category["is_main_category"]]
+main_category_names.sort()
+
+# function for flattening nested list
+def flatten_list(lst):
+    flat_list = []
+    for item in lst:
+        if isinstance(item, list):
+            flat_list.extend(flatten_list(item))
+        else:
+            flat_list.append(item)
+    return flat_list
+
+# Create list of all categories in the correct order with main category, [sub categories], main category, [sub categories], ... still nested
+main_sub_category_names = {category: [] for category in main_category_names}
+
+for category in categories_data:
+    for item in category.get("part_of"):
+        if item["value"] in main_category_names:
+            main_sub_category_names[item["value"]].append(category["name"])
+
+# Create another nested list with the subcategories alphabetically ordered
+nested_list = []
+for category in main_category_names:
+    nested_list.append(category)
+    nested_list.append(sorted(main_sub_category_names[category]))
+
+# flatten the nested_list
+category_names = flatten_list(nested_list)
+
+for category in categories_data:
+    category_name = category["name"]
+    doc_list = [document["id"] for document in category["documents"]]
     for doc in doc_list:
         date_of_creation = docs_data[str(doc)].get("creation_date_ISO")
         year = extract_year(date_of_creation)
@@ -323,6 +355,18 @@ for category_name, decade_counts in normalized_decade_dict.items():
             count, total_docs_in_decade
         )
 
+# Sort decade_dict on basis of the category_names list
+sorted_decade_dict = dict()
+sorted_list = list((i, decade_dict.get(i)) for i in category_names)
+for i in sorted_list:
+    sorted_decade_dict.setdefault(i[0], i[1])
+
+# Sort normalized_decade_dict on basis of the category_names list
+sorted_normalized_decade_dict = dict()
+sorted_list = list((i, normalized_decade_dict.get(i)) for i in category_names)
+for i in sorted_list:
+    sorted_normalized_decade_dict.setdefault(i[0], i[1])
+
 # Symbols for the time series chart
 symbols = ["square", "diamond", "circle", "triangle"]
 symbol_cycle = itertools.cycle(symbols)
@@ -332,16 +376,29 @@ decades_results = [
         "name": category,
         "marker": {"symbol": next(symbol_cycle)},
         "data": list(decade_counts.values()),
-    }
-    for category, decade_counts in sorted(decade_dict.items())
-]
-normalized_decades_results = [
+        "is_main_category": True
+    } if category in main_category_names else 
     {
         "name": category,
         "marker": {"symbol": next(symbol_cycle)},
         "data": list(decade_counts.values()),
     }
-    for category, decade_counts in sorted(normalized_decade_dict.items())
+    for category, decade_counts in sorted_decade_dict.items()
+]
+
+normalized_decades_results = [
+    {
+        "name": category,
+        "marker": {"symbol": next(symbol_cycle)},
+        "data": list(decade_counts.values()),
+        "is_main_category": True
+    } if category in main_category_names else 
+    {
+        "name": category,
+        "marker": {"symbol": next(symbol_cycle)},
+        "data": list(decade_counts.values()),
+    }
+    for category, decade_counts in sorted_normalized_decade_dict.items()
 ]
 
 # Convert the results to JSON format and write to a file
