@@ -33,8 +33,8 @@ def make_geojson(json_files):
                 gj_feature["properties"]["grocerist_id"] = value["grocerist_id"]
                 gj_feature["properties"]["documents"] = value["documents"]
                 gj_feature["properties"]["doc_count"] = len(value["documents"])
-                # gj_feature["properties"]["persons"] = value["persons"]
-                # gj_feature["properties"]["person_count"] = len(value["persons"])
+                gj_feature["properties"]["persons"] = value["persons"]
+                gj_feature["properties"]["person_count"] = len(value["persons"])
                 if "neighbourhood" in value["grocerist_id"]:
                     gj_feature["properties"]["location_type"] = "Mahalle"
                 else:
