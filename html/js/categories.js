@@ -76,31 +76,59 @@ d3.json(dataUrl, function (data) {
   data = Object.values(data);
 
   const hierarchicalData = {};
+  // First pass: Enrich data and initialize hierarchical structure for main categories
   const enrichedData = data.map((item) => {
-    // Add counts to every category
     const enriched = {
       ...item,
       doc_count: item.documents.length,
       good_count: item.goods.length,
-      // There's only one parent category
       part_of:
         item.part_of && item.part_of.length > 0 ? item.part_of[0].value : null,
     };
-    // If the item is a main category, initialize it in the hierarchical data structure
-    if (enriched.is_main_category) {
-      hierarchicalData[enriched.name] = { ...enriched, _children: [] };
+
+    // Initialize in hierarchical data structure only for main categories
+    if (enriched.category_type.value === "main") {
+      hierarchicalData[enriched.name] = enriched;
     }
+
     return enriched;
   });
 
-  // Add child categories to their respective main category's _children array
+  // Second pass: Link subcategories to their respective main categories
   enrichedData.forEach((item) => {
-    if (item.part_of) {
-      const parentCategory = item.part_of;
-      if (hierarchicalData[parentCategory]) {
-        hierarchicalData[parentCategory]._children.push(item);
+    if (item.category_type.value === "sub") {
+      const parentCategory = hierarchicalData[item.part_of];
+      if (parentCategory) {
+        // Create _children array only if it doesn't exist
+        if (!parentCategory._children) {
+          parentCategory._children = [];
+        }
+        parentCategory._children.push(item);
       } else {
         console.warn("Parent category not found for", item);
+      }
+    }
+  });
+
+  // Third pass: Link sub-subcategories to their respective subcategories
+  enrichedData.forEach((item) => {
+    if (item.category_type.value === "subsub") {
+      // Find the parent subcategory in the entire hierarchical data
+      let parentCategory = null;
+      for (const mainCategory in hierarchicalData) {
+        const subcategories = hierarchicalData[mainCategory]._children || [];
+        parentCategory = subcategories.find((sub) => sub.name === item.part_of);
+        if (parentCategory) break;
+      }
+
+      if (parentCategory) {
+        // Create _children array only if it doesn't exist
+        if (!parentCategory._children) {
+          parentCategory._children = [];
+        }
+        parentCategory._children.push(item);
+      } else {
+        console.warn("Parent subcategory not found for", item);
       }
     }
   });
@@ -108,6 +136,7 @@ d3.json(dataUrl, function (data) {
   table = new Tabulator("#categories-table", {
     ...commonTableConfig,
     data: tableData,
+    headerFilterLiveFilterDelay: 600,
     dataTree: true,
     columnCalcs: "both",
     columns: columnDefinitions,
