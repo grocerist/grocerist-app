@@ -101,7 +101,10 @@ def create_nested_goods_dict(category_dict):
     for data in category_dict:
         if data["category_type"]["value"] == "sub":
             main_cat = data["part_of"][0]["value"]
-            nested_goods[main_cat]["subcategories"][data["name"]] = {"goods": data["goods"], "subcategories": {}}
+            nested_goods[main_cat]["subcategories"][data["name"]] = {
+                "goods": data["goods"],
+                "subcategories": {},
+            }
             # Remove goods from the main category if they are in a subcategory
             nested_goods[main_cat]["goods"] = [
                 good
@@ -116,7 +119,9 @@ def create_nested_goods_dict(category_dict):
             # Find the main category that contains this subcategory
             for main_cat, main_cat_data in nested_goods.items():
                 if sub_cat in main_cat_data["subcategories"]:
-                    main_cat_data["subcategories"][sub_cat]["subcategories"][data["name"]] = data["goods"]
+                    main_cat_data["subcategories"][sub_cat]["subcategories"][
+                        data["name"]
+                    ] = data["goods"]
                     # Remove goods from the subcategory if they are in a sub-subcategory
                     main_cat_data["subcategories"][sub_cat]["goods"] = [
                         good
@@ -223,6 +228,7 @@ def combine_dictionaries(nested_goods_dict, century_goods_dict):
 
     return categories_18, categories_19
 
+
 # Create a nested dictionary containing main categories, subcategories, and goods
 nested_goods_dict = create_nested_goods_dict(categories_data)
 
@@ -233,6 +239,7 @@ century_goods_dict = calculate_century_count(goods_data, docs_data)
 categories_18, categories_19 = combine_dictionaries(
     nested_goods_dict, century_goods_dict
 )
+
 
 def generate_drilldown_chart_data(categories_dict):
     main_categories = []  # Data for all main categories
@@ -260,28 +267,38 @@ def generate_drilldown_chart_data(categories_dict):
                 sub_category = item
                 # data for the chart that will appear when clicking on a subcategory, showing products and sub-subcategories
                 drilldown_level2 = {
-                        "name": sub_category,
-                        "id": sub_category,
-                        "data": [],
-                    }
+                    "name": sub_category,
+                    "id": sub_category,
+                    "data": [],
+                }
                 # test if there is another subcategory
                 if categories_dict[main_category][sub_category]["subcategories"]:
                     sub_category_sum = 0
-                    for subsub_category in categories_dict[main_category][sub_category]["subcategories"]:
+                    for subsub_category in categories_dict[main_category][sub_category][
+                        "subcategories"
+                    ]:
                         drilldown_level3 = {
                             "name": subsub_category,
                             "id": subsub_category,
                             "data": [],
                         }
-                        subsub_category_sum = sum(categories_dict[main_category][sub_category]["subcategories"][subsub_category].values())
+                        subsub_category_sum = sum(
+                            categories_dict[main_category][sub_category][
+                                "subcategories"
+                            ][subsub_category].values()
+                        )
                         main_category_sum += subsub_category_sum
                         sub_category_sum += subsub_category_sum
-                        
-                        for product in categories_dict[main_category][sub_category]["subcategories"][subsub_category]:
+
+                        for product in categories_dict[main_category][sub_category][
+                            "subcategories"
+                        ][subsub_category]:
                             drilldown_level3["data"].append(
                                 {
                                     "name": product,
-                                    "y": categories_dict[main_category][sub_category]["subcategories"][subsub_category][product],
+                                    "y": categories_dict[main_category][sub_category][
+                                        "subcategories"
+                                    ][subsub_category][product],
                                 }
                             )
                             products_level.append(drilldown_level3)
@@ -293,11 +310,15 @@ def generate_drilldown_chart_data(categories_dict):
                             }
                         )
                     # add the products on that are not in a sub-subcategory
-                    for product in categories_dict[main_category][sub_category]["goods"]:
+                    for product in categories_dict[main_category][sub_category][
+                        "goods"
+                    ]:
                         drilldown_level2["data"].append(
                             {
                                 "name": product,
-                                "y": categories_dict[main_category][sub_category]["goods"][product],
+                                "y": categories_dict[main_category][sub_category][
+                                    "goods"
+                                ][product],
                             }
                         )
                     sub_sub_categories_level.append(drilldown_level2)
@@ -308,8 +329,8 @@ def generate_drilldown_chart_data(categories_dict):
                             "drilldown": sub_category,
                         }
                     )
-                else:  
-                    # there is no sub-subcategory  
+                else:
+                    # there is no sub-subcategory
                     # calculate subcategory sum
                     sub_category_sum = sum(
                         categories_dict[main_category][sub_category]["goods"].values()
@@ -330,11 +351,15 @@ def generate_drilldown_chart_data(categories_dict):
                         "data": [],
                     }
 
-                    for product in categories_dict[main_category][sub_category]["goods"]:
+                    for product in categories_dict[main_category][sub_category][
+                        "goods"
+                    ]:
                         drilldown_level2["data"].append(
                             {
                                 "name": product,
-                                "y": categories_dict[main_category][sub_category]["goods"][product],
+                                "y": categories_dict[main_category][sub_category][
+                                    "goods"
+                                ][product],
                             }
                         )
                         products_level.append(drilldown_level2)
@@ -384,7 +409,9 @@ decade_dict = {
 
 # Create list of names of main categories
 main_category_names = [
-    category["name"] for category in categories_data if category["category_type"]["value"] == "main"
+    category["name"]
+    for category in categories_data
+    if category["category_type"]["value"] == "main"
 ]
 main_category_names.sort()
 
