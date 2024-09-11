@@ -49,27 +49,52 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
   minWidth: 150,
 }));
 let table;
+
 function childElementFilter(headerValue, rowValue, rowData, filterParams) {
   //!! expanding while filter active will run the filter on the expanded rows
-  console.log("childElementFilter");
   const searchValue = headerValue.toLowerCase();
-  // console.log(rowValue);
   let match = false;
+  // first check if there are children
+  if (rowData._children) {
+    for (let i = 0; i < rowData._children.length; i++) {
+      const child = rowData._children[i];
+      // check for child of child
+      if (child._children) {
+        for (let j = 0; j < child._children.length; j++) {
+          const childOfChild = child._children[j];
+          if (childOfChild.name.toLowerCase().includes(headerValue.toLowerCase())) {
+            const row = table.getRow(rowData.id);
+            if (!row.isTreeExpanded()) {
+              row.treeExpand();
+              row.getTreeChildren()
+                .forEach((childRow) => {
+                  if (!childRow.isTreeExpanded()) {
+                    childRow.treeExpand();
+                  }
+                });
+            }
+            match = true;
+            break; // Break out of the loop when a match is found
+          }
+        }
+      }
+      if (child.name.toLowerCase().includes(headerValue.toLowerCase())) {
+        if (table.getRow(rowData.id)){
+          const row = table.getRow(rowData.id);
+          if (!row.isTreeExpanded()) {
+            row.treeExpand();
+          }
+        } 
+        match = true;
+        break; // Break out of the loop when a match is found
+      }
+    }
+  }
   if (rowValue.toLowerCase().includes(searchValue)) {
     match = true;
   }
-  if (rowData._children) {
-    rowData._children.forEach((child) => {
-      if (child.name.toLowerCase().includes(headerValue.toLowerCase())) {
-        const row = table.getRow(rowData.id);
-        if (!row.isTreeExpanded()) {
-          row.treeExpand();
-        }
-        match = true;
-      }
-    });
-  }
-  return match;
+  
+return match;
 }
 
 d3.json(dataUrl, function (data) {
@@ -136,7 +161,7 @@ d3.json(dataUrl, function (data) {
   table = new Tabulator("#categories-table", {
     ...commonTableConfig,
     data: tableData,
-    headerFilterLiveFilterDelay: 600,
+    //headerFilterLiveFilterDelay: 400,
     dataTree: true,
     columnCalcs: "both",
     columns: columnDefinitions,
@@ -146,9 +171,9 @@ d3.json(dataUrl, function (data) {
   let filtersApplied = false;
   table.on("dataFiltered", function (filters, rows) {
     // This code will only run when all previously applied filters are cleared
+
     if (filtersApplied && filters.length === 0) {
-      table.getRows().forEach((row) => {
-        console.log(row.isTreeExpanded());
+      rows.forEach((row) => {
         if (row.isTreeExpanded()) {
           row.treeCollapse();
         }
@@ -156,5 +181,6 @@ d3.json(dataUrl, function (data) {
     }
     // Update the filtersApplied state
     filtersApplied = filters.length > 0;
+
   });
 });
