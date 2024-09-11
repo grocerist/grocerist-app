@@ -265,7 +265,8 @@ def generate_drilldown_chart_data(categories_dict):
             # Test if it's a subcategory or a product
             if isinstance(categories_dict[main_category][item], dict):
                 sub_category = item
-                # data for the chart that will appear when clicking on a subcategory, showing products and sub-subcategories
+                # data for the chart that will appear when clicking on a subcategory, 
+                # showing products and sub-subcategories
                 drilldown_level2 = {
                     "name": sub_category,
                     "id": sub_category,
