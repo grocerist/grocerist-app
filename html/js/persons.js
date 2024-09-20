@@ -240,6 +240,15 @@ function createColumnChart(containerId, locationType, data, table) {
         data: data,
       },
     ],
+    exporting: {
+      chartOptions: {
+        title: {
+          text:
+            locationType.charAt(0).toUpperCase() + locationType.slice(1) + "s",
+          style: titleStyle,
+        },
+      },
+    },
   });
 }
 // Function to calculate percentage  and round it to 2 decimal places
