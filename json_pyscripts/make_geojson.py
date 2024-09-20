@@ -10,8 +10,8 @@ def make_geojson(json_files):
         ) as fp:
             data = json.load(fp)
 
-        for key, value in data.items():
-            if value["lat"]:
+        for value in data.values():
+            if value["name"]:
                 gj_feature = {
                     "type": "Feature",
                     "geometry": {"type": "Point"},
@@ -22,13 +22,13 @@ def make_geojson(json_files):
                         float(value["long"]),
                         float(value["lat"]),
                     ]
-                except TypeError:
+                except (TypeError, ValueError, KeyError):
                     print("###########")
                     print(
-                        f"looks like there is an issue with coordinates for entry: {value['name']}"
+                        f"looks like there is an issue with coordinates for entry: {value.get('name', 'unknown')}"
                     )
                     print("###########")
-                    continue
+                gj_feature["geometry"]["coordinates"] = [0, 0]
                 gj_feature["properties"]["name"] = value["name"]
                 gj_feature["properties"]["grocerist_id"] = value["grocerist_id"]
                 gj_feature["properties"]["documents"] = value["documents"]
@@ -49,5 +49,12 @@ def make_geojson(json_files):
         json.dump(geo_json, fp, ensure_ascii=False)
 
 
-json_files = ["districts.json", "neighbourhoods.json", "karye.json"]
+json_files = [
+    "districts.json",
+    "neighbourhoods.json",
+    "karye.json",
+    "nahiye.json",
+    "quarter.json",
+    "address.json",
+]
 make_geojson(json_files)
