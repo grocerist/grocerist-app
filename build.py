@@ -147,6 +147,7 @@ subpages = [
     ("nahiye", "nahiye.json", "./templates/nahiye.j2"),
     ("quarter", "quarter.json", "./templates/quarter.j2"),
     ("address", "address.json", "./templates/address.j2"),
+    ("utensil", "utensils.json", "./templates/utensil.j2"),
 ]
 
 for data in subpages:
