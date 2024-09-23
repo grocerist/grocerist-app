@@ -416,12 +416,18 @@ main_category_names = [
 ]
 main_category_names.sort()
 
+subsub_category_names = [
+    category["name"]
+    for category in categories_data
+    if category["category_type"]["value"] == "subsub"
+]
+
 
 # function for flattening nested list
 def flatten_list(lst):
     flat_list = []
     for item in lst:
-        if isinstance(item, list):
+        if isinstance(item, (list, tuple)):
             flat_list.extend(flatten_list(item))
         else:
             flat_list.append(item)
@@ -432,16 +438,35 @@ def flatten_list(lst):
 # categories], main category, [sub categories], ... still nested
 main_sub_category_names = {category: [] for category in main_category_names}
 
-for category in categories_data:
-    for item in category.get("part_of"):
-        if item["value"] in main_category_names:
-            main_sub_category_names[item["value"]].append(category["name"])
+for category in nested_goods_dict:
+    if category in main_category_names:
+        if nested_goods_dict[category]["subcategories"]:
+            for subcategory in nested_goods_dict[category]["subcategories"]:
+
+                if nested_goods_dict[category]["subcategories"][subcategory][
+                    "subcategories"
+                ]:
+                    subsub_list = [
+                        x
+                        for x in nested_goods_dict[category]["subcategories"][
+                            subcategory
+                        ]["subcategories"]
+                    ]
+                    main_sub_category_names[category].append(
+                        (subcategory, sorted(subsub_list))
+                    )
+                else:
+                    main_sub_category_names[category].append(subcategory)
 
 # Create another nested list with the subcategories alphabetically ordered
 nested_list = []
 for category in main_category_names:
     nested_list.append(category)
-    nested_list.append(sorted(main_sub_category_names[category]))
+    sorted_subcategories = sorted(
+        main_sub_category_names[category],
+        key=lambda x: x[0] if isinstance(x, tuple) else x,
+    )
+    nested_list.append(sorted_subcategories)
 
 # flatten the nested_list
 category_names = flatten_list(nested_list)
@@ -481,39 +506,32 @@ for i in sorted_list:
 symbols = ["square", "diamond", "circle", "triangle"]
 symbol_cycle = itertools.cycle(symbols)
 # Generate results for Highcharts, once with absolute counts, once with normalized
+
 decades_results = [
-    (
-        {
-            "name": category,
-            "marker": {"symbol": next(symbol_cycle)},
-            "data": list(decade_counts.values()),
-            "is_main_category": True,
-        }
-        if category in main_category_names
-        else {
-            "name": category,
-            "marker": {"symbol": next(symbol_cycle)},
-            "data": list(decade_counts.values()),
-        }
-    )
+    {
+        "name": category,
+        "marker": {"symbol": next(symbol_cycle)},
+        "data": list(decade_counts.values()),
+        "category": (
+            "main"
+            if category in main_category_names
+            else "subsub" if category in subsub_category_names else "sub"
+        ),
+    }
     for category, decade_counts in sorted_decade_dict.items()
 ]
 
 normalized_decades_results = [
-    (
-        {
-            "name": category,
-            "marker": {"symbol": next(symbol_cycle)},
-            "data": list(decade_counts.values()),
-            "is_main_category": True,
-        }
-        if category in main_category_names
-        else {
-            "name": category,
-            "marker": {"symbol": next(symbol_cycle)},
-            "data": list(decade_counts.values()),
-        }
-    )
+    {
+        "name": category,
+        "marker": {"symbol": next(symbol_cycle)},
+        "data": list(decade_counts.values()),
+        "category": (
+            "main"
+            if category in main_category_names
+            else "subsub" if category in subsub_category_names else "sub"
+        ),
+    }
     for category, decade_counts in sorted_normalized_decade_dict.items()
 ]
 
