@@ -34,7 +34,7 @@ const baseColumnDefinitions = [
       scrollable: true,
       urlPrefix: "person__",
       idField: "id",
-      nameField: "value",
+      nameField: "name",
     },
   },
   {

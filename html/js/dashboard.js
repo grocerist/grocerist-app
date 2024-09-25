@@ -168,9 +168,23 @@ function createSplineChart(containerId, title, yAxisTitle, data, tooltipText) {
       style: titleStyle,
     },
     subtitle: {
-      text: "(Select more categories to display their numbers, <br/> click and drag in the plot area to zoom in)",
+      text: "Select more categories to display their numbers, <br/> click and drag in the plot area to zoom in",
     },
     legend: {
+      layout: "vertical",
+      align: "left",
+      verticalAlign: "top",
+      itemWidth: 100,
+      labelFormatter: function () {
+        // Apply bold style to main category legend items, italic to subsub categories
+        if (this.userOptions.category === "main") {
+          return `<span style="font-weight:bold;">${this.name}</span>`;
+        } else if (this.userOptions.category === "subsub") {
+          return `<span style="font-style:italic;">&nbsp;&nbsp; ${this.name}</span>`;
+        } else {
+          return `<span>&nbsp; ${this.name}</span>`;
+        }
+      },
       itemHiddenStyle: {
         color: "#d3d3d3",
         textDecoration: "none",
@@ -215,7 +229,7 @@ function createSplineChart(containerId, title, yAxisTitle, data, tooltipText) {
               style: { fontSize: "1rem" },
             },
             subtitle: {
-              text: "(Select more categories to display their numbers)",
+              text: "Select more categories to display their numbers",
             },
             yAxis: {
               labels: { align: "left", x: 0, y: -2 },

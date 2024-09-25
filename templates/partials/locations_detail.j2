@@ -61,7 +61,7 @@
             <h2><i class="bi bi-person"></i> Persons</h2>
             <ul>
                 {% for x in object.persons %}
-                <li><a href="person__{{ x.id }}.html">{{ x.value }}</a></li>
+                <li><a href="person__{{ x.id }}.html">{{ x.name }}</a></li>
                 {% endfor %}
             </ul>
         </div>
