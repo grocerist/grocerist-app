@@ -136,18 +136,27 @@ const getColor = {
   "Unknown": "#b3c0c4",
 };
 
-// generate both charts
+// generate chart
 function generateChartsFromTable(rows, table) {
   let religionsResults = calculateReligionData(rows);
   createPieChart("religion-chart", "Religion", religionsResults, table);
-  generateChartSelect(rows, table);
+  // generateLocationChart(rows, table);
 }
 // generate chart for selected location type
-function generateChartSelect(rows, table) {
-  const locationType = locTypeSelect.value;
-  let locationResults = calculateLocationData(rows, locationType);
-  createColumnChart("location-chart", locationType, locationResults, table);
-}
+// function generateLocationChart(rows, table) {
+//   const locationType = locTypeSelect.value;
+//   let locationResults
+//   if (locationType === "neighbourhood/karye") {
+//     locationResults = [
+//       ...calculateLocationData(rows, "neighbourhood"),
+//       ...calculateLocationData(rows, "karye"),
+//     ];
+//   }
+//   else locationResults = calculateLocationData(rows, locationType);
+//   console.log(locationResults);
+//   // separate the data for mahalle / karye
+//   createColumnChart("location-chart", locationType, locationResults, table);
+// }
 
 function createPieChart(containerId, title, data, table) {
   return Highcharts.chart(containerId, {
@@ -220,7 +229,6 @@ function createColumnChart(containerId, locationType, data, table) {
     },
     plotOptions: {
       series: {
-        name: locationType,
         allowPointSelect: true,
         cursor: "pointer",
         point: {
@@ -280,40 +288,40 @@ function calculateReligionData(rows) {
   return results;
 }
 
-function calculateLocationData(rows, locationType = "district") {
-  let locationCount = {};
-  // get the locations (html list elements) from each row
-  rows.forEach((row) => {
-    let rowData = row.getData();
-    console.log(rowData.century);
-    let locationData;
-    if (locationType === "neighbourhood/karye") {
-      if (rowData["neighbourhood"].length > 0 && rowData["karye"].length > 0) {
-        console.log(rowData["name"]);
-      }
-      locationData =
-        rowData["neighbourhood"].length !== 0
-          ? rowData["neighbourhood"]
-          : rowData["karye"];
-    } else {
-      locationData = rowData[locationType];
-    }
-    let locationNames = locationData.map((item) => item.value);
-    if (locationNames.length === 0) {
-      locationCount["Unknown"] = (locationCount["Unknown"] || 0) + 1;
-    } else {
-      locationNames.forEach((value) => {
-        locationCount[value] = (locationCount[value] || 0) + 1;
-      });
-    }
-  });
-  // Calculate the numbers for each location type and store them in an array
-  let results = Object.entries(locationCount).map(([locationName, count]) => ({
-    name: locationName,
-    y: count,
-  }));
-  return results;
-}
+// function calculateLocationData(rows, locationType = "district") {
+//   let locationCount = {};
+//   // get the locations (html list elements) from each row
+//   rows.forEach((row) => {
+//     let rowData = row.getData();
+//     let locationData;
+//     if (locationType === "neighbourhood/karye") {
+//       if (rowData["neighbourhood"].length > 0 && rowData["karye"].length > 0) {
+//         locationData = rowData["neighbourhood"].concat(rowData["karye"]);
+//       } else {
+//         locationData =
+//           rowData["neighbourhood"].length !== 0
+//             ? rowData["neighbourhood"]
+//             : rowData["karye"];
+//       }
+//     } else {
+//       locationData = rowData[locationType];
+//     }
+//     let locationNames = locationData.map((item) => item.value);
+//     if (locationNames.length === 0) {
+//       locationCount["Unknown"] = (locationCount["Unknown"] || 0) + 1;
+//     } else {
+//       locationNames.forEach((value) => {
+//         locationCount[value] = (locationCount[value] || 0) + 1;
+//       });
+//     }
+//   });
+//   // Calculate the numbers for each location type and store them in an array
+//   let results = Object.entries(locationCount).map(([locationName, count]) => ({
+//     name: locationName,
+//     y: count,
+//   }));
+//   return results;
+// }
 
 function createTable(tableConfig) {
   console.log("loading table");
@@ -343,7 +351,7 @@ d3.json(dataUrl, function (data) {
 
   locTypeSelect.addEventListener("change", () => {
     let rows = table.getRows();
-    generateChartSelect(rows, table);
+    generateLocationChart(rows, table);
   });
 });
 
