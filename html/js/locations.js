@@ -55,10 +55,10 @@ const baseColumnDefinitions = [
     field: "properties.location_type",
     formatter: makeItalic,
     headerFilter: "list",
-    headerFilterFunc: "in",
+    // headerFilterFunc: "in",
     headerFilterParams: {
       valuesLookup: true,
-      multiselect: true,
+      multiselect: false,
       itemFormatter: makeItalic,
     },
   },
@@ -126,7 +126,7 @@ function createColumnChart(containerId, locationType, data, table) {
                 // nothing happens
               } else {
                 // set the filter value for the column with the current location type
-                table.setHeaderFilterValue(locationType, this.name);
+                table.setHeaderFilterValue("properties.name", this.name);
               }
             },
           },
@@ -161,7 +161,6 @@ function createColumnChart(containerId, locationType, data, table) {
 function calculateLocationData(rows, locationType = "District") {
   let results = rows.reduce((resultList, row) => {
     let rowData = row.getData();
-    console.log(rowData.properties.persons);
     if (rowData.properties.location_type === locationType) {
       resultList.push({
         name: rowData.properties.name,
@@ -186,9 +185,36 @@ d3.json(dataUrl, function (dataFromJson) {
   table.on("dataFiltered", function (filters, rows) {
     $("#search_count").text(rows.length);
     chart = generateChartFromTable(rows, table);
+    const locationTypeFilter = filters.find(
+      (filter) => filter.field === "properties.location_type"
+    );
+
+    if (locationTypeFilter) {
+      locTypeSelect.value = locationTypeFilter.value;
+      // Manually dispatch a change event
+      const event = new Event("change");
+      locTypeSelect.dispatchEvent(event);
+    }
   });
   locTypeSelect.addEventListener("change", () => {
     let rows = table.getRows();
+    // if the table isn't already filtered by location type, filter it
+    // or if the filter value is different from the selected value
+
+    if (
+      !table
+        .getHeaderFilters()
+        .find(
+          (filter) =>
+            filter.field === "properties.location_type" &&
+            filter.value === locTypeSelect.value
+        )
+    ) {
+      table.setHeaderFilterValue(
+        "properties.location_type",
+        locTypeSelect.value
+      );
+    }
     chart.series[0].setData(calculateLocationData(rows, locTypeSelect.value));
   });
 });
