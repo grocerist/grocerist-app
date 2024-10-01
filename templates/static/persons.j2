@@ -15,19 +15,21 @@
         {% include "templates/partials/link_to_top.j2" %}
         Persons</h1>
     <div class="row">
-        <div class="col-12">
+        <div class="col-6">
             <div id="religion-chart"></div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div id="persons-table"></div>
+        <div class="col-6">
+            <div id="districts-chart"></div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="persons-table"></div>
+            </div>
+        </div>
+
     </div>
+    {% endblock content %}
 
-</div>
-{% endblock content %}
-
-{% block scripts2 %}
-<script src="js/persons.js"></script>
-{% endblock scripts2 %}
+    {% block scripts2 %}
+    <script src="js/persons.js"></script>
+    {% endblock scripts2 %}

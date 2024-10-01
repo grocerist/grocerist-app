@@ -140,23 +140,9 @@ const getColor = {
 function generateChartsFromTable(rows, table) {
   let religionsResults = calculateReligionData(rows);
   createPieChart("religion-chart", "Religion", religionsResults, table);
-  // generateLocationChart(rows, table);
+  let districtResults = calculateDistrictData(rows);
+  createColumnChart("districts-chart", "Districts", districtResults, table);
 }
-// generate chart for selected location type
-// function generateLocationChart(rows, table) {
-//   const locationType = locTypeSelect.value;
-//   let locationResults
-//   if (locationType === "neighbourhood/karye") {
-//     locationResults = [
-//       ...calculateLocationData(rows, "neighbourhood"),
-//       ...calculateLocationData(rows, "karye"),
-//     ];
-//   }
-//   else locationResults = calculateLocationData(rows, locationType);
-//   console.log(locationResults);
-//   // separate the data for mahalle / karye
-//   createColumnChart("location-chart", locationType, locationResults, table);
-// }
 
 function createPieChart(containerId, title, data, table) {
   return Highcharts.chart(containerId, {
@@ -203,7 +189,7 @@ function createPieChart(containerId, title, data, table) {
   });
 }
 
-function createColumnChart(containerId, locationType, data, table) {
+function createColumnChart(containerId, title, data, table) {
   Highcharts.chart(containerId, {
     chart: {
       type: "column",
@@ -212,7 +198,10 @@ function createColumnChart(containerId, locationType, data, table) {
     legend: {
       enabled: false,
     },
-    title: false,
+    title: {
+      text: title,
+      style: titleStyle,
+    },
     xAxis: {
       type: "category",
       reversed: true,
@@ -237,8 +226,8 @@ function createColumnChart(containerId, locationType, data, table) {
               if (this.name === "Unknown") {
                 // nothing happens
               } else {
-                // set the filter value for the column with the current location type
-                table.setHeaderFilterValue(locationType, this.name);
+                // set the filter value for the districts column
+                table.setHeaderFilterValue("district", this.name);
               }
             },
           },
@@ -250,6 +239,7 @@ function createColumnChart(containerId, locationType, data, table) {
     },
     series: [
       {
+        name: "Districts",
         dataSorting: {
           enabled: true,
           sortKey: "name",
@@ -258,15 +248,6 @@ function createColumnChart(containerId, locationType, data, table) {
         data: data,
       },
     ],
-    exporting: {
-      chartOptions: {
-        title: {
-          text:
-            locationType.charAt(0).toUpperCase() + locationType.slice(1) + "s",
-          style: titleStyle,
-        },
-      },
-    },
   });
 }
 // Function to calculate percentage  and round it to 2 decimal places
@@ -297,40 +278,28 @@ function calculateReligionData(rows) {
   return results;
 }
 
-// function calculateLocationData(rows, locationType = "district") {
-//   let locationCount = {};
-//   // get the locations (html list elements) from each row
-//   rows.forEach((row) => {
-//     let rowData = row.getData();
-//     let locationData;
-//     if (locationType === "neighbourhood/karye") {
-//       if (rowData["neighbourhood"].length > 0 && rowData["karye"].length > 0) {
-//         locationData = rowData["neighbourhood"].concat(rowData["karye"]);
-//       } else {
-//         locationData =
-//           rowData["neighbourhood"].length !== 0
-//             ? rowData["neighbourhood"]
-//             : rowData["karye"];
-//       }
-//     } else {
-//       locationData = rowData[locationType];
-//     }
-//     let locationNames = locationData.map((item) => item.value);
-//     if (locationNames.length === 0) {
-//       locationCount["Unknown"] = (locationCount["Unknown"] || 0) + 1;
-//     } else {
-//       locationNames.forEach((value) => {
-//         locationCount[value] = (locationCount[value] || 0) + 1;
-//       });
-//     }
-//   });
-//   // Calculate the numbers for each location type and store them in an array
-//   let results = Object.entries(locationCount).map(([locationName, count]) => ({
-//     name: locationName,
-//     y: count,
-//   }));
-//   return results;
-// }
+function calculateDistrictData(rows) {
+  let districtCount = {};
+  // get the districts (html list elements) from each row
+  rows.forEach((row) => {
+    let rowData = row.getData();
+    let districtData = rowData.district;
+    let districtNames = districtData.map((item) => item.value);
+    if (districtNames.length === 0) {
+      districtCount["Unknown"] = (districtCount["Unknown"] || 0) + 1;
+    } else {
+      districtNames.forEach((value) => {
+        districtCount[value] = (districtCount[value] || 0) + 1;
+      });
+    }
+  });
+  // Calculate the numbers for each district and store them in an array
+  let results = Object.entries(districtCount).map(([district, count]) => ({
+    name: district,
+    y: count,
+  }));
+  return results;
+}
 
 function createTable(tableConfig) {
   console.log("loading table");
