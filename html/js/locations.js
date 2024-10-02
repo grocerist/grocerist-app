@@ -80,16 +80,6 @@ const tableConfig = {
   </span>`,
 };
 const locTypeSelect = document.getElementById("select-location");
-function generateChartFromTable(rows, table) {
-  const locationType = locTypeSelect.value;
-  let locationResults = calculateLocationData(rows, locationType);
-  return createColumnChart(
-    "location-chart",
-    locationType,
-    locationResults,
-    table
-  );
-}
 
 function createColumnChart(containerId, locationType, data, table) {
   return Highcharts.chart(containerId, {
@@ -147,13 +137,14 @@ function createColumnChart(containerId, locationType, data, table) {
       },
     ],
     exporting: {
+      sourceWidth: 900,
       chartOptions: {
         title: {
-          // CHECKME: doesn't work because the chart is not regenerated when the location type changes
-          text: `${locTypeSelect.value}s`,
+          text: "Districts",
           style: titleStyle,
         },
       },
+      filename: "grocers_by_district",
     },
   });
 }
@@ -178,13 +169,19 @@ d3.json(dataUrl, function (dataFromJson) {
   );
   tableConfig.data = tableData;
   const table = new Tabulator("#places_table", tableConfig);
-  let chart;
+  // Create the chart with data for Districts
+  let locationResults = calculateLocationData(table.getRows(), "District");
+  const chart = createColumnChart(
+    "location-chart",
+    "District",
+    locationResults,
+    table
+  );
   table.on("dataLoaded", function (data) {
     $("#total_count").text(data.length);
   });
   table.on("dataFiltered", function (filters, rows) {
     $("#search_count").text(rows.length);
-    chart = generateChartFromTable(rows, table);
     const locationTypeFilter = filters.find(
       (filter) => filter.field === "properties.location_type"
     );
@@ -195,10 +192,23 @@ d3.json(dataUrl, function (dataFromJson) {
       const event = new Event("change");
       locTypeSelect.dispatchEvent(event);
     }
+    const locType = locTypeSelect.value;
+    chart.series[0].update({
+      name: locType, // Set the name of the series
+      data: calculateLocationData(rows, locType), // Set the data of the series
+    });
+    chart.update({
+      exporting: {
+        chartOptions: {
+          title: {
+            text: `${locType}s`,
+          },
+        },
+        filename: `grocers_by_${locType.toLowerCase()}`,
+      },
+    });
   });
   locTypeSelect.addEventListener("change", () => {
-    let rows = table.getRows("active");
-    console.log(rows);
     // if the table isn't already filtered by location type
     // or if the filter value is different from the selected value, filter it
     if (
@@ -215,7 +225,7 @@ d3.json(dataUrl, function (dataFromJson) {
         locTypeSelect.value
       );
     }
-    chart.series[0].setData(calculateLocationData(rows, locTypeSelect.value));
+    // this will trigger the dataFiltered event and update the chart
   });
 });
 // Custom colors
