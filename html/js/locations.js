@@ -197,10 +197,10 @@ d3.json(dataUrl, function (dataFromJson) {
     }
   });
   locTypeSelect.addEventListener("change", () => {
-    let rows = table.getRows();
-    // if the table isn't already filtered by location type, filter it
-    // or if the filter value is different from the selected value
-
+    let rows = table.getRows("active");
+    console.log(rows);
+    // if the table isn't already filtered by location type
+    // or if the filter value is different from the selected value, filter it
     if (
       !table
         .getHeaderFilters()
