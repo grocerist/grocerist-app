@@ -13,7 +13,7 @@
     <div class="row">
         <div class="col">
             {% if object.turkish_names %}
-            <h2><i class="bi bi-card-text"></i> Translation</h2>
+            <h2><i class="bi bi-card-text" aria-hidden="true"></i> Translation</h2>
             <dl>
                 <dd class="ms-5"><b>{{ object.turkish_names }}</b>
                     {% if object.spelling_variations_and_synonyms %}
@@ -23,18 +23,18 @@
             </dl>
             {% endif %}
             {% if object.notes %}
-            <h2><i class="bi bi-info-circle"></i> Description</h2>
+            <h2><i class="bi bi-info-circle" aria-hidden="true"></i> Description</h2>
             <dl>
                 <dd class="ms-5">{{ object.notes }}</dd>
             </dl>
             {% endif %}
-            <h2><i class="bi bi-geo-alt"></i> Categories</h2>
+            <h2><i class="bi bi-geo-alt" aria-hidden="true"></i> Categories</h2>
             <dl>
                 {% for x in object.has_category %}
                 <dd class="ms-5"><a href="category__{{ x.id }}.html">{{ x.value }}</a></dd>
                 {% endfor %}
             </dl>
-            <h2><i class="bi bi-archive"></i> Documents</h2>
+            <h2><i class="bi bi-archive" aria-hidden="true"></i> Documents</h2>
             <ul>
                 {% for x in object.documents %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
@@ -42,7 +42,7 @@
             </ul>
         </div>
         <div class="col">
-            <h2><i class="bi bi-map"></i> Map</h2>
+            <h2><i class="bi bi-map" aria-hidden="true"></i> Map</h2>
             <div id="map" style="height: 600px;" />
         </div>
     </div>
