@@ -15,6 +15,10 @@ function createPieChart(containerId, title, data) {
     chart: {
       type: "pie",
     },
+    accessibility: {
+      description:
+        "This chart shows the distribution of the religions of the grocers in the inheritance inventories.",
+    },
     title: {
       text: title,
       style: titleStyle,
@@ -70,7 +74,10 @@ function createColumnChart(containerId, title, data, century = 18) {
     chart: {
       type: "column",
     },
-
+    accessibility: {
+      description:
+        "This chart shows the number of times products in a grocery category were mentioned in inheritance inventories during the selected century.",
+    },
     legend: {
       enabled: false,
     },
@@ -162,6 +169,10 @@ function createSplineChart(containerId, title, yAxisTitle, data, tooltipText) {
     chart: {
       type: "spline",
       zoomType: "x",
+    },
+    accessibility: {
+      description:
+        "This chart shows the frequency of mentions of a grocery in a grocery category in inheritance inventories during each decade.",
     },
     title: {
       text: title,
