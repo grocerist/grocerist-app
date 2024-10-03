@@ -214,6 +214,7 @@ nav.navbar .dropdown-item:active {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 100%;
     padding: 1rem;
     transition: transform var(--d) var(--e);
@@ -232,6 +233,7 @@ nav.navbar .dropdown-item:active {
     font-size: 1.125rem;
     font-style: italic;
     line-height: 1.35;
+    height: 3rem;
 
 }
 
