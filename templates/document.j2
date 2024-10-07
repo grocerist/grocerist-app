@@ -9,7 +9,7 @@
     </h1>
     <div class="row">
         <div class="col">
-            <h2><i class="bi bi-geo-alt"></i> Location</h2>
+            <h2><i class="bi bi-geo-alt" aria-hidden="true"></i> Location</h2>
             <dl>
                 {% if object.district %}
                 <dt>District</dt>
@@ -54,7 +54,7 @@
                 {% endif %}
             </dl>
 
-            <h2><i class="bi bi-calendar4"></i> Year of creation</h2>
+            <h2><i class="bi bi-calendar4" aria-hidden="true"></i> Year of creation</h2>
             <dl>
                 {% if object.year_of_creation_hicri %}
                 <dt><i>Hicri</i></dt>
@@ -66,7 +66,7 @@
                 {% endif %}
             </dl>
 
-            <h2><i class="bi bi-person"></i> <i>Bakkal</i>/Grocer</h2>
+            <h2><i class="bi bi-person" aria-hidden="true"></i> <i>Bakkal</i>/Grocer</h2>
             {% for x in object.main_person %}
             <dl>
                 <dt>Name</dt>
@@ -82,7 +82,7 @@
             </dl>
             {% endfor %}
 
-            <h2><i class="bi bi-basket"></i> Groceries</h2>
+            <h2><i class="bi bi-basket" aria-hidden="true"></i> Groceries</h2>
             {% for x in object.goods %}
             <dt><a href="{{ x.grocerist_id }}.html">{{ x.name }}</a></dt>
             <dd class="ms-5">
@@ -96,7 +96,7 @@
         <div class="col">
             {% if images %}
             <div class="pb-3">
-                <h2 class="text-center"><i class="bi bi-images"></i> Facsimiles</h2>
+                <h2 class="text-center"><i class="bi bi-images" aria-hidden="true"></i> Facsimiles</h2>
                 <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
                 <script type="text/javascript">
@@ -109,7 +109,7 @@
                 </script>
             </div>
             {% endif %}
-            <h2 class="text-center"><i class="bi bi-pencil"></i> Transcript</h2>
+            <h2 class="text-center"><i class="bi bi-pencil" aria-hidden="true"></i> Transcript</h2>
             {% for x in paragraphs %}
             {{ x|safe }}
             {% endfor %}

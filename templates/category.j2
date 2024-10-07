@@ -6,7 +6,7 @@
         {% include "templates/partials/link_to_top.j2" %}
         {% endwith %}
         {{object.name }}</h1>
-    <h2><i class="bi bi-basket"></i> Groceries</h2>
+    <h2><i class="bi bi-basket" aria-hidden="true"></i> Groceries</h2>
     <ul>
         {% for x in object.goods %}
         <li>
@@ -14,7 +14,7 @@
         </li>
         {% endfor %}
     </ul>
-    <h2><i class="bi bi-archive"></i> Documents</h2>
+    <h2><i class="bi bi-archive" aria-hidden="true"></i> Documents</h2>
     <ul>
         {% for x in object.documents %}
         <li><a href="{{ x.grocerist_id }}.html">{{ x.shelfmark }}</a></li>
