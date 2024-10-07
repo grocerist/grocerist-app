@@ -164,101 +164,113 @@ function createColumnChart(containerId, title, data, century = 18) {
   return chart;
 }
 
-function createSplineChart(containerId, title, yAxisTitle, data, tooltipText) {
-  return Highcharts.chart(containerId, {
-    chart: {
-      type: "spline",
-      zoomType: "x",
-    },
-    accessibility: {
-      description:
-        "This chart shows the frequency of mentions of a grocery in a grocery category in inheritance inventories during each decade.",
-    },
-    title: {
-      text: title,
-      style: titleStyle,
-    },
-    subtitle: {
-      text: "Select more categories to display their numbers, <br/> click and drag in the plot area to zoom in",
-    },
-    legend: {
-      layout: "vertical",
-      align: "left",
-      verticalAlign: "top",
-      itemWidth: 100,
-      labelFormatter: function () {
-        // Apply bold style to main category legend items, italic to subsub categories
-        if (this.userOptions.category === "main") {
-          return `<span style="font-weight:bold;">${this.name}</span>`;
-        } else if (this.userOptions.category === "subsub") {
-          return `<span style="font-style:italic;">&nbsp;&nbsp; ${this.name}</span>`;
-        } else {
-          return `<span>&nbsp; ${this.name}</span>`;
-        }
+function createSplineChart(data, isNormalized) {
+  return Highcharts.chart(
+    isNormalized ? "container_normalized_time_chart" : "container_time_chart",
+    {
+      chart: {
+        type: "spline",
+        zoomType: "x",
       },
-      itemHiddenStyle: {
-        color: "#d3d3d3",
-        textDecoration: "none",
+      accessibility: {
+        description: `This chart shows the ${
+          isNormalized ? "percentage" : "frequency"
+        } of mentions of a grocery in a grocery category in inheritance inventories ${
+          isNormalized ? "relative to the total number of documents" : ""
+        } during each decade.`,
       },
-    },
-    xAxis: {
       title: {
-        text: "Decades",
+        text: isNormalized
+          ? "Category Mentions Over Time: Document Percentage by Decade"
+          : "Category Mentions Over Time",
+        style: titleStyle,
       },
-      labels: {
-        format: "{value}s",
+      subtitle: {
+        text: "Select more categories to display their numbers, <br/> click and drag in the plot area to zoom in",
       },
-      categories: data[0],
-    },
-    yAxis: {
-      title: {
-        text: yAxisTitle,
-      },
-    },
-    tooltip: {
-      headerFormat: "<span>{point.key}s</span><br>",
-      pointFormat: `<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b>${tooltipText}<br/>`,
-      shared: true,
-    },
-    plotOptions: {
-      line: {
-        dataLabels: {
-          enabled: true,
+      legend: {
+        layout: "vertical",
+        align: "left",
+        verticalAlign: "top",
+        itemWidth: 100,
+        labelFormatter: function () {
+          // Apply bold style to main category legend items, italic to subsub categories
+          if (this.userOptions.category === "main") {
+            return `<span style="font-weight:bold;">${this.name}</span>`;
+          } else if (this.userOptions.category === "subsub") {
+            return `<span style="font-style:italic;">&nbsp;&nbsp; ${this.name}</span>`;
+          } else {
+            return `<span>&nbsp; ${this.name}</span>`;
+          }
         },
-        enableMouseTracking: false,
-      },
-    },
-    series: data[1],
-    responsive: {
-      rules: [
-        {
-          condition: {
-            maxWidth: 500,
-          },
-          chartOptions: {
-            title: {
-              style: { fontSize: "1rem" },
-            },
-            subtitle: {
-              text: "Select more categories to display their numbers",
-            },
-            yAxis: {
-              labels: { align: "left", x: 0, y: -2 },
-              title: { text: "" },
-            },
-          },
+        itemHiddenStyle: {
+          color: "#d3d3d3",
+          textDecoration: "none",
         },
-      ],
-    },
-    exporting: {
-      //downloaded image will have this width/height * scale (2 by default)
-      sourceWidth: 900,
-      sourceHeight: 500,
-      chartOptions: {
-        subtitle: null,
       },
-    },
-  });
+      xAxis: {
+        title: {
+          text: "Decades",
+        },
+        labels: {
+          format: "{value}s",
+        },
+        categories: data[0],
+      },
+      yAxis: {
+        title: {
+          text: `${
+            isNormalized ? "Percentage of Documents" : "Number of Documents"
+          }`,
+        },
+      },
+      tooltip: {
+        headerFormat: "<span>{point.key}s</span><br>",
+        pointFormat: `<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b>${
+          isNormalized ? "% of documents from this decade" : " document(s)"
+        }<br/>`,
+        shared: true,
+      },
+      plotOptions: {
+        line: {
+          dataLabels: {
+            enabled: true,
+          },
+          enableMouseTracking: false,
+        },
+      },
+      series: data[1],
+      responsive: {
+        rules: [
+          {
+            condition: {
+              maxWidth: 500,
+            },
+            chartOptions: {
+              title: {
+                style: { fontSize: "1rem" },
+              },
+              subtitle: {
+                text: "Select more categories to display their numbers",
+              },
+              yAxis: {
+                labels: { align: "left", x: 0, y: -2 },
+                title: { text: "" },
+              },
+            },
+          },
+        ],
+      },
+      exporting: {
+        //downloaded image will have this width/height * scale (2 by default)
+        sourceWidth: 900,
+        sourceHeight: 500,
+        chartOptions: {
+          subtitle: null,
+        },
+      },
+    }
+  );
 }
 d3.json(dataUrl, function (data) {
   const relChartData = Object.values(data.religions);
@@ -322,18 +334,6 @@ d3.json(dataUrl, function (data) {
   setVisibilityForFirstElement(timeChartData);
   setVisibilityForFirstElement(normalizedTimeChartData);
 
-  createSplineChart(
-    "container_time_chart",
-    "Category Mentions Over Time",
-    "Number of Documents",
-    timeChartData,
-    " document(s)"
-  );
-  createSplineChart(
-    "container_normalized_time_chart",
-    "Category Mentions Over Time: Document Percentage by Decade",
-    "Percentage of Documents from a Decade",
-    normalizedTimeChartData,
-    "% of documents from this decade"
-  );
+  createSplineChart(timeChartData, false);
+  createSplineChart(normalizedTimeChartData, true);
 });
