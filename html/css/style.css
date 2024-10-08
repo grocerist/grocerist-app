@@ -154,7 +154,7 @@ nav.navbar .dropdown-item:active {
     overflow: hidden;
     padding: 1rem;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: left;
     height: 300px;
     text-align: center;
     color: whitesmoke;
