@@ -189,21 +189,21 @@ nav.navbar .dropdown-item:active {
         pointer-events: none;
         background-image: linear-gradient(to bottom,
                 hsla(0, 0%, 0%, 0) 0%,
-                hsla(0, 0%, 0%, 0.009) 11.7%,
-                hsla(0, 0%, 0%, 0.034) 22.1%,
-                hsla(0, 0%, 0%, 0.072) 31.2%,
-                hsla(0, 0%, 0%, 0.123) 39.4%,
-                hsla(0, 0%, 0%, 0.182) 46.6%,
-                hsla(0, 0%, 0%, 0.249) 53.1%,
-                hsla(0, 0%, 0%, 0.320) 58.9%,
-                hsla(0, 0%, 0%, 0.394) 64.3%,
-                hsla(0, 0%, 0%, 0.468) 69.3%,
-                hsla(0, 0%, 0%, 0.540) 74.1%,
-                hsla(0, 0%, 0%, 0.607) 78.8%,
-                hsla(0, 0%, 0%, 0.668) 83.6%,
-                hsla(0, 0%, 0%, 0.721) 88.7%,
-                hsla(0, 0%, 0%, 0.762) 94.1%,
-                hsla(0, 0%, 0%, 0.790) 100%);
+                hsla(0, 0%, 0%, 0.028) 11.7%,
+                hsla(0, 0%, 0%, 0.069) 22.1%,
+                hsla(0, 0%, 0%, 0.122) 31.2%,
+                hsla(0, 0%, 0%, 0.183) 39.4%,
+                hsla(0, 0%, 0%, 0.250) 46.6%,
+                hsla(0, 0%, 0%, 0.322) 53.1%,
+                hsla(0, 0%, 0%, 0.396) 58.9%,
+                hsla(0, 0%, 0%, 0.470) 64.3%,
+                hsla(0, 0%, 0%, 0.542) 69.3%,
+                hsla(0, 0%, 0%, 0.609) 74.1%,
+                hsla(0, 0%, 0%, 0.670) 78.8%,
+                hsla(0, 0%, 0%, 0.723) 83.6%,
+                hsla(0, 0%, 0%, 0.764) 88.7%,
+                hsla(0, 0%, 0%, 0.792) 94.1%,
+                hsla(0, 0%, 0%, 0.8001) 100%);
         transform: translateY(-50%);
         transition: transform calc(var(--d) * 2) var(--e);
     }
@@ -226,6 +226,10 @@ nav.navbar .dropdown-item:active {
     font-size: 2rem;
     font-weight: bold;
     line-height: 1.2;
+}
+
+.card-title span {
+    display: block;
 }
 
 .card-text {
@@ -262,7 +266,7 @@ nav.navbar .dropdown-item:active {
     }
 
     .card-body {
-        transform: translateY(calc(100% - 5.5rem));
+        transform: translateY(calc(100% - 6.5rem));
 
         >*:not(.card-title) {
             opacity: 0;
