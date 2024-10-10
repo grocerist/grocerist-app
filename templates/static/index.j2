@@ -23,25 +23,29 @@
 </div>
 {% set card_groups = [
 [
-{"title": "Documents", "icon": "bi-archive", "link": "documents.html", "button": "Browse Documents", "description": "A
-list of documents containing inheritance inventories", "img": "ist1c.png" }
+{"title": "Documents", "icon": "bi-archive", "link": "documents.html", "button": "Browse Documents", "description":
+"Explore detailed records of inheritance inventories from 18th and 19th century Istanbul grocers.", "img":
+"documents.png" }
 ],
 [
-{"title": "Grocers", "icon": "bi-people", "link": "persons.html", "button": "Browse Grocers", "description": "A list of
-persons mentioned in the inheritance documents", "img": "ist2c.png"},
-{"title": "Groceries", "icon": "bi-basket", "link": "goods.html", "button": "Browse Groceries", "description": "A list
-of groceries from the inheritance inventories", "img": "ist3c.png"},
+{"title": "Grocers", "icon": "bi-people", "link": "persons.html", "button": "Browse Grocers", "description": "Browse
+profiles of persons mentioned in the inheritance records.", "img": "ist2c.png"},
+{"title": "Groceries", "icon": "bi-basket", "link": "goods.html", "button": "Browse Groceries", "description": "Access a
+detailed catalog of groceries listed in historical inheritance inventories.", "img": "ist3c.png"},
 {"title": "Grocery&nbsp;Categories", "icon": "bi-boxes", "link": "categories.html", "button": "Browse Grocery
 Categories",
-"description": "List of groceries by category", "img": "ist5c.png"}
+"description": "View groceries categorized by type.", "img":
+"ist5c.png"}
 ],
 [
 {"title": "Utensils", "icon": "bi-cup", "link": "utensils.html", "button": "Browse Utensils", "description":
-"List of utensils", "img": "ist7c.png"},
+"Discover various utensils listed in the inventories.", "img":
+"utensils.png"},
 {"title": "Locations", "icon": "bi-geo", "link": "locations.html", "button": "Browse Locations", "description":
-"Locations of grocers", "img": "ist4c.png"},
+"Explore geographical locations tied to grocers, as recorded in the documents.", "img": "locations.png"},
 {"title": "Dashboard", "icon": "bi-bar-chart", "link": "dashboard.html", "button": "Browse Dashboard", "description":
-"Different charts and graphs about the data", "img": "ist6c.png"},
+"Analyze the data through interactive charts and graphs.", "img":
+"dashboard.png"},
 ]
 ] %}
 
@@ -60,8 +64,9 @@ Categories",
         <div class="{{ col_class }} pb-3">
             <div class="card index-card" style="background-image:url('images/{{card_data.img}}')">
                 <div class="card-body">
-                    <h3 class="card-title"><i class="bi {{ card_data.icon }}" aria-hidden="true"></i>
-                        {{ card_data.title }}
+                    <h3 class="card-title">
+                        <i class="bi {{ card_data.icon }}" aria-hidden="true"></i>
+                        <span>{{ card_data.title }}</span>
                     </h3>
                     <p class="card-text">{{ card_data.description }}</p>
                     <a href="{{ card_data.link }}" class="btn">{{ card_data.button }}</a>
