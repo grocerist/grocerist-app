@@ -94,7 +94,7 @@ function createColumnChart(containerId, title, data, century = 18) {
     },
     yAxis: {
       title: {
-        text: "Number of Documents",
+        text: "Mentions",
       },
     },
     tooltip: {
