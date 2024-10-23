@@ -462,6 +462,10 @@ ul.no-bullets {
     display: none;
 }
 
+.highcharts-description {
+    margin: 0.3rem 10px;
+}
+
 #container_religion_chart,
 #container_categories_chart {
     width: 100%;

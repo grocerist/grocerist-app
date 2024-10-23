@@ -15,9 +15,9 @@
         {% include "templates/partials/link_to_top.j2" %}
         Dashboard</h1>
     <br>
-    <div class="card pb-3 mb-3" id="container_religion_chart">
+    <div class="card py-3 mb-3" id="container_religion_chart">
     </div>
-    <div class="card pb-3 mb-3">
+    <div class="card py-3 mb-3">
         <div id="container_select">
             <label for="select-century">Select century:</label>
             <select id="select-century">
@@ -28,8 +28,23 @@
         <div id="container_categories_chart">
         </div>
     </div>
-    <div class="card pb-3 mb-3" id="container_time_chart"></div>
-    <div class="card pb-3 mb-3" id="container_normalized_time_chart">
+    <figure class="highcharts-figure">
+        <div class="card py-3 mb-3" id="container_time_chart"></div>
+        <p class="highcharts-description my-3 mx-5">The chart displays the frequency with which various grocery
+            categories
+            were mentioned in inheritance inventory documents, broken down by decade. <br /> Each mention of a product
+            within a category is counted separately; for example, if a document lists two products from the same
+            category,
+            both are counted individually. Only one category is preselected, but additional categories can be displayed
+            by
+            selecting the category labels on the left. Main categories are shown in bold, subcategories in regular text,
+            and
+            sub-subcategories in italics. <br />Please note that for some main categories, the sum of mentions across
+            subcategories may be lower than the total shown for the main category, as certain products are not assigned
+            to
+            any subcategory.</p>
+    </figure>
+    <div class="card py-3 mb-3" id="container_normalized_time_chart">
     </div>
 </div>
 </div>

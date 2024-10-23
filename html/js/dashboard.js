@@ -219,15 +219,15 @@ function createSplineChart(data, isNormalized) {
       },
       yAxis: {
         title: {
-          text: `${
-            isNormalized ? "Percentage of Documents" : "Number of Documents"
-          }`,
+          text: `${isNormalized ? "Percentage of Documents" : "Mentions"}`,
         },
       },
       tooltip: {
         headerFormat: "<span>{point.key}s</span><br>",
-        pointFormat: `<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b>${
-          isNormalized ? "% of documents from this decade" : " document(s)"
+        pointFormat: `<span style="color:{point.color}">{series.name}</span>: ${
+          isNormalized
+            ? "<b>{point.y}</b> % of documents from this decade"
+            : " mentioned <b>{point.y}</b> times"
         }<br/>`,
         shared: true,
       },
