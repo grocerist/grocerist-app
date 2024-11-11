@@ -310,6 +310,24 @@ nav.navbar .dropdown-item:active {
     }
 }
 
+.attribution {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-top: 10px;
+    font-style: italic;
+    text-align: left;
+
+}
+
+.attribution a {
+    color: #aaa;
+    text-decoration: underline;
+}
+
+.attribution a:hover {
+    color: #000;
+}
+
 /*footer*/
 
 img.footerimage {
