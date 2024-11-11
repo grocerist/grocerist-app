@@ -29,20 +29,20 @@
 ],
 [
 {"title": "Grocers", "icon": "bi-people", "link": "persons.html", "button": "Browse Grocers", "description": "Browse
-profiles of persons mentioned in the inheritance records.", "img": "ist2c.png"},
-{"title": "Groceries", "icon": "bi-basket", "link": "goods.html", "button": "Browse Groceries", "description": "Access a
-detailed catalog of groceries listed in historical inheritance inventories.", "img": "ist3c.png"},
+profiles of persons mentioned in the inheritance records.", "img": "grocers.png"},
 {"title": "Grocery&nbsp;Categories", "icon": "bi-boxes", "link": "categories.html", "button": "Browse Grocery
 Categories",
 "description": "View groceries categorized by type.", "img":
-"ist5c.png"}
+"categories.png"},
+{"title": "Groceries", "icon": "bi-basket", "link": "goods.html", "button": "Browse Groceries", "description": "Access a
+detailed catalog of groceries listed in historical inheritance inventories.", "img": "groceries.png"}
 ],
 [
 {"title": "Utensils", "icon": "bi-cup", "link": "utensils.html", "button": "Browse Utensils", "description":
 "Discover various utensils listed in the inventories.", "img":
 "utensils.png"},
 {"title": "Locations", "icon": "bi-geo", "link": "locations.html", "button": "Browse Locations", "description":
-"Explore geographical locations tied to grocers, as recorded in the documents.", "img": "locations.png"},
+"Explore geographical locations tied to grocers, as recorded in the documents.", "img": "locations2.png"},
 {"title": "Dashboard", "icon": "bi-bar-chart", "link": "dashboard.html", "button": "Browse Dashboard", "description":
 "Analyze the data through interactive charts and graphs.", "img":
 "dashboard.png"},
@@ -58,7 +58,7 @@ Categories",
     {% endif %}
     <div class="row">
         {% for card_data in card_group %}
-        {% if card_data.title == 'Grocery&nbsp;Categories' or card_data.title == 'Dashboard' %}
+        {% if card_data.title == 'Groceries' or card_data.title == 'Dashboard' %}
         {% set col_class = "col-md-12 col-lg-4" %}
         {% endif %}
         <div class="{{ col_class }} pb-3">
@@ -76,5 +76,11 @@ Categories",
         {% endfor %}
     </div>
     {% endfor %}
+    <p class="attribution"> © Background image for the "Grocers" menu item from <a
+            href="https://archives.saltresearch.org/handle/123456789/117251" target="_blank"
+            rel="noopener noreferrer">Salt Research Archives</a>, licensed under <a
+            href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" rel="noopener noreferrer">CC
+            BY-NC-ND 4.0</a>, cropped.
+    </p>
 </div>
 {% endblock content %}
