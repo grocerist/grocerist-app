@@ -71,7 +71,6 @@ template = templateEnv.get_template("./templates/document.j2")
 with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
     data = json.load(f)
 for key, value in data.items():
-    doc_id = value["grocerist_id"]
     f_name = f"{value['grocerist_id']}.html"
     save_path = os.path.join(out_dir, f_name)
     context = {}
@@ -96,7 +95,7 @@ for key, value in data.items():
     try:
         context["images"] = [
             f"https://files.transkribus.eu/iiif/2/{x}/info.json"
-            for x in img_data[value["grocerist_id"]]
+            for x in img_data[value["doc_id"]]
         ]
         value["images"] = True
     except KeyError:
