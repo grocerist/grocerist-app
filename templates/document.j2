@@ -84,14 +84,15 @@
 
             <h2><i class="bi bi-basket" aria-hidden="true"></i> Groceries</h2>
             {% for x in object.goods %}
-            <dt><a href="{{ x.grocerist_id }}.html">{{ x.name }}</a></dt>
-            <dd class="ms-5">
-                {% for y in x.has_category %}
-                <a href="category__{{ y.id }}.html"><span class="badge text-bg-primary">{{y.value}}</span></a>
+            <dl>
+                <dt><a href="{{ x.grocerist_id }}.html">{{ x.name }}</a></dt>
+                <dd class="ms-5">
+                    {% for y in x.has_category %}
+                    <a href="category__{{ y.id }}.html"><span class="badge text-bg-primary">{{y.value}}</span></a>
+                    {% endfor %}
+                </dd>
                 {% endfor %}
-
-            </dd>
-            {% endfor %}
+            </dl>
         </div>
         <div class="col">
             {% if images %}
