@@ -1,7 +1,6 @@
 import itertools
 import os
 import json
-from collections import Counter
 import copy
 import datetime
 
@@ -68,7 +67,7 @@ religions_results = [
     for religion, count in religion_count.items()
 ]
 
-# DATA FOR CATEGORIES CHART
+# DATA FOR CATEGORIES CHART & TIME SERIES CHARTS
 # Categories and the number of documents they were mentioned in
 # and the same for each good (for drilldown chart)
 
@@ -145,30 +144,32 @@ def extract_year(date):
         return None
 
 
-def calculate_century_count(data_dict, docs_data):
+def goods_century_decade_count(goods_data, docs_data, decades):
     """
-    Calculates the count of documents in each century for each category/grocery in the data dictionary.
-
-    Args:
-        data_dict (dict): A dictionary containing data from the goods JSON.
-        docs_data (dict): A dictionary containing information from the documents JSON.
-
-    Returns:
-        dict: A dictionary containing the count of documents in each century for each category/grocery.
+    Calculates the number of mentions in each century and each decade per good.
     """
-    century_dict = {data["name"]: {"18": 0, "19": 0} for data in data_dict}
-    for data in data_dict:
-        data_name = data["name"]
-        doc_list = [str(document["id"]) for document in data["documents"]]
+    century_dict = {}
+    decade_dict = {}
+
+    for good in goods_data:
+        good_name = good["name"]
+        # Initialize with zeros for all decades and centuries
+        decade_dict[good_name] = {decade: 0 for decade in decades}
+        century_dict[good_name] = {"18": 0, "19": 0}
+
+        doc_list = [str(document["id"]) for document in good["documents"]]
         for doc in doc_list:
             date_of_creation = docs_data[doc].get("creation_date_ISO")
             year = extract_year(date_of_creation)
             if year is not None:
                 century = calculate_century(year)
-                # for now, the 1 document from the 17th century is not included
+                decade = round_down_to_ten(year)
+                # NOTE: for now, the 1 document from the 17th century is not included
                 if century in [18, 19]:
-                    century_dict[data_name][str(century)] += 1
-    return century_dict
+                    century_dict[good_name][str(century)] += 1
+                decade_dict[good_name][decade] += 1
+
+    return century_dict, decade_dict
 
 
 def process_goods(goods, century_goods_dict, century):
@@ -227,18 +228,6 @@ def combine_dictionaries(nested_goods_dict, century_goods_dict):
             )
 
     return categories_18, categories_19
-
-
-# Create a nested dictionary containing main categories, subcategories, and goods
-nested_goods_dict = create_nested_goods_dict(categories_data)
-
-# Calculate the number of documents in each century for each product
-century_goods_dict = calculate_century_count(goods_data, docs_data)
-
-# Combine the previous two dictionaries into one for each century
-categories_18, categories_19 = combine_dictionaries(
-    nested_goods_dict, century_goods_dict
-)
 
 
 def generate_drilldown_chart_data(categories_dict):
@@ -384,14 +373,48 @@ def generate_drilldown_chart_data(categories_dict):
     return main_categories, drilldown_data
 
 
-main_categories18, drill_down18 = generate_drilldown_chart_data(categories_18)
-main_categories19, drill_down19 = generate_drilldown_chart_data(categories_19)
+def sort_category_names(categories_data, nested_goods_dict):
+    # Create list of names of main categories
+    main_category_names = sorted(
+        category["name"]
+        for category in categories_data
+        if category["category_type"]["value"] == "main"
+    )
 
-# DATA FOR MENTIONS OVER DECADES CHART
+    # Create a dictionary to hold the nested structure
+    main_sub_category_names = {category: [] for category in main_category_names}
 
+    # Initialize the list for subsubcategories
+    subsub_category_names = []
+
+    # Populate the dictionary with subcategories and subsubcategories
+    for category in nested_goods_dict:
+        if category in main_category_names:
+            subcategories = nested_goods_dict[category].get("subcategories", {})
+            for subcategory, subcat_data in subcategories.items():
+                subsubcategories = sorted(subcat_data.get("subcategories", {}).keys())
+                if subsubcategories:
+                    main_sub_category_names[category].extend(
+                        [subcategory] + subsubcategories
+                    )
+                    subsub_category_names.extend(subsubcategories)
+                else:
+                    main_sub_category_names[category].append(subcategory)
+
+    # Create a flat list with the subcategories alphabetically ordered
+    sorted_category_names = []
+    for category in main_category_names:
+        sorted_category_names.append(category)
+        sorted_subcategories = sorted(main_sub_category_names[category])
+        sorted_category_names.extend(sorted_subcategories)
+
+    return main_category_names, subsub_category_names, sorted_category_names
+
+
+# Create a nested dictionary containing main categories, subcategories, and goods
+nested_goods_dict = create_nested_goods_dict(categories_data)
 
 # Extract years of creation from documents, excluding None values
-# For now, we're splitting the date string and taking the first part, will be fixed in the data later
 years_of_creation = [
     year
     for year in (extract_year(doc["creation_date_ISO"]) for doc in docs_data.values())
@@ -399,106 +422,65 @@ years_of_creation = [
 ]
 
 # Create a sorted list of all the decades
+# Count the total number of documents in each decade
 decades = sorted(set(round_down_to_ten(year) for year in years_of_creation))
 
-# Count the total number of documents in each decade
-total_docs_per_decade = Counter(round_down_to_ten(year) for year in years_of_creation)
-# Initialize decade_dict with zeros for all categories and decades
-decade_dict = {
-    category["name"]: {decade: 0 for decade in decades} for category in categories_data
-}
+# Calculate the number of documents per century and decade for each product
+century_goods_dict, decade_good_dict = goods_century_decade_count(
+    goods_data, docs_data, decades
+)
 
-# Create list of names of main categories
-main_category_names = [
-    category["name"]
-    for category in categories_data
-    if category["category_type"]["value"] == "main"
-]
-main_category_names.sort()
+# Combine the previous two dictionaries into one for each century
+categories_18, categories_19 = combine_dictionaries(
+    nested_goods_dict, century_goods_dict
+)
 
-subsub_category_names = [
-    category["name"]
-    for category in categories_data
-    if category["category_type"]["value"] == "subsub"
-]
+# Create the drilldown data for the chart
+main_categories18, drill_down18 = generate_drilldown_chart_data(categories_18)
+main_categories19, drill_down19 = generate_drilldown_chart_data(categories_19)
 
-
-# function for flattening nested list
-def flatten_list(lst):
-    flat_list = []
-    for item in lst:
-        if isinstance(item, (list, tuple)):
-            flat_list.extend(flatten_list(item))
-        else:
-            flat_list.append(item)
-    return flat_list
-
-
-# Create list of all categories in the correct order with main category, [sub
-# categories], main category, [sub categories], ... still nested
-main_sub_category_names = {category: [] for category in main_category_names}
-
-for category in nested_goods_dict:
-    if category in main_category_names:
-        if nested_goods_dict[category]["subcategories"]:
-            for subcategory in nested_goods_dict[category]["subcategories"]:
-
-                if nested_goods_dict[category]["subcategories"][subcategory][
-                    "subcategories"
-                ]:
-                    subsub_list = [
-                        x
-                        for x in nested_goods_dict[category]["subcategories"][
-                            subcategory
-                        ]["subcategories"]
-                    ]
-                    main_sub_category_names[category].append(
-                        (subcategory, sorted(subsub_list))
-                    )
-                else:
-                    main_sub_category_names[category].append(subcategory)
-
-# Create another nested list with the subcategories alphabetically ordered
-nested_list = []
-for category in main_category_names:
-    nested_list.append(category)
-    sorted_subcategories = sorted(
-        main_sub_category_names[category],
-        key=lambda x: x[0] if isinstance(x, tuple) else x,
-    )
-    nested_list.append(sorted_subcategories)
-
-# flatten the nested_list
-category_names = flatten_list(nested_list)
-
+##################
+decade_dict = {}
 for category in categories_data:
     category_name = category["name"]
-    doc_list = [document["id"] for document in category["documents"]]
-    for doc in doc_list:
-        date_of_creation = docs_data[str(doc)].get("creation_date_ISO")
-        year = extract_year(date_of_creation)
-        if year is not None:
-            decade = round_down_to_ten(year)
-            decade_dict[category_name][decade] += 1
+    decade_dict[category_name] = {decade: 0 for decade in decades}
+    # find the goods belonging to this category
+    goods_list = [good["value"] for good in category["goods"]]
+    for good in goods_list:
+        for decade in decades:
+            decade_dict[category_name][decade] += decade_good_dict[good][decade]
 
 # Normalize the counts to percentages
+total_mentions_per_decade = {}
+# Sum up the mentions per decade
+for category, mentions in decade_dict.items():
+    for decade, count in mentions.items():
+        if decade not in total_mentions_per_decade:
+            total_mentions_per_decade[decade] = 0
+        total_mentions_per_decade[decade] += count
+
 normalized_decade_dict = copy.deepcopy(decade_dict)
 for category_name, decade_counts in normalized_decade_dict.items():
     for decade, count in decade_counts.items():
-        total_docs_in_decade = total_docs_per_decade.get(decade, 1)
+        total_mentions_in_decade = total_mentions_per_decade.get(decade, 1)
         normalized_decade_dict[category_name][decade] = calculate_percentage(
-            count, total_docs_in_decade
+            count, total_mentions_in_decade
         )
+
+# Steps needed for the results
+main_category_names, subsub_category_names, sorted_category_names = sort_category_names(
+    categories_data, nested_goods_dict
+)
 
 # Sort decade_dict on basis of the category_names list
 sorted_decade_dict = dict()
-sorted_list = list((i, decade_dict.get(i)) for i in category_names)
+sorted_list = list((i, decade_dict.get(i)) for i in sorted_category_names)
 for i in sorted_list:
     sorted_decade_dict.setdefault(i[0], i[1])
 
 # Sort normalized_decade_dict on basis of the category_names list
 sorted_normalized_decade_dict = dict()
-sorted_list = list((i, normalized_decade_dict.get(i)) for i in category_names)
+sorted_list = list((i, normalized_decade_dict.get(i)) for i in sorted_category_names)
 for i in sorted_list:
     sorted_normalized_decade_dict.setdefault(i[0], i[1])
 
