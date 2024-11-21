@@ -83,8 +83,8 @@
             {% endfor %}
 
             <h2><i class="bi bi-basket" aria-hidden="true"></i> Groceries</h2>
-            {% for x in object.goods %}
             <dl>
+                {% for x in object.goods %}
                 <dt><a href="{{ x.grocerist_id }}.html">{{ x.name }}</a></dt>
                 <dd class="ms-5">
                     {% for y in x.has_category %}
