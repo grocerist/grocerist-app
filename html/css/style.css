@@ -1,11 +1,11 @@
 :root {
-    --primary: #d8b384;
-    --primary-hover: #d8b384c2;
-    --secondary: #BA833B;
-    --secondary-hover: #BA833Bc2;
-    --tabulator-primary: #fbf7f2;
-    --tabulator-secondary: #efe0cd;
-    --tabulator-header-hover: #dfc29c;
+    --primary: #677eae;
+    --primary-hover: #677eaec2;
+    --secondary: #3B4C70;
+    --secondary-hover: #3B4C70c2;
+    --tabulator-primary: #D5DDEC;
+    --tabulator-secondary: #9CAFD4;
+    --tabulator-header-hover: #8ea3cd;
     --link: #000000;
     --link-hover: #6e6e6ec2;
     --footer-hover-background: #f2f2f2;
