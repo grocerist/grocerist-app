@@ -1,7 +1,6 @@
 import itertools
 import os
 import json
-from collections import Counter
 import copy
 import datetime
 
@@ -451,15 +450,21 @@ for category in categories_data:
         for decade in decades:
             decade_dict[category_name][decade] += decade_good_dict[good][decade]
 
-
 # Normalize the counts to percentages
-total_docs_per_decade = Counter(round_down_to_ten(year) for year in years_of_creation)
+total_mentions_per_decade = {}
+# Sum up the mentions per decade
+for category, mentions in decade_dict.items():
+    for decade, count in mentions.items():
+        if decade not in total_mentions_per_decade:
+            total_mentions_per_decade[decade] = 0
+        total_mentions_per_decade[decade] += count
+
 normalized_decade_dict = copy.deepcopy(decade_dict)
 for category_name, decade_counts in normalized_decade_dict.items():
     for decade, count in decade_counts.items():
-        total_docs_in_decade = total_docs_per_decade.get(decade, 1)
+        total_mentions_in_decade = total_mentions_per_decade.get(decade, 1)
         normalized_decade_dict[category_name][decade] = calculate_percentage(
-            count, total_docs_in_decade
+            count, total_mentions_in_decade
         )
 
 # Steps needed for the results

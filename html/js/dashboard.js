@@ -176,12 +176,12 @@ function createSplineChart(data, isNormalized) {
         description: `This chart shows the ${
           isNormalized ? "percentage" : "frequency"
         } of mentions of a grocery in a grocery category in inheritance inventories ${
-          isNormalized ? "relative to the total number of documents" : ""
+          isNormalized ? "relative to the total number of product mentions" : ""
         } during each decade.`,
       },
       title: {
         text: isNormalized
-          ? "Category Mentions Over Time: Document Percentage by Decade"
+          ? "Category Mentions Over Time: Percentage of Total Mentions"
           : "Category Mentions Over Time",
         style: titleStyle,
       },
@@ -219,14 +219,14 @@ function createSplineChart(data, isNormalized) {
       },
       yAxis: {
         title: {
-          text: `${isNormalized ? "Percentage of Documents" : "Mentions"}`,
+          text: `${isNormalized ? "Percentage" : "Mentions"}`,
         },
       },
       tooltip: {
         headerFormat: "<span>{point.key}s</span><br>",
         pointFormat: `<span style="color:{point.color}">{series.name}</span>: ${
           isNormalized
-            ? "<b>{point.y}</b> % of documents from this decade"
+            ? "<b>{point.y}</b> % of product mentions from this decade"
             : " mentioned <b>{point.y}</b> times"
         }<br/>`,
         shared: true,
