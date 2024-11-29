@@ -53,5 +53,6 @@ d3.json(dataUrl, function (data) {
     ...commonTableConfig,
     data: tableData,
     columns: columnDefinitions,
+    initialSort:[{column:"name", dir:"asc"}]
   });
 });
