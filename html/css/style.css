@@ -147,6 +147,13 @@ nav.navbar .dropdown-item:active {
     text-align: justify;
 }
 
+.description_text2 {
+    text-align: justify;
+    background-color: var(--primary);
+    padding: 1.5em;
+    border-radius: 0.35em;
+}
+
 .index-card {
     position: relative;
     display: flex;
