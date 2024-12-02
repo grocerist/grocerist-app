@@ -104,7 +104,7 @@ for key, value in data.items():
     with open(save_path, "w", encoding="utf-8") as f:
         f.write(template.render(context))
 with open(os.path.join(json_dumps, data_file), "w", encoding="utf-8") as f:
-    json.dump(data, f, ensure_ascii=True)
+    json.dump(data, f, ensure_ascii=False)
 
 print("building category sites")
 data_file = "categories.json"
