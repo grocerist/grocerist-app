@@ -1,8 +1,8 @@
 :root {
-    --primary: #677eae;
-    --primary-hover: #677eaec2;
-    --secondary: #3B4C70;
-    --secondary-hover: #3B4C70c2;
+    --primary: #5d7799;
+    --primary-hover: #5d7799c2;
+    --secondary: #41536B;
+    --secondary-hover: #41536Bc2;
     --tabulator-primary: #D5DDEC;
     --tabulator-secondary: #9CAFD4;
     --tabulator-header-hover: #8ea3cd;
@@ -52,7 +52,7 @@
     transform: translateX(-50%);
     width: 70%;
     height: 70%;
-    background: var(--tabulator-primary);
+    background: #fff;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -312,7 +312,7 @@ nav.navbar .dropdown-item:active {
 
 .attribution {
     font-size: 0.8rem;
-    color: #aaa;
+    color: #696969;
     margin-top: 10px;
     font-style: italic;
     text-align: left;
@@ -320,7 +320,7 @@ nav.navbar .dropdown-item:active {
 }
 
 .attribution a {
-    color: #aaa;
+    color: #696969;
     text-decoration: underline;
 }
 
