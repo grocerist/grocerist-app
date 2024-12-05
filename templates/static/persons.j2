@@ -4,11 +4,6 @@
 <meta name="description" content="{{ project_data.project_sub_title }}">
 {% endblock page_description %}
 
-{% block scriptHeader %}
-{% include "templates/partials/tabulator.j2" %}
-{% include "templates/partials/highcharts.j2" %}
-
-{% endblock scriptHeader %}
 {% block content %}
 <div class="container">
     <h1 class="text-center">
@@ -31,5 +26,7 @@
     {% endblock content %}
 
     {% block scripts2 %}
+    {% include "templates/partials/tabulator.j2" %}
+    {% include "templates/partials/highcharts.j2" %}
     <script src="js/persons.js"></script>
     {% endblock scripts2 %}

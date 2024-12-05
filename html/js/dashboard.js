@@ -1,6 +1,6 @@
 const dataUrl = "json_dumps/charts.json";
 const titleStyle = {
-  color: "#BA833B",
+  color: primaryColor,
   fontWeight: "bold",
   fontSize: "1.5rem",
 };
@@ -117,7 +117,7 @@ function createColumnChart(containerId, title, data, century = 18) {
       {
         name: "Grocery Categories",
         dataSorting: {
-          enabled: true,
+          enabled: false,
           sortKey: "name",
         },
         colorByPoint: true,
@@ -287,28 +287,7 @@ d3.json(dataUrl, function (data) {
 
   // Custom colors (default HighCharts list has too few)
   Highcharts.setOptions({
-    colors: [
-      "#a6764d",
-      "#e8c28c",
-      "#d89090",
-      "#6f9ea8",
-      "#b3c0c4",
-      "#c9944a",
-      "#8b6c42",
-      "#f2d1a5",
-      "#ef8686",
-      "#c5d7e3",
-      "#5a8d92",
-      "#9cbab9",
-      "#e0a37b",
-      "#ba5a4d",
-      "#c3ab9f",
-      "#79a89f",
-      "#7d6d61",
-      "#d2beb3",
-      "#a0b0a9",
-      "#d4a07a",
-    ],
+    colors: colors,
   });
 
   createPieChart("container_religion_chart", "Religion", relChartData);
