@@ -129,10 +129,10 @@ const tableConfig = {
 };
 
 const getColor = {
-  "Muslim": "#6f9ea8",
-  "Non muslim/Orthodox": "#a6764d",
-  "Non muslim/Armenian": "#e8c28c",
-  "Unknown": "#b3c0c4",
+  "Muslim": colors[0],
+  "Non muslim/Orthodox": colors[1],
+  "Non muslim/Armenian": colors[2],
+  "Unknown": colors[3],
 };
 
 // generate chart
