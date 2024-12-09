@@ -1,6 +1,6 @@
 const dataUrl = "json_dumps/persons.json";
 const titleStyle = {
-  color: "#BA833B",
+  color: primaryColor,
   fontWeight: "bold",
   fontSize: "20px",
 };
@@ -119,7 +119,6 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
   minWidth: 150,
 }));
 
-const locTypeSelect = document.getElementById("select-location");
 const tableConfig = {
   ...commonTableConfig,
   columns: columnDefinitions,
@@ -130,10 +129,10 @@ const tableConfig = {
 };
 
 const getColor = {
-  "Muslim": "#6f9ea8",
-  "Non muslim/Orthodox": "#a6764d",
-  "Non muslim/Armenian": "#e8c28c",
-  "Unknown": "#b3c0c4",
+  "Muslim": colors[0],
+  "Non muslim/Orthodox": colors[1],
+  "Non muslim/Armenian": colors[2],
+  "Unknown": colors[3],
 };
 
 // generate chart
@@ -327,34 +326,13 @@ d3.json(dataUrl, function (data) {
     generateChartsFromTable(rows, table);
   });
 
-  locTypeSelect.addEventListener("change", () => {
-    let rows = table.getRows();
-    generateLocationChart(rows, table);
-  });
+  //   locTypeSelect.addEventListener("change", () => {
+  //     let rows = table.getRows();
+  //     generateLocationChart(rows, table);
+  //   });
 });
 
 // Custom colors (default HighCharts list has too few)
 Highcharts.setOptions({
-  colors: [
-    "#a6764d",
-    "#e8c28c",
-    "#d89090",
-    "#6f9ea8",
-    "#b3c0c4",
-    "#c9944a",
-    "#8b6c42",
-    "#f2d1a5",
-    "#ef8686",
-    "#c5d7e3",
-    "#5a8d92",
-    "#9cbab9",
-    "#e0a37b",
-    "#ba5a4d",
-    "#c3ab9f",
-    "#79a89f",
-    "#7d6d61",
-    "#d2beb3",
-    "#a0b0a9",
-    "#d4a07a",
-  ],
+  colors: colors,
 });

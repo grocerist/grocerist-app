@@ -1,7 +1,6 @@
+{% set leaflet_css = True %}
 {% extends "templates/partials/base.j2" %}
-{% block scriptHeader %}
-{% include "templates/partials/leaflet.j2" %}
-{% endblock scriptHeader %}
+
 {% block content %}
 <div class="container subpage">
     <h1 class="text-center">
@@ -74,6 +73,7 @@
 {% endblock content %}
 {% block scripts2 %}
 {% if object.lat %}
+{% include "templates/partials/leaflet.j2" %}
 <script>
     const lat = {{ object.lat }};
     const long = {{ object.long }};
