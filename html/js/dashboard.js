@@ -90,7 +90,6 @@ function createColumnChart(containerId, title, data, century = 18) {
     },
     xAxis: {
       type: "category",
-      reversed: true,
     },
     yAxis: {
       title: {
