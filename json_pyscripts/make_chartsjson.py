@@ -364,9 +364,18 @@ def generate_drilldown_chart_data(categories_dict):
                     }
                 )
                 main_category_sum += count
+        # sort subcategories by name
+        drilldown_level1["data"] = sorted(
+            drilldown_level1["data"], key=lambda x: x["name"]
+        )
         sub_categories_level.append(drilldown_level1)
         column_data["y"] = main_category_sum
         main_categories.append(column_data)
+
+    # Sort all lists by the 'name' attribute
+    main_categories = sorted(main_categories, key=lambda x: x["drilldown"])
+    # print(sub_categories_level)
+
     # Combine the two levels of drilldown at the end,
     # it doesn't matter if they are in the same list, since Highcharts matches them by id
     drilldown_data = sub_categories_level + sub_sub_categories_level + products_level

@@ -1,11 +1,11 @@
 :root {
-    --primary: #d8b384;
-    --primary-hover: #d8b384c2;
-    --secondary: #BA833B;
-    --secondary-hover: #BA833Bc2;
-    --tabulator-primary: #fbf7f2;
-    --tabulator-secondary: #efe0cd;
-    --tabulator-header-hover: #dfc29c;
+    --primary: #5d7799;
+    --primary-hover: #5d7799c2;
+    --secondary: #41536B;
+    --secondary-hover: #41536Bc2;
+    --tabulator-primary: #D5DDEC;
+    --tabulator-secondary: #9CAFD4;
+    --tabulator-header-hover: #7d92ad;
     --link: #000000;
     --link-hover: #6e6e6ec2;
     --footer-hover-background: #f2f2f2;
@@ -52,7 +52,7 @@
     transform: translateX(-50%);
     width: 70%;
     height: 70%;
-    background: var(--tabulator-primary);
+    background: #fff;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -319,7 +319,7 @@ nav.navbar .dropdown-item:active {
 
 .attribution {
     font-size: 0.8rem;
-    color: #aaa;
+    color: #696969;
     margin-top: 10px;
     font-style: italic;
     text-align: left;
@@ -327,7 +327,7 @@ nav.navbar .dropdown-item:active {
 }
 
 .attribution a {
-    color: #aaa;
+    color: #696969;
     text-decoration: underline;
 }
 
@@ -430,14 +430,11 @@ div h1>a {
 .tabulator .tabulator-footer .tabulator-paginator .tabulator-page.active {
     background-color: var(--primary);
     border-color: var(--primary);
-
-    &:hover {
-        background-color: var(--footer-hover-background);
-    }
 }
 
 .tabulator .tabulator-footer .tabulator-paginator .tabulator-page:hover {
-    color: var(--secondary);
+    color: white;
+    background-color: var(--tabulator-secondary);
 }
 
 /* color for data tree toggler*/
@@ -458,11 +455,11 @@ div.subpage h1 {
 }
 
 div.subpage a {
-    color: var(--secondary);
+    color: var(--primary);
 
 
     &:hover {
-        color: var(--secondary-hover);
+        color: var(--primary-hover);
     }
 }
 

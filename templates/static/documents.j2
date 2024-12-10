@@ -1,14 +1,11 @@
+{% set leaflet_css = True %}
+{% set tabulator_css = True %}
 {% extends "templates/partials/base.j2" %}
 {% block title %}Browse Documents{% endblock title %}
 {% block page_description %}
 <meta name="description" content="{{ project_data.project_sub_title }}">
 {% endblock page_description %}
 
-{% block scriptHeader %}
-{% include "templates/partials/tabulator.j2" %}
-{%include "templates/partials/leaflet.j2"%}
-
-{% endblock scriptHeader %}
 {% block content %}
 <div class="container">
     <h1 class="text-center">
@@ -24,5 +21,7 @@
 {% endblock content%}
 
 {% block scripts2 %}
+{% include "templates/partials/tabulator.j2" %}
+{%include "templates/partials/leaflet.j2"%}
 <script src="js/documents.js"></script>
 {% endblock scripts2 %}
