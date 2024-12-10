@@ -5,7 +5,7 @@
     --secondary-hover: #41536Bc2;
     --tabulator-primary: #D5DDEC;
     --tabulator-secondary: #9CAFD4;
-    --tabulator-header-hover: #8ea3cd;
+    --tabulator-header-hover: #7d92ad;
     --link: #000000;
     --link-hover: #6e6e6ec2;
     --footer-hover-background: #f2f2f2;
@@ -423,14 +423,11 @@ div h1>a {
 .tabulator .tabulator-footer .tabulator-paginator .tabulator-page.active {
     background-color: var(--primary);
     border-color: var(--primary);
-
-    &:hover {
-        background-color: var(--footer-hover-background);
-    }
 }
 
 .tabulator .tabulator-footer .tabulator-paginator .tabulator-page:hover {
-    color: var(--secondary);
+    color: white;
+    background-color: var(--tabulator-secondary);
 }
 
 /* color for data tree toggler*/
@@ -451,11 +448,11 @@ div.subpage h1 {
 }
 
 div.subpage a {
-    color: var(--secondary);
+    color: var(--primary);
 
 
     &:hover {
-        color: var(--secondary-hover);
+        color: var(--primary-hover);
     }
 }
 

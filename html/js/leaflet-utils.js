@@ -18,7 +18,7 @@ const mapConfig = {
 const overlayColors = {
   "18th century": colors[0],
   "19th century": colors[3],
-  "N/A": "#727579",
+  "N/A": colors[4],
 };
 
 // Helper function to create and add layer groups to the map
