@@ -17,6 +17,9 @@ for script in os.listdir(helper_scripts):
 templateLoader = jinja2.FileSystemLoader(searchpath=".")
 templateEnv = jinja2.Environment(loader=templateLoader)
 
+nsmap = {
+    "tei": "http://www.tei-c.org/ns/1.0",
+}
 gh_img_data = (
     "https://raw.githubusercontent.com/grocerist/transkribus-out/main/data.json"
 )
@@ -83,9 +86,18 @@ for key, value in data.items():
         doc = None
         paragraphs = []
     if doc:
-        paragraphs = [
-            ET.tostring(x).decode("utf-8") for x in doc.any_xpath(".//tei:body//tei:p")
-        ]
+        paragraphs = []
+        for p in doc.any_xpath(".//tei:body//tei:p"):
+            parent_div = p.getparent()
+            if (
+                parent_div.tag == "{http://www.tei-c.org/ns/1.0}div"
+                and parent_div.get("type") == "section"
+                and parent_div.xpath(
+                    f".//*[@target='http://{value['grocerist_id']}']", namespaces=nsmap
+                )
+            ):
+                p.set("class", "fw-bold")
+            paragraphs.append(ET.tostring(p).decode("utf-8"))
     context["paragraphs"] = paragraphs
     if paragraphs:
         context["transcript"] = True
