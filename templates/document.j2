@@ -110,10 +110,12 @@
                 </script>
             </div>
             {% endif %}
-            <h2 class="text-center"><i class="bi bi-pencil" aria-hidden="true"></i> Transcript</h2>
-            {% for x in paragraphs %}
-            {{ x|safe }}
-            {% endfor %}
+            <div class="pb-3">
+                <h2 class="text-center"><i class="bi bi-pencil" aria-hidden="true"></i> Transcript</h2>
+                {% for x in paragraphs %}
+                {{ x|safe }}
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
