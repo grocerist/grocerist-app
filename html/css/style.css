@@ -100,6 +100,7 @@ legend specific
 .about-text {
     max-width: 85ch;
     overflow-wrap: break-word;
+    text-align: justify;
 }
 
 ul.custom-bullets {
@@ -145,13 +146,6 @@ nav.navbar .dropdown-item:active {
 
 .description_text {
     text-align: justify;
-}
-
-.description_text2 {
-    text-align: justify;
-    background-color: var(--primary);
-    padding: 1.5em;
-    border-radius: 0.35em;
 }
 
 .index-card {
