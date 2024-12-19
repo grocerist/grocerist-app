@@ -57,7 +57,7 @@
     // e.g. preventing the null values from being converted to None during processing
     const doc_list = {{ object.documents | tojson | safe }};
 
-    const { map, layerGroups } = createMap();
+    const { map, layerGroups } = createMap({ layerControl: true });
 
     // create markers for each document
     for (let i = 0; i < doc_list.length; i++) {
@@ -74,10 +74,8 @@
             ${yearText}</p>`,
                 icon: icon,
             };
-            const marker = createAndAddMarker(
-                markerData,
-                layerGroups
-            );
+            const { marker, layerName } = createMarker(markerData, true);
+            marker.addTo(layerGroups[layerName]);
         }
     }
 </script>
