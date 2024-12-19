@@ -88,7 +88,7 @@
     });
     baseMap.addTo(map);
     const icon = "bi bi-map-fill";
-    const color = '#d8b384';
+    const color = colors[0];
     const marker = createMarker(lat, long, color, icon);
     marker.addTo(map);
     marker.bindPopup(`<strong>{{ object.name }}</strong>
