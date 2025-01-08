@@ -9,7 +9,6 @@ function resizeIconsOnZoom(map, markers) {
     previousZoom = map.getZoom();
   });
   map.on("zoomend", function () {
-    console.log("zoomend event");
     let newZoom = map.getZoom();
     let zoomRatio = Math.pow(2, newZoom - previousZoom);
     let dampingFactor = 0.2;

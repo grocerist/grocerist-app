@@ -37,28 +37,28 @@
                 {% if object.karye %}
                 <dt><i>Karye</i></dt>
                 {% for x in object.karye %}
-                <dd class="ms-5"><a href="karye__{{ x.id }}.html"></a>{{ x.value }}</dd>
+                <dd class="ms-5"><a href="karye__{{ x.id }}.html">{{ x.value }}</a></dd>
                 {% endfor %}
                 {% endif %}
 
                 {% if object.nahiye %}
                 <dt><i>Nahiye</i></dt>
                 {% for x in object.nahiye %}
-                <dd class="ms-5"><a href="nahiye__{{ x.id }}.html"></a>{{ x.value }}</dd>
+                <dd class="ms-5"><a href="nahiye__{{ x.id }}.html">{{ x.value }}</a></dd>
                 {% endfor %}
                 {% endif %}
 
                 {% if object.quarter %}
                 <dt>Quarter</dt>
                 {% for x in object.quarter %}
-                <dd class="ms-5"><a href="quarter__{{ x.id }}.html"></a>{{ x.value }}</dd>
+                <dd class="ms-5"><a href="quarter__{{ x.id }}.html">{{ x.value }}</a></dd>
                 {% endfor %}
                 {% endif %}
 
                 {% if object.address %}
                 <dt>Address</dt>
                 {% for x in object.address %}
-                <dd class="ms-5"><a href="address__{{ x.id }}.html"></a>{{ x.value }}</dd>
+                <dd class="ms-5"><a href="address__{{ x.id }}.html">{{ x.value }}</a></dd>
                 {% endfor %}
                 {% endif %}
             </dl>
