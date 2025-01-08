@@ -9,7 +9,6 @@ function resizeIconsOnZoom(map, markers) {
     previousZoom = map.getZoom();
   });
   map.on("zoomend", function () {
-    console.log("zoomend event");
     let newZoom = map.getZoom();
     let zoomRatio = Math.pow(2, newZoom - previousZoom);
     let dampingFactor = 0.2;
@@ -236,8 +235,8 @@ function rowsToMarkers(map, rows, layerGroups, oms) {
         `,
         icon: "bi bi-file-earmark-text-fill",
       };
-      const marker = createAndAddMarker(markerData, layerGroups);
-
+      const { marker, layerName } = createMarker(markerData, true);
+      marker.addTo(layerGroups[layerName]);
       // store each marker by the grocerist_id from the document
       const markerID = rowData.grocerist_id;
       allMarkers[markerID] = marker;
@@ -270,7 +269,10 @@ function zoomToPointFromRowData(rowData, map, markers) {
 }
 // Main function for initializing the map and table
 function setupMapAndTable(dataUrl) {
-  const { map, layerGroups, oms } = createMap({ useSpiderfier: true });
+  const { map, layerGroups, oms } = createMap({
+    layerControl: true,
+    useSpiderfier: true,
+  });
   let markers = {};
   d3.json(dataUrl, function (dataFromJson) {
     const tableData = Object.values(dataFromJson).filter(

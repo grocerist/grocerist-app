@@ -1,3 +1,4 @@
+{% set leaflet_css = True %}
 {% extends "templates/partials/base.j2" %}
 {% block content %}
 <div class="container subpage">
@@ -5,65 +6,106 @@
         {% with parent_page = "persons" %}
         {% include "templates/partials/link_to_top.j2" %}
         {% endwith %}
-        {{ object.name
-        }}</h1>
-    <h2><i class="bi bi-eye" aria-hidden="true"></i> Religion</h2>
-    <ul class="no-bullets">
-        {% for x in object.religion %}
-        <li>
-            {{ x.value }}
-        </li>
-        {% endfor %}
-    </ul>
-    <h2><i class="bi bi-geo-alt" aria-hidden="true"></i> Location</h2>
-    <dl>
-        {% if object.district %}
-        <dt>District</dt>
-        {% for x in object.district %}
-        <dd class="ms-5"><a href="district__{{ x.id }}.html">{{ x.value }}</a></dd>
-        {% endfor %}
-        {% endif %}
+        {{ object.name}}
+    </h1>
+    <div class="row">
+        <div class="col">
+            <h2><i class="bi bi-eye" aria-hidden="true"></i> Religion</h2>
+            <ul class="no-bullets">
+                {% for x in object.religion %}
+                <li>
+                    {{ x.value }}
+                </li>
+                {% endfor %}
+            </ul>
+            <h2><i class="bi bi-geo-alt" aria-hidden="true"></i> Location</h2>
+            <dl>
+                {% if object.district %}
+                <dt>District</dt>
+                {% for x in object.district %}
+                <dd class="ms-5"><a href="district__{{ x.id }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
+                {% endif %}
 
-        {% if object.neighbourhood %}
-        <dt><i>Mahalle</i></dt>
-        {% for x in object.neighbourhood %}
-        <dd class="ms-5"><a href="neighbourhood__{{ x.id }}.html">{{ x.value }}</a></dd>
-        {% endfor %}
-        {% endif %}
+                {% if object.neighbourhood %}
+                <dt><i>Mahalle</i></dt>
+                {% for x in object.neighbourhood %}
+                <dd class="ms-5"><a href="neighbourhood__{{ x.id }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
+                {% endif %}
 
-        {% if object.karye %}
-        <dt><i>Karye</i></dt>
-        {% for x in object.karye %}
-        <dd class="ms-5"><a href="karye__{{ x.id }}.html"></a>{{ x.value }}</dd>
-        {% endfor %}
-        {% endif %}
+                {% if object.karye %}
+                <dt><i>Karye</i></dt>
+                {% for x in object.karye %}
+                <dd class="ms-5"><a href="karye__{{ x.id }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
+                {% endif %}
 
-        {% if object.nahiye %}
-        <dt><i>Nahiye</i></dt>
-        {% for x in object.nahiye %}
-        <dd class="ms-5"><a href="nahiye__{{ x.id }}.html"></a>{{ x.value }}</dd>
-        {% endfor %}
-        {% endif %}
+                {% if object.nahiye %}
+                <dt><i>Nahiye</i></dt>
+                {% for x in object.nahiye %}
+                <dd class="ms-5"><a href="nahiye__{{ x.id }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
+                {% endif %}
 
-        {% if object.quarter %}
-        <dt>Quarter</dt>
-        {% for x in object.quarter %}
-        <dd class="ms-5"><a href="quarter__{{ x.id }}.html"></a>{{ x.value }}</dd>
-        {% endfor %}
-        {% endif %}
+                {% if object.quarter %}
+                <dt>Quarter</dt>
+                {% for x in object.quarter %}
+                <dd class="ms-5"><a href="quarter__{{ x.id }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
+                {% endif %}
 
-        {% if object.address %}
-        <dt>Address</dt>
-        {% for x in object.address %}
-        <dd class="ms-5"><a href="address__{{ x.id }}.html"></a>{{ x.value }}</dd>
-        {% endfor %}
-        {% endif %}
-    </dl>
-    <h2><i class="bi bi-archive" aria-hidden="true"></i> Documents</h2>
-    <ul>
-        {% for x in object.documents %}
-        <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
-        {% endfor %}
-    </ul>
+                {% if object.address %}
+                <dt>Address</dt>
+                {% for x in object.address %}
+                <dd class="ms-5"><a href="address__{{ x.id }}.html">{{ x.value }}</a></dd>
+                {% endfor %}
+                {% endif %}
+            </dl>
+            <h2><i class="bi bi-archive" aria-hidden="true"></i> Documents</h2>
+            <ul>
+                {% for x in object.documents %}
+                <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col">
+            <h2><i class="bi bi-map" aria-hidden="true"></i> Map</h2>
+            <div id="map" style="height: 600px;">
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock content %}
+{% block scripts2 %}
+{% if object.documents %}
+{% include "templates/partials/leaflet.j2" %}
+<script>
+    const icon = "bi bi-house-fill"
+
+    // tojson filter is used to keep the data in json format
+    // e.g. preventing the null values from being converted to None during processing
+    const doc_list = {{ object.documents | tojson | safe }};
+
+    const { map } = createMap();
+
+    // create markers for each document
+    for (let i = 0; i < doc_list.length; i++) {
+        const doc = doc_list[i];
+        if (doc.lat && doc.long) {
+            const markerData = {
+                lat: doc.lat,
+                long: doc.long,
+                year: null,
+                popupContent: `<p><strong><a href="document__${doc.id}.html">${doc.value}</a></strong><br></p>`,
+                icon: icon,
+            };
+            const { marker } = createMarker(
+                markerData
+            );
+            marker.addTo(map)
+        }
+    }
+</script>
+{% endif %}
+{% endblock scripts2 %}

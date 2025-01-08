@@ -75,25 +75,26 @@
 {% if object.lat %}
 {% include "templates/partials/leaflet.j2" %}
 <script>
+    const icon = "bi bi-map-fill";
     const lat = {{ object.lat }};
     const long = {{ object.long }};
-    const map = L.map(mapConfig.divId, mapConfig.mapOptions).setView(
-        [lat, long],
-        13
-    );
+    const { map } = createMap({ initialCoordinates: [lat, long] });
     const docs = {{ object.documents | tojson | safe }}
     const persons = {{ object.persons | tojson | safe }};
-    const baseMap = L.tileLayer(mapConfig.baseMapUrl, {
-        attribution: mapConfig.attribution,
-    });
-    baseMap.addTo(map);
-    const icon = "bi bi-map-fill";
-    const color = colors[0];
-    const marker = createMarker(lat, long, color, icon);
-    marker.addTo(map);
-    marker.bindPopup(`<strong>{{ object.name }}</strong>
+
+    const markerData = {
+        lat: lat,
+        long: long,
+        year: null,
+        popupContent: `<strong>{{ object.name }}</strong>
     <br>${docs.length} related document(s)
-    <br>${persons.length} related person(s)`).openPopup();
+    <br>${persons.length} related person(s)`,
+        icon: icon,
+    };
+    const { marker } = createMarker(
+        markerData
+    );
+    marker.addTo(map).openPopup();
 </script>
 
 

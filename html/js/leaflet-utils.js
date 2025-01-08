@@ -34,7 +34,7 @@ const createAndAddLayerGroups = (map, colors) => {
 };
 
 // Function to create a custom css marker with an icon
-function createMarker(lat, long, color, icon) {
+function createMarkerIcon(color, icon) {
   const customIcon = L.divIcon({
     className: "custom-marker",
     html: `<div class="custom-marker-pin" style="background-color:${color};"><i class="${icon}" style="color:${color}" ></i></div><div class="custom-marker-shadow"></div>
@@ -44,27 +44,32 @@ function createMarker(lat, long, color, icon) {
     iconAnchor: [16, 32],
     popupAnchor: [0, -21],
   });
-  return L.marker([lat, long], { icon: customIcon, riseOnHover: true });
+  return customIcon;
 }
 
 // Function to create a marker and add it to the right layer group based on the year
-function createAndAddMarker(markerData, layerGroups) {
+function createMarker(markerData, addByYear = false) {
   const { lat, long, year, popupContent, icon } = markerData;
-  let century;
-  if (year !== null && year <= 1800) {
-    century = "18th century";
-  } else if (year !== null && year <= 1900) {
-    century = "19th century";
-  } else {
-    century = "N/A";
-  }
+  let color = colors[0];
+  let layerName = null;
+  if (addByYear) {
+    let century;
+    if (year !== null && year <= 1800) {
+      century = "18th century";
+    } else if (year !== null && year <= 1900) {
+      century = "19th century";
+    } else {
+      century = "N/A";
+    }
 
-  const color = overlayColors[century];
-  const layer = `<span style="color:${color}">${century}</span>`;
-  const marker = createMarker(lat, long, color, icon);
+    color = overlayColors[century];
+    layerName = `<span style="color:${color}">${century}</span>`;
+  }
+  const customIcon = createMarkerIcon(color, icon);
+  const marker = L.marker([lat, long], { icon: customIcon, riseOnHover: true });
+
   marker.bindPopup(popupContent);
-  marker.addTo(layerGroups[layer]);
-  return marker;
+  return { marker, layerName };
 }
 
 function getYearFromISODate(date) {
@@ -79,11 +84,12 @@ function getYearFromISODate(date) {
 }
 
 // Function for initializing the map
-// Function for initializing the map
 function createMap(options = {}) {
   console.log("loading map");
   const map = L.map(mapConfig.divId, mapConfig.mapOptions).setView(
-    mapConfig.initialCoordinates,
+    options.initialCoordinates
+      ? options.initialCoordinates
+      : mapConfig.initialCoordinates,
     mapConfig.initialZoom
   );
   const baseMapLayer = L.tileLayer(mapConfig.baseMapUrl, {
@@ -92,13 +98,15 @@ function createMap(options = {}) {
   // Add base map layer
   baseMapLayer.addTo(map);
 
-  // Create and add marker layer groups from the overlayColors object
-  const layerGroups = createAndAddLayerGroups(map, overlayColors);
-
-  const layerControl = L.control.layers(null, layerGroups, {
-    collapsed: false,
-  });
-  layerControl.addTo(map);
+  let layerGroups = null;
+  if (options.layerControl) {
+    // Create and add marker layer groups from the overlayColors object
+    layerGroups = createAndAddLayerGroups(map, overlayColors);
+    const layerControl = L.control.layers(null, layerGroups, {
+      collapsed: false,
+    });
+    layerControl.addTo(map);
+  }
 
   let oms = null;
   if (options.useSpiderfier) {
@@ -108,6 +116,5 @@ function createMap(options = {}) {
       nearbyDistance: 1,
     });
   }
-
   return { map, layerGroups, oms };
 }
