@@ -87,7 +87,7 @@
     // e.g. preventing the null values from being converted to None during processing
     const doc_list = {{ object.documents | tojson | safe }};
 
-    const { map, layerGroups } = createMap();
+    const { map } = createMap();
 
     // create markers for each document
     for (let i = 0; i < doc_list.length; i++) {
