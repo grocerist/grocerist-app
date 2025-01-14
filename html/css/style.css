@@ -471,10 +471,6 @@ ul.no-bullets {
     list-style-type: none;
 }
 
-dl {
-    margin-left: 2rem;
-}
-
 /* Highcharts specific */
 /* removes the stroke thorugh the symbols in the legend of Highcharts graph */
 .highcharts-legend-item .highcharts-graph {
