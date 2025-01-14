@@ -13,9 +13,8 @@
         <div class="col">
             {% if object.notes %}
             <h2><i class="bi bi-info-circle" aria-hidden="true"></i> Description</h2>
-            <dl>
-                <dd class="ms-5">{{ object.notes }}</dd>
-            </dl>
+            <p class="ms-4">{{ object.notes }}</p>
+
             {% endif %}
             <h2><i class="bi bi-archive" aria-hidden="true"></i> Documents</h2>
             <ul>
