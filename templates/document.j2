@@ -9,6 +9,8 @@
     </h1>
     <div class="row">
         <div class="col">
+            {% if object.district or object.neighbourhood or object.karye or object.nahiye or object.quarter or
+            object.address%}
             <h2><i class="bi bi-geo-alt" aria-hidden="true"></i> Location</h2>
             <dl class="ms-4">
                 {% if object.district %}
@@ -53,7 +55,8 @@
                 {% endfor %}
                 {% endif %}
             </dl>
-
+            {% endif %}
+            {%if object.year_of_creation_hicri or object.creation_date_miladi %}
             <h2><i class="bi bi-calendar4" aria-hidden="true"></i> Year of creation</h2>
             <dl class="ms-4">
                 {% if object.year_of_creation_hicri %}
@@ -65,7 +68,8 @@
                 <dd class="ms-2">{{ object.creation_date_miladi }}</dd>
                 {% endif %}
             </dl>
-
+            {% endif %}
+            {% if object.main_person %}
             <h2><i class="bi bi-person" aria-hidden="true"></i> <i>Bakkal</i>/Grocer</h2>
             {% for x in object.main_person %}
             <dl class="ms-4">
@@ -81,7 +85,8 @@
                 <dd class="ms-2">{{ object.type_of_ownership.value }}</dd>
             </dl>
             {% endfor %}
-
+            {% endif %}
+            {% if object.goods %}
             <h2><i class="bi bi-basket" aria-hidden="true"></i> Groceries</h2>
             <dl class="ms-4">
                 {% for x in object.goods | sort(attribute='name') %}
@@ -93,6 +98,7 @@
                 </dd>
                 {% endfor %}
             </dl>
+            {% endif%}
         </div>
         <div class="col">
             {% if images %}
