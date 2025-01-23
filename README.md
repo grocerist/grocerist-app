@@ -14,7 +14,7 @@ Repo for Grocerist's Web-Application
 
 * make sure your virtual environment is activated and you have all dependencies installed
 * have a look at `.github/workflows/build.yml` to see which scripts need be run in which sequence
-* run `./build.sh` to call all needed python scripts
+* run `./build.sh` to call all needed python scripts (or run them individually)
 
 ## run the application
 
