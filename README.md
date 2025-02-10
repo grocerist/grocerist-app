@@ -5,6 +5,7 @@ Repo for Grocerist's Web-Application
 
 ## install
 
+* make sure you have Python, pip and git installed and on PATH
 * clone the repo `git clone https://github.com/grocerist/grocerist-app.git`
 * create a virtual environment `python -m venv venv`
 * activate the environment `source venv/bin/activate` (.\venv\Scripts\Activate.ps1 for Windows Powershell)
