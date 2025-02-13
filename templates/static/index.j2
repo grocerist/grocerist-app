@@ -45,16 +45,15 @@ detailed catalog of groceries listed in historical inheritance inventories.", "i
 "Explore geographical locations tied to grocers, as recorded in the documents.", "img": "locations2.png"},
 {"title": "Dashboard", "icon": "bi-bar-chart", "link": "dashboard.html", "button": "Browse Dashboard", "description":
 "Analyze the data through interactive charts and graphs.", "img":
-"dashboard.png"},
+"dashboard.png"}
 ],
 [
-{"title": "Prices", "icon": "bi-cash-stack", "link": "prices.html", "button": "Browse Prices", 
-"description": "View historical product prices from the available records.", "img": "prices.png"}
+  {"title": "Prices", "icon": "bi-cash-stack", "link": "prices.html", "button": "Browse Prices",
+  "description": "View historical product prices from the available records.", "img": "prices.png"}
 ]
 ] %}
 
-{{ card_groups | safe }}
-<h2>DEBUG: {{ card_groups }}</h2>
+
 <div class="container">
     {% for card_group in card_groups %}
     {% if card_group|length == 1 %}
