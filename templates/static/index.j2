@@ -54,7 +54,7 @@ detailed catalog of groceries listed in historical inheritance inventories.", "i
 ] %}
 
 {{ card_groups | safe }}
-
+<h2>DEBUG: {{ card_groups }}</h2>
 <div class="container">
     {% for card_group in card_groups %}
     {% if card_group|length == 1 %}
