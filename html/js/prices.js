@@ -5,7 +5,10 @@ const baseColumnDefinitions = [
         title: "Name",
         field: "good",
         headerFilter: "input",
-        formatter: linkToDetailView, 
+        formatter: function (cell, formatterParams) {
+            let value = cell.getValue();
+            return `<a href="/price-detail/${value}">${value}</a>`;
+        }
     },
     {
         title: "Price",
