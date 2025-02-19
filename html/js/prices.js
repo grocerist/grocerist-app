@@ -46,7 +46,6 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
     minWidth: 200,
 }));
 
-// Fetch JSON Data using Callback Function
 d3.json(dataUrl, function (error, data) {
     if (error) {
         console.error("Failed to load JSON data:", error);
@@ -61,7 +60,7 @@ d3.json(dataUrl, function (error, data) {
     }
 
     let tableData = Object.values(data)
-        .filter((item) => item.good?.length > 0) // Ensure valid goods exist
+        .filter((item) => item.good?.length > 0) 
         .map((item) => ({
             document: item?.document?.[0]?.value ?? "N/A",
             good: item?.good?.[0]?.value ?? "Unknown",
