@@ -1,24 +1,26 @@
 const dataUrl = "json_dumps/price_per_document.json";
 
 const baseColumnDefinitions = [
-    {
-        title: "Document",
-        field: "document",
-        headerFilter: "input",
-        formatter: function (cell) {
-            let value = cell.getValue();
-            return value !== "N/A" ? `<a href="/document-detail/${value}">${value}</a>` : value;
-        }
-    },
+
     {
         title: "Name",
         field: "good",
         headerFilter: "input",
         formatter: function (cell) {
-            let value = cell.getValue();
-            return value !== "Unknown" ? `<a href="/price-detail/${value}">${value}</a>` : value;
+            let good = cell.getRow().getData().good;
+            return good?.id ? `<a href="https://grocerist.acdh.oeaw.ac.at/goods__${good.id}.html">${good.value}</a>` : "Unknown";
         }
     },
+    {
+        title: "Document",
+        field: "document",
+        headerFilter: "input",
+        formatter: function (cell) {
+            let document = cell.getRow().getData().document;
+            return document?.id ? `<a href="https://grocerist.acdh.oeaw.ac.at/document__${document.id}.html">${document.value}</a>` : "N/A";
+        }
+    },
+    
     {
         title: "Price",
         field: "price",
@@ -56,8 +58,8 @@ d3.json(dataUrl, function (error, data) {
     let tableData = Object.values(data)
         .filter((item) => item.good?.length > 0) 
         .map((item) => ({
-            document: item?.document?.[0]?.value ?? "N/A",
-            good: item?.good?.[0]?.value ?? "Unknown",
+            document: item?.document?.[0] ?? { id: null, value: "N/A" },
+            good: item?.good?.[0] ?? { id: null, value: "Unknown" },
             price: item?.price ?? "N/A",
             unit: item?.unit?.value ?? "N/A",
             amount_of_units: item?.amount_of_units ?? "N/A",
