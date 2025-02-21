@@ -52,13 +52,7 @@ d3.json(dataUrl, function (error, data) {
         return;
     }
 
-    console.log("Raw JSON Data:", data);
-
-    if (!data || Object.keys(data).length === 0) {
-        console.error("Error: No data found or empty JSON!");
-        return;
-    }
-
+    console.log("Raw JSON Data:", data);    
     let tableData = Object.values(data)
         .filter((item) => item.good?.length > 0) 
         .map((item) => ({
