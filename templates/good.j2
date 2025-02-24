@@ -26,10 +26,12 @@
                 {% endif %}
             </dl>
             {% endif %}
+
             {% if object.notes %}
             <h2><i class="bi bi-info-circle" aria-hidden="true"></i> Description</h2>
             <p class="ms-4">{{ object.notes }}</p>
             {% endif %}
+
             {% if object.has_category%}
             <h2><i class="bi bi-boxes" aria-hidden="true"></i> Categories</h2>
             <ul>
@@ -38,6 +40,7 @@
                 {% endfor %}
             </ul>
             {% endif %}
+
             {% if object.documents%}
             <h2><i class="bi bi-archive" aria-hidden="true"></i> Documents</h2>
             <ul>
@@ -46,7 +49,33 @@
                 {% endfor %}
             </ul>
             {% endif %}
+
+
+
+            {% if object.price_per_document%}
+            <h2><i class="bi-cash-stack" aria-hidden="true"></i> Price Information</h2>
+            <dl class="ms-4">
+                {% for x in object.price_per_document %}
+                <dt><strong>Price:</strong> {{ x.price }}</dt>
+                <dd class="ms-2"><strong>Unit:</strong> {{ x.unit.value }}</dd>
+                <dd class="ms-2"><strong>Amount:</strong> {{ x.amount_of_units }}</dd>
+                <dd class="ms-2"><strong>Total Value:</strong> {{ x.total_value }}</dd>
+                {% endfor %}
+                </dl>
+            {#  <ul>
+                <li><strong>Price:</strong> {{ object.price }}</li>
+                <li><strong>Unit:</strong> {{ object.unit.value }}</li>
+                <li><strong>Amount:</strong> {{ object.amount_of_units }}</li>
+                <li><strong>Total Value:</strong> {{ object.total_value }}</li> 
+            </ul> #}
+            {% endif %}
+
+
+
         </div>
+
+
+
         <div class="col">
             <h2><i class="bi bi-map" aria-hidden="true"></i> Map</h2>
             <div id="map" style="height: 600px;" />
