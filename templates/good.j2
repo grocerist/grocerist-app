@@ -52,23 +52,24 @@
 
 
 
-            {% if object.price_per_document%}
-            <h2><i class="bi-cash-stack" aria-hidden="true"></i> Price Information</h2>
-            <dl class="ms-4">
-                {% for x in object.price_per_document %}
-                <dt><strong>Price:</strong> {{ x.price }}</dt>
-                <dd class="ms-2"><strong>Unit:</strong> {{ x.unit.value }}</dd>
-                <dd class="ms-2"><strong>Amount:</strong> {{ x.amount_of_units }}</dd>
-                <dd class="ms-2"><strong>Total Value:</strong> {{ x.total_value }}</dd>
-                {% endfor %}
-                </dl>
-            {#  <ul>
-                <li><strong>Price:</strong> {{ object.price }}</li>
-                <li><strong>Unit:</strong> {{ object.unit.value }}</li>
-                <li><strong>Amount:</strong> {{ object.amount_of_units }}</li>
-                <li><strong>Total Value:</strong> {{ object.total_value }}</li> 
-            </ul> #}
-            {% endif %}
+{% if object.price_per_document %}
+    <h2><i class="bi bi-cash-stack" aria-hidden="true"></i> Price Information</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Price</th>
+                <th>Unit</th>
+                <th>Amount</th>
+                <th>Total Value</th>
+            </tr>
+        </thead>
+        <tbody id="price-table">
+            <tr><td colspan="4">Loading price data...</td></tr>
+        </tbody>
+    </table>
+{% endif %}
+
 
 
 

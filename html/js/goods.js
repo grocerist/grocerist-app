@@ -56,3 +56,40 @@ d3.json(dataUrl, function (data) {
     initialSort:[{column:"name", dir:"asc"}]
   });
 });
+// Price information
+const priceDataUrl = "json_dumps/price_per_document.json";
+
+function loadPriceData(goodId) {
+    d3.json(priceDataUrl, function (error, priceData) {
+        if (error) {
+            console.error("Failed to load price data:", error);
+            return;
+        }
+
+        // Use `good[0].id` to filter prices correctly
+        let relatedPrices = Object.values(priceData).filter(
+            (item) => item.good?.[0]?.id == goodId
+        );
+
+        let priceTable = document.querySelector("#price-table");
+
+        if (relatedPrices.length === 0) {
+            priceTable.innerHTML = "<tr><td colspan='4'>No price data available</td></tr>";
+        } else {
+            priceTable.innerHTML = relatedPrices.map((price) => `
+                <tr>
+                    <td>${price.price ?? "N/A"}</td>
+                    <td>${price.unit?.value ?? "N/A"}</td>
+                    <td>${price.amount_of_units ?? "N/A"}</td>
+                    <td>${price.total_value ?? "N/A"}</td>
+                </tr>
+            `).join("");
+        }
+    });
+}
+
+// Get the good ID from the page URL and load prices
+const goodId = window.location.pathname.match(/goods__(\d+).html/)[1];
+if (goodId) {
+    loadPriceData(goodId);
+}
