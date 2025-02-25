@@ -50,61 +50,73 @@
             </ul>
             {% endif %}
 
+{% if object.price_per_document %}
+    <h2><i class="bi bi-cash-stack" aria-hidden="true"></i> Price Information</h2>
 
-            {% if object.price_per_document %}
-            <h2><i class="bi bi-cash-stack" aria-hidden="true"></i> Price Information</h2>
+    <div id="prices-table"></div>
 
-                <table class="table">
-                <thead>
-                 <tr>
-                    <th>Related Document</th>
-                    <th>Year of Creation</th>
-                    <th>Price</th>
-                    <th>Unit</th>
-                    <th>Amount</th>
-                    <th>Total Value</th>
-                </tr>
-                </thead>
+    <!-- Convert Jinja Data to JSON -->
+    <script id="prices-data" type="application/json">
+        {{ object.price_per_document | tojson | safe }}
+    </script>
 
-                 <tbody>
-                {% for entry in object.price_per_document %}
-                <tr>
-                <!-- Related Document Column -->
-                <td>
-                {% if entry.document %}
-                    <a href="document__{{ entry.document[0].id }}.html">
-                        {{ entry.document[0].value }}
-                    </a>
-                {% endif %}
-                </td>
+    <!-- Load Tabulator -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.3/css/tabulator.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.3/js/tabulator.min.js"></script>
 
-                <!-- Document Creation Year -->
-                
-        {% set sorted_documents = object.documents | sort(attribute="iso_date") %}
+    <!-- Minimal JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get JSON data from the hidden script tag
+            let tableDataElement = document.getElementById("prices-data");
+            if (!tableDataElement) {
+                console.error("Tabulator data element not found.");
+                return;
+            }
 
-<td>
-    {% if entry.document %}
-        {% set document_id = entry.document[0].id %}
-        {% for doc in sorted_documents %}
-            {% if doc.id == document_id %}
-                {{ doc.iso_date if doc.iso_date else "N/A" }}
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        N/A
-    {% endif %}
-</td>
+            let tableData = JSON.parse(tableDataElement.textContent);
+
+            // Define table columns with clear formatting
+            const columnDefinitions = [
+                {
+                    title: "Document",
+                    field: "document.0.value",
+                    formatter: "link",
+                    formatterParams: {
+                        urlPrefix: "document__",
+                        urlField: "document.0.id",
+                    },
+                },
+                {
+                    title: "Year",
+                    field: "document.0.iso_date",
+                    formatter: "plaintext",
+                    mutator: function (value) {
+                        return value ? value.slice(0, 4) : "N/A";
+                    },
+                },
+                { title: "Price", field: "price" },
+                { title: "Unit", field: "unit.value" },
+                { title: "Amount", field: "amount_of_units" },
+                { title: "Total Value", field: "total_value" },
+            ];
+
+            // Initialize Tabulator with organized configuration
+            new Tabulator("#prices-table", {
+                data: tableData,
+                layout: "fitColumns",
+                columns: columnDefinitions,
+            });
+        });
+    </script>
+{% endif %}
 
 
-                    <td>{{ entry.price if entry.price else "N/A" }}</td>
-                    <td>{{ entry.unit.value if entry.unit else "N/A" }}</td>
-                    <td>{{ entry.amount_of_units if entry.amount_of_units else "N/A" }}</td>
-                    <td>{{ entry.total_value if entry.total_value else "N/A" }}</td>
-                </tr>
-                 {% endfor %}
-                </tbody>
-                </table>
-            {% endif %}
+
+
+
+
+
 
 
         </div>

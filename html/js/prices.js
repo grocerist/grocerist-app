@@ -3,7 +3,7 @@ const dataUrl = "json_dumps/price_per_document.json";
 const baseColumnDefinitions = [
 
     {
-        title: "Name",
+        title: "Good",
         field: "good",
         headerFilter: "input",
         formatter: function (cell) {
