@@ -56,6 +56,8 @@
     <table class="table">
         <thead>
             <tr>
+                <th>Related Document</th>
+                <th>Year of Creation</th>
                 <th>Price</th>
                 <th>Unit</th>
                 <th>Amount</th>
@@ -65,6 +67,26 @@
         <tbody>
             {% for entry in object.price_per_document %}
                 <tr>
+                    <!-- Related Document Column -->
+                    <td>
+                        {% if entry.document and entry.document[0] %}
+                            <a href="document__{{ entry.document[0].id }}.html">
+                                {{ entry.document[0].value }}
+                            </a>
+                        {% endif %}
+                    </td>
+
+                    <!-- Year data part, but it does not work properly!!! -->
+                    <td>
+                        {% if entry.document and entry.document[0] %}
+                            {% set document_id = entry.document[0].id %}
+                            {% for doc in documents %}
+                                {% if doc.id == document_id %}
+                                    {{ doc.creation_date_miladi if doc.creation_date_miladi else "N/A" }}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </td>
                     <td>{{ entry.price if entry.price else "N/A" }}</td>
                     <td>{{ entry.unit.value if entry.unit else "N/A" }}</td>
                     <td>{{ entry.amount_of_units if entry.amount_of_units else "N/A" }}</td>
@@ -74,6 +96,8 @@
         </tbody>
     </table>
 {% endif %}
+
+
         </div>
 
         <div class="col">
