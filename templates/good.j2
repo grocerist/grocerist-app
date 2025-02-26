@@ -1,9 +1,11 @@
 {% set leaflet_css = True %}
 {% set tabulator_css = True %}
+{% set tabulator_css = True %}
 {% extends "templates/partials/base.j2" %}
 {% block scriptHeader %}
 {% include "templates/partials/tabulator.j2" %}
 {% endblock scriptHeader %}
+
 {% block content %}
 <div class="container subpage">
     <h1 class="text-center">
@@ -52,6 +54,10 @@
                 {% endfor %}
             </ul>
             {% endif %}
+
+
+
+            
 
             {% if object.price_per_document %}
             <h2><i class="bi bi-cash-stack" aria-hidden="true"></i> Price Information</h2>
