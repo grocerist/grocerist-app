@@ -1,5 +1,9 @@
 {% set leaflet_css = True %}
+{% set tabulator_css = True %}
 {% extends "templates/partials/base.j2" %}
+{% block scriptHeader %}
+{% include "templates/partials/tabulator.j2" %}
+{% endblock scriptHeader %}
 
 {% block content %}
 <div class="container subpage">
@@ -50,17 +54,19 @@
             </ul>
             {% endif %}
 
+
+
+            
+
             {% if object.price_per_document %}
             <h2><i class="bi bi-cash-stack" aria-hidden="true"></i> Price Information</h2>
 
             <div id="prices-table"></div>
 
             <script id="prices-data" type="application/json">
-                {{object.price_per_document | tojson | safe}}
+                {{object | tojson | safe}}
             </script>
-            <!-- Load Tabulator -->
-            <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.3/css/tabulator.min.css" rel="stylesheet">
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/5.4.3/js/tabulator.min.js"></script>
+
 
             <!-- Updated JavaScript for Tabulator -->
             <script>
@@ -78,7 +84,7 @@
                     const columnDefinitions = [
                         {
                             title: "Document",
-                            field: "document.0.value",
+                            field: "price_per_document.document.0.value",
                             formatter: function (cell) {
                                 let doc = cell.getData().document[0];
                                 return doc ? `<a href="document__${doc.id}.html">${doc.value}</a>` : "N/A";
@@ -89,14 +95,15 @@
                             field: "documents",
                             formatter: "plaintext",
                             mutator: function (value) {
+                                console.log(value)
                                 if (Array.isArray(value) && value.length > 0) {
                                     for (let doc of value) {
                                         if (doc.iso_date) {
                                             return doc.iso_date.slice(0, 4); // Extract year from iso_date
                                         }
                                     }
-                                }
-                                return "N/A"; // Default if no valid year found
+                                } else {return "blue";}
+                                 // Default if no valid year found
                             }
                         },
                         {
@@ -143,16 +150,6 @@
                 });
             </script>
             {% endif %}
-
-
-
-
-
-
-
-
-
-
 
         </div>
 
