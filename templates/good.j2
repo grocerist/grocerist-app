@@ -55,10 +55,16 @@
             </ul>
             {% endif %}
 
+        </div>
 
-
-            
-
+        <div class="col">
+            <h2><i class="bi bi-map" aria-hidden="true"></i> Map</h2>
+            <div id="map" style="height: 600px;" />
+        </div>
+    </div>
+</div>
+        
+        <div class="row">
             {% if object.price_per_document %}
             <h2><i class="bi bi-cash-stack" aria-hidden="true"></i> Price Information</h2>
 
@@ -150,14 +156,9 @@
                     });
             </script>
             {% endif %}
+        
+        
         </div>
-
-        <div class="col">
-            <h2><i class="bi bi-map" aria-hidden="true"></i> Map</h2>
-            <div id="map" style="height: 600px;" />
-        </div>
-    </div>
-</div>
 {% endblock content %}
 {% block scripts2 %}
 {% if object.documents %}
