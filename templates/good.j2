@@ -6,6 +6,7 @@
 {% include "templates/partials/tabulator.j2" %}
 {% endblock scriptHeader %}
 
+//trying
 {% block content %}
 <div class="container subpage">
     <h1 class="text-center">
@@ -63,102 +64,102 @@
         </div>
     </div>
 </div>
-        
-        <div class="row">
-            {% if object.price_per_document %}
-            <h2><i class="bi bi-cash-stack" aria-hidden="true"></i> Price Information</h2>
 
-            <div id="prices-table"></div>
+<div class="row">
+    {% if object.price_per_document %}
+    <h2><i class="bi bi-cash-stack" aria-hidden="true"></i> Price Information</h2>
 
-            <script>
-                const JSONdata = {{ object | tojson | safe}}
-                let priceData = JSONdata.price_per_document;
-                let documentData = JSONdata.documents;
-                priceData.forEach(price => {
-                    price.document.forEach(doc => {
-                        const matchingDoc = documentData.find(d => d.id === doc.id);
-                        if (matchingDoc) {
-                            doc.iso_date = matchingDoc.iso_date;
-                        }
-                    });
-                });
-                function getYearFromISODate(date) {
-                    let year = null;
-                    if (date) {
-                        const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
-                        if (isoDatePattern.test(date)) {
-                            year = date.substring(0, 4);
-                        }
-                    }
-                    return year;
+    <div id="prices-table"></div>
+
+    <script>
+        const JSONdata = {{ object | tojson | safe}}
+        let priceData = JSONdata.price_per_document;
+        let documentData = JSONdata.documents;
+        priceData.forEach(price => {
+            price.document.forEach(doc => {
+                const matchingDoc = documentData.find(d => d.id === doc.id);
+                if (matchingDoc) {
+                    doc.iso_date = matchingDoc.iso_date;
                 }
-                console.log(priceData)
-                // Define table columns (matching prices.js)
-                const columnDefinitions = [
-                    {
-                        title: "Document",
-                        field: "document",
-                        formatter: function (cell) {
-                            let doc = cell.getData().document[0];
-                            return doc ? `<a href="document__${doc.id}.html">${doc.value}</a>` : "N/A";
-                        }
-                    },
-                    {
-                        title: "Year",
-                        field: "document",
-                        formatter: function (cell) {
-                            const date = cell.getData().document[0].iso_date;
-                            const year = getYearFromISODate(date);
-                            return year ? year : "N/A";
-                        }
+            });
+        });
+        function getYearFromISODate(date) {
+            let year = null;
+            if (date) {
+                const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+                if (isoDatePattern.test(date)) {
+                    year = date.substring(0, 4);
+                }
+            }
+            return year;
+        }
+        console.log(priceData)
+        // Define table columns (matching prices.js)
+        const columnDefinitions = [
+            {
+                title: "Document",
+                field: "document",
+                formatter: function (cell) {
+                    let doc = cell.getData().document[0];
+                    return doc ? `<a href="document__${doc.id}.html">${doc.value}</a>` : "N/A";
+                }
+            },
+            {
+                title: "Year",
+                field: "document",
+                formatter: function (cell) {
+                    const date = cell.getData().document[0].iso_date;
+                    const year = getYearFromISODate(date);
+                    return year ? year : "N/A";
+                }
 
-                    },
-                    {
-                        title: "Price",
-                        field: "price",
-                        formatter: "plaintext",
-                        mutator: function (value) {
-                            return value ?? "N/A";
-                        },
-                    },
-                    {
-                        title: "Unit",
-                        field: "unit.value",
-                        formatter: "plaintext",
-                        mutator: function (value) {
-                            return value ?? "N/A";
-                        },
-                    },
-                    {
-                        title: "Amount",
-                        field: "amount_of_units",
-                        formatter: "plaintext",
-                        mutator: function (value) {
-                            return value ?? "N/A";
-                        },
-                    },
-                    {
-                        title: "Total Value",
-                        field: "total_value",
-                        formatter: "plaintext",
-                        mutator: function (value) {
-                            return value ?? "N/A";
-                        },
-                    },
-                ];
+            },
+            {
+                title: "Price",
+                field: "price",
+                formatter: "plaintext",
+                mutator: function (value) {
+                    return value ?? "N/A";
+                },
+            },
+            {
+                title: "Unit",
+                field: "unit.value",
+                formatter: "plaintext",
+                mutator: function (value) {
+                    return value ?? "N/A";
+                },
+            },
+            {
+                title: "Amount",
+                field: "amount_of_units",
+                formatter: "plaintext",
+                mutator: function (value) {
+                    return value ?? "N/A";
+                },
+            },
+            {
+                title: "Total Value",
+                field: "total_value",
+                formatter: "plaintext",
+                mutator: function (value) {
+                    return value ?? "N/A";
+                },
+            },
+        ];
 
-                // Initialize Tabulator
-                new Tabulator("#prices-table", {
-                    data: priceData,
-                    layout: "fitColumns",
-                    columns: columnDefinitions,
+        // Initialize Tabulator
+        new Tabulator("#prices-table", {
+            data: priceData,
+            layout: "fitColumns",
+            columns: columnDefinitions,
                         {# initialSort: [{ column: "Year", dir: "asc" }], #}
                     });
-            </script>
-            {% endif %}
-        
-        
-        </div>
+    </script>
+    {% endif %}
+
+
+</div>
 {% endblock content %}
 {% block scripts2 %}
 {% if object.documents %}
