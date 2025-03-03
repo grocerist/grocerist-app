@@ -1,24 +1,25 @@
 const dataUrl = "json_dumps/price_per_document.json";
 
 const baseColumnDefinitions = [
-
     {
         title: "Good",
         field: "good",
-        headerFilter: "input",
-        formatter: function (cell) {
-            let good = cell.getValue();
-            return `<a href="goods__${good.id}.html">${good.value}</a>`;
-        }
+        ...linkListColumnSettings,
+        formatterParams: {
+            urlPrefix: "goods__",
+            idField: "id",
+            nameField: "value",
+          },
     },
     {
         title: "Document",
         field: "document",
-        headerFilter: "input",
-        formatter: function (cell) {
-            let document = cell.getValue();
-            return `<a href="document__${document.id}.html">${document.value}</a>`;
-        }
+        ...linkListColumnSettings,
+        formatterParams: {
+            urlPrefix: "document__",
+            idField: "id",
+            nameField: "value",
+          },
     },
     
     {
@@ -28,7 +29,7 @@ const baseColumnDefinitions = [
     },
     {
         title: "Unit",
-        field: "unit",
+        field: "unit.value",
         headerFilter: "input",
     },
     {
@@ -45,30 +46,14 @@ const baseColumnDefinitions = [
 
 const columnDefinitions = baseColumnDefinitions.map((column) => ({
     ...column,
-    minWidth: 200,
+    minWidth: 150,
 }));
 
-d3.json(dataUrl, function (error, data) {
-    if (error) {
-        console.error("Failed to load JSON data:", error);
-        return;
-    }
+d3.json(dataUrl, function (dataFromJson) {
+    let tableData = Object.values(dataFromJson)
+        .filter((item) => item.good.length > 0) 
 
-    console.log("Raw JSON Data:", data);    
-    let tableData = Object.values(data)
-        .filter((item) => item.good?.length > 0) 
-        .map((item) => ({
-            document: item.document?.[0],
-            good: item.good?.[0],
-            price: item?.price ?? "N/A",
-            unit: item?.unit?.value ?? "N/A",
-            amount_of_units: item?.amount_of_units ?? "N/A",
-            total_value: item?.total_value ?? "N/A",
-        }));
-
-    console.log("Processed Table Data:", tableData);
-
-    var table = new Tabulator("#prices-table", {
+    new Tabulator("#prices-table", {
         ...commonTableConfig,
         data: tableData,
         columns: columnDefinitions,
