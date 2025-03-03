@@ -1,12 +1,14 @@
-{% set leaflet_css = True %}
-{% set tabulator_css = True %}
-{% set tabulator_css = True %}
+{% set leaflet_css = object.documents is not none %}
+{% set tabulator_css = object.price_per_document is not none %}
 {% extends "templates/partials/base.j2" %}
 {% block scriptHeader %}
+{% if object.documents %}
+{% include "templates/partials/leaflet.j2" %}
+{% endif %}
+{% if object.price_per_document %}
 {% include "templates/partials/tabulator.j2" %}
+{% endif %}
 {% endblock scriptHeader %}
-
-//trying
 {% block content %}
 <div class="container subpage">
     <h1 class="text-center">
@@ -32,12 +34,10 @@
                 {% endif %}
             </dl>
             {% endif %}
-
             {% if object.notes %}
             <h2><i class="bi bi-info-circle" aria-hidden="true"></i> Description</h2>
             <p class="ms-4">{{ object.notes }}</p>
             {% endif %}
-
             {% if object.has_category%}
             <h2><i class="bi bi-boxes" aria-hidden="true"></i> Categories</h2>
             <ul>
@@ -46,7 +46,6 @@
                 {% endfor %}
             </ul>
             {% endif %}
-
             {% if object.documents%}
             <h2><i class="bi bi-archive" aria-hidden="true"></i> Documents</h2>
             <ul>
@@ -55,143 +54,50 @@
                 {% endfor %}
             </ul>
             {% endif %}
-
         </div>
-
+        {% if object.documents %}
         <div class="col">
             <h2><i class="bi bi-map" aria-hidden="true"></i> Map</h2>
             <div id="map" style="height: 600px;" />
         </div>
+        {% endif %}
     </div>
-</div>
-
-<div class="row">
     {% if object.price_per_document %}
-    <h2><i class="bi bi-cash-stack" aria-hidden="true"></i> Price Information</h2>
-
-    <div id="prices-table"></div>
-
-    <script>
-        const JSONdata = {{ object | tojson | safe}}
-        let priceData = JSONdata.price_per_document;
-        let documentData = JSONdata.documents;
-        priceData.forEach(price => {
-            price.document.forEach(doc => {
-                const matchingDoc = documentData.find(d => d.id === doc.id);
-                if (matchingDoc) {
-                    doc.iso_date = matchingDoc.iso_date;
-                }
-            });
-        });
-        function getYearFromISODate(date) {
-            let year = null;
-            if (date) {
-                const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
-                if (isoDatePattern.test(date)) {
-                    year = date.substring(0, 4);
-                }
-            }
-            return year;
-        }
-        console.log(priceData)
-        // Define table columns (matching prices.js)
-        const columnDefinitions = [
-            {
-                title: "Document",
-                field: "document",
-                formatter: function (cell) {
-                    let doc = cell.getData().document[0];
-                    return doc ? `<a href="document__${doc.id}.html">${doc.value}</a>` : "N/A";
-                }
-            },
-            {
-                title: "Year",
-                field: "document",
-                formatter: function (cell) {
-                    const date = cell.getData().document[0].iso_date;
-                    const year = getYearFromISODate(date);
-                    return year ? year : "N/A";
-                }
-
-            },
-            {
-                title: "Price",
-                field: "price",
-                formatter: "plaintext",
-                mutator: function (value) {
-                    return value ?? "N/A";
-                },
-            },
-            {
-                title: "Unit",
-                field: "unit.value",
-                formatter: "plaintext",
-                mutator: function (value) {
-                    return value ?? "N/A";
-                },
-            },
-            {
-                title: "Amount",
-                field: "amount_of_units",
-                formatter: "plaintext",
-                mutator: function (value) {
-                    return value ?? "N/A";
-                },
-            },
-            {
-                title: "Total Value",
-                field: "total_value",
-                formatter: "plaintext",
-                mutator: function (value) {
-                    return value ?? "N/A";
-                },
-            },
-        ];
-
-        // Initialize Tabulator
-        new Tabulator("#prices-table", {
-            data: priceData,
-            layout: "fitColumns",
-            columns: columnDefinitions,
-                        {# initialSort: [{ column: "Year", dir: "asc" }], #}
-                    });
-    </script>
+    <div class="row">
+        <h2><i class="bi bi-cash-stack" aria-hidden="true"></i> Price Information</h2>
+        <div id="prices-table"></div>
+    </div>
     {% endif %}
-
-
+</div>
 </div>
 {% endblock content %}
 {% block scripts2 %}
-{% if object.documents %}
-{% include "templates/partials/leaflet.j2" %}
+{% if object.price_per_document or object.documents%}
+<script src="js/good-common.js"></script>
+{% endif %}
+{% if object.price_per_document %}
 <script>
-    const icon = "bi bi-basket3-fill"
-
+    const priceData = {{ object.price_per_document | tojson | safe }};
+    const documentData = {{ object.documents | tojson | safe }}
+    priceData.forEach(price => {
+        price.document.forEach(doc => {
+            const matchingDoc = documentData.find(d => d.id === doc.id);
+            if (matchingDoc) {
+                const year = getYearFromISODate(matchingDoc.iso_date);
+                doc.year = year;
+            }
+        });
+    });
+    initializeTabulator(priceData);
+</script>
+{% endif %}
+{% if object.documents %}
+<script>
     // tojson filter is used to keep the data in json format
     // e.g. preventing the null values from being converted to None during processing
     const doc_list = {{ object.documents | tojson | safe }};
-
     const { map, layerGroups } = createMap({ layerControl: true });
-
-    // create markers for each document
-    for (let i = 0; i < doc_list.length; i++) {
-        const doc = doc_list[i];
-        const year = getYearFromISODate(doc.iso_date);
-        if (doc.lat && doc.long) {
-            const yearText = year ? `in ${year}` : '';
-            const markerData = {
-                lat: doc.lat,
-                long: doc.long,
-                year: year,
-                popupContent: `<p>Mentioned in document <br>
-            <strong><a href="document__${doc.id}.html">${doc.value}</a></strong><br>
-            ${yearText}</p>`,
-                icon: icon,
-            };
-            const { marker, layerName } = createMarker(markerData, true);
-            marker.addTo(layerGroups[layerName]);
-        }
-    }
+    markerPerDoc(doc_list, layerGroups);
 </script>
 {% endif %}
 {% endblock scripts2 %}
