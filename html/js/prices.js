@@ -10,6 +10,11 @@ const baseColumnDefinitions = [
             idField: "id",
             nameField: "value",
           },
+          sorterParams:{
+            type:"string",
+            alignEmptyValues:"bottom",
+            valueMap:"value",
+        },
     },
     {
         title: "Document",
@@ -20,19 +25,43 @@ const baseColumnDefinitions = [
             idField: "id",
             nameField: "value",
           },
+          sorterParams:{
+            type:"string",
+            alignEmptyValues:"bottom",
+            valueMap:"value",
+        },
     },
-    
+    {
+        title: "Year",
+        field: "doc_year",
+        mutator: function (value, data, type, params, component) {
+          return value[0].value;
+        },
+        headerFilter: "input",
+        sorterParams:{
+            alignEmptyValues:"bottom",
+        }
+      },
     {
         title: "Price",
         field: "price",
         headerFilter: "number",
         headerFilterPlaceholder: "at least...",
         headerFilterFunc: greaterThanFilter,
+        sorterParams:{
+            alignEmptyValues:"bottom",
+        }
     },
     {
         title: "Unit",
         field: "unit.value",
-        headerFilter: "input",
+        headerFilter: "list",
+        headerFilterParams: {
+          valuesLookup: true,
+        },
+        sorterParams:{
+            alignEmptyValues:"bottom",
+        }
     },
     {
         title: "Amount",
@@ -40,6 +69,9 @@ const baseColumnDefinitions = [
         headerFilter: "number",
         headerFilterPlaceholder: "at least...",
         headerFilterFunc: greaterThanFilter,
+        sorterParams:{
+            alignEmptyValues:"bottom",
+        }
     },
     {
         title: "Total Value",
@@ -47,6 +79,9 @@ const baseColumnDefinitions = [
         headerFilter: "number",
         headerFilterPlaceholder: "at least...",
         headerFilterFunc: greaterThanFilter,
+        sorterParams:{
+            alignEmptyValues:"bottom",
+        }
     },
 ];
 
@@ -58,7 +93,6 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
 d3.json(dataUrl, function (dataFromJson) {
     let tableData = Object.values(dataFromJson)
         .filter((item) => item.good.length > 0) 
-    console.log(tableData)
     new Tabulator("#prices-table", {
         ...commonTableConfig,
         data: tableData,

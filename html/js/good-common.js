@@ -69,7 +69,9 @@ function initializeTabulator(priceData) {
   new Tabulator("#prices-table", {
     data: priceData,
     layout: "fitColumns",
+    responsiveLayout: "collapse",
     columns: columnDefinitions,
+    initialSort: [{ column: "doc_year", dir: "asc" }],
   });
 }
 
