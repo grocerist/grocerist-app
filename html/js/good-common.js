@@ -32,23 +32,37 @@ function initializeTabulator(priceData) {
       field: "doc_year",
       mutator: function (value, data, type, params, component) {
         return value[0].value;
-      }
+      },
+      headerFilter: "input",
     },
     {
       title: "Price",
       field: "price",
+      headerFilter: "number",
+      headerFilterPlaceholder: "at least...",
+      headerFilterFunc: ">=",
     },
     {
       title: "Unit",
       field: "unit.value",
+      headerFilter: "list",
+      headerFilterParams: {
+        valuesLookup: true,
+      },
     },
     {
       title: "Amount",
       field: "amount_of_units",
+      headerFilter: "number",
+      headerFilterPlaceholder: "at least...",
+      headerFilterFunc: ">=",
     },
     {
       title: "Total Value",
       field: "total_value",
+      headerFilter: "number",
+      headerFilterPlaceholder: "at least...",
+      headerFilterFunc: ">=",
     },
   ];
 
