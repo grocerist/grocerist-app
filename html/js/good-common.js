@@ -34,13 +34,19 @@ function initializeTabulator(priceData) {
         return value[0].value;
       },
       headerFilter: "input",
+      sorterParams:{
+        alignEmptyValues:"bottom",
+    }
     },
     {
       title: "Price",
       field: "price",
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
-      headerFilterFunc: greaterThanFilter
+      headerFilterFunc: greaterThanFilter,
+      sorterParams:{
+        alignEmptyValues:"bottom",
+    }
     },
     {
       title: "Unit",
@@ -49,20 +55,29 @@ function initializeTabulator(priceData) {
       headerFilterParams: {
         valuesLookup: true,
       },
+      sorterParams:{
+        alignEmptyValues:"bottom",
+    }
     },
     {
       title: "Amount",
       field: "amount_of_units",
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
-      headerFilterFunc: greaterThanFilter
+      headerFilterFunc: greaterThanFilter,
+      sorterParams:{
+        alignEmptyValues:"bottom",
+    }
     },
     {
       title: "Total Value",
       field: "total_value",
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
-      headerFilterFunc: greaterThanFilter
+      headerFilterFunc: greaterThanFilter,
+      sorterParams:{
+        alignEmptyValues:"bottom",
+    }
     },
   ];
 
