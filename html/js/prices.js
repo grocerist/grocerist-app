@@ -25,7 +25,9 @@ const baseColumnDefinitions = [
     {
         title: "Price",
         field: "price",
-        headerFilter: "input",
+        headerFilter: "number",
+        headerFilterPlaceholder: "at least...",
+        headerFilterFunc: greaterThanFilter,
     },
     {
         title: "Unit",
@@ -35,12 +37,16 @@ const baseColumnDefinitions = [
     {
         title: "Amount",
         field: "amount_of_units",
-        headerFilter: "input",
+        headerFilter: "number",
+        headerFilterPlaceholder: "at least...",
+        headerFilterFunc: greaterThanFilter,
     },
     {
         title: "Total Value",
         field: "total_value",
-        headerFilter: "input",
+        headerFilter: "number",
+        headerFilterPlaceholder: "at least...",
+        headerFilterFunc: greaterThanFilter,
     },
 ];
 
@@ -52,7 +58,7 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
 d3.json(dataUrl, function (dataFromJson) {
     let tableData = Object.values(dataFromJson)
         .filter((item) => item.good.length > 0) 
-
+    console.log(tableData)
     new Tabulator("#prices-table", {
         ...commonTableConfig,
         data: tableData,

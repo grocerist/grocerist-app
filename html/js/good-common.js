@@ -40,7 +40,7 @@ function initializeTabulator(priceData) {
       field: "price",
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
-      headerFilterFunc: ">=",
+      headerFilterFunc: greaterThanFilter
     },
     {
       title: "Unit",
@@ -55,14 +55,14 @@ function initializeTabulator(priceData) {
       field: "amount_of_units",
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
-      headerFilterFunc: ">=",
+      headerFilterFunc: greaterThanFilter
     },
     {
       title: "Total Value",
       field: "total_value",
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
-      headerFilterFunc: ">=",
+      headerFilterFunc: greaterThanFilter
     },
   ];
 
