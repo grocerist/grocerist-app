@@ -78,16 +78,6 @@
 {% if object.price_per_document %}
 <script>
     const priceData = {{ object.price_per_document | tojson | safe }};
-    const documentData = {{ object.documents | tojson | safe }}
-    priceData.forEach(price => {
-        price.document.forEach(doc => {
-            const matchingDoc = documentData.find(d => d.id === doc.id);
-            if (matchingDoc) {
-                const year = getYearFromISODate(matchingDoc.iso_date);
-                doc.year = year;
-            }
-        });
-    });
     initializeTabulator(priceData);
 </script>
 {% endif %}

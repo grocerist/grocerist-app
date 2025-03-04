@@ -14,6 +14,7 @@ function initializeTabulator(priceData) {
     {
       title: "Document",
       field: "document",
+      // TODO find out if multiple documents ARE supposed to be possible
       ...linkListColumnSettings,
       formatterParams: {
         urlPrefix: "document__",
@@ -28,15 +29,10 @@ function initializeTabulator(priceData) {
     },
     {
       title: "Year",
-      field: "document",
-      // TODO: find out if multiple documents are actually intended and adjust accordingly
-      formatter: function (cell) {
-        const year = (cell.getValue()[0].year);
-        return year;
-      },
-      sorter:function(a, b){
-        return a[0].year - b[0].year; 
-    },
+      field: "doc_year",
+      mutator: function (value, data, type, params, component) {
+        return value[0].value;
+      }
     },
     {
       title: "Price",
@@ -55,7 +51,7 @@ function initializeTabulator(priceData) {
       field: "total_value",
     },
   ];
-  console.log(priceData);
+
   new Tabulator("#prices-table", {
     data: priceData,
     layout: "fitColumns",
