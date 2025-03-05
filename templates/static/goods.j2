@@ -1,6 +1,7 @@
+{% set page_title = "Groceries" %}
 {% set tabulator_css = True %}
 {% extends "templates/partials/base.j2" %}
-{% block title %}Browse Groceries{% endblock title %}
+{% block title %}Browse {{page_title}}{% endblock title %}
 {% block page_description %}
 <meta name="description" content="{{ project_data.project_sub_title }}">
 {% endblock page_description %}
@@ -9,10 +10,10 @@
 {% include "templates/partials/tabulator.j2" %}
 {% endblock scriptHeader %}
 {% block content %}
+{% include "templates/partials/breadcrumbs.j2" %}
 <div class="container">
     <h1 class="text-center">
-        {% include "templates/partials/link_to_top.j2" %}
-        Groceries</h1>
+        {{page_title}}</h1>
     <div id="goods-table"></div>
 </div>
 {% endblock content%}
