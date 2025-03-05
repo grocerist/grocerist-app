@@ -550,3 +550,11 @@ ul.no-bullets {
     margin: 5px 5px 0 0;
     border-radius: 50%;
 }
+
+/* Breadcrumbs */
+.breadcrumb-item a {
+    color: var(--primary);
+    &:hover {
+        color: var(--primary-hover);
+    }
+}
