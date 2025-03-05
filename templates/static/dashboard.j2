@@ -1,14 +1,15 @@
+{% set page_title = "Dashboard" %}
 {% extends "templates/partials/base.j2" %}
-{% block title %}Browse Charts{% endblock title %}
+{% block title %}Browse {{page_title}}{% endblock title %}
 {% block page_description %}
 <meta name="description" content="{{ project_data.project_sub_title }}">
 {% endblock page_description %}
 
 {% block content %}
+{% include "templates/partials/breadcrumbs.j2" %}
 <div class="container">
     <h1 class="text-center">
-        {% include "templates/partials/link_to_top.j2" %}
-        Dashboard</h1>
+        {{page_title}}</h1>
     <br>
     <div class="card py-3 mb-3" id="container_religion_chart">
     </div>

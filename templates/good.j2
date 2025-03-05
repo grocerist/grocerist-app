@@ -1,13 +1,14 @@
+{% set page_title = object.name %}
 {% set leaflet_css = True %}
 {% extends "templates/partials/base.j2" %}
 
 {% block content %}
+{% with parent_page = "goods", parent_page_title = "Groceries" %}
+{% include "templates/partials/breadcrumbs.j2" %}
+{% endwith %}
 <div class="container subpage">
     <h1 class="text-center">
-        {% with parent_page = "goods" %}
-        {% include "templates/partials/link_to_top.j2" %}
-        {% endwith %}
-        {{ object.name }}
+        {{ page_title }}
     </h1>
     <div class="row">
         <div class="col">

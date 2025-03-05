@@ -1,16 +1,17 @@
+{% set page_title = "Documents" %}
 {% set leaflet_css = True %}
 {% set tabulator_css = True %}
 {% extends "templates/partials/base.j2" %}
-{% block title %}Browse Documents{% endblock title %}
+{% block title %}Browse {{page_title}}{% endblock title %}
 {% block page_description %}
 <meta name="description" content="{{ project_data.project_sub_title }}">
 {% endblock page_description %}
 
 {% block content %}
+{% include "templates/partials/breadcrumbs.j2" %}
 <div class="container">
     <h1 class="text-center">
-        {% include "templates/partials/link_to_top.j2" %}
-        Documents</h1>
+        {{page_title}}</h1>
     <div class="row">
         <div class="col-md-12">
             <div id="map"></div>
