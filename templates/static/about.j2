@@ -1,14 +1,15 @@
+{% set page_title = "About the Project" %}
 {% extends "templates/partials/base.j2" %}
-{% block title %}About{% endblock title %}
+{% block title %}{{page_title}}{% endblock title %}
 {% block page_description %}
 <meta name="description" content="{{ project_data.project_sub_title }}">
 {% endblock page_description %}
 
 {% block content %}
+{% include "templates/partials/breadcrumbs.j2" %}
 <div class="container subpage">
     <h1 class="text-center pb-2">
-        {% include "templates/partials/link_to_top.j2" %}
-        About the Project</h1>
+        {{page_title}}</h1>
     <div class="mt-4 mx-auto about-text">
         <p>This website was established to present the results of GrocerIST, a project funded by the Austrian Science
             Fund (FWF) and conducted by the Department of Turkish Studies at the University of Vienna, in collaboration
