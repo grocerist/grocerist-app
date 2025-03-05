@@ -104,6 +104,7 @@ for key, value in data.items():
         value["transcript"] = True
     else:
         context["transcript"] = False
+        value["transcript"] = False
     try:
         context["images"] = [
             f"https://files.transkribus.eu/iiif/2/{x}/info.json"
