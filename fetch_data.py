@@ -21,6 +21,7 @@ file_list = [
     "address.json",
     "persons.json",
     "utensils.json",
+    "price_per_document.json"
 ]
 
 json_dumps = os.path.join("html", "json_dumps")
