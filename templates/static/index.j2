@@ -23,36 +23,40 @@
 </div>
 {% set card_groups = [
 [
-{"title": "Documents", "icon": "bi-archive", "link": "documents.html", "button": "Browse Documents", "description":
-"Explore detailed records of inheritance inventories from 18th and 19th century Istanbul grocers.", "img":
-"documents.png" }
+{"title": "Documents", "icon": "bi-archive", "link": "documents.html", "button": "Browse Documents",
+"description": "Explore detailed records of inheritance inventories from 18th and 19th century Istanbul grocers.",
+"img": "documents.png"},
+{"title": "Locations", "icon": "bi-geo", "link": "locations.html", "button": "Browse Locations",
+"description": "Explore geographical locations tied to grocers, as recorded in the documents.", "img":
+"locations.png"}
 ],
 [
-{"title": "Grocers", "icon": "bi-people", "link": "persons.html", "button": "Browse Grocers", "description": "Browse
-profiles of persons mentioned in the inheritance records.", "img": "grocers.png"},
+{"title": "Grocers", "icon": "bi-people", "link": "persons.html", "button": "Browse Grocers",
+"description": "Browse profiles of persons mentioned in the inheritance records.", "img": "grocers.png"},
 {"title": "Grocery&nbsp;Categories", "icon": "bi-boxes", "link": "categories.html", "button": "Browse Grocery
 Categories",
-"description": "View groceries categorized by type.", "img":
-"categories.png"},
-{"title": "Groceries", "icon": "bi-basket", "link": "goods.html", "button": "Browse Groceries", "description": "Access a
-detailed catalog of groceries listed in historical inheritance inventories.", "img": "groceries.png"}
+"description": "View groceries categorized by type.", "img": "categories.png"},
+{"title": "Groceries", "icon": "bi-basket", "link": "goods.html", "button": "Browse Groceries",
+"description": "Access a detailed catalog of groceries listed in historical inheritance inventories.", "img":
+"groceries.png"},
+
 ],
 [
-{"title": "Utensils", "icon": "bi-cup", "link": "utensils.html", "button": "Browse Utensils", "description":
-"Discover various utensils listed in the inventories.", "img":
-"utensils.png"},
-{"title": "Locations", "icon": "bi-geo", "link": "locations.html", "button": "Browse Locations", "description":
-"Explore geographical locations tied to grocers, as recorded in the documents.", "img": "locations2.png"},
-{"title": "Dashboard", "icon": "bi-bar-chart", "link": "dashboard.html", "button": "Browse Dashboard", "description":
-"Analyze the data through interactive charts and graphs.", "img":
-"dashboard.png"},
+{"title": "Utensils", "icon": "bi-cup", "link": "utensils.html", "button": "Browse Utensils",
+"description": "Discover various utensils listed in the inventories.", "img": "utensils.png"},
+{"title": "Prices", "icon": "bi-cash-stack", "link": "prices.html", "button": "Browse Prices",
+"description": "View historical product prices from the available records.", "img": "prices.png"},
+{"title": "Dashboard", "icon": "bi-bar-chart", "link": "dashboard.html", "button": "Browse Dashboard",
+"description": "Analyze the data through interactive charts and graphs.", "img": "dashboard.png"}
 ]
 ] %}
 
+
+
 <div class="container">
     {% for card_group in card_groups %}
-    {% if card_group|length == 1 %}
-    {% set col_class = "col-12" %}
+    {% if card_group|length == 2 %}
+    {% set col_class = "col-sm-12 col-md-6" %}
     {% else %}
     {% set col_class = "col-sm-12 col-md-6 col-lg-4" %}
     {% endif %}

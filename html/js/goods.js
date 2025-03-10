@@ -55,4 +55,4 @@ d3.json(dataUrl, function (data) {
     columns: columnDefinitions,
     initialSort:[{column:"name", dir:"asc"}]
   });
-});
+})

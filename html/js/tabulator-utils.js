@@ -72,6 +72,7 @@ function makeItalic(value) {
   return output;
 }
 
+
 // for the first column, the name is a link to the detail view
 function linkToDetailView(cell) {
   var row = cell.getRow().getData();
@@ -102,6 +103,14 @@ function customHeaderFilter(headerValue, rowValue, rowData, filterParams) {
       return item.value.toLowerCase().includes(headerValue.toLowerCase());
     });
   }
+}
+
+// custom headerFilter function for columns containing numbers as strings
+// NOTE: Baserow exports numbers as strings to keep the decimal points
+// Numbers calculated by us, like Nr. of Documents are numbers, so they can use the standard ">="
+function greaterThanFilter(headerValue, rowValue, rowData, filterParams) {
+  // Convert headerValue to a number before comparing
+  return Number(rowValue) >= Number(headerValue);
 }
 
 // Define column header menu as column visibility toggle
