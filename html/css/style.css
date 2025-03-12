@@ -457,16 +457,6 @@ div.subpage a {
     }
 }
 
-
-div.subpage .badge {
-    background-color: var(--primary) !important;
-
-    &:hover {
-        background-color: var(--primary-hover) !important;
-    }
-}
-
-
 ul.no-bullets {
     list-style-type: none;
 }
