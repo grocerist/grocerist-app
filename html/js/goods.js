@@ -17,6 +17,7 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
+    headerSort:false,
   },
   {
     title: "Nr. of Documents",
@@ -34,6 +35,7 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
+    headerSort:false,
   },
 ];
 // Add minWidth and visibility toggle to each column
