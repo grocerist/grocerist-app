@@ -404,6 +404,7 @@ div h1>a {
     border-bottom: 2px solid var(--primary);
 
 }
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element,
 .tabulator .tabulator-header .tabulator-col {
     background-color: var(--primary);
     color: white;
