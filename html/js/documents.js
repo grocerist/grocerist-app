@@ -59,26 +59,9 @@ const baseColumnDefinitions = [
     headerFilterFuncParams: { nameField: "name" },
   },
   {
-    title: "Transcript",
-    field: "transcript",
-    hozAlign: "center",
-    formatter: "tickCross",
-    headerFilter: "tickCross",
-    headerFilterParams: { tristate: true },
-    headerFilterEmptyCheck: function (value) {
-      return value === null;
-    },
-  },
-  {
-    title: "Facsimiles",
-    field: "images",
-    hozAlign: "center",
-    formatter: "tickCross",
-    headerFilter: "tickCross",
-    headerFilterParams: { tristate: true },
-    headerFilterEmptyCheck: function (value) {
-      return value === null;
-    },
+    title: "Century",
+    field: "century",
+    headerFilter: "input",
   },
   {
     title: "Groceries",
@@ -161,11 +144,13 @@ const baseColumnDefinitions = [
     title: "Year <i>Hicri</i>",
     field: "year_of_creation_hicri",
     headerFilter: "input",
+    visible: false,
   },
   {
     title: "Date <i>Miladi</i>",
     field: "creation_date_ISO",
     headerFilter: "input",
+    visible: false,
   },
 ];
 // Add minWidth and visibility toggle to each column
