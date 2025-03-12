@@ -24,6 +24,7 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
+    headerSort:false,
   },
   {
     title: "Nr. of Documents",
@@ -43,6 +44,7 @@ const baseColumnDefinitions = [
       nameField: "name",
     },
     headerFilterFuncParams: { nameField: "name" },
+    headerSort:false,
   },
   {
     title: "Nr. of Persons",
