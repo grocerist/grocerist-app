@@ -57,6 +57,10 @@ const baseColumnDefinitions = [
       nameField: "name",
     },
     headerFilterFuncParams: { nameField: "name" },
+    sorterParams:{
+      type:"string",
+      valueMap: "name",
+  },
   },
   {
     title: "Century",
@@ -74,6 +78,7 @@ const baseColumnDefinitions = [
     },
     ...linkListColumnSettings,
     headerFilterFuncParams: { nameField: "name" },
+    headerSort:false,
   },
   {
     title: "District",
@@ -84,6 +89,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
+    sorterParams:{
+      type:"string",
+      valueMap: "value",
+  },
   },
   {
     title: "<i>Mahalle</i>",
@@ -95,6 +104,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
+    sorterParams:{
+      type:"string",
+      valueMap: "value",
+  },
   },
   {
     title: "<i>Karye</i>",
@@ -106,6 +119,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
+    sorterParams:{
+      type:"string",
+      valueMap: "value",
+  },
   },
   {
     title: "<i>Nahiye</i>",
@@ -117,6 +134,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
+    sorterParams:{
+      type:"string",
+      valueMap: "value",
+  },
   },
   {
     title: "Quarter",
@@ -128,6 +149,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
+    sorterParams:{
+      type:"string",
+      valueMap: "value",
+  },
   },
   {
     title: "Address",
@@ -139,6 +164,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
+    sorterParams:{
+      type:"string",
+      valueMap: "value",
+  },
   },
   {
     title: "Year <i>Hicri</i>",
