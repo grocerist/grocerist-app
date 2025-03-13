@@ -24,7 +24,7 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    headerSort:false,
+    headerSort: false,
   },
   {
     title: "Nr. of Documents",
@@ -44,7 +44,7 @@ const baseColumnDefinitions = [
       nameField: "name",
     },
     headerFilterFuncParams: { nameField: "name" },
-    headerSort:false,
+    headerSort: false,
   },
   {
     title: "Nr. of Persons",
@@ -64,6 +64,27 @@ const baseColumnDefinitions = [
       multiselect: false,
       itemFormatter: makeItalic,
     },
+  },
+  {
+    title: "District",
+    field: "properties.upper_admin",
+    mutator: function (value
+    ) {
+      if (value === "N/A") {
+        return null;
+      } else if (value[0]) {
+        return value[0].value;
+      }
+      else {
+        return "Unknown";
+      }
+    },
+    headerFilter: "list",
+    headerFilterParams: {
+      valuesLookup: true,
+      multiselect: false,
+    },
+    headerFilterFunc: "=",
   },
 ];
 // Add minWidth to each column
@@ -118,8 +139,9 @@ function createColumnChart(containerId, locationType, data, table) {
               if (this.name === "Unknown") {
                 // nothing happens
               } else {
+                console.log(this)
                 // set the filter value for the column with the current location type
-                table.setHeaderFilterValue("properties.name", this.name);
+                // table.setHeaderFilterValue("properties.upper_admin", this.name);
               }
             },
           },
@@ -139,6 +161,17 @@ function createColumnChart(containerId, locationType, data, table) {
         data: data,
       },
     ],
+    drilldown: {
+      activeAxisLabelStyle: {
+        color: "#000000",
+        textDecoration: "unset",
+      },
+      activeDataLabelStyle: {
+        color: "#000000",
+        textDecoration: "unset",
+      },
+      series: [],
+    },
     exporting: {
       sourceWidth: 900,
       chartOptions: {
@@ -153,17 +186,40 @@ function createColumnChart(containerId, locationType, data, table) {
 }
 
 function calculateLocationData(rows, locationType = "District") {
-  let results = rows.reduce((resultList, row) => {
+  let results = [];
+  let drilldown =[]
+  // first pass to get the 1st level of the chart
+  rows.forEach(row => {
     let rowData = row.getData();
     if (rowData.properties.location_type === locationType) {
-      resultList.push({
+      results.push({
         name: rowData.properties.name,
         y: rowData.properties.person_count,
+        drilldown: rowData.properties.name,
+      });
+
+      // Add district to drilldown list
+      drilldown.push({
+        name: rowData.properties.name,
+        id: rowData.properties.name,
+        data: []
+      });
+    }})
+  //second pass for the drilldown data
+  rows.forEach(row => {
+    let rowData = row.getData();
+    if (rowData.properties.upper_admin){
+      drilldown.forEach(drill => {
+        if (drill.id === rowData.properties.upper_admin){
+          drill.data.push({
+            name: rowData.properties.name,
+            y: rowData.properties.person_count,
+          });
+        }
       });
     }
-    return resultList;
-  }, []);
-  return results;
+  })
+  return [results, drilldown];
 }
 d3.json(dataUrl, function (dataFromJson) {
   // remove items with an empty name (mostly found in the neighbourhoods table)
@@ -173,22 +229,22 @@ d3.json(dataUrl, function (dataFromJson) {
   tableConfig.data = tableData;
   const table = new Tabulator("#places_table", tableConfig);
   // Create the chart with data for Districts
-  let locationResults = calculateLocationData(table.getRows(), "District");
+  let [results, drilldown] = calculateLocationData(table.getRows(), "District");
   const chart = createColumnChart(
     "location-chart",
     "District",
-    locationResults,
+    results,
     table
   );
   table.on("dataLoaded", function (data) {
     $("#total_count").text(data.length);
   });
+
   table.on("dataFiltered", function (filters, rows) {
     $("#search_count").text(rows.length);
     const locationTypeFilter = filters.find(
       (filter) => filter.field === "properties.location_type"
     );
-
     if (locationTypeFilter) {
       locTypeSelect.value = locationTypeFilter.value;
       // Manually dispatch a change event
@@ -196,11 +252,16 @@ d3.json(dataUrl, function (dataFromJson) {
       locTypeSelect.dispatchEvent(event);
     }
     const locType = locTypeSelect.value;
+    let [results, drilldown] = calculateLocationData(rows, locType)
     chart.series[0].update({
       name: locType, // Set the name of the series
-      data: calculateLocationData(rows, locType), // Set the data of the series
+      data: results // Set the data of the series
     });
+    console.log(drilldown)
     chart.update({
+      drilldown:{
+        series: drilldown
+      },
       exporting: {
         chartOptions: {
           title: {
