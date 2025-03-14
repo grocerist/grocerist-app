@@ -11,7 +11,7 @@
     </h1>
     <div class="row">
         <div class="col">
-            {% if object.religion%}
+            {% if object.religion %}
             <h2><i class="bi bi-eye" aria-hidden="true"></i> Religion</h2>
             <ul class="no-bullets">
                 {% for x in object.religion %}
@@ -22,7 +22,7 @@
             </ul>
             {% endif %}
             {% if object.district or object.neighbourhood or object.karye or object.nahiye or object.quarter or
-            object.address%}
+            object.address %}
             <h2><i class="bi bi-geo-alt" aria-hidden="true"></i> Location</h2>
             <dl class="ms-4">
                 {% if object.district %}
