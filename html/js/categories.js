@@ -19,11 +19,14 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
+    headerSort:false,
   },
   {
     title: "# Groceries",
     field: "good_count",
-    bottomCalc: "sum",
+    headerFilter: "number",
+    headerFilterPlaceholder: "at least...",
+    headerFilterFunc: ">=",
   },
   {
     title: "Documents",
@@ -36,11 +39,14 @@ const baseColumnDefinitions = [
       nameField: "shelfmark",
     },
     headerFilterFuncParams: { nameField: "shelfmark" },
+    headerSort:false,
   },
   {
     title: "# Docs",
     field: "doc_count",
-    bottomCalc: "sum",
+    headerFilter: "number",
+    headerFilterPlaceholder: "at least...",
+    headerFilterFunc: ">=",
   },
 ];
 // Add minWidth to each column

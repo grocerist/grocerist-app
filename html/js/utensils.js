@@ -17,6 +17,7 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
+    headerSort: false,
   },
   {
     title: "Nr. of Documents",
