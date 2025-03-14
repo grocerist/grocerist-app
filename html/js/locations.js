@@ -68,14 +68,12 @@ const baseColumnDefinitions = [
   {
     title: "District",
     field: "properties.upper_admin",
-    mutator: function (value
-    ) {
+    mutator: function (value) {
       if (value === "N/A") {
         return null;
       } else if (value[0]) {
         return value[0].value;
-      }
-      else {
+      } else {
         return "Unknown";
       }
     },
@@ -105,7 +103,7 @@ const tableConfig = {
 };
 const locTypeSelect = document.getElementById("select-location");
 
-function createColumnChart(containerId, locationType, data, table) {
+function createColumnChart(containerId, locationType, data, drilldown, table) {
   return Highcharts.chart(containerId, {
     chart: {
       type: "column",
@@ -139,7 +137,7 @@ function createColumnChart(containerId, locationType, data, table) {
               if (this.name === "Unknown") {
                 // nothing happens
               } else {
-                console.log(this)
+                console.log(this);
                 // set the filter value for the column with the current location type
                 // table.setHeaderFilterValue("properties.upper_admin", this.name);
               }
@@ -170,7 +168,7 @@ function createColumnChart(containerId, locationType, data, table) {
         color: "#000000",
         textDecoration: "unset",
       },
-      series: [],
+      series: drilldown,
     },
     exporting: {
       sourceWidth: 900,
@@ -187,9 +185,10 @@ function createColumnChart(containerId, locationType, data, table) {
 
 function calculateLocationData(rows, locationType = "District") {
   let results = [];
-  let drilldown =[]
+  let drilldown = [];
+  let notDistrict = ["Mahalle", "Karye", "Nahiye", "Quarter", "Address"];
   // first pass to get the 1st level of the chart
-  rows.forEach(row => {
+  rows.forEach((row) => {
     let rowData = row.getData();
     if (rowData.properties.location_type === locationType) {
       results.push({
@@ -198,19 +197,26 @@ function calculateLocationData(rows, locationType = "District") {
         drilldown: rowData.properties.name,
       });
 
-      // Add district to drilldown list
-      drilldown.push({
-        name: rowData.properties.name,
-        id: rowData.properties.name,
-        data: []
+      notDistrict.forEach((type) => {
+        // Add district to drilldown list
+        drilldown.push({
+          name: type,
+          id: rowData.properties.name,
+          data: [],
+        });
       });
-    }})
+    }
+  });
   //second pass for the drilldown data
-  rows.forEach(row => {
+
+  rows.forEach((row) => {
     let rowData = row.getData();
-    if (rowData.properties.upper_admin){
-      drilldown.forEach(drill => {
-        if (drill.id === rowData.properties.upper_admin){
+    if (rowData.properties.upper_admin) {
+      drilldown.forEach((drill) => {
+        if (
+          drill.id === rowData.properties.upper_admin &&
+          drill.name === rowData.properties.location_type
+        ) {
           drill.data.push({
             name: rowData.properties.name,
             y: rowData.properties.person_count,
@@ -218,7 +224,8 @@ function calculateLocationData(rows, locationType = "District") {
         }
       });
     }
-  })
+  });
+  console.log(drilldown);
   return [results, drilldown];
 }
 d3.json(dataUrl, function (dataFromJson) {
@@ -234,6 +241,7 @@ d3.json(dataUrl, function (dataFromJson) {
     "location-chart",
     "District",
     results,
+    drilldown,
     table
   );
   table.on("dataLoaded", function (data) {
@@ -252,15 +260,14 @@ d3.json(dataUrl, function (dataFromJson) {
       locTypeSelect.dispatchEvent(event);
     }
     const locType = locTypeSelect.value;
-    let [results, drilldown] = calculateLocationData(rows, locType)
+    let [results, drilldown] = calculateLocationData(rows, locType);
     chart.series[0].update({
       name: locType, // Set the name of the series
-      data: results // Set the data of the series
+      data: results, // Set the data of the series
     });
-    console.log(drilldown)
     chart.update({
-      drilldown:{
-        series: drilldown
+      drilldown: {
+        series: drilldown,
       },
       exporting: {
         chartOptions: {
