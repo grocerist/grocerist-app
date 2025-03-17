@@ -129,21 +129,6 @@ function createColumnChart(containerId, locationType, data, drilldown, table) {
     },
     plotOptions: {
       series: {
-        allowPointSelect: true,
-        cursor: "pointer",
-        point: {
-          events: {
-            click: function () {
-              if (this.name === "Unknown") {
-                // nothing happens
-              } else {
-                console.log(this);
-                // set the filter value for the column with the current location type
-                // table.setHeaderFilterValue("properties.upper_admin", this.name);
-              }
-            },
-          },
-        },
         dataLabels: {
           enabled: true,
         },
