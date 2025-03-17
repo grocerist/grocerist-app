@@ -184,19 +184,23 @@ function createColumnChart(containerId, locationType, data, drilldown, table) {
 }
 
 function calculateLocationData(rows, locationType = "District") {
-  let results = [];
+  let topLevel = [];
   let drilldown = [];
   let notDistrict = ["Mahalle", "Karye", "Nahiye", "Quarter", "Address"];
+  let districts = new Set();
   // first pass to get the 1st level of the chart
   rows.forEach((row) => {
     let rowData = row.getData();
-    if (rowData.properties.location_type === locationType) {
-      results.push({
+    if (
+      locationType === "District" &&
+      rowData.properties.location_type === locationType
+    ) {
+      topLevel.push({
         name: rowData.properties.name,
         y: rowData.properties.person_count,
         drilldown: rowData.properties.name,
       });
-
+      //TODO: this only works for the last type in the list now
       notDistrict.forEach((type) => {
         // Add district to drilldown list
         drilldown.push({
@@ -205,28 +209,50 @@ function calculateLocationData(rows, locationType = "District") {
           data: [],
         });
       });
-    }
-  });
-  //second pass for the drilldown data
+    } else if (
+      locationType !== "District" &&
+      rowData.properties.location_type === locationType
+    ) {
+      if (
+        !districts.has(rowData.properties.upper_admin) &&
+        rowData.properties.upper_admin !== "Unknown"
+      ) {
+        topLevel.push({
+          name: `${locationType} of ${rowData.properties.upper_admin}`,
+          y: 0,
+          drilldown: rowData.properties.upper_admin,
+        });
 
-  rows.forEach((row) => {
-    let rowData = row.getData();
-    if (rowData.properties.upper_admin) {
-      drilldown.forEach((drill) => {
-        if (
-          drill.id === rowData.properties.upper_admin &&
-          drill.name === rowData.properties.location_type
-        ) {
-          drill.data.push({
-            name: rowData.properties.name,
-            y: rowData.properties.person_count,
-          });
-        }
-      });
+        drilldown.push({
+          name: rowData.properties.upper_admin,
+          id: rowData.properties.upper_admin,
+          data: [],
+        });
+        districts.add(rowData.properties.upper_admin);
+      }
     }
   });
-  console.log(drilldown);
-  return [results, drilldown];
+  let sum = 0;
+  //second pass for the drilldown data
+  drilldown.forEach((entry) => {
+    let sum = 0;
+    rows.forEach((row) => {
+      let rowData = row.getData();
+      if (rowData.properties.upper_admin === entry.id) {
+        entry.data.push({
+          name: rowData.properties.name,
+          y: rowData.properties.person_count,
+        });
+        if (locationType !== "District") {
+          sum += rowData.properties.person_count;}
+      } 
+    });
+    if (locationType !== "District") {
+    
+    topLevel.find((item) => item.drilldown === entry.id).y = sum;
+    }
+  });
+  return [topLevel, drilldown];
 }
 d3.json(dataUrl, function (dataFromJson) {
   // remove items with an empty name (mostly found in the neighbourhoods table)
