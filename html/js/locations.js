@@ -103,12 +103,36 @@ const tableConfig = {
 };
 const locTypeSelect = document.getElementById("select-location");
 
-function createColumnChart(containerId, locationType, data, drilldown, table) {
+function createColumnChart(
+  containerId,
+  locationType,
+  data,
+  drilldownData,
+  table
+) {
   return Highcharts.chart(containerId, {
     chart: {
       type: "column",
+      events: {
+        drilldown: function (e) {
+          if (!e.seriesOptions) {
+            const chart = this;
+            let series;
+            if (locationType === "District") {
+            series = drilldownData.filter(
+              (item) => item.drilldownName === e.point.name
+            );} else {
+              series = drilldownData.filter(
+                (item) => item.drilldownName === e.point.name.split(" of ").pop())
+            }
+            series.forEach((series) => {
+              chart.addSingleSeriesAsDrilldown(e.point, series);
+            });
+            chart.applyDrilldown();
+          }
+        },
+      },
     },
-
     legend: {
       enabled: false,
     },
@@ -123,6 +147,7 @@ function createColumnChart(containerId, locationType, data, drilldown, table) {
       },
     },
     tooltip: {
+      // TODO: series.name is only defined for the drilldown of the discricts chart
       headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
       pointFormat:
         '<span style="color:{point.color}">{point.name}</span><br> <b>{point.y}</b> grocers<br/>',
@@ -144,17 +169,17 @@ function createColumnChart(containerId, locationType, data, drilldown, table) {
         data: data,
       },
     ],
-    drilldown: {
-      activeAxisLabelStyle: {
-        color: "#000000",
-        textDecoration: "unset",
-      },
-      activeDataLabelStyle: {
-        color: "#000000",
-        textDecoration: "unset",
-      },
-      series: drilldown,
-    },
+    // drilldown: {
+    //   activeAxisLabelStyle: {
+    //     color: "#000000",
+    //     textDecoration: "unset",
+    //   },
+    //   activeDataLabelStyle: {
+    //     color: "#000000",
+    //     textDecoration: "unset",
+    //   },
+    //   series: drilldown,
+    // },
     exporting: {
       sourceWidth: 900,
       chartOptions: {
@@ -183,16 +208,18 @@ function calculateLocationData(rows, locationType = "District") {
       topLevel.push({
         name: rowData.properties.name,
         y: rowData.properties.person_count,
-        drilldown: rowData.properties.name,
+        drilldown: true,
       });
-      //TODO: this only works for the last type in the list now
+      colorIndex = colors.length
       notDistrict.forEach((type) => {
         // Add district to drilldown list
         drilldown.push({
           name: type,
-          id: rowData.properties.name,
+          drilldownName: rowData.properties.name,
+          color: colors[colorIndex],
           data: [],
         });
+        colorIndex -= 1
       });
     } else if (
       locationType !== "District" &&
@@ -205,36 +232,45 @@ function calculateLocationData(rows, locationType = "District") {
         topLevel.push({
           name: `${locationType} of ${rowData.properties.upper_admin}`,
           y: 0,
-          drilldown: rowData.properties.upper_admin,
+          drilldownName: rowData.properties.upper_admin,
+          drilldown: true,
         });
 
         drilldown.push({
           name: rowData.properties.upper_admin,
-          id: rowData.properties.upper_admin,
+          drilldownName: rowData.properties.upper_admin,
           data: [],
         });
         districts.add(rowData.properties.upper_admin);
       }
     }
   });
-  let sum = 0;
+
   //second pass for the drilldown data
   drilldown.forEach((entry) => {
     let sum = 0;
     rows.forEach((row) => {
       let rowData = row.getData();
-      if (rowData.properties.upper_admin === entry.id) {
-        entry.data.push({
-          name: rowData.properties.name,
-          y: rowData.properties.person_count,
-        });
-        if (locationType !== "District") {
-          sum += rowData.properties.person_count;}
-      } 
+      if (locationType === "District") {
+        if (rowData.properties.upper_admin === entry.drilldownName && rowData.properties.location_type === entry.name) {
+          entry.data.push({
+            name: rowData.properties.name,
+            y: rowData.properties.person_count,
+          });
+        }
+      }
+      else {
+        if (rowData.properties.upper_admin === entry.drilldownName) {
+          entry.data.push({
+            name: rowData.properties.name,
+            y: rowData.properties.person_count,
+          });
+          sum += rowData.properties.person_count;
+        }
+      }
     });
     if (locationType !== "District") {
-    
-    topLevel.find((item) => item.drilldown === entry.id).y = sum;
+      topLevel.find((item) => item.drilldownName === entry.drilldownName).y = sum;
     }
   });
   return [topLevel, drilldown];
@@ -246,15 +282,7 @@ d3.json(dataUrl, function (dataFromJson) {
   );
   tableConfig.data = tableData;
   const table = new Tabulator("#places_table", tableConfig);
-  // Create the chart with data for Districts
-  let [results, drilldown] = calculateLocationData(table.getRows(), "District");
-  const chart = createColumnChart(
-    "location-chart",
-    "District",
-    results,
-    drilldown,
-    table
-  );
+  let chart;
   table.on("dataLoaded", function (data) {
     $("#total_count").text(data.length);
   });
@@ -272,23 +300,24 @@ d3.json(dataUrl, function (dataFromJson) {
     }
     const locType = locTypeSelect.value;
     let [results, drilldown] = calculateLocationData(rows, locType);
-    chart.series[0].update({
-      name: locType, // Set the name of the series
-      data: results, // Set the data of the series
-    });
-    chart.update({
-      drilldown: {
-        series: drilldown,
-      },
-      exporting: {
-        chartOptions: {
-          title: {
-            text: `${locType}s`,
-          },
-        },
-        filename: `grocers_by_${locType.toLowerCase()}`,
-      },
-    });
+    createColumnChart("location-chart", locType, results, drilldown, table);
+    // chart.series[0].update({
+    //   name: locType, // Set the name of the series
+    //   data: results, // Set the data of the series
+    // });
+    // chart.update({
+    //   // drilldown: {
+    //   //   series: drilldown,
+    //   // },
+    //   exporting: {
+    //     chartOptions: {
+    //       title: {
+    //         text: `${locType}s`,
+    //       },
+    //     },
+    //     filename: `grocers_by_${locType.toLowerCase()}`,
+    //   },
+    // });
   });
   locTypeSelect.addEventListener("change", () => {
     // if the table isn't already filtered by location type
