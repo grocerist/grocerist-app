@@ -119,11 +119,14 @@ function createColumnChart(
             const chart = this;
             let series;
             if (locationType === "District") {
-            series = drilldownData.filter(
-              (item) => item.drilldownName === e.point.name
-            );} else {
               series = drilldownData.filter(
-                (item) => item.drilldownName === e.point.name.split(" of ").pop())
+                (item) => item.drilldownName === e.point.name
+              );
+            } else {
+              series = drilldownData.filter(
+                (item) =>
+                  item.drilldownName === e.point.name.split(" of ").pop()
+              );
             }
             series.forEach((series) => {
               chart.addSingleSeriesAsDrilldown(e.point, series);
@@ -160,7 +163,8 @@ function createColumnChart(
       },
     },
     series: [
-      { name: `${locationType}s`,
+      {
+        name: `${locationType}s`,
         dataSorting: {
           enabled: true,
           sortKey: "name",
@@ -209,7 +213,7 @@ function calculateLocationData(rows, locationType = "District") {
         y: rowData.properties.person_count,
         drilldown: true,
       });
-      colorIndex = colors.length
+      colorIndex = colors.length;
       notDistrict.forEach((type) => {
         // Add district to drilldown list
         drilldown.push({
@@ -219,7 +223,7 @@ function calculateLocationData(rows, locationType = "District") {
           pointWidth: 10,
           data: [],
         });
-        colorIndex -= 1
+        colorIndex -= 1;
       });
     } else if (
       locationType !== "District" &&
@@ -253,14 +257,16 @@ function calculateLocationData(rows, locationType = "District") {
     rows.forEach((row) => {
       let rowData = row.getData();
       if (locationType === "District") {
-        if (rowData.properties.upper_admin === entry.drilldownName && rowData.properties.location_type === entry.name) {
+        if (
+          rowData.properties.upper_admin === entry.drilldownName &&
+          rowData.properties.location_type === entry.name
+        ) {
           entry.data.push({
             name: rowData.properties.name,
             y: rowData.properties.person_count,
           });
         }
-      }
-      else {
+      } else {
         if (rowData.properties.upper_admin === entry.drilldownName) {
           entry.data.push({
             name: rowData.properties.name,
@@ -271,7 +277,8 @@ function calculateLocationData(rows, locationType = "District") {
       }
     });
     if (locationType !== "District") {
-      topLevel.find((item) => item.drilldownName === entry.drilldownName).y = sum;
+      topLevel.find((item) => item.drilldownName === entry.drilldownName).y =
+        sum;
     }
   });
   return [topLevel, drilldown];
@@ -321,21 +328,26 @@ d3.json(dataUrl, function (dataFromJson) {
     // });
   });
   locTypeSelect.addEventListener("change", () => {
-    // if the table isn't already filtered by location type
-    // or if the filter value is different from the selected value, filter it
-    if (
-      !table
-        .getHeaderFilters()
-        .find(
-          (filter) =>
-            filter.field === "properties.location_type" &&
-            filter.value === locTypeSelect.value
-        )
-    ) {
-      table.setHeaderFilterValue(
-        "properties.location_type",
-        locTypeSelect.value
-      );
+    if (locTypeSelect.value === "District") {
+      // Clear the filter if "District" is selected
+      table.clearHeaderFilter();
+    } else {
+      // if the table isn't already filtered by location type
+      // or if the filter value is different from the selected value, filter it
+      if (
+        !table
+          .getHeaderFilters()
+          .find(
+            (filter) =>
+              filter.field === "properties.location_type" &&
+              filter.value === locTypeSelect.value
+          )
+      ) {
+        table.setHeaderFilterValue(
+          "properties.location_type",
+          locTypeSelect.value
+        );
+      }
     }
     // this will trigger the dataFiltered event and update the chart
   });
