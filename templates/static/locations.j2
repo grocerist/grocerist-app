@@ -16,13 +16,12 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            {% set locations = ["mahalle", "karye", "nahiye", "quarter", "address"] %}
             <select class="form-select" id="select-location">
-                <option value="District">Districts</option>
-                <option value="Mahalle">Mahalles</option>
-                <option value="Karye">Karyes</option>
-                <option value="Nahiye">Nahiyes</option>
-                <option value="Quarter">Quarters</option>
-                <option value="Address">Addresses</option>
+                <option value="District">Grocers per location by district</option>
+                {% for location_type in locations %}
+                <option value="{{ location_type|capitalize }}">Grocers per {{ location_type }} by district</option>
+                {% endfor %}
             </select>
             <div id="location-chart"></div>
         </div>
