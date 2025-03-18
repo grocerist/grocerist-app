@@ -160,7 +160,7 @@ function createColumnChart(
       },
     },
     series: [
-      {
+      { name: `${locationType}s`,
         dataSorting: {
           enabled: true,
           sortKey: "name",
@@ -169,17 +169,16 @@ function createColumnChart(
         data: data,
       },
     ],
-    // drilldown: {
-    //   activeAxisLabelStyle: {
-    //     color: "#000000",
-    //     textDecoration: "unset",
-    //   },
-    //   activeDataLabelStyle: {
-    //     color: "#000000",
-    //     textDecoration: "unset",
-    //   },
-    //   series: drilldown,
-    // },
+    drilldown: {
+      activeAxisLabelStyle: {
+        color: "#000000",
+        textDecoration: "unset",
+      },
+      activeDataLabelStyle: {
+        color: "#000000",
+        textDecoration: "unset",
+      },
+    },
     exporting: {
       sourceWidth: 900,
       chartOptions: {
@@ -217,6 +216,7 @@ function calculateLocationData(rows, locationType = "District") {
           name: type,
           drilldownName: rowData.properties.name,
           color: colors[colorIndex],
+          pointWidth: 10,
           data: [],
         });
         colorIndex -= 1
@@ -239,6 +239,7 @@ function calculateLocationData(rows, locationType = "District") {
         drilldown.push({
           name: rowData.properties.upper_admin,
           drilldownName: rowData.properties.upper_admin,
+          pointWidth: 20,
           data: [],
         });
         districts.add(rowData.properties.upper_admin);
