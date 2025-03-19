@@ -17,7 +17,7 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    headerSort:false,
+    headerSort: false,
   },
   {
     title: "Nr. of Documents",
@@ -35,7 +35,7 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    headerSort:false,
+    headerSort: false,
   },
 ];
 // Add minWidth and visibility toggle to each column
@@ -55,6 +55,15 @@ d3.json(dataUrl, function (data) {
     ...commonTableConfig,
     data: tableData,
     columns: columnDefinitions,
-    initialSort:[{column:"name", dir:"asc"}]
+    initialSort: [{ column: "name", dir: "asc" }],
+    footerElement: `<span class="tabulator-counter float-left">
+                    Showing <span id="search_count"></span> results out of <span id="total_count"></span>
+                    </span>`,
   });
-})
+  table.on("dataLoaded", function (data) {
+    $("#total_count").text(data.length);
+  });
+  table.on("dataFiltered", function (_filters, rows) {
+    $("#search_count").text(rows.length);
+  });
+});
