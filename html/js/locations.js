@@ -305,6 +305,12 @@ d3.json(dataUrl, function (dataFromJson) {
       // Manually dispatch a change event
       const event = new Event("change");
       locTypeSelect.dispatchEvent(event);
+    } 
+    else {
+      // if there is no location type filter, reset the chart to "location by district"
+      if (locTypeSelect.value !== "District") {
+        locTypeSelect.value = "District";
+      }
     }
     const locType = locTypeSelect.value;
     let [results, drilldown] = calculateLocationData(rows, locType);
@@ -327,11 +333,9 @@ d3.json(dataUrl, function (dataFromJson) {
     //   },
     // });
   });
-  locTypeSelect.addEventListener("change", () => {
-    if (locTypeSelect.value === "District") {
-      // Clear the filter if "District" is selected
-      table.clearHeaderFilter();
-    } else {
+  locTypeSelect.addEventListener(
+    "change",
+    () => {
       // if the table isn't already filtered by location type
       // or if the filter value is different from the selected value, filter it
       if (
@@ -350,7 +354,7 @@ d3.json(dataUrl, function (dataFromJson) {
       }
     }
     // this will trigger the dataFiltered event and update the chart
-  });
+  );
 });
 // Custom colors
 Highcharts.setOptions({
