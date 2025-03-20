@@ -6,7 +6,6 @@ const baseColumnDefinitions = [
     headerFilter: "input",
     headerFilterFunc: childElementFilter,
     formatter: linkToDetailView,
-    bottomCalc: "count",
     minWidth: 200,
   },
   {
@@ -19,7 +18,7 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    headerSort:false,
+    headerSort: false,
   },
   {
     title: "# Groceries",
@@ -39,7 +38,7 @@ const baseColumnDefinitions = [
       nameField: "shelfmark",
     },
     headerFilterFuncParams: { nameField: "shelfmark" },
-    headerSort:false,
+    headerSort: false,
   },
   {
     title: "# Docs",
@@ -55,7 +54,7 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
   minWidth: 150,
 }));
 let table;
-
+let numVisibleRows = 0;
 function childElementFilter(headerValue, rowValue, rowData, filterParams) {
   //!! expanding while filter active will run the filter on the expanded rows
   const searchValue = headerValue.toLowerCase();
@@ -68,16 +67,17 @@ function childElementFilter(headerValue, rowValue, rowData, filterParams) {
       if (child._children) {
         for (let j = 0; j < child._children.length; j++) {
           const childOfChild = child._children[j];
-          if (childOfChild.name.toLowerCase().includes(headerValue.toLowerCase())) {
+          if (
+            childOfChild.name.toLowerCase().includes(headerValue.toLowerCase())
+          ) {
             const row = table.getRow(rowData.id);
             if (!row.isTreeExpanded()) {
               row.treeExpand();
-              row.getTreeChildren()
-                .forEach((childRow) => {
-                  if (!childRow.isTreeExpanded()) {
-                    childRow.treeExpand();
-                  }
-                });
+              row.getTreeChildren().forEach((childRow) => {
+                if (!childRow.isTreeExpanded()) {
+                  childRow.treeExpand();
+                }
+              });
             }
             match = true;
             break; // Break out of the loop when a match is found
@@ -85,12 +85,12 @@ function childElementFilter(headerValue, rowValue, rowData, filterParams) {
         }
       }
       if (child.name.toLowerCase().includes(headerValue.toLowerCase())) {
-        if (table.getRow(rowData.id)){
+        if (table.getRow(rowData.id)) {
           const row = table.getRow(rowData.id);
           if (!row.isTreeExpanded()) {
             row.treeExpand();
           }
-        } 
+        }
         match = true;
         break; // Break out of the loop when a match is found
       }
@@ -99,8 +99,7 @@ function childElementFilter(headerValue, rowValue, rowData, filterParams) {
   if (rowValue.toLowerCase().includes(searchValue)) {
     match = true;
   }
-  
-return match;
+  return match;
 }
 
 d3.json(dataUrl, function (data) {
@@ -167,17 +166,43 @@ d3.json(dataUrl, function (data) {
   table = new Tabulator("#categories-table", {
     ...commonTableConfig,
     data: tableData,
-    //headerFilterLiveFilterDelay: 400,
+    headerFilterLiveFilterDelay: 400,
     dataTree: true,
-    columnCalcs: "both",
     columns: columnDefinitions,
     dataTreeExpandElement: `<i class="bi bi-caret-right-fill"></i>`,
     dataTreeCollapseElement: `<i class="bi bi-caret-down-fill"></i>`,
+    footerElement: `<span class="tabulator-counter float-left">
+                    Showing <span id="search_count"></span> results out of <span id="total_count"></span>
+                    </span>`,
   });
-  let filtersApplied = false;
-  table.on("dataFiltered", function (filters, rows) {
-    // This code will only run when all previously applied filters are cleared
+  
+  table.on("dataLoaded", function (data) {
+    let total = 0;
+    function countChildren(row) {
+      if (row._children?.length > 0) {
+        row._children.forEach((child) => {
+          total += 1;
+          countChildren(child);
+        });
+      }
+    }
+    data.forEach((row) => {
+      total += 1;
+      // Count children and sub-children recursively
+      countChildren(row);
+    });
 
+    $("#total_count").text(total);
+  });
+ 
+  let filtersApplied = false;
+
+  table.on("dataFiltered", function (filters, rows) {
+    // this works for normal filtering, but expanding the row also triggers this event
+   
+    $("#search_count").text(rows.length);
+
+    // This code will only run when all previously applied filters are cleared
     if (filtersApplied && filters.length === 0) {
       rows.forEach((row) => {
         if (row.isTreeExpanded()) {
@@ -187,6 +212,5 @@ d3.json(dataUrl, function (data) {
     }
     // Update the filtersApplied state
     filtersApplied = filters.length > 0;
-
   });
 });
