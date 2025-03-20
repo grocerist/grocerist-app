@@ -394,6 +394,9 @@ div h1>a {
     background: var(--primary);
 
 }
+.location-type-filter {
+    background-color: var(--primary);
+}
 
 /* tabulator header */
 .tabulator-header-contents {

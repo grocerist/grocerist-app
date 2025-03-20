@@ -7,6 +7,19 @@ const titleStyle = {
 };
 const baseColumnDefinitions = [
   {
+    title: "Location Type",
+    field: "properties.location_type",
+    formatter: makeItalic,
+    headerFilter: "list",
+    // headerFilterFunc: "in",
+    headerFilterParams: {
+      valuesLookup: true,
+      multiselect: false,
+      itemFormatter: makeItalic,
+    },
+    cssClass: "location-type-filter",
+  },
+  {
     title: "Name",
     field: "properties.name",
     headerFilter: "input",
@@ -54,18 +67,6 @@ const baseColumnDefinitions = [
     headerFilterFunc: ">=",
   },
   {
-    title: "Location Type",
-    field: "properties.location_type",
-    formatter: makeItalic,
-    headerFilter: "list",
-    // headerFilterFunc: "in",
-    headerFilterParams: {
-      valuesLookup: true,
-      multiselect: false,
-      itemFormatter: makeItalic,
-    },
-  },
-  {
     title: "District",
     field: "properties.upper_admin",
     mutator: function (value) {
@@ -101,7 +102,6 @@ const tableConfig = {
   Showing <span id="search_count"></span> results out of <span id="total_count"></span>
   </span>`,
 };
-const locTypeSelect = document.getElementById("select-location");
 
 function createColumnChart(
   containerId,
@@ -139,7 +139,10 @@ function createColumnChart(
     legend: {
       enabled: false,
     },
-    title: false,
+    title: {
+      text: locationType === "District" ? `Grocers per location by district` : `Grocers per ${locationType} by district`,
+      style: titleStyle,
+    },
     xAxis: {
       type: "category",
       reversed: true,
@@ -150,7 +153,6 @@ function createColumnChart(
       },
     },
     tooltip: {
-      // TODO: series.name is only defined for the drilldown of the discricts chart
       headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
       pointFormat:
         '<span style="color:{point.color}">{point.name}</span><br> <b>{point.y}</b> grocers<br/>',
@@ -234,7 +236,7 @@ function calculateLocationData(rows, locationType = "District") {
         rowData.properties.upper_admin !== "Unknown"
       ) {
         topLevel.push({
-          name: `${locationType} of ${rowData.properties.upper_admin}`,
+          name: `${locationType}s of ${rowData.properties.upper_admin}`,
           y: 0,
           drilldownName: rowData.properties.upper_admin,
           drilldown: true,
@@ -300,19 +302,8 @@ d3.json(dataUrl, function (dataFromJson) {
     const locationTypeFilter = filters.find(
       (filter) => filter.field === "properties.location_type"
     );
-    if (locationTypeFilter) {
-      locTypeSelect.value = locationTypeFilter.value;
-      // Manually dispatch a change event
-      const event = new Event("change");
-      locTypeSelect.dispatchEvent(event);
-    } 
-    else {
-      // if there is no location type filter, reset the chart to "location by district"
-      if (locTypeSelect.value !== "District") {
-        locTypeSelect.value = "District";
-      }
-    }
-    const locType = locTypeSelect.value;
+
+    const locType = locationTypeFilter ? locationTypeFilter.value : "District";
     let [results, drilldown] = calculateLocationData(rows, locType);
     createColumnChart("location-chart", locType, results, drilldown, table);
     // chart.series[0].update({
@@ -333,28 +324,6 @@ d3.json(dataUrl, function (dataFromJson) {
     //   },
     // });
   });
-  locTypeSelect.addEventListener(
-    "change",
-    () => {
-      // if the table isn't already filtered by location type
-      // or if the filter value is different from the selected value, filter it
-      if (
-        !table
-          .getHeaderFilters()
-          .find(
-            (filter) =>
-              filter.field === "properties.location_type" &&
-              filter.value === locTypeSelect.value
-          )
-      ) {
-        table.setHeaderFilterValue(
-          "properties.location_type",
-          locTypeSelect.value
-        );
-      }
-    }
-    // this will trigger the dataFiltered event and update the chart
-  );
 });
 // Custom colors
 Highcharts.setOptions({
