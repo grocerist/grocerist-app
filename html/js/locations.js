@@ -198,7 +198,7 @@ function createColumnChart(
   });
 }
 
-function calculateLocationData(rows, locationType = "District") {
+function calculateLocationData(rows, locationType, areDistrictsGone) {
   let topLevel = [];
   let drilldown = [];
   let notDistrict = ["Mahalle", "Karye", "Nahiye", "Quarter", "Address"];
@@ -209,6 +209,7 @@ function calculateLocationData(rows, locationType = "District") {
     if (
       locationType === "District" &&
       rowData.properties.location_type === locationType
+      && !areDistrictsGone
     ) {
       topLevel.push({
         name: rowData.properties.name,
@@ -227,16 +228,19 @@ function calculateLocationData(rows, locationType = "District") {
         });
         colorIndex -= 1;
       });
-    } else if (
-      locationType !== "District" &&
-      rowData.properties.location_type === locationType
+    } 
+    else if (
+      (locationType !== "District" &&
+      rowData.properties.location_type === locationType) ||
+      areDistrictsGone
     ) {
       if (
         !districts.has(rowData.properties.upper_admin) &&
         rowData.properties.upper_admin !== "Unknown"
       ) {
+        let pointName = locationType !== "District" ? `${locationType}s of ${rowData.properties.upper_admin}` : rowData.properties.upper_admin;
         topLevel.push({
-          name: `${locationType}s of ${rowData.properties.upper_admin}`,
+          name: pointName,
           y: 0,
           drilldownName: rowData.properties.upper_admin,
           drilldown: true,
@@ -258,7 +262,7 @@ function calculateLocationData(rows, locationType = "District") {
     let sum = 0;
     rows.forEach((row) => {
       let rowData = row.getData();
-      if (locationType === "District") {
+      if (locationType === "District" && !areDistrictsGone) {
         if (
           rowData.properties.upper_admin === entry.drilldownName &&
           rowData.properties.location_type === entry.name
@@ -278,7 +282,8 @@ function calculateLocationData(rows, locationType = "District") {
         }
       }
     });
-    if (locationType !== "District") {
+    if (locationType !== "District" ||
+      areDistrictsGone) {
       topLevel.find((item) => item.drilldownName === entry.drilldownName).y =
         sum;
     }
@@ -302,9 +307,12 @@ d3.json(dataUrl, function (dataFromJson) {
     const locationTypeFilter = filters.find(
       (filter) => filter.field === "properties.location_type"
     );
-
+    const upperAdminFilter = filters.find(
+      (filter) => filter.field === "properties.upper_admin"
+    );
+    const areDistrictsGone = upperAdminFilter ? true : false;
     const locType = locationTypeFilter ? locationTypeFilter.value : "District";
-    let [results, drilldown] = calculateLocationData(rows, locType);
+    let [results, drilldown] = calculateLocationData(rows, locType, areDistrictsGone);
     createColumnChart("location-chart", locType, results, drilldown, table);
     // chart.series[0].update({
     //   name: locType, // Set the name of the series
