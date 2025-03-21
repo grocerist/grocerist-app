@@ -140,7 +140,10 @@ function createColumnChart(
       enabled: false,
     },
     title: {
-      text: locationType === "District" ? `Grocers per location by district` : `Grocers per ${locationType} by district`,
+      text:
+        locationType === "District"
+          ? `Grocers per location by district`
+          : `Grocers per ${locationType} by district`,
       style: titleStyle,
     },
     xAxis: {
@@ -201,95 +204,91 @@ function createColumnChart(
 function calculateLocationData(rows, locationType, areDistrictsGone) {
   let topLevel = [];
   let drilldown = [];
-  let notDistrict = ["Mahalle", "Karye", "Nahiye", "Quarter", "Address"];
-  let districts = new Set();
-  // first pass to get the 1st level of the chart
+  let nonDistrictTypes = ["Mahalle", "Karye", "Nahiye", "Quarter", "Address"];
+  let processedAdmins = new Set();
+
+  function addDrilldownEntry(
+    drilldownKey,
+    name,
+    pointWidth,
+    colorIndex = null
+  ) {
+    let entry = {
+      name,
+      drilldownKey,
+      pointWidth,
+      data: [],
+    };
+    if (colorIndex !== null) entry.color = colors[colorIndex];
+    drilldown.push(entry);
+  }
+
+  // First pass: Create top-level and drilldown structure
   rows.forEach((row) => {
     let rowData = row.getData();
+    let { name, person_count, location_type, upper_admin } = rowData.properties;
+
     if (
       locationType === "District" &&
-      rowData.properties.location_type === locationType
-      && !areDistrictsGone
+      location_type === locationType &&
+      !areDistrictsGone
     ) {
-      topLevel.push({
-        name: rowData.properties.name,
-        y: rowData.properties.person_count,
-        drilldown: true,
-      });
-      colorIndex = colors.length;
-      notDistrict.forEach((type) => {
-        // Add district to drilldown list
-        drilldown.push({
-          name: type,
-          drilldownName: rowData.properties.name,
-          color: colors[colorIndex],
-          pointWidth: 10,
-          data: [],
-        });
-        colorIndex -= 1;
-      });
-    } 
-    else if (
-      (locationType !== "District" &&
-      rowData.properties.location_type === locationType) ||
+      topLevel.push({ name, y: person_count, drilldown: true });
+      nonDistrictTypes.forEach((type, i) =>
+        addDrilldownEntry(name, type, 10, colors.length - 1 - i)
+      );
+    } else if (
+      (locationType !== "District" && location_type === locationType) ||
       areDistrictsGone
     ) {
-      if (
-        !districts.has(rowData.properties.upper_admin) &&
-        rowData.properties.upper_admin !== "Unknown"
-      ) {
-        let pointName = locationType !== "District" ? `${locationType}s of ${rowData.properties.upper_admin}` : rowData.properties.upper_admin;
+      if (!processedAdmins.has(upper_admin) && upper_admin !== "Unknown") {
+        let pointName =
+          locationType !== "District"
+            ? `${locationType}s of ${upper_admin}`
+            : upper_admin;
         topLevel.push({
           name: pointName,
           y: 0,
-          drilldownName: rowData.properties.upper_admin,
+          drilldownKey: upper_admin,
           drilldown: true,
         });
-
-        drilldown.push({
-          name: rowData.properties.upper_admin,
-          drilldownName: rowData.properties.upper_admin,
-          pointWidth: 20,
-          data: [],
-        });
-        districts.add(rowData.properties.upper_admin);
+        addDrilldownEntry(upper_admin, upper_admin, 20);
+        processedAdmins.add(upper_admin);
       }
     }
   });
 
-  //second pass for the drilldown data
+  // Second pass: Populate drilldown data
   drilldown.forEach((entry) => {
     let sum = 0;
     rows.forEach((row) => {
       let rowData = row.getData();
-      if (locationType === "District" && !areDistrictsGone) {
-        if (
-          rowData.properties.upper_admin === entry.drilldownName &&
-          rowData.properties.location_type === entry.name
-        ) {
-          entry.data.push({
-            name: rowData.properties.name,
-            y: rowData.properties.person_count,
-          });
-        }
-      } else {
-        if (rowData.properties.upper_admin === entry.drilldownName) {
-          entry.data.push({
-            name: rowData.properties.name,
-            y: rowData.properties.person_count,
-          });
-          sum += rowData.properties.person_count;
-        }
+      let { name, person_count, upper_admin, location_type } =
+        rowData.properties;
+
+      if (
+        (locationType === "District" &&
+          !areDistrictsGone &&
+          upper_admin === entry.drilldownKey &&
+          location_type === entry.name) ||
+        upper_admin === entry.drilldownKey
+      ) {
+        entry.data.push({ name, y: person_count });
+        sum += person_count;
       }
     });
-    if (locationType !== "District" ||
-      areDistrictsGone) {
-      topLevel.find((item) => item.drilldownName === entry.drilldownName).y =
-        sum;
+
+    if (locationType !== "District" || areDistrictsGone) {
+      let topEntry = topLevel.find(
+        (item) => item.drilldownKey === entry.drilldownKey
+      );
+      if (topEntry) topEntry.y = sum;
     }
   });
+
   return [topLevel, drilldown];
 }
+
 d3.json(dataUrl, function (dataFromJson) {
   // remove items with an empty name (mostly found in the neighbourhoods table)
   const tableData = Object.values(dataFromJson)[1].filter(
@@ -312,7 +311,11 @@ d3.json(dataUrl, function (dataFromJson) {
     );
     const areDistrictsGone = upperAdminFilter ? true : false;
     const locType = locationTypeFilter ? locationTypeFilter.value : "District";
-    let [results, drilldown] = calculateLocationData(rows, locType, areDistrictsGone);
+    let [results, drilldown] = calculateLocationData(
+      rows,
+      locType,
+      areDistrictsGone
+    );
     createColumnChart("location-chart", locType, results, drilldown, table);
     // chart.series[0].update({
     //   name: locType, // Set the name of the series
