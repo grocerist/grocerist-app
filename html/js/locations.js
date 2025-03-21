@@ -120,12 +120,12 @@ function createColumnChart(
             let series;
             if (locationType === "District") {
               series = drilldownData.filter(
-                (item) => item.drilldownName === e.point.name
+                (item) => item.drilldownKey === e.point.name
               );
             } else {
               series = drilldownData.filter(
                 (item) =>
-                  item.drilldownName === e.point.name.split(" of ").pop()
+                  item.drilldownKey === e.point.name.split(" of ").pop()
               );
             }
             series.forEach((series) => {
@@ -206,6 +206,7 @@ function calculateLocationData(rows, locationType, areDistrictsGone) {
   let drilldown = [];
   let nonDistrictTypes = ["Mahalle", "Karye", "Nahiye", "Quarter", "Address"];
   let processedAdmins = new Set();
+  let uniquePersons = new Set();
 
   function addDrilldownEntry(
     drilldownKey,
@@ -226,7 +227,8 @@ function calculateLocationData(rows, locationType, areDistrictsGone) {
   // First pass: Create top-level and drilldown structure
   rows.forEach((row) => {
     let rowData = row.getData();
-    let { name, person_count, location_type, upper_admin } = rowData.properties;
+    let { name, person_count, location_type, upper_admin} =
+      rowData.properties;
 
     if (
       locationType === "District" &&
@@ -260,21 +262,22 @@ function calculateLocationData(rows, locationType, areDistrictsGone) {
 
   // Second pass: Populate drilldown data
   drilldown.forEach((entry) => {
-    let sum = 0;
     rows.forEach((row) => {
       let rowData = row.getData();
-      let { name, person_count, upper_admin, location_type } =
+      let { name, person_count, upper_admin, location_type, persons } =
         rowData.properties;
-
-      if (
-        (locationType === "District" &&
-          !areDistrictsGone &&
+      if (locationType === "District" && !areDistrictsGone) {
+        if (
           upper_admin === entry.drilldownKey &&
-          location_type === entry.name) ||
-        upper_admin === entry.drilldownKey
-      ) {
-        entry.data.push({ name, y: person_count });
-        sum += person_count;
+          location_type === entry.name
+        ) {
+          entry.data.push({ name, y: person_count });
+        }
+      } else {
+        if (upper_admin === entry.drilldownKey) {
+          entry.data.push({ name, y: person_count });
+          persons.forEach((person)=> uniquePersons.add(person.grocerist_id));
+        }
       }
     });
 
@@ -282,10 +285,9 @@ function calculateLocationData(rows, locationType, areDistrictsGone) {
       let topEntry = topLevel.find(
         (item) => item.drilldownKey === entry.drilldownKey
       );
-      if (topEntry) topEntry.y = sum;
+      if (topEntry) topEntry.y = uniquePersons.size;
     }
   });
-
   return [topLevel, drilldown];
 }
 
