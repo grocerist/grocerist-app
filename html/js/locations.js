@@ -133,7 +133,9 @@ function createColumnChart(
               );
             }
             drillDownSeries.forEach((series) => {
-              chart.addSingleSeriesAsDrilldown(e.point, series);
+              if (series.data.length > 0) {
+                chart.addSingleSeriesAsDrilldown(e.point, series);
+              }
             });
             chart.applyDrilldown();
           }
@@ -291,10 +293,6 @@ function calculateLocationData(rows, selectedLocationType) {
               );
             }
           });
-          // let topEntry = topLevel.find(
-          //   (item) => item.drilldownKey === entry.drilldownKey
-          // );
-          // if (topEntry) topEntry.y = uniquePersons.size;
         }
       });
       topEntry.y = uniquePersons.size;
@@ -328,9 +326,6 @@ d3.json(dataUrl, function (dataFromJson) {
     const locationTypeFilter = filters.find(
       (filter) => filter.field === "properties.location_type"
     );
-    const upperAdminFilter = filters.find(
-      (filter) => filter.field === "properties.upper_admin"
-    );
 
     const selectedLocationType = locationTypeFilter
       ? locationTypeFilter.value
@@ -339,7 +334,7 @@ d3.json(dataUrl, function (dataFromJson) {
       rows,
       selectedLocationType
     );
-    createColumnChart(
+    const chart = createColumnChart(
       "location-chart",
       selectedLocationType,
       results,
