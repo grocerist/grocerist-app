@@ -1,5 +1,4 @@
 const dataUrl = "json_dumps/locations.json";
-
 const titleStyle = {
   color: primaryColor,
   fontWeight: "bold",
@@ -106,20 +105,18 @@ const tableConfig = {
   Showing <span id="search_count"></span> results out of <span id="total_count"></span>
   </span>`,
 };
+// drilldown data and selected lcoation type need to be global variables
+let globalDrilldownData = [];
+let selectedLocationType = "allLocations";
 
-function createColumnChart(
-  containerId,
-  selectedLocationType,
-  data,
-  drilldownData,
-  table
-) {
+function createColumnChart(containerId, data) {
   return Highcharts.chart(containerId, {
     chart: {
       type: "column",
       events: {
         drilldown: function (e) {
-          if (!e.seriesOptions) {
+          if (!e.seriesOptions && globalDrilldownData.length > 0) {
+            const drilldownData = globalDrilldownData;
             const chart = this;
             let drillDownSeries;
             if (selectedLocationType === "allLocations") {
@@ -146,11 +143,11 @@ function createColumnChart(
       enabled: false,
     },
     title: {
-      text:
-        selectedLocationType === "allLocations"
-          ? `Grocers per location by district`
-          : `Grocers per ${selectedLocationType} by district`,
+      text: "Grocers per location by district",
       style: titleStyle,
+    },
+    subtitle: {
+      text: `Filter the "location type" column to see the chart for a specific location type`,
     },
     xAxis: {
       type: "category",
@@ -175,10 +172,7 @@ function createColumnChart(
     },
     series: [
       {
-        name:
-          selectedLocationType === "allLocations"
-            ? `Grocers per location`
-            : `Grocers per ${selectedLocationType}`,
+        name: "Grocers per location",
         dataSorting: {
           enabled: true,
           sortKey: "name",
@@ -199,13 +193,7 @@ function createColumnChart(
     },
     exporting: {
       sourceWidth: 900,
-      chartOptions: {
-        title: {
-          text: "Districts",
-          style: titleStyle,
-        },
-      },
-      filename: "grocers_by_district",
+      filename: "grocers_per_location",
     },
   });
 }
@@ -316,6 +304,7 @@ d3.json(dataUrl, function (dataFromJson) {
     });
   tableConfig.data = tableData;
   const table = new Tabulator("#places_table", tableConfig);
+  let first = true;
   let chart;
   table.on("dataLoaded", function (data) {
     $("#total_count").text(data.length);
@@ -323,41 +312,57 @@ d3.json(dataUrl, function (dataFromJson) {
 
   table.on("dataFiltered", function (filters, rows) {
     $("#search_count").text(rows.length);
+
+    if (first) {
+      // Create the chart
+      let locationResults;
+      [locationResults, globalDrilldownData] = calculateLocationData(
+        table.getRows(),
+        "allLocations"
+      );
+      chart = createColumnChart("location-chart", locationResults);
+      first = false;
+    }
+    // Drill up to the top level if the chart is in a drilldown state
+    if (chart.drilldownLevels && chart.drilldownLevels.length > 0) {
+      chart.drillUp();
+    }
+
     const locationTypeFilter = filters.find(
       (filter) => filter.field === "properties.location_type"
     );
 
-    const selectedLocationType = locationTypeFilter
+    selectedLocationType = locationTypeFilter
       ? locationTypeFilter.value
       : "allLocations";
-    let [results, drilldown] = calculateLocationData(
+    [locationResults, globalDrilldownData] = calculateLocationData(
       rows,
       selectedLocationType
     );
-    const chart = createColumnChart(
-      "location-chart",
-      selectedLocationType,
-      results,
-      drilldown,
-      table
-    );
-    // chart.series[0].update({
-    //   name: locType, // Set the name of the series
-    //   data: results, // Set the data of the series
-    // });
-    // chart.update({
-    //   // drilldown: {
-    //   //   series: drilldown,
-    //   // },
-    //   exporting: {
-    //     chartOptions: {
-    //       title: {
-    //         text: `${locType}s`,
-    //       },
-    //     },
-    //     filename: `grocers_by_${locType.toLowerCase()}`,
-    //   },
-    // });
+    // Update the chart with the new data
+    chart.series[0].update({
+      name:
+        selectedLocationType === "allLocations"
+          ? `Grocers per location`
+          : `Grocers per ${selectedLocationType}`, // Set the name of the series
+      data: locationResults, // Set the data of the series
+    });
+
+    chart.update({
+      title: {
+        text:
+          selectedLocationType === "allLocations"
+            ? `Grocers per location by district`
+            : `Grocers per ${selectedLocationType} by district`,
+      },
+      exporting: {
+        filename:
+          selectedLocationType === "allLocations"
+            ? "grocers_per_location"
+            : `grocers_per_${selectedLocationType.toLowerCase()}`,
+      },
+    });
+    chart.redraw();
   });
 });
 // Custom colors
