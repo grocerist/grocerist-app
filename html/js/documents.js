@@ -39,6 +39,67 @@ function resizeIconsOnZoom(map, markers) {
   });
 }
 
+//custom header filter
+const dateFilterEditor = function (
+  cell,
+  onRendered,
+  success,
+  cancel,
+  editorParams
+) {
+  // Create and style the container
+  const container = $("<span></span>");
+
+  // Create the input for the date range picker
+  const dateRangeInput = $(
+    "<input type='text' class='form-control' placeholder='Select date range'/>"
+  );
+
+  container.append(dateRangeInput);
+
+  // Initialize the date range picker
+  dateRangeInput.daterangepicker({
+    locale: {
+      cancelLabel: "Clear",
+      format: "YYYY-MM-DD",
+    },
+    // our current earliest date
+    startDate: "1697-11-10",
+    minDate: "1697-11-10",
+    maxDate: "1899-12-31",
+    showDropdowns: true,
+    linkedCalendars: false,
+  });
+  
+  // Update the input value when a range is selected
+  dateRangeInput.on("apply.daterangepicker", function (ev, picker) {
+    $(this).val(
+      picker.startDate.format("YYYY-MM-DD") +
+        " - " +
+        picker.endDate.format("YYYY-MM-DD")
+    );
+    success({
+      start: picker.startDate.format("YYYY-MM-DD"),
+      end: picker.endDate.format("YYYY-MM-DD"),
+    });
+  });
+
+  // Clear the input value when the cancel button is clicked
+  dateRangeInput.on("cancel.daterangepicker", function () {
+    $(this).val("");
+    success(null); 
+  });
+
+  return container[0];
+};
+// custom header filter function
+const dateFilterFunction = function (headerValue, rowValue, rowData, filterParams) {
+  if (rowValue)
+    {
+      return rowValue >= headerValue.start && rowValue <= headerValue.end;
+    }
+    return false;
+}
 // ####### TABLE CONFIG AND FUNCTIONS #######
 const baseColumnDefinitions = [
   {
@@ -57,10 +118,10 @@ const baseColumnDefinitions = [
       nameField: "name",
     },
     headerFilterFuncParams: { nameField: "name" },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "name",
-  },
+    },
   },
   {
     title: "Century",
@@ -78,7 +139,7 @@ const baseColumnDefinitions = [
     },
     ...linkListColumnSettings,
     headerFilterFuncParams: { nameField: "name" },
-    headerSort:false,
+    headerSort: false,
   },
   {
     title: "District",
@@ -89,10 +150,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "<i>Mahalle</i>",
@@ -104,10 +165,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "<i>Karye</i>",
@@ -119,10 +180,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "<i>Nahiye</i>",
@@ -134,10 +195,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "Quarter",
@@ -149,10 +210,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "Address",
@@ -164,10 +225,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "Year <i>Hicri</i>",
@@ -178,8 +239,9 @@ const baseColumnDefinitions = [
   {
     title: "Date <i>Miladi</i>",
     field: "creation_date_ISO",
-    headerFilter: "input",
-    visible: false,
+    headerFilter: dateFilterEditor,
+    headerFilterFunc:dateFilterFunction,
+    visible: true,
   },
 ];
 // Add minWidth and visibility toggle to each column
