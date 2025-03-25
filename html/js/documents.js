@@ -47,7 +47,7 @@ const dateFilterEditor = function (
   cancel,
   editorParams
 ) {
-  // Create and style the container
+  // Create the container
   const container = $("<span></span>");
 
   // Create the input for the date range picker
@@ -100,6 +100,29 @@ const dateFilterFunction = function (headerValue, rowValue, rowData, filterParam
     }
     return false;
 }
+
+const rangeEditor = function (cell, onRendered, success, cancel, editorParams) {
+  // Create the container
+  const container = $("<span></span>");
+  const start=$("<input type='number' placeholder='Start' style='width: 80px;' min='1100' max='1250'/>")
+  const end=$("<input type='number' placeholder='End' style='width: 80px;' min='1100' max='1250'/>")
+  container.append(start).append(end);
+  const inputs = $("input", container);
+
+ 
+	//submit new value on blur
+	inputs.on("change", function(e){
+		const startValue = parseInt(start.val(), 10);
+      const endValue = parseInt(end.val(), 10);
+      if (!isNaN(startValue) && !isNaN(endValue) && startValue <= endValue) {
+        success({ start: startValue, end: endValue });
+      }
+	});
+
+  return container[0];
+}
+
+
 // ####### TABLE CONFIG AND FUNCTIONS #######
 const baseColumnDefinitions = [
   {
@@ -233,15 +256,16 @@ const baseColumnDefinitions = [
   {
     title: "Year <i>Hicri</i>",
     field: "year_of_creation_hicri",
-    headerFilter: "input",
-    visible: false,
+    headerFilter: rangeEditor,
+    headerFilterFunc: dateFilterFunction,
+    visible: true
   },
   {
     title: "Date <i>Miladi</i>",
     field: "creation_date_ISO",
     headerFilter: dateFilterEditor,
     headerFilterFunc:dateFilterFunction,
-    visible: true,
+    visible: false
   },
 ];
 // Add minWidth and visibility toggle to each column
