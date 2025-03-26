@@ -40,10 +40,18 @@ d3.json(dataUrl, function (data) {
     return enriched;
   });
 
-  var table = new Tabulator("#utensils-table", {
+  const table = new Tabulator("#utensils-table", {
     ...commonTableConfig,
     data: tableData,
     columns: columnDefinitions,
     initialSort: [{ column: "name", dir: "asc" }],
+    footerElement: `<span class="tabulator-counter float-left">
+                    Showing <span id="search_count"></span> results out of <span id="total_count"></span>
+                    </span>`,
   });
+  table.on("dataLoaded", function (data) {
+    $("#total_count").text(data.length);
+  });
+  table.on("dataFiltered", function (_filters, rows) {
+    $("#search_count").text(rows.length);})
 });

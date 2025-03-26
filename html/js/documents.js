@@ -39,6 +39,140 @@ function resizeIconsOnZoom(map, markers) {
   });
 }
 
+//custom header filter
+const dateFilterEditor = function (
+  cell,
+  onRendered,
+  success,
+  cancel,
+  editorParams
+) {
+  // Create the container
+  const container = $("<span></span>");
+
+  // Create the input for the date range picker
+  const dateRangeInput = $(
+    "<input type='text' class='form-control' placeholder='Select date range'/>"
+  );
+
+  container.append(dateRangeInput);
+
+  // Initialize the date range picker
+  dateRangeInput.daterangepicker({
+    locale: {
+      cancelLabel: "Clear",
+      format: "YYYY-MM-DD",
+    },
+    // our current earliest date
+    startDate: "1697-11-10",
+    minDate: "1697-11-10",
+    maxDate: "1899-12-31",
+    showDropdowns: true,
+    linkedCalendars: false,
+  });
+
+  // Update the input value when a range is selected
+  dateRangeInput.on("apply.daterangepicker", function (ev, picker) {
+    $(this).val(
+      picker.startDate.format("YYYY-MM-DD") +
+        " - " +
+        picker.endDate.format("YYYY-MM-DD")
+    );
+    success({
+      start: picker.startDate.format("YYYY-MM-DD"),
+      end: picker.endDate.format("YYYY-MM-DD"),
+    });
+  });
+
+  // Clear the input value when the cancel button is clicked
+  dateRangeInput.on("cancel.daterangepicker", function () {
+    $(this).val("");
+    success(null);
+  });
+
+  return container[0];
+};
+// custom header filter function for dates
+const dateFilterFunction = function (
+  headerValue,
+  rowValue,
+  rowData,
+  filterParams
+) {
+  if (rowValue) {
+    return rowValue >= headerValue.start && rowValue <= headerValue.end;
+  }
+  return false;
+};
+
+// custom header filter function for ranges
+const rangeFilter = function (headerValue, rowValue, rowData, filterParams) {
+ // filter out rows with no value
+  if (!rowValue) return false;
+ 
+  const { start, end } = headerValue;
+
+  // Handle open-ended ranges
+  if (!start) return rowValue <= end;
+  if (!end) return rowValue >= start;
+
+  // Handle closed ranges
+  return rowValue >= start && rowValue <= end;
+};
+
+const rangeEditor = function (cell, onRendered, success, cancel, editorParams) {
+  // Create container
+  const container = document.createElement("span");
+
+  // Create and style inputs
+  container.insertAdjacentHTML(
+    "beforeend",
+    ["Start", "End"]
+      .map(
+        (placeholder) => `
+          <input type="number" placeholder="${placeholder}" 
+            style="width: 50%;" min="1100" max="1250">
+        `
+      )
+      .join("")
+  );
+
+  // Get references to the created inputs
+  const [start, end] = container.querySelectorAll("input");
+
+  // Function to validate and apply the range
+  const applyRange = () => {
+    const startValue = start.value.trim() ? parseInt(start.value, 10) : null;
+    const endValue = end.value.trim() ? parseInt(end.value, 10) : null;
+    // only allow numbers in the input fields
+    if (isNaN(startValue)) {
+      start.value = "";
+      cancel();
+    }
+    if (isNaN(endValue)) {
+      end.value = "";
+      cancel();
+    }
+    if (startValue === null || endValue === null || startValue <= endValue) {
+      success({ start: startValue, end: endValue });
+    }
+  };
+
+  function keypress(e) {
+    if (e.key === "Enter") applyRange();
+    if (e.key === "Escape") cancel();
+  }
+
+  // Add event listeners
+  [start, end].forEach((input) => {
+    input.addEventListener("change", applyRange);
+    input.addEventListener("blur", applyRange);
+    input.addEventListener("keydown", keypress);
+  });
+
+  return container;
+};
+
 // ####### TABLE CONFIG AND FUNCTIONS #######
 const baseColumnDefinitions = [
   {
@@ -57,10 +191,10 @@ const baseColumnDefinitions = [
       nameField: "name",
     },
     headerFilterFuncParams: { nameField: "name" },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "name",
-  },
+    },
   },
   {
     title: "Century",
@@ -78,7 +212,7 @@ const baseColumnDefinitions = [
     },
     ...linkListColumnSettings,
     headerFilterFuncParams: { nameField: "name" },
-    headerSort:false,
+    headerSort: false,
   },
   {
     title: "District",
@@ -89,10 +223,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "<i>Mahalle</i>",
@@ -104,10 +238,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "<i>Karye</i>",
@@ -119,10 +253,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "<i>Nahiye</i>",
@@ -134,10 +268,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "Quarter",
@@ -149,10 +283,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "Address",
@@ -164,21 +298,24 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "Year <i>Hicri</i>",
     field: "year_of_creation_hicri",
-    headerFilter: "input",
+    headerFilter: rangeEditor,
+    headerFilterFunc: rangeFilter,
+    headerFilterLiveFilter: false,
     visible: false,
   },
   {
     title: "Date <i>Miladi</i>",
     field: "creation_date_ISO",
-    headerFilter: "input",
+    headerFilter: dateFilterEditor,
+    headerFilterFunc: dateFilterFunction,
     visible: false,
   },
 ];
@@ -300,6 +437,7 @@ function setupMapAndTable(dataUrl) {
     table.on("dataFiltered", function (_filters, rows) {
       $("#search_count").text(rows.length);
       markers = rowsToMarkers(map, rows, layerGroups, oms);
+      console.log(_filters);
     });
     //eventlistener for click on row
     table.on("rowClick", (e, row) => {

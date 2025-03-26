@@ -1,7 +1,7 @@
 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="ps-4 pt-3">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="index.html">Main page</a></li>
-    {% if parent_page%}
+    {% if parent_page %}
     <li class="breadcrumb-item"><a href="{{ parent_page }}.html">{{ parent_page_title}}</a></li>
     {% endif %}
     <li class="breadcrumb-item active" aria-current="page">{{page_title}}</li>

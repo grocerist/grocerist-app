@@ -93,10 +93,19 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
 d3.json(dataUrl, function (dataFromJson) {
     let tableData = Object.values(dataFromJson)
         .filter((item) => item.good.length > 0) 
-    new Tabulator("#prices-table", {
+    const table = new Tabulator("#prices-table", {
         ...commonTableConfig,
         data: tableData,
         columns: columnDefinitions,
         initialSort: [{ column: "good", dir: "asc" }],
+        footerElement: `<span class="tabulator-counter float-left">
+                    Showing <span id="search_count"></span> results out of <span id="total_count"></span>
+                    </span>`,
     });
+    table.on("dataLoaded", function (data) {
+        $("#total_count").text(data.length);
+      });
+      table.on("dataFiltered", function (_filters, rows) {
+        $("#search_count").text(rows.length);
+      });
 });
