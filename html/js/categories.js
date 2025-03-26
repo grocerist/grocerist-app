@@ -54,7 +54,7 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
   minWidth: 150,
 }));
 let table;
-let numVisibleRows = 0;
+
 function childElementFilter(headerValue, rowValue, rowData, filterParams) {
   //!! expanding while filter active will run the filter on the expanded rows
   const searchValue = headerValue.toLowerCase();
@@ -165,6 +165,7 @@ d3.json(dataUrl, function (data) {
   const tableData = Object.values(hierarchicalData);
   table = new Tabulator("#categories-table", {
     ...commonTableConfig,
+    pagination:false,
     data: tableData,
     headerFilterLiveFilterDelay: 400,
     dataTree: true,
@@ -175,7 +176,7 @@ d3.json(dataUrl, function (data) {
                     Showing <span id="search_count"></span> results out of <span id="total_count"></span>
                     </span>`,
   });
-  
+
   table.on("dataLoaded", function (data) {
     let total = 0;
     function countChildren(row) {
@@ -194,15 +195,11 @@ d3.json(dataUrl, function (data) {
 
     $("#total_count").text(total);
   });
- 
+
   let filtersApplied = false;
 
   table.on("dataFiltered", function (filters, rows) {
-    // this works for normal filtering, but expanding the row also triggers this event
-   
-    $("#search_count").text(rows.length);
-
-    // This code will only run when all previously applied filters are cleared
+     // This code will only run when all previously applied filters are cleared
     if (filtersApplied && filters.length === 0) {
       rows.forEach((row) => {
         if (row.isTreeExpanded()) {
@@ -212,5 +209,9 @@ d3.json(dataUrl, function (data) {
     }
     // Update the filtersApplied state
     filtersApplied = filters.length > 0;
+  });
+  table.on("renderComplete", function(){
+    const rowCount = table.element.querySelectorAll('.tabulator-row').length;
+    $("#search_count").text(rowCount);
   });
 });
