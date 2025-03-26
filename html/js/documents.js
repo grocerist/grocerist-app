@@ -70,7 +70,7 @@ const dateFilterEditor = function (
     showDropdowns: true,
     linkedCalendars: false,
   });
-  
+
   // Update the input value when a range is selected
   dateRangeInput.on("apply.daterangepicker", function (ev, picker) {
     $(this).val(
@@ -87,41 +87,91 @@ const dateFilterEditor = function (
   // Clear the input value when the cancel button is clicked
   dateRangeInput.on("cancel.daterangepicker", function () {
     $(this).val("");
-    success(null); 
+    success(null);
   });
 
   return container[0];
 };
-// custom header filter function
-const dateFilterFunction = function (headerValue, rowValue, rowData, filterParams) {
-  if (rowValue)
-    {
-      return rowValue >= headerValue.start && rowValue <= headerValue.end;
-    }
-    return false;
-}
+// custom header filter function for dates
+const dateFilterFunction = function (
+  headerValue,
+  rowValue,
+  rowData,
+  filterParams
+) {
+  if (rowValue) {
+    return rowValue >= headerValue.start && rowValue <= headerValue.end;
+  }
+  return false;
+};
+
+// custom header filter function for ranges
+const rangeFilter = function (headerValue, rowValue, rowData, filterParams) {
+ // filter out rows with no value
+  if (!rowValue) return false;
+ 
+  const { start, end } = headerValue;
+
+  // Handle open-ended ranges
+  if (!start) return rowValue <= end;
+  if (!end) return rowValue >= start;
+
+  // Handle closed ranges
+  return rowValue >= start && rowValue <= end;
+};
 
 const rangeEditor = function (cell, onRendered, success, cancel, editorParams) {
-  // Create the container
-  const container = $("<span></span>");
-  const start=$("<input type='number' placeholder='Start' style='width: 80px;' min='1100' max='1250'/>")
-  const end=$("<input type='number' placeholder='End' style='width: 80px;' min='1100' max='1250'/>")
-  container.append(start).append(end);
-  const inputs = $("input", container);
+  // Create container
+  const container = document.createElement("span");
 
- 
-	//submit new value on blur
-	inputs.on("change", function(e){
-		const startValue = parseInt(start.val(), 10);
-      const endValue = parseInt(end.val(), 10);
-      if (!isNaN(startValue) && !isNaN(endValue) && startValue <= endValue) {
-        success({ start: startValue, end: endValue });
-      }
-	});
+  // Create and style inputs
+  container.insertAdjacentHTML(
+    "beforeend",
+    ["Start", "End"]
+      .map(
+        (placeholder) => `
+          <input type="number" placeholder="${placeholder}" 
+            style="width: 50%;" min="1100" max="1250">
+        `
+      )
+      .join("")
+  );
 
-  return container[0];
-}
+  // Get references to the created inputs
+  const [start, end] = container.querySelectorAll("input");
 
+  // Function to validate and apply the range
+  const applyRange = () => {
+    const startValue = start.value.trim() ? parseInt(start.value, 10) : null;
+    const endValue = end.value.trim() ? parseInt(end.value, 10) : null;
+    // only allow numbers in the input fields
+    if (isNaN(startValue)) {
+      start.value = "";
+      cancel();
+    }
+    if (isNaN(endValue)) {
+      end.value = "";
+      cancel();
+    }
+    if (startValue === null || endValue === null || startValue <= endValue) {
+      success({ start: startValue, end: endValue });
+    }
+  };
+
+  function keypress(e) {
+    if (e.key === "Enter") applyRange();
+    if (e.key === "Escape") cancel();
+  }
+
+  // Add event listeners
+  [start, end].forEach((input) => {
+    input.addEventListener("change", applyRange);
+    input.addEventListener("blur", applyRange);
+    input.addEventListener("keydown", keypress);
+  });
+
+  return container;
+};
 
 // ####### TABLE CONFIG AND FUNCTIONS #######
 const baseColumnDefinitions = [
@@ -257,15 +307,16 @@ const baseColumnDefinitions = [
     title: "Year <i>Hicri</i>",
     field: "year_of_creation_hicri",
     headerFilter: rangeEditor,
-    headerFilterFunc: dateFilterFunction,
-    visible: true
+    headerFilterFunc: rangeFilter,
+    headerFilterLiveFilter: false,
+    visible: false,
   },
   {
     title: "Date <i>Miladi</i>",
     field: "creation_date_ISO",
     headerFilter: dateFilterEditor,
-    headerFilterFunc:dateFilterFunction,
-    visible: false
+    headerFilterFunc: dateFilterFunction,
+    visible: false,
   },
 ];
 // Add minWidth and visibility toggle to each column
@@ -386,6 +437,7 @@ function setupMapAndTable(dataUrl) {
     table.on("dataFiltered", function (_filters, rows) {
       $("#search_count").text(rows.length);
       markers = rowsToMarkers(map, rows, layerGroups, oms);
+      console.log(_filters);
     });
     //eventlistener for click on row
     table.on("rowClick", (e, row) => {
