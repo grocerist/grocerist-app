@@ -108,6 +108,7 @@ const tableConfig = {
 // drilldown data and selected lcoation type need to be global variables
 let globalDrilldownData = [];
 let selectedLocationType = "allLocations";
+let districtColors = {};
 
 function createColumnChart(containerId, data) {
   return Highcharts.chart(containerId, {
@@ -198,7 +199,7 @@ function createColumnChart(containerId, data) {
   });
 }
 
-function calculateLocationData(rows, selectedLocationType) {
+function calculateLocationData(rows, selectedLocationType, districtColors) {
   let topLevel = [];
   let drilldownData = [];
   let nonDistrictTypes = ["Mahalle", "Karye", "Nahiye", "Quarter", "Address"];
@@ -231,6 +232,7 @@ function calculateLocationData(rows, selectedLocationType) {
         y: person_count,
         drilldownKey: name,
         drilldown: false,
+        color: districtColors[name],
       });
     } else {
       // create the first level with each district available in the table
@@ -246,9 +248,11 @@ function calculateLocationData(rows, selectedLocationType) {
           y: 0,
           drilldownKey: firstLevel,
           drilldown: true,
+          color: districtColors[firstLevel],
         });
         if (selectedLocationType === "allLocations") {
           nonDistrictTypes.forEach((type, i) =>
+            // for each location type, we set a different color (counting from the end, so they're different from the district colors)
             addDrilldownEntry(firstLevel, type, 10, colors.length - 1 - i)
           );
         } else {
@@ -314,11 +318,20 @@ d3.json(dataUrl, function (dataFromJson) {
     $("#search_count").text(rows.length);
 
     if (first) {
+      // set specific colors for each district
+      districtColors = rows.reduce((result, row, index) => {
+        const data = row.getData().properties;
+        if (data.location_type === "District") {
+          result[data.name] = colors[index];
+        }
+        return result;
+      }, {});
       // Create the chart
       let locationResults;
       [locationResults, globalDrilldownData] = calculateLocationData(
-        table.getRows(),
-        "allLocations"
+        rows,
+        "allLocations",
+        districtColors
       );
       chart = createColumnChart("location-chart", locationResults);
       first = false;
@@ -337,7 +350,8 @@ d3.json(dataUrl, function (dataFromJson) {
       : "allLocations";
     [locationResults, globalDrilldownData] = calculateLocationData(
       rows,
-      selectedLocationType
+      selectedLocationType,
+      districtColors
     );
     // Update the chart with the new data
     chart.series[0].update({
@@ -356,6 +370,9 @@ d3.json(dataUrl, function (dataFromJson) {
             : `Grocers per ${selectedLocationType} by district`,
       },
       exporting: {
+        chartOptions: {
+          subtitle: null,
+        },
         filename:
           selectedLocationType === "allLocations"
             ? "grocers_per_location"
