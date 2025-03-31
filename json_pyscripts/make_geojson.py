@@ -35,6 +35,11 @@ def make_geojson(json_files):
                 gj_feature["properties"]["doc_count"] = len(value["documents"])
                 gj_feature["properties"]["persons"] = value["persons"]
                 gj_feature["properties"]["person_count"] = len(value["persons"])
+                try:
+                    gj_feature["properties"]["upper_admin"] = value["upper_admin1"]
+                except KeyError:
+                    # should only be the case for districts
+                    gj_feature["properties"]["upper_admin"] = "N/A"
                 if "neighbourhood" in value["grocerist_id"]:
                     gj_feature["properties"]["location_type"] = "Mahalle"
                 else:

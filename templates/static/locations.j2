@@ -16,14 +16,6 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <select class="form-select" id="select-location">
-                <option value="District">Districts</option>
-                <option value="Mahalle">Mahalles</option>
-                <option value="Karye">Karyes</option>
-                <option value="Nahiye">Nahiyes</option>
-                <option value="Quarter">Quarters</option>
-                <option value="Address">Addresses</option>
-            </select>
             <div id="location-chart"></div>
         </div>
         <div class="col-md-12" id="places_table"></div>
@@ -35,5 +27,6 @@
 {% block scripts2 %}
 {% include "templates/partials/tabulator.j2" %}
 {% include "templates/partials/highcharts.j2" %}
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
 <script src="js/locations.js"></script>
 {% endblock scripts2 %}

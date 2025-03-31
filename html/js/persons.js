@@ -351,10 +351,6 @@ d3.json(dataUrl, function (data) {
     generateChartsFromTable(rows, table);
   });
 
-  //   locTypeSelect.addEventListener("change", () => {
-  //     let rows = table.getRows();
-  //     generateLocationChart(rows, table);
-  //   });
 });
 
 // Custom colors (default HighCharts list has too few)
