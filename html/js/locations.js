@@ -68,21 +68,15 @@ const baseColumnDefinitions = [
   {
     title: "District",
     field: "properties.upper_admin",
-    mutator: function (value) {
-      if (value === "N/A") {
-        return null;
-      } else if (value[0]) {
-        return value[0].value;
-      } else {
-        return "Unknown";
-      }
-    },
+    mutator: reduceArrayMutator,
+    formatter: testFormatter,
+    sorter: objectSorter,
     headerFilter: "list",
     headerFilterParams: {
-      valuesLookup: true,
+      valuesLookup: objectLookup,
       multiselect: false,
     },
-    headerFilterFunc: "=",
+    headerFilterFunc: objectHeaderFilter,
   },
   {
     field: "first_level",
@@ -224,7 +218,7 @@ function calculateLocationData(rows, selectedLocationType, districtColors) {
   // First pass: Create top-level and drilldown structure
   rows.forEach((row) => {
     let rowData = row.getData();
-    let { name, person_count, location_type, upper_admin } = rowData.properties;
+    let { name, person_count, location_type } = rowData.properties;
     let firstLevel = rowData.first_level;
     if (selectedLocationType === "District" && location_type === "District") {
       topLevel.push({
@@ -272,6 +266,7 @@ function calculateLocationData(rows, selectedLocationType, districtColors) {
             let rowData = row.getData();
             let { name, person_count, upper_admin, location_type, persons } =
               rowData.properties;
+           upper_admin = upper_admin === null ? upper_admin : upper_admin.value
             // for the chart type allLocations, we need to find the right drilldown series within a district
             // for specific location types, there is only one series per district anyway
             if (

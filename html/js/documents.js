@@ -218,15 +218,21 @@ const baseColumnDefinitions = [
     title: "District",
     field: "district",
     ...linkListColumnSettings,
+    headerFilter: "list",
+    headerFilterParams: {
+      valuesLookup: objectLookup,
+      multiselect: false,
+    },
+    headerFilterFunc: objectArrayHeaderFilter,
     formatterParams: {
       urlPrefix: "district__",
       idField: "id",
       nameField: "value",
     },
-    sorterParams: {
-      type: "string",
+    sorterParams:{
+      type:"string",
       valueMap: "value",
-    },
+  },
   },
   {
     title: "<i>Mahalle</i>",

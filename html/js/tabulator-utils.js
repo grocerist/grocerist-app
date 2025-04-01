@@ -13,8 +13,8 @@ const commonTableConfig = {
 // common settings for columns with arrays of objects
 const linkListColumnSettings = {
   formatter: linkListFormatter,
-  headerFilter: "input",
-  headerFilterFunc: customHeaderFilter,
+  // headerFilter: "input",
+  headerFilterFunc: objectArrayHeaderFilter,
   sorter: "array",
 };
 
@@ -29,6 +29,24 @@ function get_scrollable_cell(renderer, cell, cell_html_string) {
   cell_html_element.style.maxHeight = "100px";
   let final_val = renderer.emptyToSpace(cell_html_string);
   return final_val;
+}
+
+// CUSTOM FORMATTERS
+
+// for the first column, the name is a link to the detail view
+function linkToDetailView(cell) {
+  var row = cell.getRow().getData();
+  var cellData = cell.getData();
+  var groceristId = row.grocerist_id;
+  // for documents, name = shelfmark
+  var linkText = cellData.name ? cellData.name : cellData.shelfmark;
+  var theLink = `<a href="${groceristId}.html">${linkText}</a>`;
+  // for locations, the id is in the properties (geoJSON)
+  if (groceristId === undefined) {
+    groceristId = row.properties.grocerist_id;
+    theLink = `<a href="${groceristId}.html">${cellData.properties.name}</a>`;
+  }
+  return theLink;
 }
 
 function linkListFormatter(cell, formatterParams, onRendered) {
@@ -48,7 +66,19 @@ function linkListFormatter(cell, formatterParams, onRendered) {
   return output;
 }
 
-function mutateSelectField(value, data, type, params, component) {
+function testFormatter(cell, formatterParams, onRendered) {
+  let value = cell.getValue();
+  if (value === null) {
+    return value;
+  } else {
+    return `<a href="district__${value.ids.database_table_1492}.html">${value.value}</a>`;
+  }
+}
+
+// CUSTOM MUTATORS
+
+// custom mutator that combines the values of an array of objects into a string
+function combineValues(value, data, type, params, component) {
   let output = value
     .map((item) => {
       return `${item.value}`;
@@ -72,24 +102,21 @@ function makeItalic(value) {
   return output;
 }
 
-
-// for the first column, the name is a link to the detail view
-function linkToDetailView(cell) {
-  var row = cell.getRow().getData();
-  var cellData = cell.getData();
-  var groceristId = row.grocerist_id;
-  // for documents, name = shelfmark
-  var linkText = cellData.name ? cellData.name : cellData.shelfmark;
-  var theLink = `<a href="${groceristId}.html">${linkText}</a>`;
-  // for locations, the id is in the properties (geoJSON)
-  if (groceristId === undefined) {
-    groceristId = row.properties.grocerist_id;
-    theLink = `<a href="${groceristId}.html">${cellData.properties.name}</a>`;
+// Custom mutator for fields with arrays that aren't meant to be arrays
+function reduceArrayMutator(value, data, type, params, component) {
+  if (typeof value === "object" && value.length > 0) {
+    // Check if value is an array and has at least one element
+    return value[0];
+  } else {
+    // For empty array or strings ("N/A"), the cell should be empty
+    return null;
   }
-  return theLink;
 }
+
+// CUSTOM FILTERS
+
 // custom headerFilter for cells with arrays of objects
-function customHeaderFilter(headerValue, rowValue, rowData, filterParams) {
+function objectArrayHeaderFilter(headerValue, rowValue, rowData, filterParams) {
   // for columns where the name of the items is not in the "value" field,
   // the line headerFilterFuncParams: { nameField: 'name' } needs to be added to the column config
   if (filterParams.nameField) {
@@ -104,6 +131,14 @@ function customHeaderFilter(headerValue, rowValue, rowData, filterParams) {
     });
   }
 }
+// custom headerFilter for cells with a single object
+function objectHeaderFilter(headerValue, rowValue, rowData, filterParams) {
+  if (rowValue?.value) {
+    return rowValue.value === headerValue;
+  } else {
+    return false;
+  }
+}
 
 // custom headerFilter function for columns containing numbers as strings
 // NOTE: Baserow exports numbers as strings to keep the decimal points
@@ -111,6 +146,33 @@ function customHeaderFilter(headerValue, rowValue, rowData, filterParams) {
 function greaterThanFilter(headerValue, rowValue, rowData, filterParams) {
   // Convert headerValue to a number before comparing
   return Number(rowValue) >= Number(headerValue);
+}
+
+// custom lookupfunction for list type headerfilters
+function objectLookup(cell, filterTerm) {
+  // necessary for field names with dots (i.e. properties.upper_admin)
+  const getNestedValue = (obj, path) => {
+    return path.split('.').reduce((acc, key) => acc && acc[key], obj);
+  };
+  const results = new Set();
+  let column = cell.getColumn();
+  let field = column.getField();
+  console.log(field)
+  let data = cell.getTable().getData();
+  data.forEach((row) =>  {
+    let cellValue = getNestedValue(row, field);
+    if (cellValue !== null) {
+      if (Array.isArray(cellValue)) {
+        cellValue.forEach((item) => {
+          results.add(item.value);
+        });
+      } else {
+        results.add(cellValue.value);
+      }
+    }
+  });
+
+  return Array.from(results);
 }
 
 // Define column header menu as column visibility toggle
@@ -160,3 +222,14 @@ const headerMenu = function () {
 
   return menu;
 };
+
+function objectSorter(a, b, aRow, bRow, column, dir, sorterParams) {
+  // Handle null or empty values
+  if (a === null) return dir === "asc" ? 1 : -1; // Place `a` last
+  if (b === null) return dir === "asc" ? -1 : 1; // Place `b` last
+
+  // Compare non-empty values
+  return String(a.value)
+    .toLowerCase()
+    .localeCompare(String(b.value).toLowerCase(), "tr");
+}

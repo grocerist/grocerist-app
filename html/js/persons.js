@@ -14,7 +14,7 @@ const baseColumnDefinitions = [
   {
     title: "Religion",
     field: "religion",
-    mutator: mutateSelectField,
+    mutator: combineValues,
     formatter: "html",
     headerFilter: "list",
     headerFilterFunc: "in",
@@ -39,6 +39,12 @@ const baseColumnDefinitions = [
     title: "District",
     field: "district",
     ...linkListColumnSettings,
+    headerFilter: "list",
+    headerFilterParams: {
+      valuesLookup: objectLookup,
+      multiselect: false,
+    },
+    headerFilterFunc: objectArrayHeaderFilter,
     formatterParams: {
       urlPrefix: "district__",
       idField: "id",
