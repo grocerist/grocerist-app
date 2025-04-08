@@ -217,18 +217,21 @@ const baseColumnDefinitions = [
   {
     title: "District",
     field: "district",
-    ...linkListColumnSettings,
+    
     headerFilter: "list",
     headerFilterParams: {
       valuesLookup: objectLookup,
       multiselect: false,
     },
     headerFilterFunc: objectArrayHeaderFilter,
+    formatter: linkListFormatter,
     formatterParams: {
       urlPrefix: "district__",
       idField: "id",
       nameField: "value",
     },
+    headerFilterFunc: objectArrayHeaderFilter,
+    sorter: "array",
     sorterParams:{
       type:"string",
       valueMap: "value",
@@ -443,7 +446,6 @@ function setupMapAndTable(dataUrl) {
     table.on("dataFiltered", function (_filters, rows) {
       $("#search_count").text(rows.length);
       markers = rowsToMarkers(map, rows, layerGroups, oms);
-      console.log(_filters);
     });
     //eventlistener for click on row
     table.on("rowClick", (e, row) => {

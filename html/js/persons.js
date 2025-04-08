@@ -38,7 +38,8 @@ const baseColumnDefinitions = [
   {
     title: "District",
     field: "district",
-    ...linkListColumnSettings,
+    formatter: linkListFormatter,
+    headerFilterFunc: objectArrayHeaderFilter,
     headerFilter: "list",
     headerFilterParams: {
       valuesLookup: objectLookup,
@@ -47,9 +48,10 @@ const baseColumnDefinitions = [
     headerFilterFunc: objectArrayHeaderFilter,
     formatterParams: {
       urlPrefix: "district__",
-      idField: "id",
+      idField: "id", 
       nameField: "value",
     },
+    sorter: "array",
     sorterParams:{
       type:"string",
       valueMap: "value",
