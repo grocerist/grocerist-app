@@ -15,7 +15,7 @@ for script in os.listdir(helper_scripts):
     subprocess.run(["python", path])
 
 templateLoader = jinja2.FileSystemLoader(searchpath=".")
-templateEnv = jinja2.Environment(loader=templateLoader)
+templateEnv = jinja2.Environment(loader=templateLoader, trim_blocks=True, lstrip_blocks=True)
 
 nsmap = {
     "tei": "http://www.tei-c.org/ns/1.0",

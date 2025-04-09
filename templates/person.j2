@@ -14,11 +14,11 @@
             {% if object.religion %}
             <h2><i class="bi bi-eye" aria-hidden="true"></i>Religion</h2>
             <ul class="no-bullets">
-                {%- for x in object.religion %}
+                {% for x in object.religion %}
                 <li>
                     {{ x.value }}
                 </li>
-                {%- endfor %}
+                {% endfor %}
             </ul>
             {% endif %}
             {% if object.district or object.neighbourhood or object.karye or object.nahiye or object.quarter or
@@ -27,53 +27,53 @@
             <dl class="ms-4">
                 {% if object.district %}
                 <dt>District</dt>
-                {%- for x in object.district %}
+                {% for x in object.district %}
                 <dd class="ms-2"><a href="district__{{ x.id }}.html">{{ x.value }}</a></dd>
-                {%- endfor %}
+                {% endfor %}
                 {% endif %}
 
                 {% if object.neighbourhood %}
                 <dt><i>Mahalle</i></dt>
-                {%- for x in object.neighbourhood %}
+                {% for x in object.neighbourhood %}
                 <dd class="ms-2"><a href="neighbourhood__{{ x.id }}.html">{{ x.value }}</a></dd>
-                {%- endfor %}
+                {% endfor %}
                 {% endif %}
 
                 {% if object.karye %}
                 <dt><i>Karye</i></dt>
-                {%- for x in object.karye %}
+                {% for x in object.karye %}
                 <dd class="ms-2"><a href="karye__{{ x.id }}.html">{{ x.value }}</a></dd>
-                {%- endfor %}
+                {% endfor %}
                 {% endif %}
 
                 {% if object.nahiye %}
                 <dt><i>Nahiye</i></dt>
-                {%- for x in object.nahiye %}
+                {% for x in object.nahiye %}
                 <dd class="ms-2"><a href="nahiye__{{ x.id }}.html">{{ x.value }}</a></dd>
-                {%- endfor %}
+                {% endfor %}
                 {% endif %}
 
                 {% if object.quarter %}
                 <dt>Quarter</dt>
-                {%- for x in object.quarter %}
+                {% for x in object.quarter %}
                 <dd class="ms-2"><a href="quarter__{{ x.id }}.html">{{ x.value }}</a></dd>
-                {%- endfor %}
+                {% endfor %}
                 {% endif %}
 
                 {% if object.address %}
                 <dt>Address</dt>
-                {%- for x in object.address %}
+                {% for x in object.address %}
                 <dd class="ms-2"><a href="address__{{ x.id }}.html">{{ x.value }}</a></dd>
-                {%- endfor %}
+                {% endfor %}
                 {% endif %}
             </dl>
             {% endif %}
             {% if object.documents %}
             <h2><i class="bi bi-archive" aria-hidden="true"></i>Documents</h2>
             <ul>
-                {%- for x in object.documents %}
+                {% for x in object.documents %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
-                {%- endfor %}
+                {% endfor %}
             </ul>
             {% endif %}
         </div>
