@@ -15,64 +15,64 @@
             {% if pagename != 'district'%}
             {% if object.upper_admin1 or object.upper_admin2 or object.upper_admin3 or object.upper_admin4 or
             object.upper_admin5 %}
-            <h2><i class="bi bi-geo-alt" aria-hidden="true"></i> Upper administration unit</h2>
+            <h2><i class="bi bi-geo-alt" aria-hidden="true"></i>Upper administration unit</h2>
             {% endif %}
             <dl class="ms-4">
                 {% if object.upper_admin1 %}
                 <dt>District</dt>
-                {% for x in object.upper_admin1 %}
+                {%- for x in object.upper_admin1 %}
                 <dd class="ms-2"><a href="district__{{ x.ids['database_table_1492'] }}.html">{{ x.value }}</a></dd>
-                {% endfor %}
+                {%- endfor %}
                 {% endif %}
 
                 {% if object.upper_admin2 %}
                 <dt><i>Nahiye</i></dt>
-                {% for x in object.upper_admin2 %}
+                {%- for x in object.upper_admin2 %}
                 <dd class="ms-2"><a href="nahiye__{{ x.ids['database_table_2979'] }}.html">{{ x.value }}</a></dd>
-                {% endfor %}
+                {%- endfor %}
                 {% endif %}
 
                 {% if object.upper_admin3 %}
                 <dt>Quarter</dt>
-                {% for x in object.upper_admin3 %}
+                {%- for x in object.upper_admin3 %}
                 <dd class="ms-2"><a href="quarter__{{ x.ids['database_table_2977'] }}.html">{{ x.value }}</a></dd>
-                {% endfor %}
+                {%- endfor %}
                 {% endif %}
 
                 {% if object.upper_admin4 %}
                 <dt><i>Mahalle</i></dt>
-                {% for x in object.upper_admin4 %}
+                {%- for x in object.upper_admin4 %}
                 <dd class="ms-2"><a href="neighbourhood__{{ x.ids['database_table_1493'] }}.html">{{ x.value }}</a></dd>
-                {% endfor %}
+                {%- endfor %}
                 {% endif %}
 
                 {% if object.upper_admin5 %}
                 <dt><i>Karye</i></dt>
-                {% for x in object.upper_admin5 %}
+                {%- for x in object.upper_admin5 %}
                 <dd class="ms-2"><a href="karye__{{ x.ids['database_table_1520'] }}.html">{{ x.value }}</a></dd>
-                {% endfor %}
+                {%- endfor %}
                 {% endif %}
             </dl>
             {% endif %}
             {% if object.documents %}
-            <h2><i class="bi bi-archive" aria-hidden="true"></i> Documents</h2>
+            <h2><i class="bi bi-archive" aria-hidden="true"></i>Documents</h2>
             <ul>
-                {% for x in object.documents %}
+                {%- for x in object.documents %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
-                {% endfor %}
+                {%- endfor %}
             </ul>
             {% endif %}
             {% if object.persons %}
-            <h2><i class="bi bi-person" aria-hidden="true"></i> Persons</h2>
+            <h2><i class="bi bi-person" aria-hidden="true"></i>Persons</h2>
             <ul>
-                {% for x in object.persons %}
+                {%- for x in object.persons %}
                 <li><a href="person__{{ x.id }}.html">{{ x.name }}</a></li>
-                {% endfor %}
+                {%- endfor %}
             </ul>
             {% endif %}
         </div>
         <div class="col">
-            <h2><i class="bi bi-map" aria-hidden="true"></i> Map</h2>
+            <h2><i class="bi bi-map" aria-hidden="true"></i>Map</h2>
             <div id="map" style="height: 600px;" />
         </div>
     </div>

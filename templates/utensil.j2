@@ -13,19 +13,19 @@
     <div class="row">
         <div class="col">
             {% if object.notes %}
-            <h2><i class="bi bi-info-circle" aria-hidden="true"></i> Description</h2>
+            <h2><i class="bi bi-info-circle" aria-hidden="true"></i>Description</h2>
             <p class="ms-4">{{ object.notes }}</p>
 
             {% endif %}
-            <h2><i class="bi bi-archive" aria-hidden="true"></i> Documents</h2>
+            <h2><i class="bi bi-archive" aria-hidden="true"></i>Documents</h2>
             <ul>
-                {% for x in object.documents %}
+                {%- for x in object.documents %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
-                {% endfor %}
+                {%- endfor %}
             </ul>
         </div>
         <div class="col">
-            <h2><i class="bi bi-map" aria-hidden="true"></i> Map</h2>
+            <h2><i class="bi bi-map" aria-hidden="true"></i>Map</h2>
             <div id="map" style="height: 600px;" />
         </div>
     </div>

@@ -54,14 +54,14 @@ Categories",
 
 
 <div class="container">
-    {% for card_group in card_groups %}
+    {%- for card_group in card_groups %}
     {% if card_group|length == 2 %}
     {% set col_class = "col-sm-12 col-md-6" %}
     {% else %}
     {% set col_class = "col-sm-12 col-md-6 col-lg-4" %}
     {% endif %}
     <div class="row">
-        {% for card_data in card_group %}
+        {%- for card_data in card_group %}
         {% if card_data.title == 'Groceries' or card_data.title == 'Dashboard' %}
         {% set col_class = "col-md-12 col-lg-4" %}
         {% endif %}
@@ -77,9 +77,9 @@ Categories",
                 </div>
             </div>
         </div>
-        {% endfor %}
+        {%- endfor %}
     </div>
-    {% endfor %}
+    {%- endfor %}
     <p class="attribution"> © Background image for the "Grocers" menu item from <a
             href="https://archives.saltresearch.org/handle/123456789/117251" target="_blank"
             rel="noopener noreferrer">Salt Research Archives</a>, licensed under <a

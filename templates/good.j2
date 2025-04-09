@@ -20,8 +20,8 @@
     </h1>
     <div class="row">
         <div class="col">
-            {% if object.english_names or object.spelling_variations_and_synonyms %}
-            <h2><i class="bi bi-journal-text" aria-hidden="true"></i> Vocabulary details</h2>
+            {%- if object.english_names or object.spelling_variations_and_synonyms %}
+            <h2><i class="bi bi-journal-text" aria-hidden="true"></i>Vocabulary details</h2>
             <dl class="ms-4">
                 {% if object.english_names %}
                 <dt>Translation</dt>
@@ -29,86 +29,76 @@
                 {% endif %}
                 {% if object.spelling_variations_and_synonyms %}
                 <dt>Spelling variations and synonyms</dt>
-                {% for variation in object.spelling_variations_and_synonyms.split(',') %}
+                {%- for variation in object.spelling_variations_and_synonyms.split(',') %}
                 <dd class="ms-2">{{ variation.strip() }}</dd>
-                {% endfor %}
+                {%- endfor %}
                 {% endif %}
             </dl>
-            {% endif %}
-            {% if object.notes %}
-            <h2><i class="bi bi-info-circle" aria-hidden="true"></i> Description</h2>
+            {%- endif %}
+            {%- if object.notes %}
+            <h2><i class="bi bi-info-circle" aria-hidden="true"></i>Description</h2>
             <p class="ms-4">{{ object.notes }}</p>
-            {% endif %}
-            {% if object.has_category %}
-            <h2><i class="bi bi-boxes" aria-hidden="true"></i> Categories</h2>
+            {%- endif %}
+            {%- if object.has_category %}
+            <h2><i class="bi bi-boxes" aria-hidden="true"></i>Categories</h2>
             <ul>
-                {% for x in object.has_category %}
+                {%- for x in object.has_category %}
                 <li><a href="category__{{ x.id }}.html">{{ x.value }}</a></li>
-                {% endfor %}
+                {%- endfor %}
             </ul>
-            {% endif %}
-
+            {%- endif %}
             {% if object.documents %}
-            <h2><i class="bi bi-archive" aria-hidden="true"></i> Documents</h2>
+            <h2><i class="bi bi-archive" aria-hidden="true"></i>Documents</h2>
             {% set ns = namespace(has_18th_century_docs=false, has_19th_century_docs=false, has_no_date_docs=false) %}
-
-            {% for x in object.documents %}
-            {% if x.century is none %}
+            {%- for x in object.documents -%}
+            {%- if x.century is none -%}
             {% set ns.has_no_date_docs = true %}
-            {% elif x.century.value == "18" %}
+            {%- elif x.century.value == "18" -%}
             {% set ns.has_18th_century_docs = true %}
-            {% elif x.century.value == "19" %}
+            {%- elif x.century.value == "19" -%}
             {% set ns.has_19th_century_docs = true %}
-            {% endif %}
-            {% endfor %}
-
-            {% if ns.has_18th_century_docs %}
+            {%- endif %}
+            {%- endfor -%}
+            {%- if ns.has_18th_century_docs %}
             <strong class="ms-4">18th century documents</strong>
             <ul>
-                {% for x in object.documents %}
-                {% if x.century.value == "18" %}
+                {%- for x in object.documents if x.century.value == "18" %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
-                {% endif %}
-                {% endfor %}
+                {%- endfor %}
             </ul>
-            {% endif %}
-            {% if ns.has_19th_century_docs %}
+            {%- endif %}
+            {%- if ns.has_19th_century_docs %}
             <strong class="ms-4">19th century documents</strong>
             <ul>
-                {% for x in object.documents %}
-                {% if x.century.value == "19" %}
+                {%- for x in object.documents if x.century.value == "19" %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
-                {% endif %}
-                {% endfor %}
+                {%- endfor %}
             </ul>
-            {% endif %}
-            {% if ns.has_no_date_docs %}
+            {%- endif %}
+            {%- if ns.has_no_date_docs %}
             <strong class="ms-4">Documents without date</strong>
             <ul>
-                {% for x in object.documents %}
-                {% if x.century is none %}
+                {%- for x in object.documents if x.century is none %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
-                {% endif %}
-                {% endfor %}
+                {%- endfor %}
             </ul>
+            {%- endif %}
             {% endif %}
-            {% endif %}
-
         </div>
 
         {% if object.documents %}
         <div class="col">
-            <h2><i class="bi bi-map" aria-hidden="true"></i> Map</h2>
+            <h2><i class="bi bi-map" aria-hidden="true"></i>Map</h2>
             <div id="map" style="height: 600px;" />
         </div>
         {% endif %}
     </div>
-    {% if object.price_per_document %}
+    {%- if object.price_per_document %}
     <div class="row">
-        <h2><i class="bi bi-cash-stack" aria-hidden="true"></i> Price Information</h2>
+        <h2><i class="bi bi-cash-stack" aria-hidden="true"></i>Price Information</h2>
         <div id="prices-table"></div>
     </div>
-    {% endif %}
+    {%- endif %}
 </div>
 </div>
 {% endblock content %}
