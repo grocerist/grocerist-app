@@ -87,7 +87,7 @@
             <dl class="ms-4">
                 {% for x in object.goods | sort(attribute='name') %}
                 <dt><a href="{{ x.grocerist_id }}.html">{{ x.name }}</a></dt>
-                <dd class="ms-2">
+                <dd class="m-2">
                     {% for y in x.has_category %}
                     <a href="category__{{ y.id }}.html"><span class="border rounded p-1">{{y.value}}</span></a>
                     {% endfor %}
