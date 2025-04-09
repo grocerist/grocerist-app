@@ -48,22 +48,15 @@ function createMarkerIcon(color, icon) {
 }
 
 // Function to create a marker and add it to the right layer group based on the year
-function createMarker(markerData, addByYear = false) {
-  const { lat, long, year, popupContent, icon } = markerData;
+function createMarker(markerData, centuryLayers = false) {
+  const { lat, long, century, popupContent, icon } = markerData;
   let color = colors[0];
   let layerName = null;
-  if (addByYear) {
-    let century;
-    if (year !== null && year <= 1800) {
-      century = "18th century";
-    } else if (year !== null && year <= 1900) {
-      century = "19th century";
-    } else {
-      century = "N/A";
-    }
-
-    color = overlayColors[century];
-    layerName = `<span style="color:${color}">${century}</span>`;
+  if (centuryLayers) {
+    //  if (century === "17") {century = "18th century"}
+    const centuryText = century === "N/A" ? century : `${century}th century`;
+    color = overlayColors[centuryText];
+    layerName = `<span style="color:${color}">${centuryText}</span>`;
   }
   const customIcon = createMarkerIcon(color, icon);
   const marker = L.marker([lat, long], { icon: customIcon, riseOnHover: true });

@@ -378,12 +378,14 @@ function rowsToMarkers(map, rows, layerGroups, oms) {
   const allMarkers = {};
   rows.forEach((row) => {
     const rowData = row.getData();
-    const date = rowData.creation_date_ISO;
+    // const date = rowData.creation_date_ISO;
+    const century = rowData.century;
     if (rowData.lat && rowData.long) {
       const markerData = {
         lat: rowData.lat,
         long: rowData.long,
-        year: getYearFromISODate(date),
+        century: century?.value ? century.value : "N/A",
+        // year: getYearFromISODate(date),
         popupContent: `
         <h5><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}<a/></h5>
         <p><b><i>Bakkal</i> / Grocer:</b> ${
@@ -392,6 +394,7 @@ function rowsToMarkers(map, rows, layerGroups, oms) {
         `,
         icon: "bi bi-file-earmark-text-fill",
       };
+
       const { marker, layerName } = createMarker(markerData, true);
       marker.addTo(layerGroups[layerName]);
       // store each marker by the grocerist_id from the document
@@ -443,7 +446,6 @@ function setupMapAndTable(dataUrl) {
     table.on("dataFiltered", function (_filters, rows) {
       $("#search_count").text(rows.length);
       markers = rowsToMarkers(map, rows, layerGroups, oms);
-      console.log(_filters);
     });
     //eventlistener for click on row
     table.on("rowClick", (e, row) => {

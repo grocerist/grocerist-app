@@ -157,7 +157,6 @@ function objectLookup(cell, filterTerm) {
   const results = new Set();
   let column = cell.getColumn();
   let field = column.getField();
-  console.log(field)
   let data = cell.getTable().getData();
   data.forEach((row) =>  {
     let cellValue = getNestedValue(row, field);
