@@ -378,14 +378,12 @@ function rowsToMarkers(map, rows, layerGroups, oms) {
   const allMarkers = {};
   rows.forEach((row) => {
     const rowData = row.getData();
-    // const date = rowData.creation_date_ISO;
     const century = rowData.century;
     if (rowData.lat && rowData.long) {
       const markerData = {
         lat: rowData.lat,
         long: rowData.long,
         century: century?.value ? century.value : "N/A",
-        // year: getYearFromISODate(date),
         popupContent: `
         <h5><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}<a/></h5>
         <p><b><i>Bakkal</i> / Grocer:</b> ${

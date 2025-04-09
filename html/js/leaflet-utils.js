@@ -53,7 +53,6 @@ function createMarker(markerData, centuryLayers = false) {
   let color = colors[0];
   let layerName = null;
   if (centuryLayers) {
-    //  if (century === "17") {century = "18th century"}
     const centuryText = century === "N/A" ? century : `${century}th century`;
     color = overlayColors[centuryText];
     layerName = `<span style="color:${color}">${centuryText}</span>`;
