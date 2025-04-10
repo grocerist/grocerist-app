@@ -101,12 +101,12 @@
             <div class="pb-3">
                 <h2 class="text-center"><i class="bi bi-images" aria-hidden="true"></i>Facsimiles</h2>
                 <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script src="vendor/openseadragon-bin-5.0.1/openseadragon.min.js"></script>
                 <script type="text/javascript">
                     var viewer = OpenSeadragon({
                         id: "openseadragon1",
                         sequenceMode: true,
-                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        prefixUrl: "vendor/openseadragon-bin-5.0.1/images/",
                         tileSources: {{ images }}
                 });
                 </script>

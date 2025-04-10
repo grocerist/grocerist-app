@@ -351,16 +351,29 @@ function setupEventHandlers(
 // Main function for initializing the map and table
 export function setupMapAndTable(dataUrl) {
   const { map, layerGroups } = createMap();
-  d3.json(dataUrl, function (dataFromJson) {
-    // remove items with an empty name (mostly found in the neighbourhoods table)
-    const tableData = Object.values(dataFromJson)[1].filter(
-      (item) => item.properties.name.trim() !== ""
-    );
-    tableConfig.data = tableData;
-    const table = createTable(tableConfig);
-    table.on("tableBuilt", function () {
-      let existingCirclesByCoordinates = createMarkerLayers(table, layerGroups);
-      setupEventHandlers(map, table, existingCirclesByCoordinates, layerGroups);
-    });
-  });
+  (async function () {
+    try {
+      const dataFromJson = await d3.json(dataUrl);
+      // remove items with an empty name (mostly found in the neighbourhoods table)
+      const tableData = Object.values(dataFromJson)[1].filter(
+        (item) => item.properties.name.trim() !== ""
+      );
+      tableConfig.data = tableData;
+      const table = createTable(tableConfig);
+      table.on("tableBuilt", function () {
+        let existingCirclesByCoordinates = createMarkerLayers(
+          table,
+          layerGroups
+        );
+        setupEventHandlers(
+          map,
+          table,
+          existingCirclesByCoordinates,
+          layerGroups
+        );
+      });
+    } catch (error) {
+      console.error("Error loading or processing data:", error);
+    }
+  })();
 }

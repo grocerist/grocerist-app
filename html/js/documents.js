@@ -435,24 +435,33 @@ function setupMapAndTable(dataUrl) {
     useSpiderfier: true,
   });
   let markers = {};
-  d3.json(dataUrl, function (dataFromJson) {
-    const tableData = Object.values(dataFromJson).filter(
-      (item) => item.shelfmark !== ""
-    );
-    tableConfig.data = tableData;
-    const table = createTable(tableConfig);
-    table.on("dataLoaded", function (data) {
-      $("#total_count").text(data.length);
-    });
-    table.on("dataFiltered", function (_filters, rows) {
-      $("#search_count").text(rows.length);
-      markers = rowsToMarkers(map, rows, layerGroups, oms);
-    });
-    //eventlistener for click on row
-    table.on("rowClick", (e, row) => {
-      zoomToPointFromRowData(row.getData(), map, markers);
-    });
-  });
+  (async function () {
+    try {
+      const dataFromJson = await d3.json(dataUrl);
+  
+      const tableData = Object.values(dataFromJson).filter(
+        (item) => item.shelfmark !== ""
+      );
+      tableConfig.data = tableData;
+      const table = createTable(tableConfig);
+  
+      table.on("dataLoaded", function (data) {
+        $("#total_count").text(data.length);
+      });
+  
+      table.on("dataFiltered", function (_filters, rows) {
+        $("#search_count").text(rows.length);
+        markers = rowsToMarkers(map, rows, layerGroups, oms);
+      });
+  
+      // Event listener for click on row
+      table.on("rowClick", (e, row) => {
+        zoomToPointFromRowData(row.getData(), map, markers);
+      });
+    } catch (error) {
+      console.error("Error loading or processing data:", error);
+    }
+  })();
 }
 
 setupMapAndTable(dataUrl);

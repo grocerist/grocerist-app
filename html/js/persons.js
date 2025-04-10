@@ -33,7 +33,7 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    headerSort:false,
+    headerSort: false,
   },
   {
     title: "District",
@@ -48,14 +48,14 @@ const baseColumnDefinitions = [
     headerFilterFunc: objectArrayHeaderFilter,
     formatterParams: {
       urlPrefix: "district__",
-      idField: "id", 
+      idField: "id",
       nameField: "value",
     },
     sorter: "array",
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "<i>Mahalle</i>",
@@ -67,10 +67,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "<i>Karye</i>",
@@ -82,10 +82,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "<i>Nahiye</i>",
@@ -97,10 +97,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "Quarter",
@@ -112,10 +112,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "Address",
@@ -127,10 +127,10 @@ const baseColumnDefinitions = [
       idField: "id",
       nameField: "value",
     },
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "Century",
@@ -339,27 +339,31 @@ function createTable(tableConfig) {
   return table;
 }
 
-d3.json(dataUrl, function (data) {
-  tableData = Object.values(data)
-    .filter((item) => item.name !== "")
-    // replace empty century values (NaN in Baserow) with null
-    .map((item) => {
-      if (isNaN(item.century)) {
-        item.century = null;
-      }
-      return item;
+(async function () {
+  try {
+    const dataFromJson = await d3.json(dataUrl);
+    const tableData = Object.values(dataFromJson)
+      .filter((item) => item.name !== "")
+      // replace empty century values (NaN in Baserow) with null
+      .map((item) => {
+        if (isNaN(item.century)) {
+          item.century = null;
+        }
+        return item;
+      });
+    tableConfig.data = tableData;
+    const table = createTable(tableConfig);
+    table.on("dataLoaded", function (data) {
+      $("#total_count").text(data.length);
     });
-  tableConfig.data = tableData;
-  const table = createTable(tableConfig);
-  table.on("dataLoaded", function (data) {
-    $("#total_count").text(data.length);
-  });
-  table.on("dataFiltered", function (_filters, rows) {
-    $("#search_count").text(rows.length);
-    generateChartsFromTable(rows, table);
-  });
-
-});
+    table.on("dataFiltered", function (_filters, rows) {
+      $("#search_count").text(rows.length);
+      generateChartsFromTable(rows, table);
+    });
+  } catch (error) {
+    console.error("Error loading or processing data:", error);
+  }
+})();
 
 // Custom colors (default HighCharts list has too few)
 Highcharts.setOptions({
