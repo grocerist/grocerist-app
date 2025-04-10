@@ -266,7 +266,8 @@ function calculateLocationData(rows, selectedLocationType, districtColors) {
             let rowData = row.getData();
             let { name, person_count, upper_admin, location_type, persons } =
               rowData.properties;
-           upper_admin = upper_admin === null ? upper_admin : upper_admin.value
+            upper_admin =
+              upper_admin === null ? upper_admin : upper_admin.value;
             // for the chart type allLocations, we need to find the right drilldown series within a district
             // for specific location types, there is only one series per district anyway
             if (
@@ -288,95 +289,100 @@ function calculateLocationData(rows, selectedLocationType, districtColors) {
   return [topLevel, drilldownData];
 }
 
-d3.json(dataUrl, function (dataFromJson) {
-  // remove items with an empty name (mostly found in the neighbourhoods table)
-  const tableData = Object.values(dataFromJson)[1]
-    .filter((item) => item.properties.name.trim() !== "")
-    .map((item) => {
-      const enriched = item;
-      if (item.properties.location_type === "District") {
-        enriched["first_level"] = item.properties.name;
-      } else if (item.properties.upper_admin.length > 0) {
-        enriched["first_level"] = item.properties.upper_admin[0].value;
-      }
-      return enriched;
-    });
-  tableConfig.data = tableData;
-  const table = new Tabulator("#places_table", tableConfig);
-  let first = true;
-  let chart;
-  table.on("dataLoaded", function (data) {
-    $("#total_count").text(data.length);
-  });
-
-  table.on("dataFiltered", function (filters, rows) {
-    $("#search_count").text(rows.length);
-
-    if (first) {
-      // set specific colors for each district
-      districtColors = rows.reduce((result, row, index) => {
-        const data = row.getData().properties;
-        if (data.location_type === "District") {
-          result[data.name] = colors[index];
+(async function () {
+  try {
+    const dataFromJson = await d3.json(dataUrl);
+    // remove items with an empty name (mostly found in the neighbourhoods table)
+    const tableData = Object.values(dataFromJson)[1]
+      .filter((item) => item.properties.name.trim() !== "")
+      .map((item) => {
+        const enriched = item;
+        if (item.properties.location_type === "District") {
+          enriched["first_level"] = item.properties.name;
+        } else if (item.properties.upper_admin.length > 0) {
+          enriched["first_level"] = item.properties.upper_admin[0].value;
         }
-        return result;
-      }, {});
-      // Create the chart
-      let locationResults;
+        return enriched;
+      });
+    tableConfig.data = tableData;
+    const table = new Tabulator("#places_table", tableConfig);
+    let first = true;
+    let chart;
+    table.on("dataLoaded", function (data) {
+      $("#total_count").text(data.length);
+    });
+
+    table.on("dataFiltered", function (filters, rows) {
+      $("#search_count").text(rows.length);
+
+      if (first) {
+        // set specific colors for each district
+        districtColors = rows.reduce((result, row, index) => {
+          const data = row.getData().properties;
+          if (data.location_type === "District") {
+            result[data.name] = colors[index];
+          }
+          return result;
+        }, {});
+        // Create the chart
+        let locationResults;
+        [locationResults, globalDrilldownData] = calculateLocationData(
+          rows,
+          "allLocations",
+          districtColors
+        );
+        chart = createColumnChart("location-chart", locationResults);
+        first = false;
+      }
+      // Drill up to the top level if the chart is in a drilldown state
+      if (chart.drilldownLevels && chart.drilldownLevels.length > 0) {
+        chart.drillUp();
+      }
+
+      const locationTypeFilter = filters.find(
+        (filter) => filter.field === "properties.location_type"
+      );
+
+      selectedLocationType = locationTypeFilter
+        ? locationTypeFilter.value
+        : "allLocations";
       [locationResults, globalDrilldownData] = calculateLocationData(
         rows,
-        "allLocations",
+        selectedLocationType,
         districtColors
       );
-      chart = createColumnChart("location-chart", locationResults);
-      first = false;
-    }
-    // Drill up to the top level if the chart is in a drilldown state
-    if (chart.drilldownLevels && chart.drilldownLevels.length > 0) {
-      chart.drillUp();
-    }
-
-    const locationTypeFilter = filters.find(
-      (filter) => filter.field === "properties.location_type"
-    );
-
-    selectedLocationType = locationTypeFilter
-      ? locationTypeFilter.value
-      : "allLocations";
-    [locationResults, globalDrilldownData] = calculateLocationData(
-      rows,
-      selectedLocationType,
-      districtColors
-    );
-    // Update the chart with the new data
-    chart.series[0].update({
-      name:
-        selectedLocationType === "allLocations"
-          ? `Grocers per location`
-          : `Grocers per ${selectedLocationType}`, // Set the name of the series
-      data: locationResults, // Set the data of the series
-    });
-
-    chart.update({
-      title: {
-        text:
+      // Update the chart with the new data
+      chart.series[0].update({
+        name:
           selectedLocationType === "allLocations"
-            ? `Grocers per location by district`
-            : `Grocers per ${selectedLocationType} by district`,
-      },
-      exporting: {
-        chartOptions: {
-          subtitle: null,
+            ? `Grocers per location`
+            : `Grocers per ${selectedLocationType}`, // Set the name of the series
+        data: locationResults, // Set the data of the series
+      });
+
+      chart.update({
+        title: {
+          text:
+            selectedLocationType === "allLocations"
+              ? `Grocers per location by district`
+              : `Grocers per ${selectedLocationType} by district`,
         },
-        filename:
-          selectedLocationType === "allLocations"
-            ? "grocers_per_location"
-            : `grocers_per_${selectedLocationType.toLowerCase()}`,
-      },
+        exporting: {
+          chartOptions: {
+            subtitle: null,
+          },
+          filename:
+            selectedLocationType === "allLocations"
+              ? "grocers_per_location"
+              : `grocers_per_${selectedLocationType.toLowerCase()}`,
+        },
+      });
+      chart.redraw();
     });
-    chart.redraw();
-  });
-});
+  } catch (error) {
+    console.error("Error loading or processing data:", error);
+  }
+})();
 // Custom colors
 Highcharts.setOptions({
   colors: colors,
