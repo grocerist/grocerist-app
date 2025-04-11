@@ -60,7 +60,7 @@
             {% endif %}
             {% endfor %}
             {% if ns.has_18th_century_docs %}
-            <strong class="ms-4">18th century documents</strong>
+            <strong class="ms-4">18th century</strong>
             <ul>
                 {% for x in object.documents if x.century.value == "18" %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
@@ -68,7 +68,7 @@
             </ul>
             {% endif %}
             {% if ns.has_19th_century_docs %}
-            <strong class="ms-4">19th century documents</strong>
+            <strong class="ms-4">19th century</strong>
             <ul>
                 {% for x in object.documents if x.century.value == "19" %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
@@ -76,7 +76,7 @@
             </ul>
             {% endif %}
             {% if ns.has_no_date_docs %}
-            <strong class="ms-4">Documents without date</strong>
+            <strong class="ms-4">No date</strong>
             <ul>
                 {% for x in object.documents if x.century is none %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
