@@ -10,6 +10,13 @@ const commonTableConfig = {
   paginationSize: 15,
 };
 
+const priceTableConfig = {
+  layout: "fitColumns",
+  responsiveLayout: "collapse",
+  minHeight: 150,
+  maxHeight: 400
+};
+
 // common settings for columns with arrays of objects
 const linkListColumnSettings = {
   formatter: linkListFormatter,

@@ -370,6 +370,14 @@ div h1>a {
     }
 }
 
+div h2>a {
+    color: var(--secondary);
+
+    &:hover {
+        color: var(--secondary-hover);
+    }
+}
+
 /*Custom Tabulator styles*/
 .tabulator-row.tabulator-row-even {
     background-color: white;
@@ -462,6 +470,15 @@ div.subpage a {
 
 ul.no-bullets {
     list-style-type: none;
+}
+
+.prices-info {
+    margin: auto;
+    width: 60%;
+}
+
+.tabulator-row.tabulator-selectable.tabulator-selected {
+    background-color: var(--primary-hover)
 }
 
 /* Highcharts specific */
