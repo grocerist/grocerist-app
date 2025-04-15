@@ -1,37 +1,21 @@
 const dataUrl = "json_dumps/price_per_document.json";
 
 const columnDefinitions = [
-    {
-        title: "Document",
-        field: "document",
-        minWidth: 250,
-        headerFilter: "input",
-        ...linkListColumnSettings,
-        formatterParams: {
-            urlPrefix: "document__",
-            idField: "id",
-            nameField: "value",
-          },
-          sorterParams:{
-            type:"string",
-            alignEmptyValues:"bottom",
-            valueMap:"value",
-        },
-    },
-  },
   {
     title: "Document",
     field: "document",
+    minWidth: 250,
+    headerFilter: "input",
     ...linkListColumnSettings,
     formatterParams: {
-      urlPrefix: "document__",
-      idField: "id",
-      nameField: "value",
+        urlPrefix: "document__",
+        idField: "id",
+        nameField: "value",
     },
-    sorterParams: {
-      type: "string",
-      alignEmptyValues: "bottom",
-      valueMap: "value",
+    sorterParams:{
+        type:"string",
+        alignEmptyValues:"bottom",
+        valueMap:"value",
     },
   },
   {
@@ -108,29 +92,26 @@ const goodsListColumnDefinitions = [
 ];
 
 
-initializeTable = function (goodName, correctedGoodName) {
-    d3.json(dataUrl, function (dataFromJson) {
-        let tableData = Object.values(dataFromJson)
-            .filter((item) => (item.good.length > 0 && item.good[0].value == goodName))
+initializeTable = function (goodName, correctedGoodName, allData) {
+    let tableData = allData
+        .filter((item) => (item.good.length > 0 && item.good[0].value == goodName))
 
-        const table = new Tabulator(`#table-${correctedGoodName}`, {
-            ...priceTableConfig,
-            data: tableData,
-            columns: columnDefinitions,
-            initialSort: [{ column: "doc_year", dir: "asc" }],
-            footerElement: `<span class="tabulator-counter float-left">
-                    </span>`,
-        });
-        table.on("dataLoaded", function (data) {
-            $("#total_count").text(data.length);
-        });
-        table.on("dataFiltered", function (_filters, rows) {
-            $("#search_count").text(rows.length);
-        });
+    const table = new Tabulator(`#table-${correctedGoodName}`, {
+        ...priceTableConfig,
+        data: tableData,
+        columns: columnDefinitions,
+        initialSort: [{ column: "doc_year", dir: "asc" }],
+        footerElement: `<span class="tabulator-counter float-left"></span>`,
+    });
+    table.on("dataLoaded", function (data) {
+        $("#total_count").text(data.length);
+    });
+    table.on("dataFiltered", function (_filters, rows) {
+        $("#search_count").text(rows.length);
     });
 }
 
-function handleRowSelection(row) {
+function handleRowSelection(row, allData) {
     rowData = row.getData()
     goodName = rowData.good
     goodId = rowData.id
@@ -155,7 +136,7 @@ function handleRowSelection(row) {
         `;
         rowDivInPricesTablesContainer.appendChild(goodDiv);
     
-        initializeTable(goodName, correctedGoodName);
+        initializeTable(goodName, correctedGoodName, allData);
     } else {
         goodDiv.style.display = "block";
     }
@@ -166,7 +147,6 @@ function handleRowDeselection(row) {
     goodName = rowData.good
     goodId = rowData.good
 
-    
     let correctedGoodName = goodName.replace(/\//g, "").replace(/\s+/g, "_");
     let goodDiv = document.getElementById(`prices-${correctedGoodName}`);
     goodDiv.style.display = "none";
@@ -177,8 +157,9 @@ function handleRowDeselection(row) {
 (async function () {
   try {
     const dataFromJson = await d3.json(dataUrl);
-    let tableData = Object.values(dataFromJson)
-        .filter(item => item.good && Array.isArray(item.good) && item.good.length > 0)
+    let allData = Object.values(dataFromJson)
+        .filter(item => item.good && Array.isArray(item.good) && item.good.length > 0);
+    let tableData = allData
         .filter((item, index, self) =>
             index === self.findIndex(t => t.good[0].value === item.good[0].value)
         )
@@ -201,8 +182,8 @@ function handleRowDeselection(row) {
     table.on("dataFiltered", function (_filters, rows) {
       $("#search_count").text(rows.length);
     });
-    table.on("rowSelected", function(row){
-        handleRowSelection(row);
+    table.on("rowSelected", function(row) {
+        handleRowSelection(row, allData);
     });
     table.on("rowDeselected", function(row){
         handleRowDeselection(row);
