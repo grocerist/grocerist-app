@@ -18,58 +18,74 @@ const columnDefinitions = [
             valueMap:"value",
         },
     },
-    {
-        title: "Year",
-        field: "doc_year",
-        mutator: function (value, data, type, params, component) {
-          return value[0].value;
-        },
-        headerFilter: "input",
-        sorterParams:{
-            alignEmptyValues:"bottom",
-        }
-      },
-    {
-        title: "Price",
-        field: "price",
-        headerFilter: "number",
-        headerFilterPlaceholder: "at least...",
-        headerFilterFunc: greaterThanFilter,
-        sorterParams:{
-            alignEmptyValues:"bottom",
-        }
+  },
+  {
+    title: "Document",
+    field: "document",
+    ...linkListColumnSettings,
+    formatterParams: {
+      urlPrefix: "document__",
+      idField: "id",
+      nameField: "value",
     },
-    {
-        title: "Unit",
-        field: "unit.value",
-        headerFilter: "list",
-        headerFilterParams: {
-          valuesLookup: true,
-        },
-        sorterParams:{
-            alignEmptyValues:"bottom",
-        }
+    sorterParams: {
+      type: "string",
+      alignEmptyValues: "bottom",
+      valueMap: "value",
     },
-    {
-        title: "Amount",
-        field: "amount_of_units",
-        headerFilter: "number",
-        headerFilterPlaceholder: "at least...",
-        headerFilterFunc: greaterThanFilter,
-        sorterParams:{
-            alignEmptyValues:"bottom",
-        }
+  },
+  {
+    title: "Year",
+    field: "doc_year",
+    mutator: function (value, data, type, params, component) {
+      return value[0].value;
     },
-    {
-        title: "Total Value",
-        field: "total_value",
-        headerFilter: "number",
-        headerFilterPlaceholder: "at least...",
-        headerFilterFunc: greaterThanFilter,
-        sorterParams:{
-            alignEmptyValues:"bottom",
-        }
+    headerFilter: "input",
+    sorterParams: {
+      alignEmptyValues: "bottom",
     },
+  },
+  {
+    title: "Price",
+    field: "price",
+    headerFilter: "number",
+    headerFilterPlaceholder: "at least...",
+    headerFilterFunc: greaterThanFilter,
+    sorterParams: {
+      alignEmptyValues: "bottom",
+    },
+  },
+  {
+    title: "Unit",
+    field: "unit.value",
+    headerFilter: "list",
+    headerFilterParams: {
+      valuesLookup: true,
+    },
+    sorterParams: {
+      alignEmptyValues: "bottom",
+    },
+  },
+  {
+    title: "Amount",
+    field: "amount_of_units",
+    headerFilter: "number",
+    headerFilterPlaceholder: "at least...",
+    headerFilterFunc: greaterThanFilter,
+    sorterParams: {
+      alignEmptyValues: "bottom",
+    },
+  },
+  {
+    title: "Total Value",
+    field: "total_value",
+    headerFilter: "number",
+    headerFilterPlaceholder: "at least...",
+    headerFilterFunc: greaterThanFilter,
+    sorterParams: {
+      alignEmptyValues: "bottom",
+    },
+  },
 ];
 
 const goodsListColumnDefinitions = [
@@ -158,10 +174,10 @@ function handleRowDeselection(row) {
     rowDivInPricesTablesContainer.remove()
 }
 
-//main
-d3.json(dataUrl, function (dataFromJson) {
-
-    const tableData = Object.values(dataFromJson)
+(async function () {
+  try {
+    const dataFromJson = await d3.json(dataUrl);
+    let tableData = Object.values(dataFromJson)
         .filter(item => item.good && Array.isArray(item.good) && item.good.length > 0)
         .filter((item, index, self) =>
             index === self.findIndex(t => t.good[0].value === item.good[0].value)
@@ -170,7 +186,6 @@ d3.json(dataUrl, function (dataFromJson) {
             good: item.good[0].value,
             id: item.good[0].id
         }));
-
     const table = new Tabulator(`#goods-list`, {
         selectableRows:3,
         ...commonTableConfig,
@@ -179,13 +194,12 @@ d3.json(dataUrl, function (dataFromJson) {
         columns: goodsListColumnDefinitions,
         initialSort: [{ column: "good", dir: "asc" }],
         footerElement: `<span class="tabulator-counter float-left"></span>`,
-       
     });
     table.on("dataLoaded", function (data) {
-        $("#total_count").text(data.length);
+      $("#total_count").text(data.length);
     });
     table.on("dataFiltered", function (_filters, rows) {
-        $("#search_count").text(rows.length);
+      $("#search_count").text(rows.length);
     });
     table.on("rowSelected", function(row){
         handleRowSelection(row);
@@ -193,4 +207,8 @@ d3.json(dataUrl, function (dataFromJson) {
     table.on("rowDeselected", function(row){
         handleRowDeselection(row);
     });
-});
+  } catch (error) {
+    console.error("Error loading or processing data:", error);
+  }
+})();
+

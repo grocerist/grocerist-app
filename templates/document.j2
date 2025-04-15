@@ -12,7 +12,7 @@
         <div class="col">
             {% if object.district or object.neighbourhood or object.karye or object.nahiye or object.quarter or
             object.address %}
-            <h2><i class="bi bi-geo-alt" aria-hidden="true"></i> Location</h2>
+            <h2><i class="bi bi-geo-alt" aria-hidden="true"></i>Location</h2>
             <dl class="ms-4">
                 {% if object.district %}
                 <dt>District</dt>
@@ -20,35 +20,30 @@
                 <dd class="ms-2"><a href="district__{{ x.id }}.html">{{ x.value }}</a></dd>
                 {% endfor %}
                 {% endif %}
-
                 {% if object.neighbourhood %}
                 <dt><i>Mahalle</i></dt>
                 {% for x in object.neighbourhood %}
                 <dd class="ms-2"><a href="neighbourhood__{{ x.id }}.html">{{ x.value }}</a></dd>
                 {% endfor %}
                 {% endif %}
-
                 {% if object.karye %}
                 <dt><i>Karye</i></dt>
                 {% for x in object.karye %}
                 <dd class="ms-2"><a href="karye__{{ x.id }}.html">{{ x.value }}</a></dd>
                 {% endfor %}
                 {% endif %}
-
                 {% if object.nahiye %}
                 <dt><i>Nahiye</i></dt>
                 {% for x in object.nahiye %}
                 <dd class="ms-2"><a href="nahiye__{{ x.id }}.html">{{ x.value }}</a></dd>
                 {% endfor %}
                 {% endif %}
-
                 {% if object.quarter %}
                 <dt>Quarter</dt>
                 {% for x in object.quarter %}
                 <dd class="ms-2"><a href="quarter__{{ x.id }}.html">{{ x.value }}</a></dd>
                 {% endfor %}
                 {% endif %}
-
                 {% if object.address %}
                 <dt>Address</dt>
                 {% for x in object.address %}
@@ -58,7 +53,7 @@
             </dl>
             {% endif %}
             {%if object.year_of_creation_hicri or object.creation_date_miladi %}
-            <h2><i class="bi bi-calendar4" aria-hidden="true"></i> Year of creation</h2>
+            <h2><i class="bi bi-calendar4" aria-hidden="true"></i>Year of creation</h2>
             <dl class="ms-4">
                 {% if object.year_of_creation_hicri %}
                 <dt><i>Hicri</i></dt>
@@ -71,7 +66,7 @@
             </dl>
             {% endif %}
             {% if object.main_person %}
-            <h2><i class="bi bi-person" aria-hidden="true"></i> <i>Bakkal</i>/Grocer</h2>
+            <h2><i class="bi bi-person" aria-hidden="true"></i><i>Bakkal</i>/Grocer</h2>
             {% for x in object.main_person %}
             <dl class="ms-4">
                 <dt>Name</dt>
@@ -88,11 +83,11 @@
             {% endfor %}
             {% endif %}
             {% if object.goods %}
-            <h2><i class="bi bi-basket" aria-hidden="true"></i> Groceries</h2>
+            <h2><i class="bi bi-basket" aria-hidden="true"></i>Groceries</h2>
             <dl class="ms-4">
                 {% for x in object.goods | sort(attribute='name') %}
                 <dt><a href="{{ x.grocerist_id }}.html">{{ x.name }}</a></dt>
-                <dd class="ms-2">
+                <dd class="m-2">
                     {% for y in x.has_category %}
                     <a href="category__{{ y.id }}.html"><span class="border rounded p-1">{{y.value}}</span></a>
                     {% endfor %}
@@ -104,21 +99,21 @@
         <div class="col">
             {% if images %}
             <div class="pb-3">
-                <h2 class="text-center"><i class="bi bi-images" aria-hidden="true"></i> Facsimiles</h2>
+                <h2 class="text-center"><i class="bi bi-images" aria-hidden="true"></i>Facsimiles</h2>
                 <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/openseadragon.min.js"></script>
+                <script src="vendor/openseadragon-bin-5.0.1/openseadragon.min.js"></script>
                 <script type="text/javascript">
                     var viewer = OpenSeadragon({
                         id: "openseadragon1",
                         sequenceMode: true,
-                        prefixUrl: "https://cdnjs.cloudflare.com/ajax/libs/openseadragon/4.1.0/images/",
+                        prefixUrl: "vendor/openseadragon-bin-5.0.1/images/",
                         tileSources: {{ images }}
                 });
                 </script>
             </div>
             {% endif %}
             <div class="pb-3">
-                <h2 class="text-center"><i class="bi bi-pencil" aria-hidden="true"></i> Transcript</h2>
+                <h2 class="text-center"><i class="bi bi-pencil" aria-hidden="true"></i>Transcript</h2>
                 {% for x in paragraphs %}
                 {{ x|safe }}
                 {% endfor %}

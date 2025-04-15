@@ -15,7 +15,7 @@
             {% if pagename != 'district'%}
             {% if object.upper_admin1 or object.upper_admin2 or object.upper_admin3 or object.upper_admin4 or
             object.upper_admin5 %}
-            <h2><i class="bi bi-geo-alt" aria-hidden="true"></i> Upper administration unit</h2>
+            <h2><i class="bi bi-geo-alt" aria-hidden="true"></i>Upper administration unit</h2>
             {% endif %}
             <dl class="ms-4">
                 {% if object.upper_admin1 %}
@@ -55,7 +55,7 @@
             </dl>
             {% endif %}
             {% if object.documents %}
-            <h2><i class="bi bi-archive" aria-hidden="true"></i> Documents</h2>
+            <h2><i class="bi bi-archive" aria-hidden="true"></i>Documents</h2>
             <ul>
                 {% for x in object.documents %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
@@ -63,7 +63,7 @@
             </ul>
             {% endif %}
             {% if object.persons %}
-            <h2><i class="bi bi-person" aria-hidden="true"></i> Persons</h2>
+            <h2><i class="bi bi-person" aria-hidden="true"></i>Persons</h2>
             <ul>
                 {% for x in object.persons %}
                 <li><a href="person__{{ x.id }}.html">{{ x.name }}</a></li>
@@ -72,7 +72,7 @@
             {% endif %}
         </div>
         <div class="col">
-            <h2><i class="bi bi-map" aria-hidden="true"></i> Map</h2>
+            <h2><i class="bi bi-map" aria-hidden="true"></i>Map</h2>
             <div id="map" style="height: 600px;" />
         </div>
     </div>
@@ -92,7 +92,7 @@
     const markerData = {
         lat: lat,
         long: long,
-        year: null,
+        century: null,
         popupContent: `<strong>{{ object.name }}</strong>
     <br>${docs.length} related document(s)
     <br>${persons.length} related person(s)`,

@@ -271,47 +271,54 @@ function createSplineChart(data, isNormalized) {
     }
   );
 }
-d3.json(dataUrl, function (data) {
-  const relChartData = Object.values(data.religions);
-  const catChartData = {
-    categories_18: Object.values(data.categories_18),
-    drilldown_18: Object.values(data.categories_18_drilldown),
-    categories_19: Object.values(data.categories_19),
-    drilldown_19: Object.values(data.categories_19_drilldown),
-  };
-  const timeChartData = Object.values(data.categories_over_decades);
-  const normalizedTimeChartData = Object.values(
-    data.normalized_categories_over_decades
-  );
+(async function () {
+  try {
+    const dataFromJson = await d3.json(dataUrl);
 
-  // Custom colors (default HighCharts list has too few)
-  Highcharts.setOptions({
-    colors: colors,
-  });
+    const relChartData = Object.values(dataFromJson.religions);
+    const catChartData = {
+      categories_18: Object.values(dataFromJson.categories_18),
+      drilldown_18: Object.values(dataFromJson.categories_18_drilldown),
+      categories_19: Object.values(dataFromJson.categories_19),
+      drilldown_19: Object.values(dataFromJson.categories_19_drilldown),
+    };
+    const timeChartData = Object.values(dataFromJson.categories_over_decades);
+    const normalizedTimeChartData = Object.values(
+      dataFromJson.normalized_categories_over_decades
+    );
 
-  createPieChart("container_religion_chart", "Religion", relChartData);
-  let catChart = createColumnChart(
-    "container_categories_chart",
-    "Groceries by Category",
-    catChartData
-  );
-  // Redraw the Groceries by Category chart when the century is changed
-  const select = document.getElementById("select-century");
-  select.addEventListener("change", () => {
-    const century = select.value;
-    catChart.destroy();
-    catChart = createColumnChart(
+    // Custom colors (default HighCharts list has too few)
+    Highcharts.setOptions({
+      colors: colors,
+    });
+
+    createPieChart("container_religion_chart", "Religion", relChartData);
+    let catChart = createColumnChart(
       "container_categories_chart",
       "Groceries by Category",
-      catChartData,
-      century
+      catChartData
     );
-  });
 
-  // Add visibility attribute for the spline charts
-  setVisibilityForFirstElement(timeChartData);
-  setVisibilityForFirstElement(normalizedTimeChartData);
+    // Redraw the Groceries by Category chart when the century is changed
+    const select = document.getElementById("select-century");
+    select.addEventListener("change", () => {
+      const century = select.value;
+      catChart.destroy();
+      catChart = createColumnChart(
+        "container_categories_chart",
+        "Groceries by Category",
+        catChartData,
+        century
+      );
+    });
 
-  createSplineChart(timeChartData, false);
-  createSplineChart(normalizedTimeChartData, true);
-});
+    // Add visibility attribute for the spline charts
+    setVisibilityForFirstElement(timeChartData);
+    setVisibilityForFirstElement(normalizedTimeChartData);
+
+    createSplineChart(timeChartData, false);
+    createSplineChart(normalizedTimeChartData, true);
+  } catch (error) {
+    console.error("Error loading or processing data:", error);
+  }
+})();
