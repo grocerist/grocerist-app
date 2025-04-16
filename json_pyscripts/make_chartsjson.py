@@ -157,8 +157,8 @@ def goods_century_decade_count(goods_data, docs_data, decades):
             if century is not None:
                 century = century.get("value")
                 # NOTE: for now, the 1 document from the 17th century is not included
-                if century in [18, 19]:
-                    century_dict[good_name][str(century)] += 1
+                if century in ["18", "19"]:
+                    century_dict[good_name][century] += 1
             # data for decade dict
             date_of_creation = docs_data[doc].get("creation_date_ISO")
             year = extract_year(date_of_creation)
