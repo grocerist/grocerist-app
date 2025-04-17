@@ -145,26 +145,27 @@ def goods_century_decade_count(goods_data, docs_data, decades):
     decade_dict = {}
 
     for good in goods_data:
-        good_name = good["name"]
-        # Initialize with zeros for all decades and centuries
-        decade_dict[good_name] = {decade: 0 for decade in decades}
-        century_dict[good_name] = {"18": 0, "19": 0}
+        if good["broken_or_spoilt"] is False:
+            good_name = good["name"]
+            # Initialize with zeros for all decades and centuries
+            decade_dict[good_name] = {decade: 0 for decade in decades}
+            century_dict[good_name] = {"18": 0, "19": 0}
 
-        doc_list = [str(document["id"]) for document in good["documents"]]
-        for doc in doc_list:
-            # data for century dict
-            century = docs_data[doc].get("century")
-            if century is not None:
-                century = century.get("value")
-                # NOTE: for now, the 1 document from the 17th century is not included
-                if century in ["18", "19"]:
-                    century_dict[good_name][century] += 1
-            # data for decade dict
-            date_of_creation = docs_data[doc].get("creation_date_ISO")
-            year = extract_year(date_of_creation)
-            if year is not None:
-                decade = round_down_to_ten(year)
-                decade_dict[good_name][decade] += 1
+            doc_list = [str(document["id"]) for document in good["documents"]]
+            for doc in doc_list:
+                # data for century dict
+                century = docs_data[doc].get("century")
+                if century is not None:
+                    century = century.get("value")
+                    # NOTE: for now, the 1 document from the 17th century is not included
+                    if century in ["18", "19"]:
+                        century_dict[good_name][century] += 1
+                # data for decade dict
+                date_of_creation = docs_data[doc].get("creation_date_ISO")
+                year = extract_year(date_of_creation)
+                if year is not None:
+                    decade = round_down_to_ten(year)
+                    decade_dict[good_name][decade] += 1
 
     return century_dict, decade_dict
 
@@ -173,7 +174,11 @@ def process_goods(goods, century_goods_dict, century):
     processed_goods = {}
     for good in goods:
         name = good["value"]
-        processed_goods[name] = century_goods_dict[name][century]
+        try:
+            processed_goods[name] = century_goods_dict[name][century]
+        # If the good is not in the century_goods_dict, it's broken or spoilt
+        except KeyError:
+            continue
     return processed_goods
 
 
@@ -453,8 +458,13 @@ for category in categories_data:
     # find the goods belonging to this category
     goods_list = [good["value"] for good in category["goods"]]
     for good in goods_list:
-        for decade in decades:
-            decade_dict[category_name][decade] += decade_good_dict[good][decade]
+        try:
+            decade_good_dict[good]
+            for decade in decades:
+                decade_dict[category_name][decade] += decade_good_dict[good][decade]
+        # If the good is not in the decade_good_dict, it's broken or spoilt
+        except KeyError:
+            continue
 
 # Normalize the counts to percentages
 total_mentions_per_decade = {}
