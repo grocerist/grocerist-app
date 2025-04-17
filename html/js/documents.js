@@ -198,8 +198,12 @@ const baseColumnDefinitions = [
   },
   {
     title: "Century",
-    field: "century",
-    headerFilter: "input",
+    field: "century.value",
+    headerFilter: "list",
+    headerFilterParams: {
+      valuesLookup: "century",
+      sort: "asc",
+    },
   },
   {
     title: "Groceries",
