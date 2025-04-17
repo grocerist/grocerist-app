@@ -37,6 +37,14 @@ const baseColumnDefinitions = [
     },
     headerSort: false,
   },
+  {
+    title: "Broken / spoilt",
+    field: "broken_or_spoilt",
+    hozAlign: "center",
+    formatter: "tickCross",
+    headerFilter: "tickCross",
+    headerFilterParams: { tristate: true },
+  }
 ];
 // Add minWidth and visibility toggle to each column
 const columnDefinitions = baseColumnDefinitions.map((column) => ({
