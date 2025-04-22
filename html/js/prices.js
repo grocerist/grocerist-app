@@ -8,14 +8,14 @@ const columnDefinitions = [
     headerFilter: "input",
     ...linkListColumnSettings,
     formatterParams: {
-        urlPrefix: "document__",
-        idField: "id",
-        nameField: "value",
+      urlPrefix: "document__",
+      idField: "id",
+      nameField: "value",
     },
-    sorterParams:{
-        type:"string",
-        alignEmptyValues:"bottom",
-        valueMap:"value",
+    sorterParams: {
+      type: "string",
+      alignEmptyValues: "bottom",
+      valueMap: "value",
     },
   },
   {
@@ -73,108 +73,120 @@ const columnDefinitions = [
 ];
 
 const goodsListColumnDefinitions = [
-    {
-        title: "Good",
-        field: "good",
-        headerFilter: "input",
-        //...linkListColumnSettings,
-        formatterParams: {
-          urlPrefix: "goods__",
-          idField: "id",
-          nameField: "value",
-        },
-        sorterParams: {
-          type: "string",
-          alignEmptyValues: "bottom",
-          valueMap: "value",
-        },
+  {
+    title: "Good",
+    field: "good",
+    headerFilter: "input",
+    //...linkListColumnSettings,
+    formatterParams: {
+      urlPrefix: "goods__",
+      idField: "id",
+      nameField: "value",
     },
+    sorterParams: {
+      type: "string",
+      alignEmptyValues: "bottom",
+      valueMap: "value",
+    },
+  },
 ];
 
+initializeTable = function (goodName, correctedGoodName,  priceTableData) {
 
-initializeTable = function (goodName, correctedGoodName, allData) {
-    let tableData = allData
-        .filter((item) => (item.good.length > 0 && item.good[0].value == goodName))
-
-    const table = new Tabulator(`#table-${correctedGoodName}`, {
-        ...priceTableConfig,
-        data: tableData,
-        columns: columnDefinitions,
-        initialSort: [{ column: "doc_year", dir: "asc" }],
-        footerElement: `<span class="tabulator-counter float-left"></span>`,
-    });
-    table.on("dataLoaded", function (data) {
-        $("#total_count").text(data.length);
-    });
-    table.on("dataFiltered", function (_filters, rows) {
-        $("#search_count").text(rows.length);
-    });
-}
+  const table = new Tabulator(`#table-${correctedGoodName}`, {
+    layout: "fitColumns",
+    responsiveLayout: "collapse",
+    minHeight: 150,
+    maxHeight: 400,
+    data: priceTableData,
+    columns: columnDefinitions,
+    initialSort: [{ column: "doc_year", dir: "asc" }],
+    footerElement: `<span class="tabulator-counter float-left"></span>`,
+  });
+  table.on("dataLoaded", function (data) {
+    $("#total_count").text(data.length);
+  });
+  table.on("dataFiltered", function (_filters, rows) {
+    $("#search_count").text(rows.length);
+  });
+};
 
 function handleRowSelection(row, allData) {
-    rowData = row.getData()
-    goodName = rowData.good
-    goodId = rowData.id
+  rowData = row.getData();
+  goodName = rowData.good;
+  goodId = rowData.id;
+  const pricesTablesContainer = document.getElementById("prices-tables");
+  let correctedGoodName = goodName.replace(/\//g, "").replace(/\s+/g, "_");
 
-    const pricesTablesContainer = document.getElementById("prices-tables");
-    let correctedGoodName = goodName.replace(/\//g, "").replace(/\s+/g, "_");
+  let goodDiv = document.getElementById(`prices-${correctedGoodName}`);
+  if (!goodDiv) {
+    rowDiv = document.createElement("div");
+    rowDiv.className = "row";
+    rowDiv.id = `rowDiv-${correctedGoodName}`;
+    pricesTablesContainer.appendChild(rowDiv);
+    rowDivInPricesTablesContainer = document.getElementById(
+      `rowDiv-${correctedGoodName}`
+    );
+    goodDiv = document.createElement("div");
+    goodDiv.id = `prices-${correctedGoodName}`;
+    goodDiv.className = "col-10";
 
-    let goodDiv = document.getElementById(`prices-${correctedGoodName}`);
-    if (!goodDiv) {
-        rowDiv = document.createElement("div");
-        rowDiv.className = "row";
-        rowDiv.id = `rowDiv-${correctedGoodName}`
-        pricesTablesContainer.appendChild(rowDiv)
-        rowDivInPricesTablesContainer = document.getElementById(`rowDiv-${correctedGoodName}`);
-        goodDiv = document.createElement("div");
-        goodDiv.id = `prices-${correctedGoodName}`;
-        goodDiv.className = "col-10"
-    
-        goodDiv.innerHTML = `
+    goodDiv.innerHTML = `
             <h2 id="title-${correctedGoodName}"><a href="/goods__${goodId}.html">${goodName}</a></h2>
             <div id="table-${correctedGoodName}"></div>
         `;
-        rowDivInPricesTablesContainer.appendChild(goodDiv);
-    
-        initializeTable(goodName, correctedGoodName, allData);
-    } else {
-        goodDiv.style.display = "block";
-    }
+    rowDivInPricesTablesContainer.appendChild(goodDiv);
+    let priceTableData = JSON.parse(
+      JSON.stringify(
+        allData.filter(
+          (item) => item.good.length > 0 && item.good[0].value == goodName
+        )
+      )
+    );
+    initializeTable(goodName, correctedGoodName, priceTableData);
+  } else {
+    goodDiv.style.display = "block";
+  }
 }
 
 function handleRowDeselection(row) {
-    rowData = row.getData()
-    goodName = rowData.good
-    goodId = rowData.good
+  rowData = row.getData();
+  goodName = rowData.good;
+  goodId = rowData.good;
 
-    let correctedGoodName = goodName.replace(/\//g, "").replace(/\s+/g, "_");
-    let goodDiv = document.getElementById(`prices-${correctedGoodName}`);
-    goodDiv.style.display = "none";
-    rowDivInPricesTablesContainer = document.getElementById(`rowDiv-${correctedGoodName}`);
-    rowDivInPricesTablesContainer.remove()
+  let correctedGoodName = goodName.replace(/\//g, "").replace(/\s+/g, "_");
+  let goodDiv = document.getElementById(`prices-${correctedGoodName}`);
+  goodDiv.style.display = "none";
+  rowDivInPricesTablesContainer = document.getElementById(
+    `rowDiv-${correctedGoodName}`
+  );
+  rowDivInPricesTablesContainer.remove();
 }
 
 (async function () {
   try {
     const dataFromJson = await d3.json(dataUrl);
-    let allData = Object.values(dataFromJson)
-        .filter(item => item.good && Array.isArray(item.good) && item.good.length > 0);
+    let allData = Object.values(dataFromJson).filter(
+      (item) => item.good && Array.isArray(item.good) && item.good.length > 0
+    );
     let tableData = allData
-        .filter((item, index, self) =>
-            index === self.findIndex(t => t.good[0].value === item.good[0].value)
-        )
-        .map(item => ({
-            good: item.good[0].value,
-            id: item.good[0].id
-        }));
+      .filter(
+        (item, index, self) =>
+          index ===
+          self.findIndex((t) => t.good[0].value === item.good[0].value)
+      )
+      .map((item) => ({
+        good: item.good[0].value,
+        id: item.good[0].id,
+      }));
     const table = new Tabulator(`#goods-list`, {
-        selectableRows:3,
-        ...commonTableConfig,
-        pagination: false,
-        data: tableData,
-        columns: goodsListColumnDefinitions,
-        initialSort: [{ column: "good", dir: "asc" }],
-        footerElement: `<span class="tabulator-counter float-left"></span>`,
+      selectableRows: 3,
+      ...commonTableConfig,
+      pagination: false,
+      data: tableData,
+      columns: goodsListColumnDefinitions,
+      initialSort: [{ column: "good", dir: "asc" }],
+      footerElement: `<span class="tabulator-counter float-left"></span>`,
     });
     table.on("dataLoaded", function (data) {
       $("#total_count").text(data.length);
@@ -182,14 +194,13 @@ function handleRowDeselection(row) {
     table.on("dataFiltered", function (_filters, rows) {
       $("#search_count").text(rows.length);
     });
-    table.on("rowSelected", function(row) {
-        handleRowSelection(row, allData);
+    table.on("rowSelected", function (row) {
+      handleRowSelection(row, allData);
     });
-    table.on("rowDeselected", function(row){
-        handleRowDeselection(row);
+    table.on("rowDeselected", function (row) {
+      handleRowDeselection(row);
     });
   } catch (error) {
     console.error("Error loading or processing data:", error);
   }
 })();
-
