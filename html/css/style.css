@@ -478,7 +478,24 @@ ul.no-bullets {
 }
 
 .tabulator-row.tabulator-selectable.tabulator-selected {
-    background-color: var(--primary-hover)
+    background-color: var(--primary);
+    color: white;
+}
+
+#deselect-button {
+    color: var(--primary);
+    border-color: var(--primary);
+    margin: 15px 0 0 0;
+
+    &:hover {
+        color: var(--primary-hover);
+        border-color: var(--primary-hover);
+    }
+
+    &:focus {
+        background-color: var(--primary);
+        color: white;
+    }
 }
 
 /* Highcharts specific */

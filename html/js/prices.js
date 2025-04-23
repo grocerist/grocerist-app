@@ -101,66 +101,49 @@ initializeTable = function (goodName, correctedGoodName,  priceTableData) {
     data: priceTableData,
     columns: columnDefinitions,
     initialSort: [{ column: "doc_year", dir: "asc" }],
-    footerElement: `<span class="tabulator-counter float-left"></span>`,
-  });
-  table.on("dataLoaded", function (data) {
-    $("#total_count").text(data.length);
-  });
-  table.on("dataFiltered", function (_filters, rows) {
-    $("#search_count").text(rows.length);
+    footerElement: `<span class="tabulator-counter"></span>`,
   });
 };
 
 function handleRowSelection(row, allData) {
-  rowData = row.getData();
-  goodName = rowData.good;
-  goodId = rowData.id;
-  const pricesTablesContainer = document.getElementById("prices-tables");
+  let rowData = row.getData();
+  let goodName = rowData.good;
+  let goodId = rowData.id;
+
   let correctedGoodName = goodName.replace(/\//g, "").replace(/\s+/g, "_");
 
-  let goodDiv = document.getElementById(`prices-${correctedGoodName}`);
-  if (!goodDiv) {
-    rowDiv = document.createElement("div");
-    rowDiv.className = "row";
-    rowDiv.id = `rowDiv-${correctedGoodName}`;
-    pricesTablesContainer.appendChild(rowDiv);
-    rowDivInPricesTablesContainer = document.getElementById(
-      `rowDiv-${correctedGoodName}`
-    );
-    goodDiv = document.createElement("div");
-    goodDiv.id = `prices-${correctedGoodName}`;
-    goodDiv.className = "col-10";
+  let goodData = document.createElement("div");
+  goodData.id = `data-${correctedGoodName}`;
+  goodData.className = "row col-10";
 
-    goodDiv.innerHTML = `
-            <h2 id="title-${correctedGoodName}"><a href="/goods__${goodId}.html">${goodName}</a></h2>
-            <div id="table-${correctedGoodName}"></div>
-        `;
-    rowDivInPricesTablesContainer.appendChild(goodDiv);
-    let priceTableData = JSON.parse(
-      JSON.stringify(
-        allData.filter(
-          (item) => item.good.length > 0 && item.good[0].value == goodName
-        )
+  goodData.innerHTML = `
+    <h2 id="title-${correctedGoodName}"><a href="/goods__${goodId}.html">${goodName}</a></h2>
+    <div id="table-${correctedGoodName}"></div>
+  `;
+
+  const pricesContainer = document.getElementById("prices-tables");
+  pricesContainer.appendChild(goodData);
+  let priceTableData = JSON.parse(
+    JSON.stringify(
+      allData.filter(
+        (item) => item.good.length > 0 && item.good[0].value == goodName
       )
-    );
-    initializeTable(goodName, correctedGoodName, priceTableData);
-  } else {
-    goodDiv.style.display = "block";
-  }
+    )
+  );
+  initializeTable(goodName, correctedGoodName, priceTableData);
 }
 
 function handleRowDeselection(row) {
-  rowData = row.getData();
-  goodName = rowData.good;
-  goodId = rowData.good;
+  let rowData = row.getData();
+  let goodName = rowData.good;
 
   let correctedGoodName = goodName.replace(/\//g, "").replace(/\s+/g, "_");
-  let goodDiv = document.getElementById(`prices-${correctedGoodName}`);
-  goodDiv.style.display = "none";
-  rowDivInPricesTablesContainer = document.getElementById(
-    `rowDiv-${correctedGoodName}`
-  );
-  rowDivInPricesTablesContainer.remove();
+  let goodData = document.getElementById(`data-${correctedGoodName}`);
+  goodData.remove();
+}
+
+function handleDeselectingAllRows(table) {
+  table.deselectRow();
 }
 
 (async function () {
@@ -186,19 +169,16 @@ function handleRowDeselection(row) {
       data: tableData,
       columns: goodsListColumnDefinitions,
       initialSort: [{ column: "good", dir: "asc" }],
-      footerElement: `<span class="tabulator-counter float-left"></span>`,
-    });
-    table.on("dataLoaded", function (data) {
-      $("#total_count").text(data.length);
-    });
-    table.on("dataFiltered", function (_filters, rows) {
-      $("#search_count").text(rows.length);
+      footerElement: `<span class="tabulator-counter"></span>`,
     });
     table.on("rowSelected", function (row) {
       handleRowSelection(row, allData);
     });
     table.on("rowDeselected", function (row) {
       handleRowDeselection(row);
+    });
+    document.getElementById("deselect-button").addEventListener("click", function(){
+      handleDeselectingAllRows(table);
     });
   } catch (error) {
     console.error("Error loading or processing data:", error);
