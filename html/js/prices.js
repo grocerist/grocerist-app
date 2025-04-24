@@ -167,6 +167,7 @@ function handleDeselectingAllRows(table) {
       ...commonTableConfig,
       pagination: false,
       data: tableData,
+      height: "90%",
       columns: goodsListColumnDefinitions,
       initialSort: [{ column: "good", dir: "asc" }],
       footerElement: `<span class="tabulator-counter"></span>`,
