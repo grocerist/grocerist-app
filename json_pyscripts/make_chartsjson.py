@@ -532,6 +532,19 @@ normalized_decades_results = [
     }
     for category, decade_counts in sorted_normalized_decade_dict.items()
 ]
+# HISTOGRAM
+mentions = {}
+for good in goods_data:
+    if good["broken_or_spoilt"] is False:
+        good_name = good["name"]
+        if good_name not in mentions:
+            mentions[good_name] = 0
+            for doc in good["documents"]:
+                # check if it's from the 18th century
+                if len(doc) > 0 and doc["century"] is not None:
+                    if doc["century"]["value"] == "18":
+                        mentions[good_name] += 1
+print(mentions)
 
 # Convert the results to JSON format and write to a file
 result_json = json.dumps(
@@ -549,6 +562,10 @@ result_json = json.dumps(
             "categories": [str(decade) for decade in decades],
             "series": normalized_decades_results,
         },
+        "histogram":{
+            "categories": list(mentions.keys()),
+            "data": list(mentions.values())
+        }
     },
     indent=2,
 )

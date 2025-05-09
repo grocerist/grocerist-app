@@ -271,6 +271,34 @@ function createSplineChart(data, isNormalized) {
     }
   );
 }
+function createHistogram(data) {
+  console.log(data);
+  return Highcharts.chart("container_histogram", {
+    title: {
+      text: "Mentions of Goods in 18th Century",
+    },
+    plotOptions: {
+      series: {
+        // general options for all series
+      },
+      histogram: {
+        // shared options for all histogram series
+      },
+    },
+    series: [
+      {
+        // specific options for this series instance
+        type: "histogram",
+        xAxis: 0,
+        yAxis: 0,
+        baseSeries: 1,
+        binsNumber: "square-root",
+    }, {
+      
+      data: data[1],
+    }]
+  });
+}
 (async function () {
   try {
     const dataFromJson = await d3.json(dataUrl);
@@ -286,6 +314,7 @@ function createSplineChart(data, isNormalized) {
     const normalizedTimeChartData = Object.values(
       dataFromJson.normalized_categories_over_decades
     );
+    const histogramData = Object.values(dataFromJson.histogram);
 
     // Custom colors (default HighCharts list has too few)
     Highcharts.setOptions({
@@ -317,7 +346,9 @@ function createSplineChart(data, isNormalized) {
     setVisibilityForFirstElement(normalizedTimeChartData);
 
     createSplineChart(timeChartData, false);
+    console.log(timeChartData);
     createSplineChart(normalizedTimeChartData, true);
+    createHistogram(histogramData);
   } catch (error) {
     console.error("Error loading or processing data:", error);
   }

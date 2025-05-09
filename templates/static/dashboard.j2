@@ -47,11 +47,13 @@
             used to normalize the counts from the previous chart.</p>
     </figure>
 </div>
+<div id="container_histogram"></div>
 </div>
 {% endblock content %}
 {% block scripts2 %}
 <script src="vendor/d3/d3.v7.min.js"></script>
 {% include "templates/partials/highcharts.j2" %}
 <script src="vendor/highcharts-12.2.0/modules/drilldown.js"></script>
+<script src="https://code.highcharts.com/modules/histogram-bellcurve.js"></script>
 <script type="text/javascript" src="js/dashboard.js"></script>
 {% endblock scripts2 %}
