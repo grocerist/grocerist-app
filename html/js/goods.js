@@ -44,10 +44,26 @@ const baseColumnDefinitions = [
     formatter: "tickCross",
     headerFilter: "tickCross",
     headerFilterParams: { tristate: true },
+  },
+  {
+    title: "Century",
+    field: "centuries",
+    formatter: "array",
+    formatterParams: {
+      delimiter: ", ", 
+    },
+    headerFilter: "list",
+    headerFilterParams: {
+      valuesLookup: true,
+    }, 
+    visible : false, 
+
+
   }
 ];
 // Add minWidth and visibility toggle to each column
 const columnDefinitions = baseColumnDefinitions.map((column) => ({
+  headerMenu: headerMenu,
   ...column,
   minWidth: 200,
 }));
@@ -57,7 +73,16 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
     const filteredData = Object.values(dataFromJson).filter((item) => item.name !== "");
     const tableData = filteredData.map((item) => {
       const enriched = item;
+      const centuries = new Set();
+      item.documents.forEach((doc) => {
+        const century = doc.century?.value;
+        if (century) {
+          centuries.add(century);
+        }
+      });
+      enriched["centuries"] = Array.from(centuries).sort()
       enriched["doc_count"] = item.documents.length;
+    
       return enriched;
     });
 
