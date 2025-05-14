@@ -96,6 +96,7 @@ const baseColumnDefinitions = [
     headerFilterParams: {
       valuesLookup: true,
     },
+    visible: false,
   },
   {
     field: "first_level",
