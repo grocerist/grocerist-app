@@ -69,7 +69,14 @@ const baseColumnDefinitions = [
     title: "District",
     field: "properties.upper_admin",
     mutator: reduceArrayMutator,
-    formatter: testFormatter,
+    formatter: function (cell, formatterParams, onRendered) {
+      let value = cell.getValue();
+      if (value === null) {
+        return value;
+      } else {
+        return `<a href="district__${value.ids.database_table_1492}.html">${value.value}</a>`;
+      }
+    },
     sorter: objectSorter,
     headerFilter: "list",
     headerFilterParams: {
@@ -79,15 +86,30 @@ const baseColumnDefinitions = [
     headerFilterFunc: objectHeaderFilter,
   },
   {
+    title: "Century",
+    field: "centuries",
+    formatter: "array",
+    formatterParams: {
+      delimiter: ", ",
+    },
+    headerFilter: "list",
+    headerFilterParams: {
+      valuesLookup: true,
+    },
+  },
+  {
     field: "first_level",
     visible: false,
   },
 ];
 // Add minWidth to each column
-const columnDefinitions = baseColumnDefinitions.map((column) => ({
-  ...column,
-  minWidth: 150,
-}));
+const columnDefinitions = baseColumnDefinitions.map((column) => {
+  return {
+    ...(column.field !== "first_level" ? { headerMenu: headerMenu } : {}),
+    ...column,
+    minWidth: 150,
+  };
+});
 
 // Config settings for table
 const tableConfig = {
@@ -297,6 +319,14 @@ function calculateLocationData(rows, selectedLocationType, districtColors) {
       .filter((item) => item.properties.name.trim() !== "")
       .map((item) => {
         const enriched = item;
+        const centuries = new Set();
+        item.properties.documents.forEach((doc) => {
+          const century = doc.century?.value;
+          if (century) {
+            centuries.add(century);
+          }
+        });
+        enriched["centuries"] = Array.from(centuries).sort()
         if (item.properties.location_type === "District") {
           enriched["first_level"] = item.properties.name;
         } else if (item.properties.upper_admin.length > 0) {

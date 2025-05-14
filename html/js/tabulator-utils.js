@@ -66,15 +66,6 @@ function linkListFormatter(cell, formatterParams, onRendered) {
   return output;
 }
 
-function testFormatter(cell, formatterParams, onRendered) {
-  let value = cell.getValue();
-  if (value === null) {
-    return value;
-  } else {
-    return `<a href="district__${value.ids.database_table_1492}.html">${value.value}</a>`;
-  }
-}
-
 // CUSTOM MUTATORS
 
 // custom mutator that combines the values of an array of objects into a string
@@ -152,13 +143,13 @@ function greaterThanFilter(headerValue, rowValue, rowData, filterParams) {
 function objectLookup(cell, filterTerm) {
   // necessary for field names with dots (i.e. properties.upper_admin)
   const getNestedValue = (obj, path) => {
-    return path.split('.').reduce((acc, key) => acc && acc[key], obj);
+    return path.split(".").reduce((acc, key) => acc && acc[key], obj);
   };
   const results = new Set();
   let column = cell.getColumn();
   let field = column.getField();
   let data = cell.getTable().getData();
-  data.forEach((row) =>  {
+  data.forEach((row) => {
     let cellValue = getNestedValue(row, field);
     if (cellValue !== null) {
       if (Array.isArray(cellValue)) {
@@ -173,6 +164,8 @@ function objectLookup(cell, filterTerm) {
 
   return Array.from(results);
 }
+// add helper columns that should be excluded from the header menu
+excludeFromHeaderMenu = ["first_level"];
 
 // Define column header menu as column visibility toggle
 const headerMenu = function () {
@@ -181,6 +174,11 @@ const headerMenu = function () {
   table = this; // to access the table instance in the menu item action
 
   allColumns.forEach((column) => {
+    // Skip columns that are excluded from the header menu
+    if (excludeFromHeaderMenu.includes(column.getField())) {
+      return;
+    }
+
     let icon = document.createElement("i");
     icon.className = "bi " + (column.isVisible() ? "bi-eye" : "bi-eye-slash");
 
