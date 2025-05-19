@@ -105,73 +105,6 @@ const dateFilterFunction = function (
   return false;
 };
 
-// custom header filter function for ranges
-const rangeFilter = function (headerValue, rowValue, rowData, filterParams) {
- // filter out rows with no value
-  if (!rowValue) return false;
- 
-  const { start, end } = headerValue;
-
-  // Handle open-ended ranges
-  if (!start) return rowValue <= end;
-  if (!end) return rowValue >= start;
-
-  // Handle closed ranges
-  return rowValue >= start && rowValue <= end;
-};
-
-const rangeEditor = function (cell, onRendered, success, cancel, editorParams) {
-  // Create container
-  const container = document.createElement("span");
-
-  // Create and style inputs
-  container.insertAdjacentHTML(
-    "beforeend",
-    ["Start", "End"]
-      .map(
-        (placeholder) => `
-          <input type="number" placeholder="${placeholder}" 
-            style="width: 50%;" min="1100" max="1250">
-        `
-      )
-      .join("")
-  );
-
-  // Get references to the created inputs
-  const [start, end] = container.querySelectorAll("input");
-
-  // Function to validate and apply the range
-  const applyRange = () => {
-    const startValue = start.value.trim() ? parseInt(start.value, 10) : null;
-    const endValue = end.value.trim() ? parseInt(end.value, 10) : null;
-    // only allow numbers in the input fields
-    if (isNaN(startValue)) {
-      start.value = "";
-      cancel();
-    }
-    if (isNaN(endValue)) {
-      end.value = "";
-      cancel();
-    }
-    if (startValue === null || endValue === null || startValue <= endValue) {
-      success({ start: startValue, end: endValue });
-    }
-  };
-
-  function keypress(e) {
-    if (e.key === "Enter") applyRange();
-    if (e.key === "Escape") cancel();
-  }
-
-  // Add event listeners
-  [start, end].forEach((input) => {
-    input.addEventListener("change", applyRange);
-    input.addEventListener("blur", applyRange);
-    input.addEventListener("keydown", keypress);
-  });
-
-  return container;
-};
 
 // ####### TABLE CONFIG AND FUNCTIONS #######
 const baseColumnDefinitions = [
@@ -320,6 +253,11 @@ const baseColumnDefinitions = [
     title: "Year <i>Hicri</i>",
     field: "year_of_creation_hicri",
     headerFilter: rangeEditor,
+    headerFilterParams: {
+      labels: ["Start", "End"],
+      min: 1100,
+      max: 1250,
+    },
     headerFilterFunc: rangeFilter,
     headerFilterLiveFilter: false,
     visible: false,

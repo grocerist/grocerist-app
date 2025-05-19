@@ -115,6 +115,21 @@ function reduceArrayMutator(value, data, type, params, component) {
 
 // CUSTOM FILTERS
 
+// custom header filter function for ranges
+const rangeFilter = function (headerValue, rowValue, rowData, filterParams) {
+  // filter out rows with no value
+  if (!rowValue) return false;
+
+  const { start, end } = headerValue;
+
+  // Handle open-ended ranges
+  if (!start) return rowValue <= end;
+  if (!end) return rowValue >= start;
+
+  // Handle closed ranges
+  return rowValue >= start && rowValue <= end;
+};
+
 // custom headerFilter for cells with arrays of objects
 function objectArrayHeaderFilter(headerValue, rowValue, rowData, filterParams) {
   // for columns where the name of the items is not in the "value" field,
@@ -152,13 +167,13 @@ function greaterThanFilter(headerValue, rowValue, rowData, filterParams) {
 function objectLookup(cell, filterTerm) {
   // necessary for field names with dots (i.e. properties.upper_admin)
   const getNestedValue = (obj, path) => {
-    return path.split('.').reduce((acc, key) => acc && acc[key], obj);
+    return path.split(".").reduce((acc, key) => acc && acc[key], obj);
   };
   const results = new Set();
   let column = cell.getColumn();
   let field = column.getField();
   let data = cell.getTable().getData();
-  data.forEach((row) =>  {
+  data.forEach((row) => {
     let cellValue = getNestedValue(row, field);
     if (cellValue !== null) {
       if (Array.isArray(cellValue)) {
@@ -232,3 +247,60 @@ function objectSorter(a, b, aRow, bRow, column, dir, sorterParams) {
     .toLowerCase()
     .localeCompare(String(b.value).toLowerCase(), "tr");
 }
+
+// CUSTOM EDITORS
+const rangeEditor = function (cell, onRendered, success, cancel, editorParams) {
+  // Use editorParams or fallback to defaults
+  const labels = editorParams?.labels || ["Min", "Max"];
+  const min = editorParams?.min || 0;
+  const max = editorParams?.max || 1000;
+  // Create container
+  const container = document.createElement("span");
+  // Create and style inputs
+  container.insertAdjacentHTML(
+    "beforeend",
+    labels
+      .map(
+        (placeholder) => `
+          <input type="number" placeholder="${placeholder}" 
+            style="width: 50%;" min="${min}" max="${max}">
+        `
+      )
+      .join("")
+  );
+
+  // Get references to the created inputs
+  const [start, end] = container.querySelectorAll("input");
+
+  // Function to validate and apply the range
+  const applyRange = () => {
+    const startValue = start.value.trim() ? parseInt(start.value, 10) : null;
+    const endValue = end.value.trim() ? parseInt(end.value, 10) : null;
+    // only allow numbers in the input fields
+    if (isNaN(startValue)) {
+      start.value = "";
+      cancel();
+    }
+    if (isNaN(endValue)) {
+      end.value = "";
+      cancel();
+    }
+    if (startValue === null || endValue === null || startValue <= endValue) {
+      success({ start: startValue, end: endValue });
+    }
+  };
+
+  function keypress(e) {
+    if (e.key === "Enter") applyRange();
+    if (e.key === "Escape") cancel();
+  }
+
+  // Add event listeners
+  [start, end].forEach((input) => {
+    input.addEventListener("change", applyRange);
+    input.addEventListener("blur", applyRange);
+    input.addEventListener("keydown", keypress);
+  });
+
+  return container;
+};
