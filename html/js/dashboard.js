@@ -272,43 +272,90 @@ function createSplineChart(data, isNormalized) {
   );
 }
 function createStackedBarChart(data) {
-  const categories = Object.keys(data).sort();
-  const allSeries = []
-  categories.forEach((category) => {
-    const series = {"pointWidth": 10, };
-    series["name"] = category;
-    const products = data[category];
-    series["data"] = Object.entries(products)
-    allSeries.push(series)
+  console.log(data);
+  const totalLength = Object.values(data)
+    .map((obj) => (Array.isArray(obj) ? obj.length : Object.keys(obj).length))
+    .reduce((sum, len) => sum + len, 0);
+  if (totalLength < 60) {
+    const categories = Object.keys(data).sort();
+    const allSeries = [];
+    categories.forEach((category) => {
+      const series = { "pointWidth": 10 };
+      series["name"] = category;
+      const products = data[category];
+      series["data"] = Object.entries(products);
+      allSeries.push(series);
     });
-  const chart = Highcharts.chart("container_mentions_chart", {
-    chart: {
-      type: "column",
-    },
-       xAxis: {
-      type: "category",
-      reversed: true,
-    },
-    yAxis: {
-      min: 0,
-      title: { text: "Number of Mentions" },
-    },
-    legend: { enabled: false },
-    // plotOptions: {
-    //   column: {
-    //     stacking: "normal",
-    //     minPointLength: 5,
-    //     dataLabels: {
-    //       enabled: true,
-    //       formatter: function () {
-    //         return this.y > 3 ? this.point.name : null;
-    //       },
-    //     },
-    //   },
-    // },
-    series: allSeries,
-  });
-  return chart;
+    const chart = Highcharts.chart("container_mentions_chart", {
+      chart: {
+        type: "column",
+      },
+      xAxis: {
+        type: "category",
+        reversed: true,
+      },
+      yAxis: {
+        min: 0,
+        title: { text: "Number of Mentions" },
+      },
+      legend: { enabled: false },
+      series: allSeries,
+    });
+    return chart;
+  } else {
+    const topLevel = [];
+    const drilldown = [];
+    const categories = Object.keys(data).sort();
+    categories.forEach((category) => {
+      const sum = Object.values(data[category]).reduce((a, b) => a + b, 0);
+      topLevel.push({ name: category, y: sum, drilldown: category });
+      drilldown.push({
+        name: category,
+        id: category,
+        data: Object.entries(data[category]).map(([key, value]) => ({
+          name: key,
+          y: value,
+        })),
+      });
+    });
+    const chart = Highcharts.chart("container_mentions_chart", {
+      chart: {
+        type: "column",
+      },
+      xAxis: {
+        type: "category",
+      },
+      plotOptions: {
+        series: {
+          allowPointSelect: true,
+          cursor: "pointer",
+          dataLabels: {
+            enabled: true,
+            overflow: "none",
+            crop: false,
+          },
+        },
+      },
+      series: [
+        {
+          colorByPoint: true,
+          data: topLevel,
+        },
+      ],
+      drilldown: {
+        activeAxisLabelStyle: {
+          color: "#000000",
+          textDecoration: "unset",
+        },
+        activeDataLabelStyle: {
+          color: "#000000",
+          textDecoration: "unset",
+        },
+        series: drilldown,
+      },
+    });
+    return chart;
+  }
 }
 
 function flattenMentions(mentions) {
