@@ -273,50 +273,40 @@ function createSplineChart(data, isNormalized) {
 }
 function createStackedBarChart(data) {
   const categories = Object.keys(data).sort();
-  const series = [];
-
-  categories.forEach((category, catIndex) => {
+  const allSeries = []
+  categories.forEach((category) => {
+    const series = {"pointWidth": 10, };
+    series["name"] = category;
     const products = data[category];
-    Object.entries(products).forEach(([productName, mentions]) => {
-      const dataArray = Array(categories.length).fill(null);
-      dataArray[catIndex] = mentions;
-      series.push({
-        name: productName,
-        data: dataArray,
-      });
+    series["data"] = Object.entries(products)
+    allSeries.push(series)
     });
-  });
   const chart = Highcharts.chart("container_mentions_chart", {
     chart: {
       type: "column",
-      height: 1000,
     },
-    xAxis: {
-      categories: categories,
-      title: { text: "Product Categories" },
+       xAxis: {
+      type: "category",
+      reversed: true,
     },
     yAxis: {
       min: 0,
       title: { text: "Number of Mentions" },
-      stackLabels: {
-        enabled: true,
-        style: { fontWeight: "bold" },
-      },
     },
     legend: { enabled: false },
-    plotOptions: {
-      column: {
-        stacking: "normal",
-        minPointLength: 5,
-        dataLabels: {
-          enabled: true,
-          formatter: function () {
-            return this.y > 3 ? this.point.name : null;
-          },
-        },
-      },
-    },
-    series: series,
+    // plotOptions: {
+    //   column: {
+    //     stacking: "normal",
+    //     minPointLength: 5,
+    //     dataLabels: {
+    //       enabled: true,
+    //       formatter: function () {
+    //         return this.y > 3 ? this.point.name : null;
+    //       },
+    //     },
+    //   },
+    // },
+    series: allSeries,
   });
   return chart;
 }
@@ -430,13 +420,10 @@ function flattenMentions(mentions) {
       .addEventListener("click", function () {
         const min = parseInt(document.getElementById("min").value, 10);
         const max = parseInt(document.getElementById("max").value, 10);
-        console.log("Min:", min, "Max:", max);
-        // Use your original (unfiltered) data source here
         const filteredData = {};
         for (const [category, products] of Object.entries(
           mentions[select2.value]
         )) {
-          console.log("Category:", category);
           filteredData[category] = {};
           for (const [product, count] of Object.entries(products)) {
             if (
@@ -452,6 +439,7 @@ function flattenMentions(mentions) {
         stackedChart.destroy();
         stackedChart = createStackedBarChart(filteredData);
       });
+
     // Add visibility attribute for the spline charts
     setVisibilityForFirstElement(timeChartData);
     setVisibilityForFirstElement(normalizedTimeChartData);
