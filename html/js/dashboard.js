@@ -271,34 +271,107 @@ function createSplineChart(data, isNormalized) {
     }
   );
 }
-function createHistogram(data) {
-  console.log(data);
-  return Highcharts.chart("container_histogram", {
-    title: {
-      text: "Mentions of Goods in 18th Century",
-    },
-    plotOptions: {
-      series: {
-        // general options for all series
-      },
-      histogram: {
-        // shared options for all histogram series
-      },
-    },
-    series: [
-      {
-        // specific options for this series instance
-        type: "histogram",
-        xAxis: 0,
-        yAxis: 0,
-        baseSeries: 1,
-        binsNumber: "square-root",
-    }, {
-      
-      data: data[1],
-    }]
+function createStackedBarChart(data) {
+  const categories = Object.keys(data).sort();
+  const series = [];
+
+  categories.forEach((category, catIndex) => {
+    const products = data[category];
+    Object.entries(products).forEach(([productName, mentions]) => {
+      const dataArray = Array(categories.length).fill(null);
+      dataArray[catIndex] = mentions;
+      series.push({
+        name: productName,
+        data: dataArray,
+      });
+    });
   });
+  const chart = Highcharts.chart("container_mentions_chart", {
+    chart: {
+      type: "column",
+      height: 1000,
+    },
+    xAxis: {
+      categories: categories,
+      title: { text: "Product Categories" },
+    },
+    yAxis: {
+      min: 0,
+      title: { text: "Number of Mentions" },
+      stackLabels: {
+        enabled: true,
+        style: { fontWeight: "bold" },
+      },
+    },
+    legend: { enabled: false },
+    plotOptions: {
+      column: {
+        stacking: "normal",
+        minPointLength: 5,
+        dataLabels: {
+          enabled: true,
+          formatter: function () {
+            return this.y > 3 ? this.point.name : null;
+          },
+        },
+      },
+    },
+    series: series,
+  });
+  return chart;
 }
+
+function flattenMentions(mentions) {
+  const result = {};
+  for (const [category, value] of Object.entries(mentions)) {
+    result[category] = {};
+    for (const [key, val] of Object.entries(value)) {
+      if (typeof val === "object" && val !== null) {
+        // Recursively collect goods from nested objects
+        collectGoods(val, result[category]);
+      } else if (typeof val === "number") {
+        // Direct good:number pair
+        result[category][key] = val;
+      }
+    }
+  }
+  return result;
+
+  function collectGoods(obj, target) {
+    // If this object is a flat {good: number} object, collect all as goods
+    const entries = Object.entries(obj);
+    if (
+      entries.length > 0 &&
+      entries.every(([_, v]) => typeof v === "number")
+    ) {
+      entries.forEach(([good, count]) => {
+        target[good] = count;
+      });
+      return;
+    }
+    // Collect goods from "goods" object if present
+    if (obj.goods && typeof obj.goods === "object") {
+      Object.entries(obj.goods).forEach(([good, count]) => {
+        target[good] = count;
+      });
+    }
+    // Collect direct good:number pairs at this level
+    entries.forEach(([k, v]) => {
+      if (typeof v === "number") {
+        target[k] = v;
+      } else if (typeof v === "object" && v !== null) {
+        collectGoods(v, target);
+      }
+    });
+    // Recursively check subcategories
+    if (obj.subcategories && typeof obj.subcategories === "object") {
+      Object.values(obj.subcategories).forEach((sub) =>
+        collectGoods(sub, target)
+      );
+    }
+  }
+}
+
 (async function () {
   try {
     const dataFromJson = await d3.json(dataUrl);
@@ -314,7 +387,10 @@ function createHistogram(data) {
     const normalizedTimeChartData = Object.values(
       dataFromJson.normalized_categories_over_decades
     );
-    const histogramData = Object.values(dataFromJson.histogram);
+    const mentions = {
+      "18": flattenMentions(dataFromJson.mentions_18),
+      "19": flattenMentions(dataFromJson.mentions_19),
+    };
 
     // Custom colors (default HighCharts list has too few)
     Highcharts.setOptions({
@@ -341,14 +417,48 @@ function createHistogram(data) {
       );
     });
 
+    let stackedChart = createStackedBarChart(mentions["18"]);
+    const select2 = document.getElementById("select-century2");
+    select2.addEventListener("change", () => {
+      const century = select2.value;
+      stackedChart.destroy();
+      stackedChart = createStackedBarChart(mentions[century]);
+    });
+    // when the apply button is clicked, get the values from the inputs
+    document
+      .getElementById("range-apply-btn")
+      .addEventListener("click", function () {
+        const min = parseInt(document.getElementById("min").value, 10);
+        const max = parseInt(document.getElementById("max").value, 10);
+        console.log("Min:", min, "Max:", max);
+        // Use your original (unfiltered) data source here
+        const filteredData = {};
+        for (const [category, products] of Object.entries(
+          mentions[select2.value]
+        )) {
+          console.log("Category:", category);
+          filteredData[category] = {};
+          for (const [product, count] of Object.entries(products)) {
+            if (
+              typeof count === "number" &&
+              (!isNaN(min) ? count >= min : true) &&
+              (!isNaN(max) ? count <= max : true)
+            ) {
+              filteredData[category][product] = count;
+            }
+          }
+        }
+        // create a new chart with the filtered data
+        stackedChart.destroy();
+        stackedChart = createStackedBarChart(filteredData);
+      });
     // Add visibility attribute for the spline charts
     setVisibilityForFirstElement(timeChartData);
     setVisibilityForFirstElement(normalizedTimeChartData);
 
     createSplineChart(timeChartData, false);
-    console.log(timeChartData);
+
     createSplineChart(normalizedTimeChartData, true);
-    createHistogram(histogramData);
   } catch (error) {
     console.error("Error loading or processing data:", error);
   }

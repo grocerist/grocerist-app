@@ -544,7 +544,6 @@ for good in goods_data:
                 if len(doc) > 0 and doc["century"] is not None:
                     if doc["century"]["value"] == "18":
                         mentions[good_name] += 1
-print(mentions)
 
 # Convert the results to JSON format and write to a file
 result_json = json.dumps(
@@ -562,10 +561,8 @@ result_json = json.dumps(
             "categories": [str(decade) for decade in decades],
             "series": normalized_decades_results,
         },
-        "histogram":{
-            "categories": list(mentions.keys()),
-            "data": list(mentions.values())
-        }
+        "mentions_18": categories_18,
+        "mentions_19": categories_19,
     },
     indent=2,
 )

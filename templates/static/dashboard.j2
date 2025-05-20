@@ -24,6 +24,24 @@
         <div id="container_categories_chart">
         </div>
     </div>
+    <div class="card py-3 mb-3"> 
+        <div id="container_buttons">
+            <label for="select-century2">Select century:</label>
+            <select id="select-century2">
+                <option value="18">18th century</option>
+                <option value="19">19th century</option>
+            </select>
+            <br />
+            <label for="range-inputs">Select range:</label>
+            <div id="range-inputs">
+                <input type="number" id="min" placeholder="Min" min="0" max="100">
+                <input type="number" id="max" placeholder="Max" min="0" max="100">
+                <button id="range-apply-btn">Apply</button>
+            </div>
+        </div>
+        <div id="container_mentions_chart">
+        </div>
+    </div>
     <figure class="highcharts-figure">
         <div class="card py-3 mb-3" id="container_time_chart"></div>
         <p class="highcharts-description my-3 mx-5">The chart displays the frequency with which various grocery
@@ -47,7 +65,6 @@
             used to normalize the counts from the previous chart.</p>
     </figure>
 </div>
-<div id="container_histogram"></div>
 </div>
 {% endblock content %}
 {% block scripts2 %}
