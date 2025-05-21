@@ -24,23 +24,39 @@
         <div id="container_categories_chart">
         </div>
     </div>
-    <div class="card py-3 mb-3"> 
-        <div id="container_buttons">
-            <label for="select-century2">Select century:</label>
-            <select id="select-century2">
-                <option value="18">18th century</option>
-                <option value="19">19th century</option>
-            </select>
-            <br />
-            <label for="range-inputs">Select range:</label>
-            <div id="range-inputs">
-                <input type="number" id="min" placeholder="Min" min="0" max="100">
-                <input type="number" id="max" placeholder="Max" min="0" max="100">
-                <button id="range-apply-btn">Apply</button>
+    <div class="card py-3 mb-3">
+        <div class="buttons d-flex justify-content-center mb-3">
+            <button id="btn-18" class="btn grocerist-button active">18th century</button>
+            <button id="btn-19" class="btn grocerist-button">19th century</button>
+        </div>
+        <div class="row g-3 align-items-end mb-3">
+            <div class="col-md-1"></div>
+            <!-- Chart Title Input and Button -->
+            <div class="col-md-5">
+                <label for="chart-title" class="form-label">Chart title:</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="chart-title" placeholder="Enter chart title">
+                    <button id="set-title-btn" class="btn grocerist-button">Set title</button>
+                </div>
             </div>
+            <!-- Range Inputs and Button -->
+            <div class="col-md-5">
+                <label for="range-inputs" class="form-label">Select min. and max. documents:</label>
+                <div id="range-inputs" class="row g-2 align-items-center">
+                    <div class="col-auto">
+                        <input type="number" class="form-control" id="min" placeholder="Min" min="0" max="100">
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" class="form-control" id="max" placeholder="Max" min="0" max="100">
+                    </div>
+                    <div class="col-auto">
+                        <button id="range-apply-btn" class="btn grocerist-button">Apply range</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
         </div>
-        <div id="container_mentions_chart">
-        </div>
+        <div id="container_mentions_chart"></div>
     </div>
     <figure class="highcharts-figure">
         <div class="card py-3 mb-3" id="container_time_chart"></div>

@@ -4,6 +4,7 @@ const titleStyle = {
   fontWeight: "bold",
   fontSize: "1.5rem",
 };
+let currentCentury = "18"; // default
 function setVisibilityForFirstElement(chartData) {
   chartData[1].forEach((element, index) => {
     element.visible = index === 0; // Set visible: true for the first element, false for all others
@@ -271,8 +272,7 @@ function createSplineChart(data, isNormalized) {
     }
   );
 }
-function createStackedBarChart(data) {
-  console.log(data);
+function createInteractiveBarChart(data, title = "Frequency of Mentions") {
   const totalLength = Object.values(data)
     .map((obj) => (Array.isArray(obj) ? obj.length : Object.keys(obj).length))
     .reduce((sum, len) => sum + len, 0);
@@ -290,13 +290,36 @@ function createStackedBarChart(data) {
       chart: {
         type: "column",
       },
+      title: {
+        text: title,
+        style: titleStyle,
+      },
+      plotOptions: {
+        series: {
+          allowPointSelect: true,
+          cursor: "pointer",
+          dataLabels: {
+            enabled: true,
+            overflow: "none",
+            crop: false,
+          },
+        },
+      },
       xAxis: {
         type: "category",
-        reversed: true,
+        labels: {
+          step: 1,
+          // rotation: 90,
+        },
       },
       yAxis: {
         min: 0,
-        title: { text: "Number of Mentions" },
+        title: { text: "Documents" },
+      },
+      tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
+        pointFormat: `<span style="color:{point.color}">{point.name}</span>: mentioned <b>{point.y}</b> times <br>
+      in documents from the <i>${century}th century</i>`,
       },
       legend: { enabled: false },
       series: allSeries,
@@ -322,11 +345,29 @@ function createStackedBarChart(data) {
       chart: {
         type: "column",
       },
+      title: {
+        text: title,
+        style: titleStyle,
+      },
       xAxis: {
         type: "category",
+        labels: {
+          step: 1,
+          // rotation:90,
+        },
+      },
+      yAxis: {
+        min: 0,
+        title: { text: "Documents" },
+      },
+      tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
+        pointFormat: `<span style="color:{point.color}">{point.name}</span>: mentioned <b>{point.y}</b> times <br>
+      in documents from the <i>${currentCentury}th century</i>`,
       },
       plotOptions: {
         series: {
+          name: "All categories",
           allowPointSelect: true,
           cursor: "pointer",
           dataLabels: {
@@ -336,6 +377,7 @@ function createStackedBarChart(data) {
           },
         },
       },
+      legend: { enabled: false },
       series: [
         {
           colorByPoint: true,
@@ -454,13 +496,33 @@ function flattenMentions(mentions) {
       );
     });
 
-    let stackedChart = createStackedBarChart(mentions["18"]);
-    const select2 = document.getElementById("select-century2");
-    select2.addEventListener("change", () => {
-      const century = select2.value;
-      stackedChart.destroy();
-      stackedChart = createStackedBarChart(mentions[century]);
+    let interactiveBarChart = createInteractiveBarChart(mentions[currentCentury]);
+    const centuries = ["18", "19"];
+    centuries.forEach((century) => {
+      const btn = document.getElementById(`btn-${century}`);
+      btn.addEventListener("click", () => {
+        document
+          .querySelectorAll(".buttons button.active")
+          .forEach((active) => {
+            active.className = "btn grocerist-button";
+          });
+        btn.className = "btn grocerist-button active";
+        currentCentury = century;
+        // Clear the range inputs
+        document.getElementById("min").value = "";
+        document.getElementById("max").value = "";
+        document.getElementById("chart-title").value = "";
+        interactiveBarChart.destroy();
+        interactiveBarChart = createInteractiveBarChart(mentions[century]);
+      });
     });
+    // Add event listener for title set button
+    document
+      .getElementById("set-title-btn")
+      .addEventListener("click", function () {
+        const title = document.getElementById("chart-title").value;
+        interactiveBarChart.setTitle({ text: title });
+      });
     // when the apply button is clicked, get the values from the inputs
     document
       .getElementById("range-apply-btn")
@@ -469,7 +531,7 @@ function flattenMentions(mentions) {
         const max = parseInt(document.getElementById("max").value, 10);
         const filteredData = {};
         for (const [category, products] of Object.entries(
-          mentions[select2.value]
+          mentions[currentCentury]
         )) {
           filteredData[category] = {};
           for (const [product, count] of Object.entries(products)) {
@@ -483,8 +545,12 @@ function flattenMentions(mentions) {
           }
         }
         // create a new chart with the filtered data
-        stackedChart.destroy();
-        stackedChart = createStackedBarChart(filteredData);
+        interactiveBarChart.destroy();
+        let title =
+          document.getElementById("chart-title").value ||
+          "Frequency of Mentions";
+
+        interactiveBarChart = createInteractiveBarChart(filteredData, title);
       });
 
     // Add visibility attribute for the spline charts
