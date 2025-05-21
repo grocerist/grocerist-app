@@ -319,10 +319,17 @@ function createInteractiveBarChart(data, title = "Frequency of Mentions") {
       tooltip: {
         headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
         pointFormat: `<span style="color:{point.color}">{point.name}</span>: mentioned <b>{point.y}</b> times <br>
-      in documents from the <i>${century}th century</i>`,
+      in documents from the <i>${currentCentury}th century</i>`,
       },
       legend: { enabled: false },
       series: allSeries,
+       exporting: {
+      //downloaded image will have this width * scale (2 by default)
+      sourceWidth: 1200,
+      // chartOptions: {
+      //   subtitle: null,
+      // },
+    },
     });
     return chart;
   } else {
@@ -395,6 +402,13 @@ function createInteractiveBarChart(data, title = "Frequency of Mentions") {
         },
         series: drilldown,
       },
+             exporting: {
+      //downloaded image will have this width * scale (2 by default)
+      sourceWidth: 1200,
+      // chartOptions: {
+      //   subtitle: null,
+      // },
+    },
     });
     return chart;
   }
@@ -496,7 +510,9 @@ function flattenMentions(mentions) {
       );
     });
 
-    let interactiveBarChart = createInteractiveBarChart(mentions[currentCentury]);
+    let interactiveBarChart = createInteractiveBarChart(
+      mentions[currentCentury]
+    );
     const centuries = ["18", "19"];
     centuries.forEach((century) => {
       const btn = document.getElementById(`btn-${century}`);
