@@ -18,7 +18,6 @@ const mapConfig = {
 const overlayColors = {
   "18th century": colors[0],
   "19th century": colors[3],
-  "N/A": colors[4],
 };
 
 // Helper function to create and add layer groups to the map
@@ -52,8 +51,8 @@ function createMarker(markerData, centuryLayers = false) {
   const { lat, long, century, popupContent, icon } = markerData;
   let color = colors[0];
   let layerName = null;
-  if (centuryLayers) {
-    const centuryText = century === "N/A" ? century : `${century}th century`;
+  if (centuryLayers && century) {
+    const centuryText = `${century}th century`;
     color = overlayColors[centuryText];
     layerName = `<span style="color:${color}">${centuryText}</span>`;
   }

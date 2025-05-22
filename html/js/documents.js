@@ -328,7 +328,7 @@ function rowsToMarkers(map, rows, layerGroups, oms) {
       const markerData = {
         lat: rowData.lat,
         long: rowData.long,
-        century: century?.value ? century.value : "N/A",
+        century: century?.value || null,
         popupContent: `
         <h5><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}<a/></h5>
         <p><b><i>Bakkal</i> / Grocer:</b> ${

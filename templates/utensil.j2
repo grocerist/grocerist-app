@@ -47,7 +47,7 @@
     for (let i = 0; i < doc_list.length; i++) {
         const doc = doc_list[i];
         const year = getYearFromISODate(doc.iso_date);
-        const century = doc.century?.value ? doc.century.value : "N/A";
+        const century = century?.value || null;
         if (doc.lat && doc.long) {
             const yearText = year ? `in ${year}` : '';
             const markerData = {
