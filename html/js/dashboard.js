@@ -4,6 +4,32 @@ const titleStyle = {
   fontWeight: "bold",
   fontSize: "1.5rem",
 };
+let currentCentury1 = "18"; // default
+let currentCentury = "18"; // default
+const baseColumnChartOptions = {
+  chart: { type: "column" },
+  legend: { enabled: false },
+  plotOptions: {
+    series: {
+      allowPointSelect: true,
+      cursor: "pointer",
+      dataLabels: { enabled: true, overflow: "none", crop: false },
+    },
+  },
+  yAxisTitle: "Documents",
+  exporting: { sourceWidth: 1200 },
+};
+const baseTooltip = {
+  headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
+  pointFormat: `<span style="color:{point.color}">{point.name}</span>: mentioned <b>{point.y}</b> times <br>
+    in documents from the <i>${currentCentury}th century</i>`,
+};
+
+const baseDrilldown = {
+  activeAxisLabelStyle: { color: "#000000", textDecoration: "unset" },
+  activeDataLabelStyle: { color: "#000000", textDecoration: "unset" },
+};
+
 function setVisibilityForFirstElement(chartData) {
   chartData[1].forEach((element, index) => {
     element.visible = index === 0; // Set visible: true for the first element, false for all others
@@ -69,98 +95,43 @@ function createPieChart(containerId, title, data) {
   });
 }
 
-function createColumnChart(containerId, title, data, century = 18) {
-  const chart = Highcharts.chart(containerId, {
-    chart: {
-      type: "column",
-    },
-    accessibility: {
-      description:
-        "This chart shows the number of times products in a grocery category were mentioned in inheritance inventories during the selected century.",
-    },
-    legend: {
-      enabled: false,
-    },
-    title: {
-      text: title,
-      style: titleStyle,
-    },
-    subtitle: {
-      text: "Click the columns to see data about subcategories and/or groceries",
-    },
-    xAxis: {
-      type: "category",
-    },
-    yAxis: {
-      title: {
-        text: "Mentions",
-      },
-    },
-    tooltip: {
-      headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
-      pointFormat: `<span style="color:{point.color}">{point.name}</span>: mentioned <b>{point.y}</b> times <br>
-      in documents from the <i>${century}th century</i>`,
-    },
+function createColumnChart({
+  containerId,
+  title,
+  subtitle = "",
+  series,
+  drilldown = null,
+  yAxisTitle = "Mentions",
+  tooltip = undefined,
+  xAxisType = "category",
+  responsive = undefined,
+  exporting = undefined,
+  accessibility = undefined,
+}) {
+  const options = {
+    chart: { type: "column" },
+    title: { text: title, style: titleStyle },
+    xAxis: { type: xAxisType },
+    yAxis: { title: { text: yAxisTitle } },
+    legend: { enabled: false },
     plotOptions: {
       series: {
         allowPointSelect: true,
         cursor: "pointer",
-        dataLabels: {
-          enabled: true,
-          overflow: "none",
-          crop: false,
-        },
+        dataLabels: { enabled: true, overflow: "none", crop: false },
       },
     },
-    series: [
-      {
-        name: "Grocery Categories",
-        dataSorting: {
-          enabled: false,
-          sortKey: "name",
-        },
-        colorByPoint: true,
-        data: data["categories_" + century],
-      },
-    ],
-    drilldown: {
-      activeAxisLabelStyle: {
-        color: "#000000",
-        textDecoration: "unset",
-      },
-      activeDataLabelStyle: {
-        color: "#000000",
-        textDecoration: "unset",
-      },
-      series: data["drilldown_" + century],
-    },
-    responsive: {
-      rules: [
-        {
-          condition: {
-            maxWidth: 500,
-          },
-          chartOptions: {
-            title: {
-              style: { fontSize: "1rem" },
-            },
-            yAxis: {
-              labels: { align: "left", x: 0, y: -2 },
-              title: { text: "" },
-            },
-          },
-        },
-      ],
-    },
-    exporting: {
-      //downloaded image will have this width * scale (2 by default)
-      sourceWidth: 900,
-      chartOptions: {
-        subtitle: null,
-      },
-    },
-  });
-  return chart;
+    series,
+  };
+
+  if (subtitle) options.subtitle = { text: subtitle };
+  if (tooltip) options.tooltip = tooltip;
+  if (drilldown) options.drilldown = drilldown;
+  if (responsive) options.responsive = responsive;
+  if (exporting) options.exporting = exporting;
+  if (accessibility) options.accessibility = accessibility;
+
+  return Highcharts.chart(containerId, options);
 }
 
 function createSplineChart(data, isNormalized) {
@@ -271,6 +242,125 @@ function createSplineChart(data, isNormalized) {
     }
   );
 }
+function createInteractiveBarChart(data, chartTitle = "Frequency of Mentions") {
+  const totalLength = Object.values(data)
+    .map((obj) => (Array.isArray(obj) ? obj.length : Object.keys(obj).length))
+    .reduce((sum, len) => sum + len, 0);
+  if (totalLength < 60) {
+    const categories = Object.keys(data).sort();
+    const allSeries = [];
+    categories.forEach((category) => {
+      const series = { "pointWidth": 10 };
+      series["name"] = category;
+      const products = data[category];
+      series["data"] = Object.entries(products);
+      allSeries.push(series);
+    });
+    console.log(allSeries);
+    const simpleBarChartOptions = {
+      ...baseColumnChartOptions,
+      accessibility: {
+        description:
+          "This chart shows the number of times products in the selected range were mentioned in inheritance inventories during the selected century.",
+      },
+      containerId: "container_mentions_chart",
+      title: chartTitle,
+      series: allSeries,
+      tooltip: baseTooltip,
+    };
+    return createColumnChart(simpleBarChartOptions);
+  } else {
+    const topLevel = [];
+    const drilldown = [];
+    const categories = Object.keys(data).sort();
+    categories.forEach((category) => {
+      const sum = Object.values(data[category]).reduce((a, b) => a + b, 0);
+      topLevel.push({ name: category, y: sum, drilldown: category });
+      drilldown.push({
+        name: category,
+        id: category,
+        data: Object.entries(data[category]).map(([key, value]) => ({
+          name: key,
+          y: value,
+        })),
+      });
+    });
+    const groupedBarChartOptions = {
+      ...baseColumnChartOptions,
+      accessibility: {
+        description:
+          "This chart shows the number of times products in the selected range were mentioned in inheritance inventories during the selected century, grouped by product category.",
+      },
+      containerId: "container_mentions_chart",
+      title: chartTitle,
+      series: [
+        {
+          name: "All categories",
+          colorByPoint: true,
+          data: topLevel,
+        },
+      ],
+      drilldown: {
+        ...baseDrilldown,
+        series: drilldown,
+      },
+      tooltip: baseTooltip,
+    };
+    return createColumnChart(groupedBarChartOptions);
+  }
+}
+
+function flattenMentions(mentions) {
+  const result = {};
+  for (const [category, value] of Object.entries(mentions)) {
+    result[category] = {};
+    for (const [key, val] of Object.entries(value)) {
+      if (typeof val === "object" && val !== null) {
+        // Recursively collect goods from nested objects
+        collectGoods(val, result[category]);
+      } else if (typeof val === "number") {
+        // Direct good:number pair
+        result[category][key] = val;
+      }
+    }
+  }
+  return result;
+
+  function collectGoods(obj, target) {
+    // If this object is a flat {good: number} object, collect all as goods
+    const entries = Object.entries(obj);
+    if (
+      entries.length > 0 &&
+      entries.every(([_, v]) => typeof v === "number")
+    ) {
+      entries.forEach(([good, count]) => {
+        target[good] = count;
+      });
+      return;
+    }
+    // Collect goods from "goods" object if present
+    if (obj.goods && typeof obj.goods === "object") {
+      Object.entries(obj.goods).forEach(([good, count]) => {
+        target[good] = count;
+      });
+    }
+    // Collect direct good:number pairs at this level
+    entries.forEach(([k, v]) => {
+      if (typeof v === "number") {
+        target[k] = v;
+      } else if (typeof v === "object" && v !== null) {
+        collectGoods(v, target);
+      }
+    });
+    // Recursively check subcategories
+    if (obj.subcategories && typeof obj.subcategories === "object") {
+      Object.values(obj.subcategories).forEach((sub) =>
+        collectGoods(sub, target)
+      );
+    }
+  }
+}
+
 (async function () {
   try {
     const dataFromJson = await d3.json(dataUrl);
@@ -286,6 +376,10 @@ function createSplineChart(data, isNormalized) {
     const normalizedTimeChartData = Object.values(
       dataFromJson.normalized_categories_over_decades
     );
+    const mentions = {
+      "18": flattenMentions(dataFromJson.mentions_18),
+      "19": flattenMentions(dataFromJson.mentions_19),
+    };
 
     // Custom colors (default HighCharts list has too few)
     Highcharts.setOptions({
@@ -293,30 +387,112 @@ function createSplineChart(data, isNormalized) {
     });
 
     createPieChart("container_religion_chart", "Religion", relChartData);
-    let catChart = createColumnChart(
-      "container_categories_chart",
-      "Groceries by Category",
-      catChartData
-    );
+
+    // Options for the bar charts
+
+    const catChartOptions = {
+      ...baseColumnChartOptions,
+      accessibility: {
+        description:
+          "This chart shows the number of times products in a grocery category were mentioned in inheritance inventories during the selected century.",
+      },
+      containerId: "container_categories_chart",
+      title: "Groceries by Category",
+      subtitle:
+        "Click the columns to see data about subcategories and/or groceries",
+      series: [
+        {
+          name: "Grocery Categories",
+          colorByPoint: true,
+          data: catChartData["categories_" + currentCentury1],
+        },
+      ],
+      drilldown: {
+        ...baseDrilldown,
+        series: catChartData["drilldown_" + currentCentury1],
+      },
+      tooltip: baseTooltip,
+      exporting: {
+        sourceWidth: 900,
+        chartOptions: { subtitle: null },
+      },
+    };
+
+    let catChart = createColumnChart(catChartOptions);
 
     // Redraw the Groceries by Category chart when the century is changed
     const select = document.getElementById("select-century");
     select.addEventListener("change", () => {
-      const century = select.value;
+      currentCentury1 = select.value;
       catChart.destroy();
-      catChart = createColumnChart(
-        "container_categories_chart",
-        "Groceries by Category",
-        catChartData,
-        century
-      );
+      catChart = createColumnChart(catChartOptions);
     });
+
+    let interactiveBarChart = createInteractiveBarChart(
+      mentions[currentCentury]
+    );
+    const centuries = ["18", "19"];
+    centuries.forEach((century) => {
+      const btn = document.getElementById(`btn-${century}`);
+      btn.addEventListener("click", () => {
+        document
+          .querySelectorAll(".buttons button.active")
+          .forEach((active) => {
+            active.className = "btn grocerist-button";
+          });
+        btn.className = "btn grocerist-button active";
+        currentCentury = century;
+        // Clear the range inputs
+        document.getElementById("min").value = "";
+        document.getElementById("max").value = "";
+        document.getElementById("chart-title").value = "";
+        interactiveBarChart.destroy();
+        interactiveBarChart = createInteractiveBarChart(mentions[century]);
+      });
+    });
+    // Add event listener for title set button
+    document
+      .getElementById("set-title-btn")
+      .addEventListener("click", function () {
+        const title = document.getElementById("chart-title").value;
+        interactiveBarChart.setTitle({ text: title });
+      });
+    // when the apply button is clicked, get the values from the inputs
+    document
+      .getElementById("range-apply-btn")
+      .addEventListener("click", function () {
+        const min = parseInt(document.getElementById("min").value, 10);
+        const max = parseInt(document.getElementById("max").value, 10);
+        const filteredData = {};
+        for (const [category, products] of Object.entries(
+          mentions[currentCentury]
+        )) {
+          filteredData[category] = {};
+          for (const [product, count] of Object.entries(products)) {
+            if (
+              typeof count === "number" &&
+              (!isNaN(min) ? count >= min : true) &&
+              (!isNaN(max) ? count <= max : true)
+            ) {
+              filteredData[category][product] = count;
+            }
+          }
+        }
+        // create a new chart with the filtered data
+        interactiveBarChart.destroy();
+        let title =
+          document.getElementById("chart-title").value ||
+          "Frequency of Mentions";
+
+        interactiveBarChart = createInteractiveBarChart(filteredData, title);
+      });
 
     // Add visibility attribute for the spline charts
     setVisibilityForFirstElement(timeChartData);
     setVisibilityForFirstElement(normalizedTimeChartData);
 
     createSplineChart(timeChartData, false);
+
     createSplineChart(normalizedTimeChartData, true);
   } catch (error) {
     console.error("Error loading or processing data:", error);
