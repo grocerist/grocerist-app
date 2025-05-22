@@ -12,7 +12,7 @@
         <div class="col">
             {% if object.district or object.neighbourhood or object.karye or object.nahiye or object.quarter or
             object.address %}
-            <h2><i class="bi bi-geo-alt" aria-hidden="true"></i>Location</h2>
+            <h2><i class="bi bi-geo-alt me-2" aria-hidden="true"></i>Location</h2>
             <dl class="ms-4">
                 {% if object.district %}
                 <dt>District</dt>
@@ -53,7 +53,7 @@
             </dl>
             {% endif %}
             {%if object.year_of_creation_hicri or object.creation_date_miladi %}
-            <h2><i class="bi bi-calendar4" aria-hidden="true"></i>Year of creation</h2>
+            <h2><i class="bi bi-calendar4 me-2" aria-hidden="true"></i>Year of creation</h2>
             <dl class="ms-4">
                 {% if object.year_of_creation_hicri %}
                 <dt><i>Hicri</i></dt>
@@ -66,7 +66,7 @@
             </dl>
             {% endif %}
             {% if object.main_person %}
-            <h2><i class="bi bi-person" aria-hidden="true"></i><i>Bakkal</i>/Grocer</h2>
+            <h2><i class="bi bi-person me-2" aria-hidden="true"></i><i>Bakkal</i>/Grocer</h2>
             {% for x in object.main_person %}
             <dl class="ms-4">
                 <dt>Name</dt>
@@ -83,7 +83,7 @@
             {% endfor %}
             {% endif %}
             {% if object.goods %}
-            <h2><i class="bi bi-basket" aria-hidden="true"></i>Groceries</h2>
+            <h2><i class="bi bi-basket me-2" aria-hidden="true"></i>Groceries</h2>
             <dl class="ms-4">
                 {% for x in object.goods | sort(attribute='name') %}
                 <dt><a href="{{ x.grocerist_id }}.html">{{ x.name }}</a></dt>
@@ -99,7 +99,7 @@
         <div class="col">
             {% if images %}
             <div class="pb-3">
-                <h2 class="text-center"><i class="bi bi-images" aria-hidden="true"></i>Facsimiles</h2>
+                <h2 class="text-center"><i class="bi bi-images me-2" aria-hidden="true"></i>Facsimiles</h2>
                 <div id="openseadragon1" style="width: 600px; height: 800px;"></div>
                 <script src="vendor/openseadragon-bin-5.0.1/openseadragon.min.js"></script>
                 <script type="text/javascript">
@@ -113,7 +113,7 @@
             </div>
             {% endif %}
             <div class="pb-3">
-                <h2 class="text-center"><i class="bi bi-pencil" aria-hidden="true"></i>Transcript</h2>
+                <h2 class="text-center"><i class="bi bi-pencil me-2" aria-hidden="true"></i>Transcript</h2>
                 {% for x in paragraphs %}
                 {{ x|safe }}
                 {% endfor %}
