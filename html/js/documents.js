@@ -363,8 +363,8 @@ function zoomToPointFromRowData(rowData, map, markers) {
 // Main function for initializing the map and table
 function setupMapAndTable(dataUrl) {
   const { map, layerGroups } = createMap({
+    initialZoom: 9,
     layerControl: true,
-    // useSpiderfier: true,
     useCluster: true,
   });
   let markers = {};

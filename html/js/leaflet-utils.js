@@ -5,7 +5,7 @@ const mapConfig = {
   initialCoordinates: [41.015137, 28.97953],
   divId: "map",
   // L.map options
-  mapOptions: { maxZoom: 18, minZoom: 9 },
+  mapOptions: { maxZoom: 18, minZoom: 8 },
   // L.tileLayer options
   baseMapUrl: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
   attribution:
@@ -81,7 +81,7 @@ function createMap(options = {}) {
     options.initialCoordinates
       ? options.initialCoordinates
       : mapConfig.initialCoordinates,
-    mapConfig.initialZoom
+    options.initialZoom ? options.initialZoom : mapConfig.initialZoom
   );
   const baseMapLayer = L.tileLayer(mapConfig.baseMapUrl, {
     attribution: mapConfig.attribution,
@@ -99,14 +99,14 @@ function createMap(options = {}) {
     });
     layerControl.addTo(map);
     if (options.useCluster) {
-    // Create a marker cluster group
-    const mcgLayerSupportGroup = L.markerClusterGroup.layerSupport();
-    mcgLayerSupportGroup.addTo(map);
-    Object.values(layerGroups).forEach((layerGroup) => {
-    mcgLayerSupportGroup.addLayer(layerGroup)
-  });
-  }
+      // Create a marker cluster group
+      const mcgLayerSupportGroup = L.markerClusterGroup.layerSupport();
+      mcgLayerSupportGroup.addTo(map);
+      Object.values(layerGroups).forEach((layerGroup) => {
+        mcgLayerSupportGroup.addLayer(layerGroup);
+      });
+    }
   }
 
-  return { map, layerGroups};
+  return { map, layerGroups };
 }
