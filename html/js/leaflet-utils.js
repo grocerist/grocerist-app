@@ -100,7 +100,14 @@ function createMap(options = {}) {
     layerControl.addTo(map);
     if (options.useCluster) {
       // Create a marker cluster group
-      const mcgLayerSupportGroup = L.markerClusterGroup.layerSupport();
+      const mcgLayerSupportGroup = L.markerClusterGroup.layerSupport({
+        iconCreateFunction: function (cluster) {
+          return L.divIcon({ 
+            className: "custom-cluster",
+            html:`<div><i class="bi bi-file-earmark-text-fill"></i><span>${cluster.getChildCount()}</span></div>`,
+          iconSize: [50, 50],});
+        },
+      });
       mcgLayerSupportGroup.addTo(map);
       Object.values(layerGroups).forEach((layerGroup) => {
         mcgLayerSupportGroup.addLayer(layerGroup);
