@@ -312,9 +312,7 @@ function getCoordinates(rowData) {
   return { lat: rowData.lat, long: rowData.long };
 }
 
-function rowsToMarkers(map, rows, layerGroups, oms) {
-  // Clear all markers from the overlapping marker spiderfier
-  oms.clearMarkers();
+function rowsToMarkers(map, rows, layerGroups) {
   // Clear all markers from the map and layer groups
   Object.values(layerGroups).forEach((layerGroup) => {
     layerGroup.clearLayers();
@@ -343,18 +341,10 @@ function rowsToMarkers(map, rows, layerGroups, oms) {
       // store each marker by the grocerist_id from the document
       const markerID = rowData.grocerist_id;
       allMarkers[markerID] = marker;
-
-      oms.addMarker(marker);
-      // WATCHME: hacky solution for the only two overlapping markers for now
-      // must be adjusted in the future
-      if (markerID === "document__44" || markerID === "document__39") {
-        marker.fire("click");
-        marker.closePopup();
-        map.setView(mapConfig.initialCoordinates, mapConfig.initialZoom);
-      }
     }
   });
-  resizeIconsOnZoom(map, allMarkers);
+
+  // resizeIconsOnZoom(map, allMarkers);
   return allMarkers;
 }
 function zoomToPointFromRowData(rowData, map, markers) {
@@ -372,9 +362,10 @@ function zoomToPointFromRowData(rowData, map, markers) {
 }
 // Main function for initializing the map and table
 function setupMapAndTable(dataUrl) {
-  const { map, layerGroups, oms } = createMap({
+  const { map, layerGroups } = createMap({
     layerControl: true,
-    useSpiderfier: true,
+    // useSpiderfier: true,
+    useCluster: true,
   });
   let markers = {};
   (async function () {
@@ -393,7 +384,7 @@ function setupMapAndTable(dataUrl) {
   
       table.on("dataFiltered", function (_filters, rows) {
         $("#search_count").text(rows.length);
-        markers = rowsToMarkers(map, rows, layerGroups, oms);
+        markers = rowsToMarkers(map, rows, layerGroups);
       });
   
       // Event listener for click on row

@@ -90,6 +90,7 @@ function createMap(options = {}) {
   baseMapLayer.addTo(map);
 
   let layerGroups = null;
+  // let mcgLayerSupportGroup = null;
   if (options.layerControl) {
     // Create and add marker layer groups from the overlayColors object
     layerGroups = createAndAddLayerGroups(map, overlayColors);
@@ -97,15 +98,15 @@ function createMap(options = {}) {
       collapsed: false,
     });
     layerControl.addTo(map);
+    if (options.useCluster) {
+    // Create a marker cluster group
+    const mcgLayerSupportGroup = L.markerClusterGroup.layerSupport();
+    mcgLayerSupportGroup.addTo(map);
+    Object.values(layerGroups).forEach((layerGroup) => {
+    mcgLayerSupportGroup.addLayer(layerGroup)
+  });
+  }
   }
 
-  let oms = null;
-  if (options.useSpiderfier) {
-    // keepSpiderfied just keeps the markers from unspiderfying when clicked
-    oms = new OverlappingMarkerSpiderfier(map, {
-      keepSpiderfied: true,
-      nearbyDistance: 1,
-    });
-  }
-  return { map, layerGroups, oms };
+  return { map, layerGroups};
 }
