@@ -99,16 +99,7 @@
   font: 14px Arial, Helvetica, sans-serif;
   position: relative;
 }
-.custom-cluster div i {
-  color: #b3c3db;
-  font-size: 25px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.4;
-  z-index: 0;
-}
+
 .custom-cluster span {
   color: #fff;
   line-height: 40px;

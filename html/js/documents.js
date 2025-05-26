@@ -347,13 +347,14 @@ function rowsToMarkers(map, rows, layerGroups) {
   // resizeIconsOnZoom(map, allMarkers);
   return allMarkers;
 }
-function zoomToPointFromRowData(rowData, map, markers) {
+function zoomToPointFromRowData(rowData, map, markers, mcgLayerSupportGroup) {
   const { lat, long } = getCoordinates(rowData);
   if (lat && long) {
     const markerId = rowData.grocerist_id;
     const marker = markers[markerId];
+    mcgLayerSupportGroup.zoomToShowLayer(marker, function() {
     marker.openPopup();
-    map.setView([lat, long], mapConfig.onRowClickZoom);
+  });
   } else {
     // close all open popups when resetting the map
     map.closePopup();
@@ -362,7 +363,7 @@ function zoomToPointFromRowData(rowData, map, markers) {
 }
 // Main function for initializing the map and table
 function setupMapAndTable(dataUrl) {
-  const { map, layerGroups } = createMap({
+  const { map, layerGroups, mcgLayerSupportGroup } = createMap({
     initialZoom: 9,
     layerControl: true,
     useCluster: true,
@@ -389,7 +390,7 @@ function setupMapAndTable(dataUrl) {
   
       // Event listener for click on row
       table.on("rowClick", (e, row) => {
-        zoomToPointFromRowData(row.getData(), map, markers);
+        zoomToPointFromRowData(row.getData(), map, markers, mcgLayerSupportGroup);
       });
     } catch (error) {
       console.error("Error loading or processing data:", error);

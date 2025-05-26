@@ -90,7 +90,7 @@ function createMap(options = {}) {
   baseMapLayer.addTo(map);
 
   let layerGroups = null;
-  // let mcgLayerSupportGroup = null;
+  let mcgLayerSupportGroup = null;
   if (options.layerControl) {
     // Create and add marker layer groups from the overlayColors object
     layerGroups = createAndAddLayerGroups(map, overlayColors);
@@ -100,11 +100,11 @@ function createMap(options = {}) {
     layerControl.addTo(map);
     if (options.useCluster) {
       // Create a marker cluster group
-      const mcgLayerSupportGroup = L.markerClusterGroup.layerSupport({
+      mcgLayerSupportGroup = L.markerClusterGroup.layerSupport({
         iconCreateFunction: function (cluster) {
           return L.divIcon({ 
             className: "custom-cluster",
-            html:`<div><i class="bi bi-file-earmark-text-fill"></i><span>${cluster.getChildCount()}</span></div>`,
+            html:`<div><span>${cluster.getChildCount()}</span></div>`,
           iconSize: [50, 50],});
         },
       });
@@ -115,5 +115,5 @@ function createMap(options = {}) {
     }
   }
 
-  return { map, layerGroups };
+  return { map, layerGroups, mcgLayerSupportGroup };
 }
