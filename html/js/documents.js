@@ -268,6 +268,18 @@ const baseColumnDefinitions = [
     headerFilterFunc: dateFilterFunction,
     visible: false,
   },
+    {
+    title: "Facsimiles",
+    field: "images",
+    hozAlign: "center",
+    formatter: "tickCross",
+    headerFilter: "tickCross",
+    headerFilterParams: { tristate: true },
+    headerFilterEmptyCheck: function (value) {
+      return value === null;
+    },
+    visible: false,
+  },
 ];
 // Add minWidth and visibility toggle to each column
 const columnDefinitions = baseColumnDefinitions.map((column) => {
