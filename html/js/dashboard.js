@@ -421,26 +421,55 @@ function flattenMentions(mentions) {
     let catChart = createColumnChart(catChartOptions);
 
     // Redraw the Groceries by Category chart when the century is changed
-    const select = document.getElementById("select-century");
-    select.addEventListener("change", () => {
-      currentCentury1 = select.value;
-      catChart.destroy();
-      catChart = createColumnChart(catChartOptions);
-    });
+    // const select = document.getElementById("select-century");
+    // select.addEventListener("change", () => {
+    //   currentCentury1 = select.value;
+    //   catChart.destroy();
+    //   catChart = createColumnChart(catChartOptions);
+    // });
 
     let interactiveBarChart = createInteractiveBarChart(
       mentions[currentCentury]
     );
-    const centuries = ["18", "19"];
-    centuries.forEach((century) => {
-      const btn = document.getElementById(`btn-${century}`);
+    // --- Categories Chart Buttons ---
+    ["18", "19"].forEach((century) => {
+      const btn = document.getElementById(`btn-cat-${century}`);
       btn.addEventListener("click", () => {
+        // Remove active class from all category buttons
         document
-          .querySelectorAll(".buttons button.active")
+          .querySelectorAll(".cat-century-btn.active")
           .forEach((active) => {
-            active.className = "btn grocerist-button";
+            active.classList.remove("active");
           });
-        btn.className = "btn grocerist-button active";
+        btn.classList.add("active");
+        currentCentury1 = century;
+        catChart.destroy();
+        catChart = createColumnChart({
+          ...catChartOptions,
+          series: [
+            {
+              name: "Grocery Categories",
+              colorByPoint: true,
+              data: catChartData["categories_" + currentCentury1],
+            },
+          ],
+          drilldown: {
+            ...baseDrilldown,
+            series: catChartData["drilldown_" + currentCentury1],
+          },
+        });
+      });
+    });
+    ["18", "19"].forEach((century) => {
+      const btn = document.getElementById(`btn-mentions-${century}`);
+      btn.addEventListener("click", () => {
+        // Remove active class from all mentions buttons
+        document
+          .querySelectorAll(".mentions-century-btn.active")
+          .forEach((active) => {
+            active.classList.remove("active");
+          });
+        btn.classList.add("active");
         currentCentury = century;
         // Clear the range inputs
         document.getElementById("min").value = "";
