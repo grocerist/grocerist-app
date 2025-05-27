@@ -83,6 +83,32 @@
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
+.custom-cluster {
+  background-color: var(--primary-hover);
+  background-clip: padding-box;
+  border-radius: 25px;
+}
+.custom-cluster div {
+  background-color: var(--primary);
+  width: 40px;
+  height: 40px;
+  margin-left: 5px;
+  margin-top: 5px;
+  text-align: center;
+  border-radius: 20px;
+  font: 14px Arial, Helvetica, sans-serif;
+  position: relative;
+}
+
+.custom-cluster span {
+  color: #fff;
+  line-height: 40px;
+  /* font-weight: bold; */
+  text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+  position: relative; /* Add this */
+  z-index: 1; 
+}
+
 /*
 document is built up as follows: 
 
