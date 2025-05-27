@@ -419,19 +419,10 @@ function flattenMentions(mentions) {
     };
 
     let catChart = createColumnChart(catChartOptions);
-
-    // Redraw the Groceries by Category chart when the century is changed
-    // const select = document.getElementById("select-century");
-    // select.addEventListener("change", () => {
-    //   currentCentury1 = select.value;
-    //   catChart.destroy();
-    //   catChart = createColumnChart(catChartOptions);
-    // });
-
     let interactiveBarChart = createInteractiveBarChart(
       mentions[currentCentury]
     );
-    // --- Categories Chart Buttons ---
+    // Redraw charts when the century is changed
     ["18", "19"].forEach((century) => {
       const btn = document.getElementById(`btn-cat-${century}`);
       btn.addEventListener("click", () => {
