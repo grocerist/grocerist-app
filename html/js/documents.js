@@ -105,7 +105,6 @@ const dateFilterFunction = function (
   return false;
 };
 
-
 // ####### TABLE CONFIG AND FUNCTIONS #######
 const baseColumnDefinitions = [
   {
@@ -154,7 +153,7 @@ const baseColumnDefinitions = [
   {
     title: "District",
     field: "district",
-    
+
     headerFilter: "list",
     headerFilterParams: {
       valuesLookup: objectLookup,
@@ -169,10 +168,10 @@ const baseColumnDefinitions = [
     },
     headerFilterFunc: objectArrayHeaderFilter,
     sorter: "array",
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "<i>Mahalle</i>",
@@ -352,13 +351,13 @@ function zoomToPointFromRowData(rowData, map, markers, mcgLayerSupportGroup) {
   if (lat && long) {
     const markerId = rowData.grocerist_id;
     const marker = markers[markerId];
-    mcgLayerSupportGroup.zoomToShowLayer(marker, function() {
-    marker.openPopup();
-  });
+    mcgLayerSupportGroup.zoomToShowLayer(marker, function () {
+      marker.openPopup();
+    });
   } else {
     // close all open popups when resetting the map
     map.closePopup();
-    map.setView(mapConfig.initialCoordinates, mapConfig.initialZoom);
+    map.setView(mapConfig.initialCoordinates, 9);
   }
 }
 // Main function for initializing the map and table
@@ -368,29 +367,73 @@ function setupMapAndTable(dataUrl) {
     layerControl: true,
     useCluster: true,
   });
+  let spiderfyTimeout = null;
+  // spiderfy clusters beyond a certain zoom level
+  // (!only if there is only one cluster visible!)
+  mcgLayerSupportGroup.on("animationend", function () {
+    const currentZoom = map.getZoom();
+    const autoSpiderfyZoomLevel = 12;
+    // Zooming automically unspiderfies, so the timeout ensures 
+    // there's less spiderfying when zooming in and out quickly.
+    // Clear any pending spiderfy timeout
+    if (spiderfyTimeout) {
+      clearTimeout(spiderfyTimeout);
+    }
+
+    spiderfyTimeout = setTimeout(() => {
+      if (map.getZoom() >= autoSpiderfyZoomLevel) {
+        const visibleClusters = new Set();
+
+        mcgLayerSupportGroup.eachLayer(function (layer) {
+          if (layer.getLatLng && map.getBounds().contains(layer.getLatLng())) {
+            const visibleParent = mcgLayerSupportGroup.getVisibleParent(layer);
+            if (typeof visibleParent.getChildCount === "function") {
+              visibleClusters.add(visibleParent);
+            }
+          }
+        });
+
+        if (visibleClusters.size === 1) {
+          const clusterToSpiderfy = Array.from(visibleClusters)[0];
+          clusterToSpiderfy.spiderfy();
+        }
+      }
+    }, 400);
+  });
+  // spiderfy smaller clusters on mouseover
+  mcgLayerSupportGroup.on("clustermouseover", function (e) {
+    if (e.layer.getChildCount() <= 5) {
+      e.layer.spiderfy();
+    }
+  });
   let markers = {};
   (async function () {
     try {
       const dataFromJson = await d3.json(dataUrl);
-  
+
       const tableData = Object.values(dataFromJson).filter(
         (item) => item.shelfmark !== ""
       );
       tableConfig.data = tableData;
       const table = createTable(tableConfig);
-  
+
       table.on("dataLoaded", function (data) {
         $("#total_count").text(data.length);
       });
-  
+
       table.on("dataFiltered", function (_filters, rows) {
         $("#search_count").text(rows.length);
         markers = rowsToMarkers(map, rows, layerGroups);
       });
-  
+
       // Event listener for click on row
       table.on("rowClick", (e, row) => {
-        zoomToPointFromRowData(row.getData(), map, markers, mcgLayerSupportGroup);
+        zoomToPointFromRowData(
+          row.getData(),
+          map,
+          markers,
+          mcgLayerSupportGroup
+        );
       });
     } catch (error) {
       console.error("Error loading or processing data:", error);
