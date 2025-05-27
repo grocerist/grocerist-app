@@ -1,4 +1,5 @@
 const dataUrl = "json_dumps/charts.json";
+const goodsJSONUrl = "json_dumps/goods.json";
 const titleStyle = {
   color: primaryColor,
   fontWeight: "bold",
@@ -6,6 +7,7 @@ const titleStyle = {
 };
 let currentCentury1 = "18"; // default
 let currentCentury = "18"; // default
+const english_names = {};
 const baseColumnChartOptions = {
   chart: { type: "column" },
   legend: { enabled: false },
@@ -111,7 +113,17 @@ function createColumnChart({
   const options = {
     chart: { type: "column" },
     title: { text: title, style: titleStyle },
-    xAxis: { type: xAxisType },
+    xAxis: {
+      type: xAxisType,
+      labels: {
+        useHTML: true,
+        formatter: function () {
+          const name = this.value;
+          const english_name = english_names[name] || "";	
+          return `<span title="${english_name}">${name}</span>`;
+        },
+      },
+    },
     yAxis: { title: { text: yAxisTitle } },
     legend: { enabled: false },
     plotOptions: {
@@ -363,7 +375,9 @@ function flattenMentions(mentions) {
 
 (async function () {
   try {
+    // Load and prepare the data
     const dataFromJson = await d3.json(dataUrl);
+    const goodsData = await d3.json(goodsJSONUrl);
 
     const relChartData = Object.values(dataFromJson.religions);
     const catChartData = {
@@ -380,7 +394,10 @@ function flattenMentions(mentions) {
       "18": flattenMentions(dataFromJson.mentions_18),
       "19": flattenMentions(dataFromJson.mentions_19),
     };
-
+    
+    for (const value of Object.values(goodsData)) {
+      english_names[value.name] = value.english_names;
+    }
     // Custom colors (default HighCharts list has too few)
     Highcharts.setOptions({
       colors: colors,
