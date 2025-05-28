@@ -380,6 +380,7 @@ function flattenMentions(mentions) {
       "18": flattenMentions(dataFromJson.mentions_18),
       "19": flattenMentions(dataFromJson.mentions_19),
     };
+    const priceChartData = Object.values(dataFromJson.prices);
 
     // Custom colors (default HighCharts list has too few)
     Highcharts.setOptions({
@@ -494,6 +495,8 @@ function flattenMentions(mentions) {
     createSplineChart(timeChartData, false);
 
     createSplineChart(normalizedTimeChartData, true);
+
+    createSplineChart(priceChartData, false);
   } catch (error) {
     console.error("Error loading or processing data:", error);
   }

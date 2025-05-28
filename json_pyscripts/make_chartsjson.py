@@ -28,6 +28,7 @@ persons_data = read_json_file("persons.json").values()
 categories_data = read_json_file("categories.json").values()
 goods_data = read_json_file("goods.json").values()
 docs_data = read_json_file("documents.json")
+price_data = read_json_file("price_per_document.json").values()
 
 # DATA FOR RELIGIONS CHART
 # Create a dictionary to store the count of persons per religion
@@ -545,6 +546,31 @@ for good in goods_data:
                     if doc["century"]["value"] == "18":
                         mentions[good_name] += 1
 
+prices_dict = {}
+goods_of_interest = ["Soğan", "Revgan-ı sade", "Pirinc", "Nohud", "Bal / Asel"]
+for price in price_data:
+    if (price.get("good") and price.get("good")[0] and price.get("good")[0].get("value") in goods_of_interest):
+        current_price = [
+            price.get("price"),
+            price.get("unit").get("value") if price.get("unit") else None,
+            price.get("total_value"),
+            price.get("price_formula"),
+            price.get("doc_year")[0].get("value") if price.get("doc_year") else None
+        ]
+        prices_dict.setdefault(price.get("good")[0].get("value"), []).append(current_price)
+
+# 1 keyl = 20 kıyye
+prices_results = [
+    {
+        "name": good,
+        "prices": prices
+
+    }
+    for good, prices in prices_dict.items()
+]
+
+#print(prices_results)
+
 # Convert the results to JSON format and write to a file
 result_json = json.dumps(
     {
@@ -563,6 +589,7 @@ result_json = json.dumps(
         },
         "mentions_18": categories_18,
         "mentions_19": categories_19,
+        "prices": prices,
     },
     indent=2,
 )
