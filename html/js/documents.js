@@ -268,7 +268,7 @@ const baseColumnDefinitions = [
     headerFilterFunc: dateFilterFunction,
     visible: false,
   },
-    {
+  {
     title: "Facsimiles",
     field: "images",
     hozAlign: "center",
@@ -380,12 +380,20 @@ function setupMapAndTable(dataUrl) {
     useCluster: true,
   });
   let spiderfyTimeout = null;
+  let isSpiderfied = false;
+
+  mcgLayerSupportGroup.on("spiderfied", function () {
+    isSpiderfied = true;
+  });
+  mcgLayerSupportGroup.on("unspiderfied", function () {
+    isSpiderfied = false;
+  });
   // spiderfy clusters beyond a certain zoom level
   // (!only if there is only one cluster visible!)
   mcgLayerSupportGroup.on("animationend", function () {
     const currentZoom = map.getZoom();
     const autoSpiderfyZoomLevel = 12;
-    // Zooming automically unspiderfies, so the timeout ensures 
+    // Zooming automically unspiderfies, so the timeout ensures
     // there's less spiderfying when zooming in and out quickly.
     // Clear any pending spiderfy timeout
     if (spiderfyTimeout) {
@@ -393,14 +401,17 @@ function setupMapAndTable(dataUrl) {
     }
 
     spiderfyTimeout = setTimeout(() => {
-      if (map.getZoom() >= autoSpiderfyZoomLevel) {
+      if (currentZoom >= autoSpiderfyZoomLevel && !isSpiderfied) {
         const visibleClusters = new Set();
-
         mcgLayerSupportGroup.eachLayer(function (layer) {
-          if (layer.getLatLng && map.getBounds().contains(layer.getLatLng())) {
-            const visibleParent = mcgLayerSupportGroup.getVisibleParent(layer);
-            if (typeof visibleParent.getChildCount === "function") {
-              visibleClusters.add(visibleParent);
+          let parent = mcgLayerSupportGroup.getVisibleParent(layer);
+          if (parent) {
+            // check if the parent is a cluster and if it is visible
+            if (
+              typeof parent.getChildCount === "function" &&
+              map.getBounds().contains(parent.getLatLng())
+            ) {
+              visibleClusters.add(parent);
             }
           }
         });
