@@ -104,6 +104,14 @@ function reduceArrayMutator(value, data, type, params, component) {
   }
 }
 
+//Custom mutator for price tables: Show "No data" instead of empty cell
+function noDataMutator(value, data, type, params, component) {
+  if (value === null) {
+    return "No data";
+  }
+  return value;
+}
+
 // CUSTOM FILTERS
 
 // custom header filter function for ranges

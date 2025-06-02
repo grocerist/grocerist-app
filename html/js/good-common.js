@@ -41,6 +41,7 @@ function initializeTabulator(priceData) {
     {
       title: "Price",
       field: "price",
+      mutator: noDataMutator,
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
       headerFilterFunc: greaterThanFilter,
@@ -51,6 +52,7 @@ function initializeTabulator(priceData) {
     {
       title: "Unit",
       field: "unit.value",
+      mutator: noDataMutator,
       headerFilter: "list",
       headerFilterParams: {
         valuesLookup: true,
@@ -62,6 +64,7 @@ function initializeTabulator(priceData) {
     {
       title: "Amount",
       field: "amount_of_units",
+      mutator: noDataMutator,
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
       headerFilterFunc: greaterThanFilter,
@@ -72,6 +75,7 @@ function initializeTabulator(priceData) {
     {
       title: "Total Value",
       field: "total_value",
+      mutator: noDataMutator,
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
       headerFilterFunc: greaterThanFilter,

@@ -32,6 +32,7 @@ const columnDefinitions = [
   {
     title: "Price",
     field: "price",
+    mutator: noDataMutator,
     headerFilter: "number",
     headerFilterPlaceholder: "at least...",
     headerFilterFunc: greaterThanFilter,
@@ -42,6 +43,7 @@ const columnDefinitions = [
   {
     title: "Unit",
     field: "unit.value",
+    mutator: noDataMutator,
     headerFilter: "list",
     headerFilterParams: {
       valuesLookup: true,
@@ -53,6 +55,7 @@ const columnDefinitions = [
   {
     title: "Amount",
     field: "amount_of_units",
+    mutator: noDataMutator,
     headerFilter: "number",
     headerFilterPlaceholder: "at least...",
     headerFilterFunc: greaterThanFilter,
@@ -63,6 +66,7 @@ const columnDefinitions = [
   {
     title: "Total Value",
     field: "total_value",
+    mutator: noDataMutator,
     headerFilter: "number",
     headerFilterPlaceholder: "at least...",
     headerFilterFunc: greaterThanFilter,
@@ -91,7 +95,7 @@ const goodsListColumnDefinitions = [
   },
 ];
 
-initializeTable = function (goodName, correctedGoodName,  priceTableData) {
+initializeTable = function (correctedGoodName,  priceTableData) {
 
   const table = new Tabulator(`#table-${correctedGoodName}`, {
     layout: "fitColumns",
@@ -130,7 +134,7 @@ function handleRowSelection(row, allData) {
       )
     )
   );
-  initializeTable(goodName, correctedGoodName, priceTableData);
+  initializeTable(correctedGoodName, priceTableData);
 }
 
 function handleRowDeselection(row) {
