@@ -1,4 +1,5 @@
 const dataUrl = "json_dumps/charts.json";
+const goodsJSONUrl = "json_dumps/goods.json";
 const titleStyle = {
   color: primaryColor,
   fontWeight: "bold",
@@ -6,6 +7,7 @@ const titleStyle = {
 };
 let currentCentury1 = "18"; // default
 let currentCentury = "18"; // default
+const english_names = {};
 const baseColumnChartOptions = {
   chart: { type: "column" },
   legend: { enabled: false },
@@ -35,7 +37,22 @@ function setVisibilityForFirstElement(chartData) {
     element.visible = index === 0; // Set visible: true for the first element, false for all others
   });
 }
-
+function showCustomTooltip(evt, text) {
+  let tooltip = document.getElementById("custom-svg-tooltip");
+  if (!tooltip) {
+    tooltip = document.createElement("div");
+    tooltip.id = "custom-svg-tooltip";
+    document.body.appendChild(tooltip);
+  }
+  tooltip.textContent = text;
+  tooltip.style.display = "block";
+  tooltip.style.left = evt.clientX + 10 + "px";
+  tooltip.style.top = evt.clientY + 10 + "px";
+}
+function hideCustomTooltip() {
+  const tooltip = document.getElementById("custom-svg-tooltip");
+  if (tooltip) tooltip.style.display = "none";
+}
 function createPieChart(containerId, title, data) {
   return Highcharts.chart(containerId, {
     chart: {
@@ -109,9 +126,45 @@ function createColumnChart({
   accessibility = undefined,
 }) {
   const options = {
-    chart: { type: "column" },
+    chart: {
+      type: "column",
+      events: {
+        render() {
+          const chart = this;
+          const axis = chart.xAxis[0];
+
+          if (!axis) return;
+          axis.ticks &&
+            Object.values(axis.ticks).forEach((tick) => {
+              if (tick.label && tick.label.element) {
+                const name = tick.label.textStr;
+                const english_name = english_names[name] || "";
+                tick.label.element.onmouseover = null;
+                tick.label.element.onmouseout = null;
+                if (english_name) {
+                  tick.label.element.style.cursor = "pointer";
+                  tick.label.element.onmouseover = function (e) {
+                    showCustomTooltip(e, english_name);
+                  };
+                  tick.label.element.onmouseout = function () {
+                    hideCustomTooltip();
+                  };
+                } else {
+                  tick.label.element.style.cursor = "";
+                }
+              }
+            });
+        },
+      },
+    },
+
     title: { text: title, style: titleStyle },
-    xAxis: { type: xAxisType },
+    xAxis: {
+      type: xAxisType,
+      labels: {
+        step: 1, // Show every label
+      },
+    },
     yAxis: { title: { text: yAxisTitle } },
     legend: { enabled: false },
     plotOptions: {
@@ -363,7 +416,9 @@ function flattenMentions(mentions) {
 
 (async function () {
   try {
+    // Load and prepare the data
     const dataFromJson = await d3.json(dataUrl);
+    const goodsData = await d3.json(goodsJSONUrl);
 
     const relChartData = Object.values(dataFromJson.religions);
     const catChartData = {
@@ -381,6 +436,9 @@ function flattenMentions(mentions) {
       "19": flattenMentions(dataFromJson.mentions_19),
     };
 
+    for (const value of Object.values(goodsData)) {
+      english_names[value.name] = value.english_names;
+    }
     // Custom colors (default HighCharts list has too few)
     Highcharts.setOptions({
       colors: colors,
