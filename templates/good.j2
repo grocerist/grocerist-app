@@ -61,20 +61,53 @@
             {% endfor %}
             {% if ns.has_18th_century_docs %}
             <strong class="ms-4">18th century</strong>
+            {% set docs_18 = object.documents | selectattr("century.value", "equalto", "18") | list %}
             <ul>
-                {% for x in object.documents if x.century.value == "18" %}
+                {% if docs_18|length > 5 %}
+                {% for x in docs_18[:5] %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
                 {% endfor %}
+                <div class="collapse" id="docs18more">
+                    {% for x in docs_18[5:] %}
+                    <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                    {% endfor %}
+                </div>
+                <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#docs18more" aria-expanded="false" aria-controls="docs18more">
+                    Show more
+                </button>
+                {% else %}
+                {% for x in docs_18 %}
+                <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                {% endfor %}
+                {% endif %}
             </ul>
             {% endif %}
             {% if ns.has_19th_century_docs %}
             <strong class="ms-4">19th century</strong>
+            {% set docs_19 = object.documents | selectattr("century.value", "equalto", "19") | list %}
             <ul>
-                {% for x in object.documents if x.century.value == "19" %}
+                {% if docs_19|length > 5 %}
+                {% for x in docs_19[:5] %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
                 {% endfor %}
+                <div class="collapse" id="docs19more">
+                    {% for x in docs_19[5:] %}
+                    <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                    {% endfor %}
+                </div>
+                <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#docs19more" aria-expanded="false" aria-controls="docs19more">
+                    Show more
+                </button>
+                {% else %}
+                {% for x in docs_19 %}
+                <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                {% endfor %}
+                {% endif %}
             </ul>
             {% endif %}
+            {# Technically there shouldn't be any documents without a date, but just in case: #}
             {% if ns.has_no_date_docs %}
             <strong class="ms-4">No date</strong>
             <ul>
@@ -119,6 +152,21 @@
     const doc_list = {{ object.documents | tojson | safe }};
     const { map, layerGroups } = createMap({ layerControl: true });
     markerPerDoc(doc_list, layerGroups);
+    document.addEventListener('DOMContentLoaded', function () {
+        // For each collapsible section, set up event listeners
+        const collapses = document.querySelectorAll('.collapse');
+        collapses.forEach(function (collapse) {
+            const btn = document.querySelector('[data-bs-target="#' + collapse.id + '"]');
+            if (btn) {
+                collapse.addEventListener('shown.bs.collapse', function () {
+                    btn.textContent = 'Show less';
+                });
+                collapse.addEventListener('hidden.bs.collapse', function () {
+                    btn.textContent = 'Show more';
+                });
+            }
+        });
+    })
 </script>
 {% endif %}
 {% endblock scripts2 %}
