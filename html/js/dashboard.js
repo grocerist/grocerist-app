@@ -37,7 +37,22 @@ function setVisibilityForFirstElement(chartData) {
     element.visible = index === 0; // Set visible: true for the first element, false for all others
   });
 }
-
+function showCustomTooltip(evt, text) {
+  let tooltip = document.getElementById("custom-svg-tooltip");
+  if (!tooltip) {
+    tooltip = document.createElement("div");
+    tooltip.id = "custom-svg-tooltip";
+    document.body.appendChild(tooltip);
+  }
+  tooltip.textContent = text;
+  tooltip.style.display = "block";
+  tooltip.style.left = evt.clientX + 10 + "px";
+  tooltip.style.top = evt.clientY + 10 + "px";
+}
+function hideCustomTooltip() {
+  const tooltip = document.getElementById("custom-svg-tooltip");
+  if (tooltip) tooltip.style.display = "none";
+}
 function createPieChart(containerId, title, data) {
   return Highcharts.chart(containerId, {
     chart: {
@@ -111,18 +126,51 @@ function createColumnChart({
   accessibility = undefined,
 }) {
   const options = {
-    chart: { type: "column" },
+    chart: {
+      type: "column",
+      events: {
+        render() {
+
+          const chart = this;
+          const axis = chart.xAxis[0];
+
+          if (!axis) return;
+          axis.ticks &&
+            Object.values(axis.ticks).forEach((tick) => {
+              if (tick.label && tick.label.element) {
+                const name = tick.label.textStr;
+                const english_name = english_names[name] || "";
+                tick.label.element.onmouseover = null;
+                tick.label.element.onmouseout = null;
+                if (english_name) {
+                  tick.label.element.style.cursor = "pointer";
+                  tick.label.element.onmouseover = function (e) {
+                    showCustomTooltip(e, english_name);
+                  };
+                  tick.label.element.onmouseout = function () {
+                    hideCustomTooltip();
+                  };
+                } else {
+                  tick.label.element.style.cursor = "";
+                }
+              }
+            });
+        },
+      },
+    },
+
     title: { text: title, style: titleStyle },
     xAxis: {
       type: xAxisType,
-      labels: {
-        useHTML: true,
-        formatter: function () {
-          const name = this.value;
-          const english_name = english_names[name] || "";	
-          return `<span title="${english_name}">${name}</span>`;
-        },
-      },
+      // labels: {
+      //   useHTML: true,
+      //   formatter: function () {
+      //     console.log(this)
+      //     const name = this.value;
+      //     const english_name = english_names[name] || "";
+      //     return `<span title="${english_name}">${name}</span>`;
+      //   },
+      // },
     },
     yAxis: { title: { text: yAxisTitle } },
     legend: { enabled: false },
@@ -394,7 +442,7 @@ function flattenMentions(mentions) {
       "18": flattenMentions(dataFromJson.mentions_18),
       "19": flattenMentions(dataFromJson.mentions_19),
     };
-    
+
     for (const value of Object.values(goodsData)) {
       english_names[value.name] = value.english_names;
     }

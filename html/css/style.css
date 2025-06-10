@@ -587,3 +587,17 @@ ul.no-bullets {
   background-color: var(--primary);
   color: white;
 }
+
+#custom-svg-tooltip {
+  position: fixed;
+  pointer-events: none;
+  background: #fff;
+  color: var(--primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-style: italic;
+  z-index: 10000;
+  display: none;
+}
