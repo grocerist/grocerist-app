@@ -130,7 +130,6 @@ function createColumnChart({
       type: "column",
       events: {
         render() {
-
           const chart = this;
           const axis = chart.xAxis[0];
 
@@ -162,15 +161,9 @@ function createColumnChart({
     title: { text: title, style: titleStyle },
     xAxis: {
       type: xAxisType,
-      // labels: {
-      //   useHTML: true,
-      //   formatter: function () {
-      //     console.log(this)
-      //     const name = this.value;
-      //     const english_name = english_names[name] || "";
-      //     return `<span title="${english_name}">${name}</span>`;
-      //   },
-      // },
+      labels: {
+        step: 1, // Show every label
+      },
     },
     yAxis: { title: { text: yAxisTitle } },
     legend: { enabled: false },
