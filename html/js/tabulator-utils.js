@@ -65,19 +65,6 @@ function linkListFormatter(cell, formatterParams, onRendered) {
   }
   return output;
 }
-
-// CUSTOM MUTATORS
-
-// custom mutator that combines the values of an array of objects into a string
-function combineValues(value, data, type, params, component) {
-  let output = value
-    .map((item) => {
-      return `${item.value}`;
-    })
-    .join("/");
-  return `${output}`;
-}
-
 function makeItalic(value) {
   let turkishWords = ["Nahiye", "Mahalle", "Karye"];
   if (typeof value === "string") {
@@ -93,6 +80,29 @@ function makeItalic(value) {
   return output;
 }
 
+//Custom mutator for price tables: Show "No data" instead of empty cell
+function noDataFormatter(cell) {
+  let value = cell.getValue();
+  if (value === null) {
+    return "No data";
+  }
+  return value;
+}
+
+// CUSTOM MUTATORS
+
+// custom mutator that combines the values of an array of objects into a string
+function combineValues(value, data, type, params, component) {
+  let output = value
+    .map((item) => {
+      return `${item.value}`;
+    })
+    .join("/");
+  return `${output}`;
+}
+
+
+
 // Custom mutator for fields with arrays that aren't meant to be arrays
 function reduceArrayMutator(value, data, type, params, component) {
   if (typeof value === "object" && value.length > 0) {
@@ -104,13 +114,6 @@ function reduceArrayMutator(value, data, type, params, component) {
   }
 }
 
-//Custom mutator for price tables: Show "No data" instead of empty cell
-function noDataMutator(value, data, type, params, component) {
-  if (value === null) {
-    return "No data";
-  }
-  return value;
-}
 
 // CUSTOM FILTERS
 
