@@ -21,11 +21,11 @@ function initializeTabulator(priceData) {
         idField: "id",
         nameField: "value",
       },
-      sorterParams:{
-        type:"string",
-        alignEmptyValues:"bottom",
-        valueMap:"value",
-    },
+      sorterParams: {
+        type: "string",
+        alignEmptyValues: "bottom",
+        valueMap: "value",
+      },
     },
     {
       title: "Year",
@@ -34,9 +34,9 @@ function initializeTabulator(priceData) {
         return value[0].value;
       },
       headerFilter: "input",
-      sorterParams:{
-        alignEmptyValues:"bottom",
-    }
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
     {
       title: "Price",
@@ -45,9 +45,9 @@ function initializeTabulator(priceData) {
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
       headerFilterFunc: greaterThanFilter,
-      sorterParams:{
-        alignEmptyValues:"bottom",
-    }
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
     {
       title: "Unit",
@@ -57,9 +57,9 @@ function initializeTabulator(priceData) {
       headerFilterParams: {
         valuesLookup: true,
       },
-      sorterParams:{
-        alignEmptyValues:"bottom",
-    }
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
     {
       title: "Amount",
@@ -68,9 +68,9 @@ function initializeTabulator(priceData) {
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
       headerFilterFunc: greaterThanFilter,
-      sorterParams:{
-        alignEmptyValues:"bottom",
-    }
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
     {
       title: "Total Value",
@@ -79,12 +79,22 @@ function initializeTabulator(priceData) {
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
       headerFilterFunc: greaterThanFilter,
-      sorterParams:{
-        alignEmptyValues:"bottom",
-    }
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
   ];
-
+  let currencyData = false;
+  currencyData = priceData.some((entry) => entry.currency);
+  if (currencyData) {
+    columnDefinitions.push({
+      title: "Currency",
+      field: "currency.value",
+      mutator: noDataMutator,
+      headerFilter: "input",
+    });
+  }
+  console.log(priceData);
   new Tabulator("#prices-table", {
     data: priceData,
     layout: "fitColumns",
