@@ -34,26 +34,34 @@ const baseDrilldown = {
 
 function setVisibilityForFirstElement(chartData, priceChart) {
   if (priceChart === true) {
-      chartData.forEach((element, index) => {
-    element.visible = index === 0; // Set visible: true for the first element, false for all others
-  });
+    chartData.forEach((element, index) => {
+      element.visible = index === 0; // Set visible: true for the first element, false for all others
+    });
   } else {
-  chartData[1].forEach((element, index) => {
-    element.visible = index === 0; // Set visible: true for the first element, false for all others
-  });
+    chartData[1].forEach((element, index) => {
+      element.visible = index === 0; // Set visible: true for the first element, false for all others
+    });
   }
 }
-function showCustomTooltip(evt, text) {
+function showCustomTooltip(element, text, top = false) {
   let tooltip = document.getElementById("custom-svg-tooltip");
   if (!tooltip) {
     tooltip = document.createElement("div");
     tooltip.id = "custom-svg-tooltip";
     document.body.appendChild(tooltip);
   }
+
   tooltip.textContent = text;
   tooltip.style.display = "block";
-  tooltip.style.left = evt.clientX + 10 + "px";
-  tooltip.style.top = evt.clientY + 10 + "px";
+  const rect = element.getBoundingClientRect();
+  if (top) {
+    // Position to the top right of the element
+    tooltip.style.left = rect.right + 2 + "px";
+    tooltip.style.top = rect.top - tooltip.offsetHeight + "px";
+  } else {
+    tooltip.style.left = rect.left + 2 + "px";
+    tooltip.style.top = rect.bottom + 5 + "px";
+  }
 }
 function hideCustomTooltip() {
   const tooltip = document.getElementById("custom-svg-tooltip");
@@ -149,8 +157,8 @@ function createColumnChart({
                 tick.label.element.onmouseout = null;
                 if (english_name) {
                   tick.label.element.style.cursor = "pointer";
-                  tick.label.element.onmouseover = function (e) {
-                    showCustomTooltip(e, english_name);
+                  tick.label.element.onmouseover = function () {
+                    showCustomTooltip(this, english_name);
                   };
                   tick.label.element.onmouseout = function () {
                     hideCustomTooltip();
@@ -316,7 +324,6 @@ function createInteractiveBarChart(data, chartTitle = "Frequency of Mentions") {
       series["data"] = Object.entries(products);
       allSeries.push(series);
     });
-    console.log(allSeries);
     const simpleBarChartOptions = {
       ...baseColumnChartOptions,
       accessibility: {
@@ -371,12 +378,15 @@ function createInteractiveBarChart(data, chartTitle = "Frequency of Mentions") {
 }
 
 function getTrendLine(data) {
-  const flatData = data.flatMap(group => group.data || []);
+  const flatData = data.flatMap((group) => group.data || []);
 
   const n = flatData.length;
   if (n === 0) return [];
 
-  let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+  let sumX = 0,
+    sumY = 0,
+    sumXY = 0,
+    sumX2 = 0;
 
   for (let i = 0; i < n; i++) {
     const [x, y] = flatData[i];
@@ -394,119 +404,136 @@ function getTrendLine(data) {
 
   return [
     [minX, minX * slope + intercept],
-    [maxX, maxX * slope + intercept]
+    [maxX, maxX * slope + intercept],
   ];
 }
 
 function createPriceChart(data) {
-  return Highcharts.chart(
-    "container_price_time_chart",
-    {
-      chart: {
-        zoomType: "x",
+  return Highcharts.chart("container_price_time_chart", {
+    chart: {
+      zoomType: "x",
+      events: {
+        render: function () {
+          const chart = this;
+          chart.legend.allItems.forEach(function (item) {
+            if (item.legendItem && item.legendItem.label.element) {
+              const english_name = english_names[item.name] || "";
+
+              if (english_name) {
+                item.legendItem.label.element.onmouseover = function () {
+                  showCustomTooltip(this, english_name, true);
+                };
+                item.legendItem.label.element.onmouseout = function () {
+                  hideCustomTooltip();
+                };
+              }
+            }
+          });
+        },
       },
-      accessibility: {
-        description: "This chart shows the price development for specific groceries over time."
+    },
+    accessibility: {
+      description:
+        "This chart shows the price development for specific groceries over time.",
+    },
+    title: {
+      text: "Price Development Over Time",
+      style: titleStyle,
+    },
+    subtitle: {
+      text: "Select more groceries to display their prices, <br/> click and drag in the plot area to zoom in",
+    },
+    legend: {
+      layout: "vertical",
+      align: "left",
+      verticalAlign: "top",
+      itemWidth: 100,
+      itemHiddenStyle: {
+        color: "#d3d3d3",
+        textDecoration: "none",
       },
+    },
+    xAxis: {
       title: {
-        text: "Price Development Over Time",
-        style: titleStyle,
+        text: "Years",
       },
-      subtitle: {
-        text: "Select more groceries to display their prices, <br/> click and drag in the plot area to zoom in",
+    },
+    yAxis: {
+      title: {
+        text: `Akçe per kıyye`, //change to keyl when needed
       },
-      legend: {
-        layout: "vertical",
-        align: "left",
-        verticalAlign: "top",
-        itemWidth: 100,
-        itemHiddenStyle: {
-          color: "#d3d3d3",
-          textDecoration: "none",
+      min: 0,
+    },
+    tooltip: {
+      enabled: true,
+      headerFormat: "<span>{point.key}</span><br>",
+      pointFormat: `<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b> akçe per kıyye <br/>`,
+      shared: true,
+    },
+    plotOptions: {
+      line: {
+        dataLabels: {
+          enabled: false,
         },
-      },
-      xAxis: {
-        title: {
-          text: "Years",
-        },
-        labels: {
-          format: "{value}",
-        }
-      },
-      yAxis: {
-        title: {
-          text: `Akçe per kıyye`, //change to keyl when needed
-        },
-        min: 0
-      },
-      tooltip: {
-        enabled: true,
-        headerFormat: "<span>{point.key}</span><br>",
-        pointFormat: `<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b> akçe per kıyye <br/>`,
-        shared: true,
-      },
-      plotOptions: {
-        line: {
-          dataLabels: {
-            enabled: false,
-          },
-          enableMouseTracking: false,
-        },
-        series: {
-          marker: {
-            enabled: true
-          }
-        }
-      },
-series: data.flatMap((group, index) => {
-    const trendLine = getTrendLine([group]);
-    const baseColor = Highcharts.getOptions().colors[index % Highcharts.getOptions().colors.length];
-    return [
-      {
-        type: 'scatter',
-        id: group.name,
-        name: group.name,
-        data: group.data,
-        marker: { radius: 4 },
-        visible: group.visible,
-        color: baseColor
-      },
-      {
-        type: 'line',
-        data: trendLine,
-        marker: { enabled: false },
-        states: { hover: { lineWidth: 0 } },
         enableMouseTracking: false,
-        
-        showInLegend: false,
-        linkedTo: group.name,
-        color: Highcharts.color(baseColor).brighten(0.15).get()
-      }
-    ]
-  }),
-      responsive: {
-        rules: [
-          {
-            condition: {
-              maxWidth: 500,
-            },
-            chartOptions: {
-              title: {
-                style: { fontSize: "1rem" },
-              },
-            },
-          },
-        ],
       },
-      exporting: {
-        sourceWidth: 900,
-        sourceHeight: 500,
-        chartOptions: {
-          subtitle: null,
+      series: {
+        marker: {
+          enabled: true,
         },
       },
-    }
-  );
+    },
+    series: data.flatMap((group, index) => {
+      const trendLine = getTrendLine([group]);
+      const baseColor =
+        Highcharts.getOptions().colors[
+          index % Highcharts.getOptions().colors.length
+        ];
+      return [
+        {
+          type: "scatter",
+          id: group.name,
+          name: group.name,
+          data: group.data,
+          marker: { radius: 4 },
+          visible: group.visible,
+          color: baseColor,
+        },
+        {
+          type: "line",
+          data: trendLine,
+          marker: { enabled: false },
+          states: { hover: { lineWidth: 0 } },
+          enableMouseTracking: false,
+
+          showInLegend: false,
+          linkedTo: group.name,
+          color: Highcharts.color(baseColor).brighten(0.15).get(),
+        },
+      ];
+    }),
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 500,
+          },
+          chartOptions: {
+            title: {
+              style: { fontSize: "1rem" },
+            },
+          },
+        },
+      ],
+    },
+    exporting: {
+      sourceWidth: 900,
+      sourceHeight: 500,
+      chartOptions: {
+        subtitle: null,
+      },
+    },
+  });
 }
 
 function flattenMentions(mentions) {
@@ -582,7 +609,7 @@ function flattenMentions(mentions) {
       "19": flattenMentions(dataFromJson.mentions_19),
     };
     const priceChartData = Object.values(dataFromJson.prices);
-  
+
     for (const value of Object.values(goodsData)) {
       english_names[value.name] = value.english_names;
     }
