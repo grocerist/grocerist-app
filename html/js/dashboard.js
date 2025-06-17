@@ -399,7 +399,6 @@ function getTrendLine(data) {
 }
 
 function createPriceChart(data) {
-  console.log(data[1])
   return Highcharts.chart(
     "container_price_time_chart",
     {
@@ -436,8 +435,9 @@ function createPriceChart(data) {
       },
       yAxis: {
         title: {
-          text: `Price per kıyye`, //change to keyl when needed
+          text: `Akçe per kıyye`, //change to keyl when needed
         },
+        min: 0
       },
       tooltip: {
         enabled: true,
@@ -458,8 +458,9 @@ function createPriceChart(data) {
           }
         }
       },
-series: data.flatMap(group => {
+series: data.flatMap((group, index) => {
     const trendLine = getTrendLine([group]);
+    const baseColor = Highcharts.getOptions().colors[index % Highcharts.getOptions().colors.length];
     return [
       {
         type: 'scatter',
@@ -468,6 +469,7 @@ series: data.flatMap(group => {
         data: group.data,
         marker: { radius: 4 },
         visible: group.visible,
+        color: baseColor
       },
       {
         type: 'line',
@@ -475,9 +477,10 @@ series: data.flatMap(group => {
         marker: { enabled: false },
         states: { hover: { lineWidth: 0 } },
         enableMouseTracking: false,
-        color: 'gray',
+        
         showInLegend: false,
         linkedTo: group.name,
+        color: Highcharts.color(baseColor).brighten(0.15).get()
       }
     ]
   }),
@@ -491,16 +494,11 @@ series: data.flatMap(group => {
               title: {
                 style: { fontSize: "1rem" },
               },
-              yAxis: {
-                labels: { align: "left", x: 0, y: -2 },
-                title: { text: "" },
-              },
             },
           },
         ],
       },
       exporting: {
-        //downloaded image will have this width/height * scale (2 by default)
         sourceWidth: 900,
         sourceHeight: 500,
         chartOptions: {
