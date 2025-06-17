@@ -32,10 +32,16 @@ const baseDrilldown = {
   activeDataLabelStyle: { color: "#000000", textDecoration: "unset" },
 };
 
-function setVisibilityForFirstElement(chartData) {
+function setVisibilityForFirstElement(chartData, priceChart) {
+  if (priceChart === true) {
+      chartData.forEach((element, index) => {
+    element.visible = index === 0; // Set visible: true for the first element, false for all others
+  });
+  } else {
   chartData[1].forEach((element, index) => {
     element.visible = index === 0; // Set visible: true for the first element, false for all others
   });
+  }
 }
 function showCustomTooltip(evt, text) {
   let tooltip = document.getElementById("custom-svg-tooltip");
@@ -295,6 +301,7 @@ function createSplineChart(data, isNormalized) {
     }
   );
 }
+
 function createInteractiveBarChart(data, chartTitle = "Frequency of Mentions") {
   const totalLength = Object.values(data)
     .map((obj) => (Array.isArray(obj) ? obj.length : Object.keys(obj).length))
@@ -361,6 +368,147 @@ function createInteractiveBarChart(data, chartTitle = "Frequency of Mentions") {
     };
     return createColumnChart(groupedBarChartOptions);
   }
+}
+
+function getTrendLine(data) {
+  const flatData = data.flatMap(group => group.data || []);
+
+  const n = flatData.length;
+  if (n === 0) return [];
+
+  let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+
+  for (let i = 0; i < n; i++) {
+    const [x, y] = flatData[i];
+    sumX += x;
+    sumY += y;
+    sumXY += x * y;
+    sumX2 += x ** 2;
+  }
+
+  const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX ** 2);
+  const intercept = (sumY - slope * sumX) / n;
+
+  const minX = Math.min(...flatData.map(([x]) => x));
+  const maxX = Math.max(...flatData.map(([x]) => x));
+
+  return [
+    [minX, minX * slope + intercept],
+    [maxX, maxX * slope + intercept]
+  ];
+}
+
+function createPriceChart(data) {
+  console.log(data[1])
+  return Highcharts.chart(
+    "container_price_time_chart",
+    {
+      chart: {
+        zoomType: "x",
+      },
+      accessibility: {
+        description: "This chart shows the price development for specific groceries over time."
+      },
+      title: {
+        text: "Price Development Over Time",
+        style: titleStyle,
+      },
+      subtitle: {
+        text: "Select more groceries to display their prices, <br/> click and drag in the plot area to zoom in",
+      },
+      legend: {
+        layout: "vertical",
+        align: "left",
+        verticalAlign: "top",
+        itemWidth: 100,
+        itemHiddenStyle: {
+          color: "#d3d3d3",
+          textDecoration: "none",
+        },
+      },
+      xAxis: {
+        title: {
+          text: "Years",
+        },
+        labels: {
+          format: "{value}",
+        }
+      },
+      yAxis: {
+        title: {
+          text: `Price per kıyye`, //change to keyl when needed
+        },
+      },
+      tooltip: {
+        enabled: true,
+        headerFormat: "<span>{point.key}</span><br>",
+        pointFormat: `<span style="color:{point.color}">{series.name}</span>: <b>{point.y}</b> akçe per kıyye <br/>`,
+        shared: true,
+      },
+      plotOptions: {
+        line: {
+          dataLabels: {
+            enabled: false,
+          },
+          enableMouseTracking: false,
+        },
+        series: {
+          marker: {
+            enabled: true
+          }
+        }
+      },
+series: data.flatMap(group => {
+    const trendLine = getTrendLine([group]);
+    return [
+      {
+        type: 'scatter',
+        id: group.name,
+        name: group.name,
+        data: group.data,
+        marker: { radius: 4 },
+        visible: group.visible,
+      },
+      {
+        type: 'line',
+        data: trendLine,
+        marker: { enabled: false },
+        states: { hover: { lineWidth: 0 } },
+        enableMouseTracking: false,
+        color: 'gray',
+        showInLegend: false,
+        linkedTo: group.name,
+      }
+    ]
+  }),
+      responsive: {
+        rules: [
+          {
+            condition: {
+              maxWidth: 500,
+            },
+            chartOptions: {
+              title: {
+                style: { fontSize: "1rem" },
+              },
+              yAxis: {
+                labels: { align: "left", x: 0, y: -2 },
+                title: { text: "" },
+              },
+            },
+          },
+        ],
+      },
+      exporting: {
+        //downloaded image will have this width/height * scale (2 by default)
+        sourceWidth: 900,
+        sourceHeight: 500,
+        chartOptions: {
+          subtitle: null,
+        },
+      },
+    }
+  );
 }
 
 function flattenMentions(mentions) {
@@ -435,10 +583,12 @@ function flattenMentions(mentions) {
       "18": flattenMentions(dataFromJson.mentions_18),
       "19": flattenMentions(dataFromJson.mentions_19),
     };
-
+    const priceChartData = Object.values(dataFromJson.prices);
+  
     for (const value of Object.values(goodsData)) {
       english_names[value.name] = value.english_names;
     }
+
     // Custom colors (default HighCharts list has too few)
     Highcharts.setOptions({
       colors: colors,
@@ -566,12 +716,14 @@ function flattenMentions(mentions) {
       });
 
     // Add visibility attribute for the spline charts
-    setVisibilityForFirstElement(timeChartData);
-    setVisibilityForFirstElement(normalizedTimeChartData);
+    setVisibilityForFirstElement(timeChartData, false);
+    setVisibilityForFirstElement(normalizedTimeChartData, false);
+    setVisibilityForFirstElement(priceChartData, true);
 
     createSplineChart(timeChartData, false);
-
     createSplineChart(normalizedTimeChartData, true);
+
+    createPriceChart(priceChartData);
   } catch (error) {
     console.error("Error loading or processing data:", error);
   }
