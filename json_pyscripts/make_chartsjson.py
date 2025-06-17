@@ -558,7 +558,7 @@ all_years = set()
 
 for price in price_data:
     if (
-        price.get("good") and price.get("good")[0] and price.get("good")[0].get("value") in goods_of_interest and 
+        price.get("good") and price.get("good")[0] and price.get("good")[0].get("value") in goods_of_interest and
         price.get("amount_of_units") is not None and
         price.get("currency") and price.get("currency").get("value") == "akçe" and
         price.get("doc_year") and price.get("doc_year")[0].get("value") != '' and
@@ -571,7 +571,7 @@ for price in price_data:
 
         adjusted_price = None
         # show price in kıyye
-        if unit == "kıyye":  
+        if unit == "kıyye":
             adjusted_price = float(price_value)
         elif unit == "keyl":
             adjusted_price = float(price_value) / kiyye_keyl_conversion
