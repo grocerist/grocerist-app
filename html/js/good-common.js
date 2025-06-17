@@ -21,11 +21,11 @@ function initializeTabulator(priceData) {
         idField: "id",
         nameField: "value",
       },
-      sorterParams:{
-        type:"string",
-        alignEmptyValues:"bottom",
-        valueMap:"value",
-    },
+      sorterParams: {
+        type: "string",
+        alignEmptyValues: "bottom",
+        valueMap: "value",
+      },
     },
     {
       title: "Year",
@@ -34,53 +34,66 @@ function initializeTabulator(priceData) {
         return value[0].value;
       },
       headerFilter: "input",
-      sorterParams:{
-        alignEmptyValues:"bottom",
-    }
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
     {
       title: "Price",
       field: "price",
+      formatter: noDataFormatter,
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
       headerFilterFunc: greaterThanFilter,
-      sorterParams:{
-        alignEmptyValues:"bottom",
-    }
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
     {
       title: "Unit",
       field: "unit.value",
+      formatter: noDataFormatter,
       headerFilter: "list",
       headerFilterParams: {
         valuesLookup: true,
       },
-      sorterParams:{
-        alignEmptyValues:"bottom",
-    }
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
     {
       title: "Amount",
       field: "amount_of_units",
+      formatter: noDataFormatter,
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
       headerFilterFunc: greaterThanFilter,
-      sorterParams:{
-        alignEmptyValues:"bottom",
-    }
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
     {
       title: "Total Value",
       field: "total_value",
+      formatter: noDataFormatter,
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
       headerFilterFunc: greaterThanFilter,
-      sorterParams:{
-        alignEmptyValues:"bottom",
-    }
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
   ];
 
+  const currencyData = priceData.some((entry) => entry.currency);
+  if (currencyData) {
+    columnDefinitions.push({
+      title: "Currency",
+      field: "currency.value",
+      formatter: noDataFormatter,
+      headerFilter: "input",
+    });
+  }
   new Tabulator("#prices-table", {
     data: priceData,
     layout: "fitColumns",
@@ -95,7 +108,7 @@ function markerPerDoc(doc_list, layerGroups) {
   // create markers for each document
   for (let i = 0; i < doc_list.length; i++) {
     const doc = doc_list[i];
-    const century = doc.century?.value ? doc.century.value : "N/A";
+    const century = doc.century?.value || null;
     const year = getYearFromISODate(doc.iso_date);
     if (doc.lat && doc.long) {
       const yearText = year ? `in ${year}` : "";

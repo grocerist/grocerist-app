@@ -1,6 +1,26 @@
 const dataUrl = "json_dumps/price_per_document.json";
 
-const columnDefinitions = [
+const goodsListColumnDefinitions = [
+  {
+    title: "Good",
+    field: "good",
+    headerFilter: "input",
+    //...linkListColumnSettings,
+    formatterParams: {
+      urlPrefix: "goods__",
+      idField: "id",
+      nameField: "value",
+    },
+    sorterParams: {
+      type: "string",
+      alignEmptyValues: "bottom",
+      valueMap: "value",
+    },
+  },
+];
+
+function initializeTable(correctedGoodName, priceTableData) {
+  const columnDefinitions = [
   {
     title: "Document",
     field: "document",
@@ -32,6 +52,7 @@ const columnDefinitions = [
   {
     title: "Price",
     field: "price",
+    formatter: noDataFormatter,
     headerFilter: "number",
     headerFilterPlaceholder: "at least...",
     headerFilterFunc: greaterThanFilter,
@@ -42,6 +63,7 @@ const columnDefinitions = [
   {
     title: "Unit",
     field: "unit.value",
+    formatter: noDataFormatter,
     headerFilter: "list",
     headerFilterParams: {
       valuesLookup: true,
@@ -53,6 +75,7 @@ const columnDefinitions = [
   {
     title: "Amount",
     field: "amount_of_units",
+    formatter: noDataFormatter,
     headerFilter: "number",
     headerFilterPlaceholder: "at least...",
     headerFilterFunc: greaterThanFilter,
@@ -63,6 +86,7 @@ const columnDefinitions = [
   {
     title: "Total Value",
     field: "total_value",
+    formatter: noDataFormatter,
     headerFilter: "number",
     headerFilterPlaceholder: "at least...",
     headerFilterFunc: greaterThanFilter,
@@ -71,27 +95,15 @@ const columnDefinitions = [
     },
   },
 ];
-
-const goodsListColumnDefinitions = [
-  {
-    title: "Good",
-    field: "good",
-    headerFilter: "input",
-    //...linkListColumnSettings,
-    formatterParams: {
-      urlPrefix: "goods__",
-      idField: "id",
-      nameField: "value",
-    },
-    sorterParams: {
-      type: "string",
-      alignEmptyValues: "bottom",
-      valueMap: "value",
-    },
-  },
-];
-
-initializeTable = function (goodName, correctedGoodName,  priceTableData) {
+  const currencyData = priceTableData.some((entry) => entry.currency);
+  if (currencyData) {
+    columnDefinitions.push({
+      title: "Currency",
+      field: "currency.value",
+      formatter: noDataFormatter,
+      headerFilter: "input",
+    });
+  }
 
   const table = new Tabulator(`#table-${correctedGoodName}`, {
     layout: "fitColumns",
@@ -103,7 +115,7 @@ initializeTable = function (goodName, correctedGoodName,  priceTableData) {
     initialSort: [{ column: "doc_year", dir: "asc" }],
     footerElement: `<span class="tabulator-counter"></span>`,
   });
-};
+}
 
 function handleRowSelection(row, allData) {
   let rowData = row.getData();
@@ -130,7 +142,7 @@ function handleRowSelection(row, allData) {
       )
     )
   );
-  initializeTable(goodName, correctedGoodName, priceTableData);
+  initializeTable(correctedGoodName, priceTableData);
 }
 
 function handleRowDeselection(row) {
@@ -178,9 +190,11 @@ function handleDeselectingAllRows(table) {
     table.on("rowDeselected", function (row) {
       handleRowDeselection(row);
     });
-    document.getElementById("deselect-button").addEventListener("click", function(){
-      handleDeselectingAllRows(table);
-    });
+    document
+      .getElementById("deselect-button")
+      .addEventListener("click", function () {
+        handleDeselectingAllRows(table);
+      });
   } catch (error) {
     console.error("Error loading or processing data:", error);
   }

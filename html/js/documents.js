@@ -105,7 +105,6 @@ const dateFilterFunction = function (
   return false;
 };
 
-
 // ####### TABLE CONFIG AND FUNCTIONS #######
 const baseColumnDefinitions = [
   {
@@ -154,7 +153,7 @@ const baseColumnDefinitions = [
   {
     title: "District",
     field: "district",
-    
+
     headerFilter: "list",
     headerFilterParams: {
       valuesLookup: objectLookup,
@@ -169,10 +168,10 @@ const baseColumnDefinitions = [
     },
     headerFilterFunc: objectArrayHeaderFilter,
     sorter: "array",
-    sorterParams:{
-      type:"string",
+    sorterParams: {
+      type: "string",
       valueMap: "value",
-  },
+    },
   },
   {
     title: "<i>Mahalle</i>",
@@ -269,6 +268,18 @@ const baseColumnDefinitions = [
     headerFilterFunc: dateFilterFunction,
     visible: false,
   },
+  {
+    title: "Facsimiles",
+    field: "images",
+    hozAlign: "center",
+    formatter: "tickCross",
+    headerFilter: "tickCross",
+    headerFilterParams: { tristate: true },
+    headerFilterEmptyCheck: function (value) {
+      return value === null;
+    },
+    visible: false,
+  },
 ];
 // Add minWidth and visibility toggle to each column
 const columnDefinitions = baseColumnDefinitions.map((column) => {
@@ -312,9 +323,7 @@ function getCoordinates(rowData) {
   return { lat: rowData.lat, long: rowData.long };
 }
 
-function rowsToMarkers(map, rows, layerGroups, oms) {
-  // Clear all markers from the overlapping marker spiderfier
-  oms.clearMarkers();
+function rowsToMarkers(map, rows, layerGroups) {
   // Clear all markers from the map and layer groups
   Object.values(layerGroups).forEach((layerGroup) => {
     layerGroup.clearLayers();
@@ -328,7 +337,7 @@ function rowsToMarkers(map, rows, layerGroups, oms) {
       const markerData = {
         lat: rowData.lat,
         long: rowData.long,
-        century: century?.value ? century.value : "N/A",
+        century: century?.value || null,
         popupContent: `
         <h5><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}<a/></h5>
         <p><b><i>Bakkal</i> / Grocer:</b> ${
@@ -343,62 +352,111 @@ function rowsToMarkers(map, rows, layerGroups, oms) {
       // store each marker by the grocerist_id from the document
       const markerID = rowData.grocerist_id;
       allMarkers[markerID] = marker;
-
-      oms.addMarker(marker);
-      // WATCHME: hacky solution for the only two overlapping markers for now
-      // must be adjusted in the future
-      if (markerID === "document__44" || markerID === "document__39") {
-        marker.fire("click");
-        marker.closePopup();
-        map.setView(mapConfig.initialCoordinates, mapConfig.initialZoom);
-      }
     }
   });
-  resizeIconsOnZoom(map, allMarkers);
+
+  // resizeIconsOnZoom(map, allMarkers);
   return allMarkers;
 }
-function zoomToPointFromRowData(rowData, map, markers) {
+function zoomToPointFromRowData(rowData, map, markers, mcgLayerSupportGroup) {
   const { lat, long } = getCoordinates(rowData);
   if (lat && long) {
     const markerId = rowData.grocerist_id;
     const marker = markers[markerId];
-    marker.openPopup();
-    map.setView([lat, long], mapConfig.onRowClickZoom);
+    mcgLayerSupportGroup.zoomToShowLayer(marker, function () {
+      marker.openPopup();
+    });
   } else {
     // close all open popups when resetting the map
     map.closePopup();
-    map.setView(mapConfig.initialCoordinates, mapConfig.initialZoom);
+    map.setView(mapConfig.initialCoordinates, 9);
   }
 }
 // Main function for initializing the map and table
 function setupMapAndTable(dataUrl) {
-  const { map, layerGroups, oms } = createMap({
+  const { map, layerGroups, mcgLayerSupportGroup } = createMap({
+    initialZoom: 9,
     layerControl: true,
-    useSpiderfier: true,
+    useCluster: true,
+  });
+  let spiderfyTimeout = null;
+  let isSpiderfied = false;
+
+  mcgLayerSupportGroup.on("spiderfied", function () {
+    isSpiderfied = true;
+  });
+  mcgLayerSupportGroup.on("unspiderfied", function () {
+    isSpiderfied = false;
+  });
+  // spiderfy clusters beyond a certain zoom level
+  // (!only if there is only one cluster visible!)
+  mcgLayerSupportGroup.on("animationend", function () {
+    const currentZoom = map.getZoom();
+    const autoSpiderfyZoomLevel = 12;
+    // Zooming automically unspiderfies, so the timeout ensures
+    // there's less spiderfying when zooming in and out quickly.
+    // Clear any pending spiderfy timeout
+    if (spiderfyTimeout) {
+      clearTimeout(spiderfyTimeout);
+    }
+
+    spiderfyTimeout = setTimeout(() => {
+      if (currentZoom >= autoSpiderfyZoomLevel && !isSpiderfied) {
+        const visibleClusters = new Set();
+        mcgLayerSupportGroup.eachLayer(function (layer) {
+          let parent = mcgLayerSupportGroup.getVisibleParent(layer);
+          if (parent) {
+            // check if the parent is a cluster and if it is visible
+            if (
+              typeof parent.getChildCount === "function" &&
+              map.getBounds().contains(parent.getLatLng())
+            ) {
+              visibleClusters.add(parent);
+            }
+          }
+        });
+
+        if (visibleClusters.size === 1) {
+          const clusterToSpiderfy = Array.from(visibleClusters)[0];
+          clusterToSpiderfy.spiderfy();
+        }
+      }
+    }, 400);
+  });
+  // spiderfy smaller clusters on mouseover
+  mcgLayerSupportGroup.on("clustermouseover", function (e) {
+    if (e.layer.getChildCount() <= 5) {
+      e.layer.spiderfy();
+    }
   });
   let markers = {};
   (async function () {
     try {
       const dataFromJson = await d3.json(dataUrl);
-  
+
       const tableData = Object.values(dataFromJson).filter(
         (item) => item.shelfmark !== ""
       );
       tableConfig.data = tableData;
       const table = createTable(tableConfig);
-  
+
       table.on("dataLoaded", function (data) {
         $("#total_count").text(data.length);
       });
-  
+
       table.on("dataFiltered", function (_filters, rows) {
         $("#search_count").text(rows.length);
-        markers = rowsToMarkers(map, rows, layerGroups, oms);
+        markers = rowsToMarkers(map, rows, layerGroups);
       });
-  
+
       // Event listener for click on row
       table.on("rowClick", (e, row) => {
-        zoomToPointFromRowData(row.getData(), map, markers);
+        zoomToPointFromRowData(
+          row.getData(),
+          map,
+          markers,
+          mcgLayerSupportGroup
+        );
       });
     } catch (error) {
       console.error("Error loading or processing data:", error);

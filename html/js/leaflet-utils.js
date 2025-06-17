@@ -5,7 +5,7 @@ const mapConfig = {
   initialCoordinates: [41.015137, 28.97953],
   divId: "map",
   // L.map options
-  mapOptions: { maxZoom: 18, minZoom: 9 },
+  mapOptions: { maxZoom: 18, minZoom: 8 },
   // L.tileLayer options
   baseMapUrl: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
   attribution:
@@ -18,7 +18,6 @@ const mapConfig = {
 const overlayColors = {
   "18th century": colors[0],
   "19th century": colors[3],
-  "N/A": colors[4],
 };
 
 // Helper function to create and add layer groups to the map
@@ -52,8 +51,8 @@ function createMarker(markerData, centuryLayers = false) {
   const { lat, long, century, popupContent, icon } = markerData;
   let color = colors[0];
   let layerName = null;
-  if (centuryLayers) {
-    const centuryText = century === "N/A" ? century : `${century}th century`;
+  if (centuryLayers && century) {
+    const centuryText = `${century}th century`;
     color = overlayColors[centuryText];
     layerName = `<span style="color:${color}">${centuryText}</span>`;
   }
@@ -82,7 +81,7 @@ function createMap(options = {}) {
     options.initialCoordinates
       ? options.initialCoordinates
       : mapConfig.initialCoordinates,
-    mapConfig.initialZoom
+    options.initialZoom ? options.initialZoom : mapConfig.initialZoom
   );
   const baseMapLayer = L.tileLayer(mapConfig.baseMapUrl, {
     attribution: mapConfig.attribution,
@@ -91,6 +90,7 @@ function createMap(options = {}) {
   baseMapLayer.addTo(map);
 
   let layerGroups = null;
+  let mcgLayerSupportGroup = null;
   if (options.layerControl) {
     // Create and add marker layer groups from the overlayColors object
     layerGroups = createAndAddLayerGroups(map, overlayColors);
@@ -98,15 +98,22 @@ function createMap(options = {}) {
       collapsed: false,
     });
     layerControl.addTo(map);
+    if (options.useCluster) {
+      // Create a marker cluster group
+      mcgLayerSupportGroup = L.markerClusterGroup.layerSupport({
+        iconCreateFunction: function (cluster) {
+          return L.divIcon({ 
+            className: "custom-cluster",
+            html:`<div><span>${cluster.getChildCount()}</span></div>`,
+          iconSize: [50, 50],});
+        },
+      });
+      mcgLayerSupportGroup.addTo(map);
+      Object.values(layerGroups).forEach((layerGroup) => {
+        mcgLayerSupportGroup.addLayer(layerGroup);
+      });
+    }
   }
 
-  let oms = null;
-  if (options.useSpiderfier) {
-    // keepSpiderfied just keeps the markers from unspiderfying when clicked
-    oms = new OverlappingMarkerSpiderfier(map, {
-      keepSpiderfied: true,
-      nearbyDistance: 1,
-    });
-  }
-  return { map, layerGroups, oms };
+  return { map, layerGroups, mcgLayerSupportGroup };
 }

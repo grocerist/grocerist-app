@@ -20,6 +20,8 @@ def round_down_to_ten(year):
 
 # Calculate percentage and round it to the specified precision
 def calculate_percentage(count, total, precision=2):
+    if total == 0:
+        return 0
     return round((count / total) * 100, precision)
 
 
@@ -195,6 +197,7 @@ def process_sub_subcategories(sub_subcategories, century_goods_dict, century):
 def process_subcategories(subcategories, century_goods_dict, century):
     processed_subcategories = {}
     for sub_category, data in subcategories.items():
+        # print(data["goods"])
         processed_subcategories[sub_category] = {
             "goods": process_goods(data["goods"], century_goods_dict, century),
             "subcategories": process_sub_subcategories(
@@ -307,12 +310,15 @@ def generate_drilldown_chart_data(categories_dict):
                     for product in categories_dict[main_category][sub_category][
                         "goods"
                     ]:
+                        not_subsub_good_count = categories_dict[main_category][sub_category]["goods"][
+                            product
+                        ]
+                        main_category_sum += not_subsub_good_count
+                        sub_category_sum += not_subsub_good_count
                         drilldown_level2["data"].append(
                             {
                                 "name": product,
-                                "y": categories_dict[main_category][sub_category][
-                                    "goods"
-                                ][product],
+                                "y": not_subsub_good_count,
                             }
                         )
                     sub_sub_categories_level.append(drilldown_level2)

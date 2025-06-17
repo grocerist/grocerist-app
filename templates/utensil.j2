@@ -13,19 +13,83 @@
     <div class="row">
         <div class="col">
             {% if object.notes %}
-            <h2><i class="bi bi-info-circle" aria-hidden="true"></i>Description</h2>
+            <h2><i class="bi bi-info-circle me-2" aria-hidden="true"></i>Description</h2>
             <p class="ms-4">{{ object.notes }}</p>
 
             {% endif %}
-            <h2><i class="bi bi-archive" aria-hidden="true"></i>Documents</h2>
+            {% if object.documents %}
+            <h2><i class="bi bi-archive me-2" aria-hidden="true"></i>Documents</h2>
+            {% set ns = namespace(has_18th_century_docs=false, has_19th_century_docs=false, has_no_date_docs=false) %}
+            {% for x in object.documents %}
+            {% if x.century is none %}
+            {% set ns.has_no_date_docs = true %}
+            {% elif x.century.value == "18" %}
+            {% set ns.has_18th_century_docs = true %}
+            {% elif x.century.value == "19" %}
+            {% set ns.has_19th_century_docs = true %}
+            {% endif %}
+            {% endfor %}
+            {% if ns.has_18th_century_docs %}
+            <strong class="ms-4">18th century</strong>
+            {% set docs_18 = object.documents | selectattr("century.value", "equalto", "18") | list %}
             <ul>
-                {% for x in object.documents %}
+                {% if docs_18|length > 5 %}
+                {% for x in docs_18[:5] %}
+                <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                {% endfor %}
+                <div class="collapse" id="docs18more">
+                    {% for x in docs_18[5:] %}
+                    <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                    {% endfor %}
+                </div>
+                <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#docs18more" aria-expanded="false" aria-controls="docs18more">
+                    Show more
+                </button>
+                {% else %}
+                {% for x in docs_18 %}
+                <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+            {% endif %}
+            {% if ns.has_19th_century_docs %}
+            <strong class="ms-4">19th century</strong>
+            {% set docs_19 = object.documents | selectattr("century.value", "equalto", "19") | list %}
+            <ul>
+                {% if docs_19|length > 5 %}
+                {% for x in docs_19[:5] %}
+                <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                {% endfor %}
+                <div class="collapse" id="docs19more">
+                    {% for x in docs_19[5:] %}
+                    <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                    {% endfor %}
+                </div>
+                <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#docs19more" aria-expanded="false" aria-controls="docs19more">
+                    Show more
+                </button>
+                {% else %}
+                {% for x in docs_19 %}
+                <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+                {% endfor %}
+                {% endif %}
+            </ul>
+            {% endif %}
+            {# Technically there shouldn't be any documents without a date, but just in case: #}
+            {% if ns.has_no_date_docs %}
+            <strong class="ms-4">No date</strong>
+            <ul>
+                {% for x in object.documents if x.century is none %}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
                 {% endfor %}
             </ul>
+            {% endif %}
+            {% endif %}
         </div>
         <div class="col">
-            <h2><i class="bi bi-map" aria-hidden="true"></i>Map</h2>
+            <h2><i class="bi bi-map me-2" aria-hidden="true"></i>Map</h2>
             <div id="map" style="height: 600px;" />
         </div>
     </div>
@@ -47,7 +111,7 @@
     for (let i = 0; i < doc_list.length; i++) {
         const doc = doc_list[i];
         const year = getYearFromISODate(doc.iso_date);
-        const century = doc.century?.value ? doc.century.value : "N/A";
+        const century = doc.century?.value || null;
         if (doc.lat && doc.long) {
             const yearText = year ? `in ${year}` : '';
             const markerData = {
@@ -63,6 +127,21 @@
             marker.addTo(layerGroups[layerName]);
         }
     }
+    document.addEventListener('DOMContentLoaded', function () {
+        // For each collapsible section, set up event listeners
+        const collapses = document.querySelectorAll('.collapse');
+        collapses.forEach(function (collapse) {
+            const btn = document.querySelector('[data-bs-target="#' + collapse.id + '"]');
+            if (btn) {
+                collapse.addEventListener('shown.bs.collapse', function () {
+                    btn.textContent = 'Show less';
+                });
+                collapse.addEventListener('hidden.bs.collapse', function () {
+                    btn.textContent = 'Show more';
+                });
+            }
+        });
+    })
 </script>
 {% endif %}
 {% endblock scripts2 %}
