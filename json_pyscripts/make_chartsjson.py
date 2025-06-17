@@ -546,30 +546,51 @@ for good in goods_data:
                     if doc["century"]["value"] == "18":
                         mentions[good_name] += 1
 
-prices_dict = {}
-goods_of_interest = ["Soğan", "Revgan-ı sade", "Pirinc", "Nohud", "Bal / Asel"]
-for price in price_data:
-    if (price.get("good") and price.get("good")[0] and price.get("good")[0].get("value") in goods_of_interest):
-        current_price = [
-            price.get("price"),
-            price.get("unit").get("value") if price.get("unit") else None,
-            price.get("total_value"),
-            price.get("price_formula"),
-            price.get("doc_year")[0].get("value") if price.get("doc_year") else None
-        ]
-        prices_dict.setdefault(price.get("good")[0].get("value"), []).append(current_price)
 
-# 1 keyl = 20 kıyye
+# DATA FOR PRICE CHART
+
+# data settings
+goods_of_interest = ["Soğan", "Revgan-ı sade", "Pirinc", "Nohud", "Bal / Asel"]
+kiyye_keyl_conversion = 20  # 1 keyl = 20 kıyye
+
+prices_dict = {}
+all_years = set()
+
+for price in price_data:
+    if (
+        price.get("good") and price.get("good")[0] and price.get("good")[0].get("value") in goods_of_interest and 
+        price.get("amount_of_units") is not None and
+        price.get("currency") and price.get("currency").get("value") == "akçe" and
+        price.get("doc_year") and price.get("doc_year")[0].get("value") != '' and
+        price.get("unit")
+    ):
+        good = price.get("good")[0].get("value")
+        price_value = price.get("price")  # price column, another option would be to take the price_formula column
+        unit = price.get("unit").get("value")
+        year = int(price.get("doc_year")[0].get("value"))
+
+        adjusted_price = None
+        # show price in kıyye
+        if unit == "kıyye":  
+            adjusted_price = float(price_value)
+        elif unit == "keyl":
+            adjusted_price = float(price_value) / kiyye_keyl_conversion
+        if adjusted_price:
+            adjusted_price = round(adjusted_price, 1)
+
+        if good in prices_dict:
+            prices_dict[good].append([year, adjusted_price])
+        else:
+            prices_dict[good] = [[year, adjusted_price]]
+
 prices_results = [
     {
-        "name": good,
-        "prices": prices
-
+        "name": key,
+        "data": sorted(value, key=lambda x: int(x[0])),
+        "visible": False
     }
-    for good, prices in prices_dict.items()
+    for key, value in prices_dict.items()
 ]
-
-#print(prices_results)
 
 # Convert the results to JSON format and write to a file
 result_json = json.dumps(
@@ -589,9 +610,9 @@ result_json = json.dumps(
         },
         "mentions_18": categories_18,
         "mentions_19": categories_19,
-        "prices": prices,
+        "prices": prices_results,
     },
-    indent=2,
+    indent=2
 )
 
 with open(
