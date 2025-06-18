@@ -1,0 +1,15 @@
+{% set page_title = "Glossary" %}
+{% extends "templates/partials/base.j2" %}
+{% block title %}Browse{{page_title}}{% endblock title %}
+{% block page_description %}
+{% block page_description %}
+<meta name="description" content="{{ project_data.project_sub_title }}">
+{% endblock page_description %}
+
+{% block content %}
+{% include "templates/partials/breadcrumbs.j2" %}
+<div class="container">
+    <h1 class="text-center">
+        {{page_title}}</h1>
+</div>
+{% endblock content %}
