@@ -51,6 +51,7 @@ function linkToDetailView(cell) {
 
 function linkListFormatter(cell, formatterParams, onRendered) {
   let value = cell.getValue();
+  if (value === "No data") return value;
   let output = value
     .map((item) => {
       return `<li><a href="${formatterParams.urlPrefix}${
@@ -136,6 +137,10 @@ const rangeFilter = function (headerValue, rowValue, rowData, filterParams) {
 function objectArrayHeaderFilter(headerValue, rowValue, rowData, filterParams) {
   // for columns where the name of the items is not in the "value" field,
   // the line headerFilterFuncParams: { nameField: 'name' } needs to be added to the column config
+  if (rowValue && !Array.isArray(rowValue)) {
+    // for cases where rowValue is not empty, but not an array, like "No data"
+    return rowValue.toLowerCase().includes(headerValue.toLowerCase());
+  }
   if (filterParams.nameField) {
     return rowValue.some(function (item) {
       return item[filterParams.nameField]

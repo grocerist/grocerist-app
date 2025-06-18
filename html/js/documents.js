@@ -436,7 +436,11 @@ function setupMapAndTable(dataUrl) {
 
       const tableData = Object.values(dataFromJson).filter(
         (item) => item.shelfmark !== ""
-      );
+      ).map((item) => {
+        if (item.goods.length === 0 && item.no_goods_data === true) {
+          item.goods = "No data"
+        }
+      return item})
       tableConfig.data = tableData;
       const table = createTable(tableConfig);
 
