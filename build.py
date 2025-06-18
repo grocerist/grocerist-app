@@ -56,16 +56,27 @@ files = [
     template for template in all_templates if template.startswith("templates/static")
 ]
 
+def render_static_page(template_path, output_path, extra_context=None):
+    template = templateEnv.get_template(template_path)
+    context = {"project_data": project_data}
+    if extra_context:
+        context.update(extra_context)
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(template.render(context))
+
 print("building static content")
 for x in files:
     print(x)
-    template = templateEnv.get_template(x)
     _, tail = os.path.split(x)
     print(f"rendering {tail}")
     output_path = os.path.join("html", tail.replace(".j2", ".html"))
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(template.render({"project_data": project_data}))
-
+    extra_context = None
+    if x == "templates/static/glossary.j2":
+        data_file = "glossary.json"
+        with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
+            glossary_data = json.load(f)
+        extra_context = {"glossary_data": glossary_data}
+    render_static_page(x, output_path, extra_context)
 
 print("building document sites")
 data_file = "documents.json"

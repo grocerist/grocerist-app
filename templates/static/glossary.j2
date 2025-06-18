@@ -10,5 +10,11 @@
 <div class="container">
     <h1 class="text-center">
         {{page_title}}</h1>
+{% for entry in glossary_data.values()%}
+    <dl>
+        <dt>{{entry.term}}</dt>
+        <dd>{{entry.long_text}}</dd>
+    </dl>
+{% endfor %}
 </div>
 {% endblock content %}
