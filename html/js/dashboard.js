@@ -60,7 +60,7 @@ function showCustomTooltip(element, text, top = false) {
     tooltip.style.top = rect.top - tooltip.offsetHeight + "px";
   } else {
     tooltip.style.left = rect.left + 2 + "px";
-    tooltip.style.top = rect.bottom + 5 + "px";
+    tooltip.style.top = rect.bottom + tooltip.offsetHeight - 5 + "px";
   }
 }
 function hideCustomTooltip() {
