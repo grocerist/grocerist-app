@@ -621,3 +621,10 @@ ul.no-bullets {
 .glossary-heading {
    color: var(--primary);
 }
+
+@media (min-width: 768px) { /* md and up */
+  .glossary-list {
+    columns: 2 300px;
+    column-gap: 2rem;
+  }
+}
