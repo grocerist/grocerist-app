@@ -601,3 +601,30 @@ ul.no-bullets {
   z-index: 10000;
   display: none;
 }
+
+.glossary dt, dd {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.glossary dt::after {
+  content: ": ";
+}
+
+.glossary dd::after {
+  content: "";
+  display: block;
+}
+
+.glossary hr,
+.glossary-heading {
+   color: var(--primary);
+}
+
+@media (min-width: 768px) { /* md and up */
+  .glossary-list {
+    columns: 2 300px;
+    column-gap: 2rem;
+  }
+}
