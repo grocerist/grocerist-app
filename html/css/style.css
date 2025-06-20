@@ -616,3 +616,8 @@ ul.no-bullets {
   content: "";
   display: block;
 }
+
+.glossary hr,
+.glossary-heading {
+   color: var(--primary);
+}

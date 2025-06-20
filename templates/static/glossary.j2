@@ -1,6 +1,6 @@
 {% set page_title = "Glossary" %}
 {% extends "templates/partials/base.j2" %}
-{% block title %}Browse{{page_title}}{% endblock title %}
+{% block title %}Browsev{{page_title}}{% endblock title %}
 {% block page_description %}
 <meta name="description" content="{{ project_data.project_sub_title }}">
 {% endblock page_description %}
@@ -8,22 +8,46 @@
 {% block content %}
 {% include "templates/partials/breadcrumbs.j2" %}
 <div class="container">
-    <h1 class="text-center">
+    <h1 class="text-center mb-4">
         {{page_title}}</h1>
-    <div class="glossary-jump">
+    <div id="glossary-index" class="d-flex flex-wrap gap-2 mb-4 justify-content-center">
         {% for letter in glossary_data.keys() %}
-        <a href="#glossary-{{ letter }}">{{ letter }}</a>
+        <a href="#{{ letter }}" class="btn grocerist-button btn-sm">{{ letter }}</a>
         {% endfor %}
     </div>
     <div class="glossary">
         {% for letter, terms in glossary_data.items() %}
-        <h2 id="glossary-{{ letter }}">{{ letter }}</h2>
-        <dl>
-            {% for term, definition in terms %}
-            <dt>{{ term }}</dt>
-            <dd>{{ definition }}</dd>
-            {% endfor %}
-        </dl>
+        <h2 id="{{ letter }}" class="glossary-heading ms-2">
+            {{ letter }}
+            <a href="#glossary-index">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-arrow-up" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5">
+                    </path>
+                </svg>
+                <span class="visually-hidden">Jump to top</span>
+            </a>
+        </h2>
+        <hr class="mt-0 mb-3">
+        <div class="row">
+            <div class="col-md-6">
+                <dl>
+                    {% for term, definition in terms[:(terms|length // 2 + terms|length % 2)] %}
+                    <dt>{{ term }}</dt>
+                    <dd>{{ definition }}</dd>
+                    {% endfor %}
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <dl>
+                    {% for term, definition in terms[(terms|length // 2 + terms|length % 2):] %}
+                    <dt>{{ term }}</dt>
+                    <dd>{{ definition }}</dd>
+                    {% endfor %}
+                </dl>
+            </div>
+        </div>
         {% endfor %}
     </div>
 </div>
