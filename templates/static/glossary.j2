@@ -10,11 +10,21 @@
 <div class="container">
     <h1 class="text-center">
         {{page_title}}</h1>
-{% for entry in glossary_data.values()%}
-    <dl>
-        <dt>{{entry.term}}</dt>
-        <dd>{{entry.long_text}}</dd>
-    </dl>
-{% endfor %}
+    <div class="glossary-jump">
+        {% for letter in glossary_data.keys() %}
+        <a href="#glossary-{{ letter }}">{{ letter }}</a>
+        {% endfor %}
+    </div>
+    <div class="glossary">
+        {% for letter, terms in glossary_data.items() %}
+        <h2 id="glossary-{{ letter }}">{{ letter }}</h2>
+        <dl>
+            {% for term, definition in terms %}
+            <dt>{{ term }}</dt>
+            <dd>{{ definition }}</dd>
+            {% endfor %}
+        </dl>
+        {% endfor %}
+    </div>
 </div>
 {% endblock content %}

@@ -6,6 +6,7 @@ import requests
 import lxml.etree as ET
 from acdh_tei_pyutils.tei import TeiReader
 import subprocess
+import locale
 
 # Run additional scripts to generate or update json files
 helper_scripts = "json_pyscripts"
@@ -15,7 +16,9 @@ for script in os.listdir(helper_scripts):
     subprocess.run(["python", path])
 
 templateLoader = jinja2.FileSystemLoader(searchpath=".")
-templateEnv = jinja2.Environment(loader=templateLoader, trim_blocks=True, lstrip_blocks=True)
+templateEnv = jinja2.Environment(
+    loader=templateLoader, trim_blocks=True, lstrip_blocks=True
+)
 
 nsmap = {
     "tei": "http://www.tei-c.org/ns/1.0",
@@ -56,6 +59,7 @@ files = [
     template for template in all_templates if template.startswith("templates/static")
 ]
 
+
 def render_static_page(template_path, output_path, extra_context=None):
     template = templateEnv.get_template(template_path)
     context = {"project_data": project_data}
@@ -63,6 +67,20 @@ def render_static_page(template_path, output_path, extra_context=None):
         context.update(extra_context)
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(template.render(context))
+
+
+def sort_and_group_glossary(glossary_data):
+    glossary_terms = {
+        entry["term"]: entry["long_text"] for entry in glossary_data.values()
+    }
+    locale.setlocale(locale.LC_COLLATE, "tr_TR.UTF-8")
+    sorted_terms = sorted(glossary_terms.items(), key=lambda x: locale.strxfrm(x[0]))
+    grouped = {}
+    for term, definition in sorted_terms:
+        letter = term[0].upper()
+        grouped.setdefault(letter, []).append((term, definition))
+    return grouped
+
 
 print("building static content")
 for x in files:
@@ -75,7 +93,8 @@ for x in files:
         data_file = "glossary.json"
         with open(os.path.join(json_dumps, data_file), "r", encoding="utf-8") as f:
             glossary_data = json.load(f)
-        extra_context = {"glossary_data": glossary_data}
+            grouped_glossary = sort_and_group_glossary(glossary_data)
+        extra_context = {"glossary_data": grouped_glossary}
     render_static_page(x, output_path, extra_context)
 
 print("building document sites")

@@ -601,3 +601,18 @@ ul.no-bullets {
   z-index: 10000;
   display: none;
 }
+
+.glossary dt, dd {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+.glossary dt::after {
+  content: ": ";
+}
+
+.glossary dd::after {
+  content: "";
+  display: block;
+}
