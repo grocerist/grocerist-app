@@ -73,7 +73,7 @@ def sort_and_group_glossary(glossary_data):
     glossary_terms = {
         entry["term"]: entry["long_text"] for entry in glossary_data.values()
     }
-    locale.setlocale(locale.LC_COLLATE, "tr_TR.utf8")
+    locale.setlocale(locale.LC_COLLATE, "tr_TR.UTF-8")
     sorted_terms = sorted(glossary_terms.items(), key=lambda x: locale.strxfrm(x[0]))
     grouped = {}
     for term, definition in sorted_terms:

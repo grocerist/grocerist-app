@@ -35,6 +35,12 @@ jobs:
           python-version: "3.12"
           cache: "pip"
       - run: pip install -r requirements.txt
+      - name: Install Turkish locale
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y locales
+          sudo locale-gen tr_TR.UTF-8
+          sudo update-locale LANG=tr_TR.UTF-8
       - name: Fetch data
         run: python fetch_data.py
       - name: Build
