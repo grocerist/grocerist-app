@@ -77,8 +77,9 @@ def sort_and_group_glossary(glossary_data):
     sorted_terms = sorted(glossary_terms.items(), key=lambda x: locale.strxfrm(x[0]))
     grouped = {}
     for term, definition in sorted_terms:
-        letter = term[0].upper()
-        grouped.setdefault(letter, []).append((term, definition))
+        if term:
+            letter = term[0].upper()
+            grouped.setdefault(letter, []).append((term, definition))
     return grouped
 
 
