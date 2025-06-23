@@ -31,7 +31,8 @@ function initializeTabulator(priceData) {
       title: "Year",
       field: "doc_year",
       mutator: function (value, data, type, params, component) {
-        return value[0].value;
+        if (value && value[0]) {
+          return value[0].value}
       },
       headerFilter: "input",
       sorterParams: {
