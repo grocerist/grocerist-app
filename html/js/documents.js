@@ -339,14 +339,17 @@ function rowsToMarkers(map, rows, layerGroups) {
         long: rowData.long,
         century: century?.value || null,
         popupContent: `
-        <h5><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}<a/></h5>
-        <p><b><i>Bakkal</i> / Grocer:</b> ${
-          rowData.main_person[0] ? rowData.main_person[0].name : "-"
-        }</p>
-        `,
+        <h5><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}</a></h5>
+        <p><b><i>Bakkal</i> / Grocer:</b>
+          ${
+            rowData.main_person[0]
+              ? `<a href="${rowData.main_person[0].grocerist_id}.html">${rowData.main_person[0].name}</a>`
+              : "-"
+          }
+        </p>
+      `,
         icon: "bi bi-file-earmark-text-fill",
       };
-
       const { marker, layerName } = createMarker(markerData, true);
       marker.addTo(layerGroups[layerName]);
       // store each marker by the grocerist_id from the document
@@ -434,13 +437,14 @@ function setupMapAndTable(dataUrl) {
     try {
       const dataFromJson = await d3.json(dataUrl);
 
-      const tableData = Object.values(dataFromJson).filter(
-        (item) => item.shelfmark !== ""
-      ).map((item) => {
-        if (item.goods.length === 0 && item.no_goods_data === true) {
-          item.goods = "No data"
-        }
-      return item})
+      const tableData = Object.values(dataFromJson)
+        .filter((item) => item.shelfmark !== "")
+        .map((item) => {
+          if (item.goods.length === 0 && item.no_goods_data === true) {
+            item.goods = "No data";
+          }
+          return item;
+        });
       tableConfig.data = tableData;
       const table = createTable(tableConfig);
 
