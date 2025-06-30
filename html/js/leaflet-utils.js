@@ -21,13 +21,18 @@ const overlayColors = {
 };
 
 // Helper function to create and add layer groups to the map
-const createAndAddLayerGroups = (map, colors) => {
+const createAndAddLayerGroups = (map, layerList) => {
   const layerGroups = {};
-  Object.entries(colors).forEach(([name, color]) => {
+  layerList.forEach((name) => {
+    const color = overlayColors[name] || null;
     const layerGroup = new L.layerGroup();
-    const htmlName = `<span style="color:${color}">${name}</span>`;
     layerGroup.addTo(map);
-    layerGroups[htmlName] = layerGroup;
+    if (color) {
+      const htmlName = `<span style="color:${color}">${name}</span>`;
+      layerGroups[htmlName] = layerGroup;
+    } else {
+      layerGroups[name] = layerGroup;
+    }
   });
   return layerGroups;
 };
@@ -47,7 +52,7 @@ function createMarkerIcon(color, icon) {
 }
 
 // Function to create a marker and add it to the right layer group based on the year
-function createMarker(markerData, centuryLayers = false) {
+function createMarker(markerData, centuryLayers = false, treeLayers = false) {
   const { lat, long, century, popupContent, icon } = markerData;
   let color = colors[0];
   let layerName = null;
@@ -55,6 +60,9 @@ function createMarker(markerData, centuryLayers = false) {
     const centuryText = `${century}th century`;
     color = overlayColors[centuryText];
     layerName = `<span style="color:${color}">${centuryText}</span>`;
+  } else if (treeLayers) {
+    layerName = `${century}-${markerData.multi ? "more" : "1"}`;
+    console.log(layerName);
   }
   const customIcon = createMarkerIcon(color, icon);
   const marker = L.marker([lat, long], { icon: customIcon, riseOnHover: true });
@@ -92,24 +100,71 @@ function createMap(options = {}) {
   let layerGroups = null;
   let mcgLayerSupportGroup = null;
   if (options.layerControl) {
+    const layerList = options.layerControlTree
+      ? ["18-1", "18-more", "19-1", "19-more"]
+      : Object.keys(overlayColors);
     // Create and add marker layer groups from the overlayColors object
-    layerGroups = createAndAddLayerGroups(map, overlayColors);
-    const layerControl = L.control.layers(null, layerGroups, {
-      collapsed: false,
-    });
-    layerControl.addTo(map);
+    layerGroups = createAndAddLayerGroups(map, layerList);
+    if (options.layerControlTree) {
+      parentCategories = Object.keys(overlayColors);
+      const overlaysTree = {
+        label: "Grocery shops",
+        children: [
+          {
+            label: `<span style="color:${overlayColors[parentCategories[0]]}"> ${
+              parentCategories[0]
+            }</span>`,
+            selectAllCheckbox: true,
+            children: [
+              { label: "Single-shop owner", layer: layerGroups[layerList[0]] },
+              {
+                label: "Multi-shop owner",
+                layer: layerGroups[layerList[1]],
+              },
+            ],
+          },
+          {
+            label: `<span style="color:${overlayColors[parentCategories[1]]}"> ${
+              parentCategories[1]
+            }</span>`,
+            selectAllCheckbox: true,
+            children: [
+              {
+                label: `Single-shop owner`,
+                layer: layerGroups[layerList[2]],
+              },
+              {
+                label: "Multi-shop owner",
+                layer: layerGroups[layerList[3]],
+              },
+            ],
+          },
+        ],
+      };
+      const layerControlTree = L.control.layers.tree(null, overlaysTree, {
+        collapsed: false,
+      });
+      layerControlTree.addTo(map);
+    } else {
+      const layerControl = L.control.layers(null, layerGroups, {
+        collapsed: false,
+      });
+      layerControl.addTo(map);
+    }
     if (options.useCluster) {
       // Create a marker cluster group
       mcgLayerSupportGroup = L.markerClusterGroup.layerSupport({
         iconCreateFunction: function (cluster) {
-          return L.divIcon({ 
+          return L.divIcon({
             className: "custom-cluster",
-            html:`<div><span>${cluster.getChildCount()}</span></div>`,
-          iconSize: [50, 50],});
+            html: `<div><span>${cluster.getChildCount()}</span></div>`,
+            iconSize: [50, 50],
+          });
         },
       });
       mcgLayerSupportGroup.addTo(map);
       Object.values(layerGroups).forEach((layerGroup) => {
+        console.log(layerGroup);
         mcgLayerSupportGroup.addLayer(layerGroup);
       });
     }

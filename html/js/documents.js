@@ -333,6 +333,7 @@ function rowsToMarkers(map, rows, layerGroups) {
   rows.forEach((row) => {
     const rowData = row.getData();
     const century = rowData.century;
+
     if (rowData.lat && rowData.long) {
       const markerData = {
         lat: rowData.lat,
@@ -349,9 +350,14 @@ function rowsToMarkers(map, rows, layerGroups) {
         </p>
       `,
         icon: "bi bi-file-earmark-text-fill",
+        multi: rowData.main_person[0]
+          ? rowData.main_person[0].multiple_shops
+          : false,
       };
-      const { marker, layerName } = createMarker(markerData, true);
+      const { marker, layerName } = createMarker(markerData, false, true);
+      console.log(layerName)
       marker.addTo(layerGroups[layerName]);
+
       // store each marker by the grocerist_id from the document
       const markerID = rowData.grocerist_id;
       allMarkers[markerID] = marker;
@@ -380,6 +386,7 @@ function setupMapAndTable(dataUrl) {
   const { map, layerGroups, mcgLayerSupportGroup } = createMap({
     initialZoom: 9,
     layerControl: true,
+    layerControlTree: true,
     useCluster: true,
   });
   let spiderfyTimeout = null;

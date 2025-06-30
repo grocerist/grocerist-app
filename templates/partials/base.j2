@@ -16,8 +16,11 @@
     <link rel="stylesheet" href="vendor/leaflet/leaflet.css"/>
     <link rel="stylesheet" href="vendor/Leaflet.markercluster-1.4.1-dist/MarkerCluster.css"/>
     <link rel="stylesheet" href="vendor/Leaflet.markercluster-1.4.1-dist/MarkerCluster.Default.css"/>
+    <link rel="stylesheet" href="vendor/Leaflet.Control.Layers.Tree/L.Control.Layers.Tree.css"/>
     {% endif %}
-    {% if tabulator_css|default(TFalse) %}
+    {% if leaflet_draw_css|default(False) %}
+    {% endif %}
+    {% if tabulator_css|default(False) %}
     <link href="vendor/tabulator-tables/css/tabulator.min.css" rel="stylesheet">
     <link href="vendor/tabulator-tables/css/tabulator_bootstrap5.min.css" rel="stylesheet">
     {% endif %}
