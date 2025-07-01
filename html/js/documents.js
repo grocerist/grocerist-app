@@ -355,7 +355,6 @@ function rowsToMarkers(map, rows, layerGroups) {
           : false,
       };
       const { marker, layerName } = createMarker(markerData, false, true);
-      console.log(layerName)
       marker.addTo(layerGroups[layerName]);
 
       // store each marker by the grocerist_id from the document

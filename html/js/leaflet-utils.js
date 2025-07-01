@@ -22,7 +22,7 @@ const overlayColors = {
 
 const iconColors = {
   "single-shop": colors[4],
-  "multi-shop": "#a6764d",
+  "multi-shop": colors[7],
 };
 
 // Helper function to create and add layer groups to the map
@@ -92,43 +92,17 @@ function getYearFromISODate(date) {
   }
   return year;
 }
-
-// Function for initializing the map
-function createMap(options = {}) {
-  console.log("loading map");
-  const map = L.map(mapConfig.divId, mapConfig.mapOptions).setView(
-    options.initialCoordinates
-      ? options.initialCoordinates
-      : mapConfig.initialCoordinates,
-    options.initialZoom ? options.initialZoom : mapConfig.initialZoom
-  );
-  const baseMapLayer = L.tileLayer(mapConfig.baseMapUrl, {
-    attribution: mapConfig.attribution,
-  });
-  // Add base map layer
-  baseMapLayer.addTo(map);
-
-  let layerGroups = null;
-  let mcgLayerSupportGroup = null;
-  if (options.layerControl) {
-    const layerList = options.layerControlTree
-      ? ["18-1", "18-more", "19-1", "19-more"]
-      : Object.keys(overlayColors);
-    // Create and add marker layer groups from the overlayColors object
-    layerGroups = createAndAddLayerGroups(map, layerList);
-    if (options.layerControlTree) {
-      parentCategories = Object.keys(overlayColors);
-      const singleShopLabel = `<span style=color:${iconColors["single-shop"]}>Single-shop owner <i class="bi bi-file-earmark-text-fill"></i></span>`;
-      const multiShopLabel = `<span style=color:${iconColors["multi-shop"]}>Multi-shop owner <i class="bi bi-file-earmark-text-fill"></i></span>`;
-      //<div class="custom-marker-pin" style="background-color:${pinColor};"></div><div class="custom-marker-shadow"></div>
+function createTreeLayerControl(layerGroups, layerList){
+  parentCategories = Object.keys(overlayColors);
+      const singleShopLabel = `<span style=color:${iconColors["single-shop"]}> Single-shop owner <i class="bi bi-file-earmark-text-fill"></i></span>`;
+      const multiShopLabel = `<span style=color:${iconColors["multi-shop"]}> Multi-shop owner <i class="bi bi-file-earmark-text-fill"></i></span>`;
       const overlaysTree = {
         label: "Grocery shops",
         children: [
           {
-            label: `<span style="color:${overlayColors[parentCategories[0]]}">
-                           ${parentCategories[0]}  <i class="bi bi-geo-alt-fill"></i>
-                          </span>`,
+            label: `<span style="color:${overlayColors[parentCategories[0]]}">${parentCategories[0]}  <i class="bi bi-geo-alt-fill"></i></span>`,
             selectAllCheckbox: true,
+            collapsed: true,
             children: [
               {
                 label: singleShopLabel,
@@ -141,11 +115,11 @@ function createMap(options = {}) {
             ],
           },
           {
-            label: `<span style="color:${overlayColors[parentCategories[1]]}">
-            ${
+            label: `<span style="color:${overlayColors[parentCategories[1]]}">${
               parentCategories[1]
-            } <i class="bi bi-geo-alt-fill"></i> </span>`,
+            } <i class="bi bi-geo-alt-fill"></i></span>`,
             selectAllCheckbox: true,
+            collapsed:true,
             children: [
               {
                 label: singleShopLabel,
@@ -161,7 +135,35 @@ function createMap(options = {}) {
       };
       const layerControlTree = L.control.layers.tree(null, overlaysTree, {
         collapsed: false,
+        closedSymbol: `<i class="bi bi-caret-right-fill"></i>`,
+        openedSymbol: `<i class="bi bi-caret-down-fill"></i>`,
       });
+      return layerControlTree
+    } 
+
+// Function for initializing the map
+function createMap(options = {}) {
+  console.log("loading map");
+  const map = L.map(mapConfig.divId, mapConfig.mapOptions).setView(
+    options.initialCoordinates
+      ? options.initialCoordinates
+      : mapConfig.initialCoordinates,
+    options.initialZoom ? options.initialZoom : mapConfig.initialZoom
+  );
+  const baseMapLayer = L.tileLayer(mapConfig.baseMapUrl, {
+    attribution: mapConfig.attribution,
+  });
+  baseMapLayer.addTo(map);
+
+  let layerGroups = null;
+  let mcgLayerSupportGroup = null;
+  if (options.layerControl) {
+    const layerList = options.layerControlTree
+      ? ["18-1", "18-more", "19-1", "19-more"]
+      : Object.keys(overlayColors);
+    layerGroups = createAndAddLayerGroups(map, layerList);
+    if (options.layerControlTree) {
+      const layerControlTree = createTreeLayerControl(layerGroups, layerList);
       layerControlTree.addTo(map);
     } else {
       const layerControl = L.control.layers(null, layerGroups, {
@@ -182,7 +184,6 @@ function createMap(options = {}) {
       });
       mcgLayerSupportGroup.addTo(map);
       Object.values(layerGroups).forEach((layerGroup) => {
-        console.log(layerGroup);
         mcgLayerSupportGroup.addLayer(layerGroup);
       });
     }
