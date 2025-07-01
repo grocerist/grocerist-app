@@ -108,10 +108,15 @@
   position: relative; /* Add this */
   z-index: 1; 
 }
-
+.leaflet-layerstree-children .leaflet-layerstree-children {
+  padding-left: 20px;
+}
+.leaflet-control-layers-selector {
+  margin-right: 3px;
+}
 /*
 document is built up as follows: 
-
+ 
 index page
 footer
 links

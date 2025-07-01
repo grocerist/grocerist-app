@@ -20,6 +20,11 @@ const overlayColors = {
   "19th century": colors[3],
 };
 
+const iconColors = {
+  "single-shop": colors[4],
+  "multi-shop": "#a6764d",
+};
+
 // Helper function to create and add layer groups to the map
 const createAndAddLayerGroups = (map, layerList) => {
   const layerGroups = {};
@@ -38,10 +43,10 @@ const createAndAddLayerGroups = (map, layerList) => {
 };
 
 // Function to create a custom css marker with an icon
-function createMarkerIcon(color, icon) {
+function createMarkerIcon(pinColor, icon, iconColor) {
   const customIcon = L.divIcon({
     className: "custom-marker",
-    html: `<div class="custom-marker-pin" style="background-color:${color};"><i class="${icon}" style="color:${color}" ></i></div><div class="custom-marker-shadow"></div>
+    html: `<div class="custom-marker-pin" style="background-color:${pinColor};"><i class="${icon}" style="color:${iconColor}" ></i></div><div class="custom-marker-shadow"></div>
     `,
     // !! if iconSize is changed, markerSize variable in style.css has to be adjusted accordingly
     iconSize: [32, 32],
@@ -54,17 +59,23 @@ function createMarkerIcon(color, icon) {
 // Function to create a marker and add it to the right layer group based on the year
 function createMarker(markerData, centuryLayers = false, treeLayers = false) {
   const { lat, long, century, popupContent, icon } = markerData;
-  let color = colors[0];
+  // --primary color as default
+  let color = "#5d7799";
+  let iconColor = "#5d7799";
   let layerName = null;
-  if (centuryLayers && century) {
+
+  if (century) {
     const centuryText = `${century}th century`;
     color = overlayColors[centuryText];
-    layerName = `<span style="color:${color}">${centuryText}</span>`;
-  } else if (treeLayers) {
-    layerName = `${century}-${markerData.multi ? "more" : "1"}`;
-    console.log(layerName);
+    if (centuryLayers) {
+      iconColor = color;
+      layerName = `<span style="color:${color}">${centuryText}</span>`;
+    } else if (treeLayers) {
+      iconColor = iconColors[markerData.multi ? "multi-shop" : "single-shop"];
+      layerName = `${century}-${markerData.multi ? "more" : "1"}`;
+    }
   }
-  const customIcon = createMarkerIcon(color, icon);
+  const customIcon = createMarkerIcon(color, icon, iconColor);
   const marker = L.marker([lat, long], { icon: customIcon, riseOnHover: true });
 
   marker.bindPopup(popupContent);
@@ -107,34 +118,41 @@ function createMap(options = {}) {
     layerGroups = createAndAddLayerGroups(map, layerList);
     if (options.layerControlTree) {
       parentCategories = Object.keys(overlayColors);
+      const singleShopLabel = `<span style=color:${iconColors["single-shop"]}>Single-shop owner <i class="bi bi-file-earmark-text-fill"></i></span>`;
+      const multiShopLabel = `<span style=color:${iconColors["multi-shop"]}>Multi-shop owner <i class="bi bi-file-earmark-text-fill"></i></span>`;
+      //<div class="custom-marker-pin" style="background-color:${pinColor};"></div><div class="custom-marker-shadow"></div>
       const overlaysTree = {
         label: "Grocery shops",
         children: [
           {
-            label: `<span style="color:${overlayColors[parentCategories[0]]}"> ${
-              parentCategories[0]
-            }</span>`,
+            label: `<span style="color:${overlayColors[parentCategories[0]]}">
+                           ${parentCategories[0]}  <i class="bi bi-geo-alt-fill"></i>
+                          </span>`,
             selectAllCheckbox: true,
             children: [
-              { label: "Single-shop owner", layer: layerGroups[layerList[0]] },
               {
-                label: "Multi-shop owner",
+                label: singleShopLabel,
+                layer: layerGroups[layerList[0]],
+              },
+              {
+                label: multiShopLabel,
                 layer: layerGroups[layerList[1]],
               },
             ],
           },
           {
-            label: `<span style="color:${overlayColors[parentCategories[1]]}"> ${
+            label: `<span style="color:${overlayColors[parentCategories[1]]}">
+            ${
               parentCategories[1]
-            }</span>`,
+            } <i class="bi bi-geo-alt-fill"></i> </span>`,
             selectAllCheckbox: true,
             children: [
               {
-                label: `Single-shop owner`,
+                label: singleShopLabel,
                 layer: layerGroups[layerList[2]],
               },
               {
-                label: "Multi-shop owner",
+                label: multiShopLabel,
                 layer: layerGroups[layerList[3]],
               },
             ],
