@@ -92,54 +92,56 @@ function getYearFromISODate(date) {
   }
   return year;
 }
-function createTreeLayerControl(layerGroups, layerList){
-  parentCategories = Object.keys(overlayColors);
-      const singleShopLabel = `<span style=color:${iconColors["single-shop"]}> Single-shop owner <i class="bi bi-file-earmark-text-fill"></i></span>`;
-      const multiShopLabel = `<span style=color:${iconColors["multi-shop"]}> Multi-shop owner <i class="bi bi-file-earmark-text-fill"></i></span>`;
-      const overlaysTree = {
-        label: "Grocery shops",
+function createTreeLayerControl(layerGroups, layerList) {
+  const parentCategories = Object.keys(overlayColors);
+  const singleShopLabel = `<span style=color:${iconColors["single-shop"]}> Single-shop owner <i class="bi bi-file-earmark-text-fill"></i></span>`;
+  const multiShopLabel = `<span style=color:${iconColors["multi-shop"]}> Multi-shop owner <i class="bi bi-file-earmark-text-fill"></i></span>`;
+  const overlaysTree = {
+    label: "Grocery shops",
+    children: [
+      {
+        label: `<span style="color:${overlayColors[parentCategories[0]]}">${
+          parentCategories[0]
+        }  <i class="bi bi-geo-alt-fill"></i></span>`,
+        selectAllCheckbox: true,
+        collapsed: true,
         children: [
           {
-            label: `<span style="color:${overlayColors[parentCategories[0]]}">${parentCategories[0]}  <i class="bi bi-geo-alt-fill"></i></span>`,
-            selectAllCheckbox: true,
-            collapsed: true,
-            children: [
-              {
-                label: singleShopLabel,
-                layer: layerGroups[layerList[0]],
-              },
-              {
-                label: multiShopLabel,
-                layer: layerGroups[layerList[1]],
-              },
-            ],
+            label: singleShopLabel,
+            layer: layerGroups[layerList[0]],
           },
           {
-            label: `<span style="color:${overlayColors[parentCategories[1]]}">${
-              parentCategories[1]
-            } <i class="bi bi-geo-alt-fill"></i></span>`,
-            selectAllCheckbox: true,
-            collapsed:true,
-            children: [
-              {
-                label: singleShopLabel,
-                layer: layerGroups[layerList[2]],
-              },
-              {
-                label: multiShopLabel,
-                layer: layerGroups[layerList[3]],
-              },
-            ],
+            label: multiShopLabel,
+            layer: layerGroups[layerList[1]],
           },
         ],
-      };
-      const layerControlTree = L.control.layers.tree(null, overlaysTree, {
-        collapsed: false,
-        closedSymbol: `<i class="bi bi-caret-right-fill"></i>`,
-        openedSymbol: `<i class="bi bi-caret-down-fill"></i>`,
-      });
-      return layerControlTree
-    } 
+      },
+      {
+        label: `<span style="color:${overlayColors[parentCategories[1]]}">${
+          parentCategories[1]
+        } <i class="bi bi-geo-alt-fill"></i></span>`,
+        selectAllCheckbox: true,
+        collapsed: true,
+        children: [
+          {
+            label: singleShopLabel,
+            layer: layerGroups[layerList[2]],
+          },
+          {
+            label: multiShopLabel,
+            layer: layerGroups[layerList[3]],
+          },
+        ],
+      },
+    ],
+  };
+  const layerControlTree = L.control.layers.tree(null, overlaysTree, {
+    collapsed: false,
+    closedSymbol: `<i class="bi bi-caret-right-fill"></i>`,
+    openedSymbol: `<i class="bi bi-caret-down-fill"></i>`,
+  });
+  return layerControlTree;
+}
 
 // Function for initializing the map
 function createMap(options = {}) {
@@ -166,11 +168,23 @@ function createMap(options = {}) {
       const layerControlTree = createTreeLayerControl(layerGroups, layerList);
       layerControlTree.addTo(map);
     } else {
+      console.log("adding layer control");
       const layerControl = L.control.layers(null, layerGroups, {
         collapsed: false,
       });
       layerControl.addTo(map);
     }
+      // Ensure all checkboxes are checked after adding the control
+      setTimeout(() => {
+        document
+          .querySelectorAll('.leaflet-control-layers-selector[type="checkbox"]')
+          .forEach((cb) => {
+            if (!cb.checked) {
+              cb.checked = true;
+              cb.dispatchEvent(new Event("change")); // trigger any listeners
+            }
+          });
+      }, 5);
     if (options.useCluster) {
       // Create a marker cluster group
       mcgLayerSupportGroup = L.markerClusterGroup.layerSupport({
