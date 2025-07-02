@@ -15,11 +15,9 @@
         </li>
         {% endfor %}
     </ul>
+    {% if object.documents %}
     <h2><i class="bi bi-archive me-2" aria-hidden="true"></i>Documents</h2>
-    <ul>
-        {% for x in object.documents %}
-        <li><a href="{{ x.grocerist_id }}.html">{{ x.shelfmark }}</a></li>
-        {% endfor %}
-    </ul>
+    {% include "templates/partials/doc_list.j2" %}
+    {% endif %}
 </div>
 {% endblock content %}

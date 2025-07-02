@@ -1,0 +1,67 @@
+{% set ns = namespace(has_18th_century_docs=false, has_19th_century_docs=false, has_no_date_docs=false) %}
+{% for x in object.documents %}
+{% if x.century is none %}
+{% set ns.has_no_date_docs = true %}
+{% elif x.century.value == "18" %}
+{% set ns.has_18th_century_docs = true %}
+{% elif x.century.value == "19" %}
+{% set ns.has_19th_century_docs = true %}
+{% endif %}
+{% endfor %}
+{% if ns.has_18th_century_docs %}
+<strong class="ms-4">18th century</strong>
+{% set docs_18 = object.documents | selectattr("century.value", "equalto", "18") | list %}
+<ul>
+    {% if docs_18|length > 5 %}
+    {% for x in docs_18[:5] %}
+    <li><a href="document__{{ x.id }}.html">{{ x.shelfmark | default(x.value) }}</a></li>
+    {% endfor %}
+    <div class="collapse" id="docs18more">
+        {% for x in docs_18[5:] %}
+        <li><a href="document__{{ x.id }}.html">{{ x.shelfmark | default(x.value) }}</a></li>
+        {% endfor %}
+    </div>
+    <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#docs18more"
+        aria-expanded="false" aria-controls="docs18more">
+        Show more
+    </button>
+    {% else %}
+    {% for x in docs_18 %}
+    <li><a href="document__{{ x.id }}.html">{{ x.shelfmark | default(x.value) }}</a></li>
+    {% endfor %}
+    {% endif %}
+</ul>
+{% endif %}
+{% if ns.has_19th_century_docs %}
+<strong class="ms-4">19th century</strong>
+{% set docs_19 = object.documents | selectattr("century.value", "equalto", "19") | list %}
+<ul>
+    {% if docs_19|length > 5 %}
+    {% for x in docs_19[:5] %}
+    <li><a href="document__{{ x.id }}.html">{{ x.shelfmark | default(x.value) }}</a></li>
+    {% endfor %}
+    <div class="collapse" id="docs19more">
+        {% for x in docs_19[5:] %}
+        <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
+        {% endfor %}
+    </div>
+    <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#docs19more"
+        aria-expanded="false" aria-controls="docs19more">
+        Show more
+    </button>
+    {% else %}
+    {% for x in docs_19 %}
+    <li><a href="document__{{ x.id }}.html">{{ x.shelfmark | default(x.value) }}</a></li>
+    {% endfor %}
+    {% endif %}
+</ul>
+{% endif %}
+{# Technically there shouldn't be any documents without a date, but just in case: #}
+{% if ns.has_no_date_docs %}
+<strong class="ms-4">No date</strong>
+<ul>
+    {% for x in object.documents if x.century is none %}
+    <li><a href="document__{{ x.id }}.html">{{ x.shelfmark | default(x.value)}}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
