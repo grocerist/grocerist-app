@@ -42,11 +42,7 @@ function initializeTable(correctedGoodName, priceTableData) {
     title: "Year",
     field: "doc_year",
     mutator: function (value, data, type, params, component) {
-      if (value && value[0]) {
-        return value[0].value
-      } else {
-        return "No data"
-      }
+      return value[0].value
     },
     headerFilter: "input",
     sorterParams: {
@@ -67,7 +63,6 @@ function initializeTable(correctedGoodName, priceTableData) {
   {
     title: "Unit",
     field: "unit.value",
-    formatter: noDataFormatter,
     headerFilter: "list",
     headerFilterParams: {
       valuesLookup: true,
@@ -90,7 +85,6 @@ function initializeTable(correctedGoodName, priceTableData) {
   {
     title: "Total Value",
     field: "total_value",
-    formatter: noDataFormatter,
     headerFilter: "number",
     headerFilterPlaceholder: "at least...",
     headerFilterFunc: greaterThanFilter,
@@ -104,7 +98,6 @@ function initializeTable(correctedGoodName, priceTableData) {
     columnDefinitions.push({
       title: "Currency",
       field: "currency.value",
-      formatter: noDataFormatter,
       headerFilter: "input",
     });
   }

@@ -56,7 +56,6 @@ function initializeTabulator(priceData) {
     {
       title: "Unit",
       field: "unit.value",
-      formatter: noDataFormatter,
       headerFilter: "list",
       headerFilterParams: {
         valuesLookup: true,
@@ -79,7 +78,6 @@ function initializeTabulator(priceData) {
     {
       title: "Total Value",
       field: "total_value",
-      formatter: noDataFormatter,
       headerFilter: "number",
       headerFilterPlaceholder: "at least...",
       headerFilterFunc: greaterThanFilter,
@@ -94,7 +92,6 @@ function initializeTabulator(priceData) {
     columnDefinitions.push({
       title: "Currency",
       field: "currency.value",
-      formatter: noDataFormatter,
       headerFilter: "input",
     });
   }

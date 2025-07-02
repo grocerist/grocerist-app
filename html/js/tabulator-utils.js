@@ -81,7 +81,7 @@ function makeItalic(value) {
   return output;
 }
 
-//Custom mutator for price tables: Show "No data" instead of empty cell
+//Custom formatter for price tables: Show "No data" instead of empty cell
 function noDataFormatter(cell) {
   let value = cell.getValue();
   if (value === null) {
