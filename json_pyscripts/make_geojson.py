@@ -23,11 +23,7 @@ def make_geojson(json_files):
                         float(value["lat"]),
                     ]
                 except (TypeError, ValueError, KeyError):
-                    print("###########")
-                    print(
-                        f"looks like there is an issue with coordinates for entry: {value.get('name', 'unknown')}"
-                    )
-                    print("###########")
+                    pass
                 gj_feature["geometry"]["coordinates"] = [0, 0]
                 gj_feature["properties"]["name"] = value["name"]
                 gj_feature["properties"]["grocerist_id"] = value["grocerist_id"]
