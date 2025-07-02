@@ -43,6 +43,9 @@ for person in persons_data:
         if len(religion_entries) > 1:
             # Create a combined key for persons with multiple religion values
             religion_values = [entry.get("value", "") for entry in religion_entries]
+            if "Non-muslim" in religion_values:
+                # Ensure "Non muslim" is always first if it exists
+                religion_values.sort(key=lambda x: (x != "Non muslim", religion_values.index(x)))
             religion_key = "|".join(religion_values)
 
         elif len(religion_entries) == 1:
