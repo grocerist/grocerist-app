@@ -184,7 +184,7 @@ function createMap(options = {}) {
               cb.dispatchEvent(new Event("change")); // trigger any listeners
             }
           });
-      }, 5);
+      }, 10);
     if (options.useCluster) {
       // Create a marker cluster group
       mcgLayerSupportGroup = L.markerClusterGroup.layerSupport({
