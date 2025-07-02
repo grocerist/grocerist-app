@@ -611,7 +611,9 @@ function flattenMentions(mentions) {
     const priceChartData = Object.values(dataFromJson.prices);
 
     for (const value of Object.values(goodsData)) {
-      english_names[value.name] = value.english_names;
+      if (value.broken_or_spoilt === false) {
+        english_names[value.name] = value.english_names;
+      }
     }
 
     // Custom colors (default HighCharts list has too few)
