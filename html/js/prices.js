@@ -142,7 +142,7 @@ function handleRowSelection(row, allData) {
   let priceTableData = JSON.parse(
     JSON.stringify(
       allData.filter(
-        (item) => item.good.length > 0 && item.good[0].value == goodName
+        (item) => item.document.length > 0 && item.good.length > 0 && item.good[0].value == goodName
       )
     )
   );

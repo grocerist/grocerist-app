@@ -10,6 +10,9 @@ function getYearFromISODate(date) {
 }
 
 function initializeTabulator(priceData) {
+  priceData = priceData.filter(
+    (item) => item.document.length > 0
+  );
   const columnDefinitions = [
     {
       title: "Document",
