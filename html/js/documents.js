@@ -345,11 +345,11 @@ function rowsToMarkers(map, rows, layerGroups) {
         );
       }
 
-      const popupHeader = `<div class="fw-semibold fs-6 mb-2"><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}</a></div>`;
+      const popupHeader = `<div class="fw-semibold fs-6 mb-2"><a href="${rowData.grocerist_id}.html" title="Go to detail page">${rowData.shelfmark}</a></div>`;
       const grocerInfo = `<div><b><i>Bakkal</i> / Grocer:</b>
           ${
             rowData.main_person[0]
-              ? `<a href="${owner.grocerist_id}.html">${owner.name}</a>`
+              ? `<a href="${owner.grocerist_id}.html" title="Go to detail page">${owner.name}</a>`
               : "-"
           }</div>
         `;
@@ -358,7 +358,7 @@ function rowsToMarkers(map, rows, layerGroups) {
             .map(
               (
                 doc
-              ) => `<li><a href="${doc.grocerist_id}.html">${doc.shelfmark}</a> <a href="#" class="goto-marker" data-grocerist-id="${doc.grocerist_id}" title="Show on map">
+              ) => `<li><a href="${doc.grocerist_id}.html" title="Go to detail page">${doc.shelfmark}</a> <a href="#" class="goto-marker" data-grocerist-id="${doc.grocerist_id}" title="Show on map">
               <i class="bi bi-pin-map-fill"></i>
             </a></li>`
             )
