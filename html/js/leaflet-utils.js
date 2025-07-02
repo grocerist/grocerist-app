@@ -20,23 +20,33 @@ const overlayColors = {
   "19th century": colors[3],
 };
 
+const iconColors = {
+  "single-shop": colors[4],
+  "multi-shop": colors[7],
+};
+
 // Helper function to create and add layer groups to the map
-const createAndAddLayerGroups = (map, colors) => {
+const createAndAddLayerGroups = (map, layerList) => {
   const layerGroups = {};
-  Object.entries(colors).forEach(([name, color]) => {
+  layerList.forEach((name) => {
+    const color = overlayColors[name] || null;
     const layerGroup = new L.layerGroup();
-    const htmlName = `<span style="color:${color}">${name}</span>`;
     layerGroup.addTo(map);
-    layerGroups[htmlName] = layerGroup;
+    if (color) {
+      const htmlName = `<span style="color:${color}">${name}</span>`;
+      layerGroups[htmlName] = layerGroup;
+    } else {
+      layerGroups[name] = layerGroup;
+    }
   });
   return layerGroups;
 };
 
 // Function to create a custom css marker with an icon
-function createMarkerIcon(color, icon) {
+function createMarkerIcon(pinColor, icon, iconColor) {
   const customIcon = L.divIcon({
     className: "custom-marker",
-    html: `<div class="custom-marker-pin" style="background-color:${color};"><i class="${icon}" style="color:${color}" ></i></div><div class="custom-marker-shadow"></div>
+    html: `<div class="custom-marker-pin" style="background-color:${pinColor};"><i class="${icon}" style="color:${iconColor}" ></i></div><div class="custom-marker-shadow"></div>
     `,
     // !! if iconSize is changed, markerSize variable in style.css has to be adjusted accordingly
     iconSize: [32, 32],
@@ -47,16 +57,25 @@ function createMarkerIcon(color, icon) {
 }
 
 // Function to create a marker and add it to the right layer group based on the year
-function createMarker(markerData, centuryLayers = false) {
+function createMarker(markerData, centuryLayers = false, treeLayers = false) {
   const { lat, long, century, popupContent, icon } = markerData;
-  let color = colors[0];
+  // --primary color as default
+  let color = "#5d7799";
+  let iconColor = "#5d7799";
   let layerName = null;
-  if (centuryLayers && century) {
+
+  if (century) {
     const centuryText = `${century}th century`;
     color = overlayColors[centuryText];
-    layerName = `<span style="color:${color}">${centuryText}</span>`;
+    if (centuryLayers) {
+      iconColor = color;
+      layerName = `<span style="color:${color}">${centuryText}</span>`;
+    } else if (treeLayers) {
+      iconColor = iconColors[markerData.multi ? "multi-shop" : "single-shop"];
+      layerName = `${century}-${markerData.multi ? "more" : "1"}`;
+    }
   }
-  const customIcon = createMarkerIcon(color, icon);
+  const customIcon = createMarkerIcon(color, icon, iconColor);
   const marker = L.marker([lat, long], { icon: customIcon, riseOnHover: true });
 
   marker.bindPopup(popupContent);
@@ -73,6 +92,56 @@ function getYearFromISODate(date) {
   }
   return year;
 }
+function createTreeLayerControl(layerGroups, layerList) {
+  const parentCategories = Object.keys(overlayColors);
+  const singleShopLabel = `<span style=color:${iconColors["single-shop"]}> Single-shop owner <i class="bi bi-file-earmark-text-fill"></i></span>`;
+  const multiShopLabel = `<span style=color:${iconColors["multi-shop"]}> Multi-shop owner <i class="bi bi-file-earmark-text-fill"></i></span>`;
+  const overlaysTree = {
+    label: "Grocery shops",
+    children: [
+      {
+        label: `<span style="color:${overlayColors[parentCategories[0]]}">${
+          parentCategories[0]
+        }  <i class="bi bi-geo-alt-fill"></i></span>`,
+        selectAllCheckbox: true,
+        collapsed: true,
+        children: [
+          {
+            label: singleShopLabel,
+            layer: layerGroups[layerList[0]],
+          },
+          {
+            label: multiShopLabel,
+            layer: layerGroups[layerList[1]],
+          },
+        ],
+      },
+      {
+        label: `<span style="color:${overlayColors[parentCategories[1]]}">${
+          parentCategories[1]
+        } <i class="bi bi-geo-alt-fill"></i></span>`,
+        selectAllCheckbox: true,
+        collapsed: true,
+        children: [
+          {
+            label: singleShopLabel,
+            layer: layerGroups[layerList[2]],
+          },
+          {
+            label: multiShopLabel,
+            layer: layerGroups[layerList[3]],
+          },
+        ],
+      },
+    ],
+  };
+  const layerControlTree = L.control.layers.tree(null, overlaysTree, {
+    collapsed: false,
+    closedSymbol: `<i class="bi bi-caret-right-fill"></i>`,
+    openedSymbol: `<i class="bi bi-caret-down-fill"></i>`,
+  });
+  return layerControlTree;
+}
 
 // Function for initializing the map
 function createMap(options = {}) {
@@ -86,26 +155,45 @@ function createMap(options = {}) {
   const baseMapLayer = L.tileLayer(mapConfig.baseMapUrl, {
     attribution: mapConfig.attribution,
   });
-  // Add base map layer
   baseMapLayer.addTo(map);
 
   let layerGroups = null;
   let mcgLayerSupportGroup = null;
   if (options.layerControl) {
-    // Create and add marker layer groups from the overlayColors object
-    layerGroups = createAndAddLayerGroups(map, overlayColors);
-    const layerControl = L.control.layers(null, layerGroups, {
-      collapsed: false,
-    });
-    layerControl.addTo(map);
+    const layerList = options.layerControlTree
+      ? ["18-1", "18-more", "19-1", "19-more"]
+      : Object.keys(overlayColors);
+    layerGroups = createAndAddLayerGroups(map, layerList);
+    if (options.layerControlTree) {
+      const layerControlTree = createTreeLayerControl(layerGroups, layerList);
+      layerControlTree.addTo(map);
+    } else {
+      console.log("adding layer control");
+      const layerControl = L.control.layers(null, layerGroups, {
+        collapsed: false,
+      });
+      layerControl.addTo(map);
+    }
+      // Ensure all checkboxes are checked after adding the control
+      setTimeout(() => {
+        document
+          .querySelectorAll('.leaflet-control-layers-selector[type="checkbox"]')
+          .forEach((cb) => {
+            if (!cb.checked) {
+              cb.checked = true;
+              cb.dispatchEvent(new Event("change")); // trigger any listeners
+            }
+          });
+      }, 10);
     if (options.useCluster) {
       // Create a marker cluster group
       mcgLayerSupportGroup = L.markerClusterGroup.layerSupport({
         iconCreateFunction: function (cluster) {
-          return L.divIcon({ 
+          return L.divIcon({
             className: "custom-cluster",
-            html:`<div><span>${cluster.getChildCount()}</span></div>`,
-          iconSize: [50, 50],});
+            html: `<div><span>${cluster.getChildCount()}</span></div>`,
+            iconSize: [50, 50],
+          });
         },
       });
       mcgLayerSupportGroup.addTo(map);
