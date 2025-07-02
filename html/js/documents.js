@@ -1,7 +1,7 @@
 const dataUrl = "json_dumps/documents.json";
+const multiShopOwners = {};
 
 // ####### MAP CONFIG AND FUNCTIONS #######
-
 function resizeIconsOnZoom(map, markers) {
   let previousZoom;
   const maxSize = 50;
@@ -335,19 +335,43 @@ function rowsToMarkers(map, rows, layerGroups) {
     const century = rowData.century;
 
     if (rowData.lat && rowData.long) {
+      const owner = rowData.main_person[0];
+
+      // Find other shelfmarks for this owner (excluding the current one)
+      let otherDocuments = [];
+      if (owner && multiShopOwners[owner.grocerist_id]) {
+        otherDocuments = multiShopOwners[owner.grocerist_id].filter(
+          (doc) => doc.shelfmark !== rowData.shelfmark
+        );
+      }
+
+      const popupHeader = `<div class="fw-semibold fs-6 mb-2"><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}</a></div>`;
+      const grocerInfo = `<div><b><i>Bakkal</i> / Grocer:</b>
+          ${
+            rowData.main_person[0]
+              ? `<a href="${owner.grocerist_id}.html">${owner.name}</a>`
+              : "-"
+          }</div>
+        `;
+      const otherShopsInfo = otherDocuments.length
+        ? `<div class="mt-1"><b>Other documents:</b><ul>${otherDocuments
+            .map(
+              (
+                doc
+              ) => `<li><a href="${doc.grocerist_id}.html">${doc.shelfmark}</a> <a href="#" class="goto-marker" data-grocerist-id="${doc.grocerist_id}" title="Show on map">
+              <i class="bi bi-pin-map-fill"></i>
+            </a></li>`
+            )
+            .join("")}</ul></div>`
+        : "";
       const markerData = {
         lat: rowData.lat,
         long: rowData.long,
         century: century?.value || null,
         popupContent: `
-        <h5><a href="${rowData.grocerist_id}.html">${rowData.shelfmark}</a></h5>
-        <p><b><i>Bakkal</i> / Grocer:</b>
-          ${
-            rowData.main_person[0]
-              ? `<a href="${rowData.main_person[0].grocerist_id}.html">${rowData.main_person[0].name}</a>`
-              : "-"
-          }
-        </p>
+        ${popupHeader}
+        ${grocerInfo}
+        ${otherShopsInfo}
       `,
         icon: "bi bi-file-earmark-text-fill",
         multi: rowData.main_person[0]
@@ -366,28 +390,18 @@ function rowsToMarkers(map, rows, layerGroups) {
   // resizeIconsOnZoom(map, allMarkers);
   return allMarkers;
 }
-function zoomToPointFromRowData(rowData, map, markers, mcgLayerSupportGroup) {
-  const { lat, long } = getCoordinates(rowData);
-  if (lat && long) {
-    const markerId = rowData.grocerist_id;
-    const marker = markers[markerId];
+
+function zoomToPoint(marker, mcgLayerSupportGroup) {
+  if (mcgLayerSupportGroup.hasLayer(marker)) {
     mcgLayerSupportGroup.zoomToShowLayer(marker, function () {
       marker.openPopup();
     });
   } else {
-    // close all open popups when resetting the map
-    map.closePopup();
-    map.setView(mapConfig.initialCoordinates, 9);
+    console.log("Marker not found.");
   }
 }
-// Main function for initializing the map and table
-function setupMapAndTable(dataUrl) {
-  const { map, layerGroups, mcgLayerSupportGroup } = createMap({
-    initialZoom: 9,
-    layerControl: true,
-    layerControlTree: true,
-    useCluster: true,
-  });
+
+function manageClusterSpiderfy(mcgLayerSupportGroup, map) {
   let spiderfyTimeout = null;
   let isSpiderfied = false;
 
@@ -438,7 +452,30 @@ function setupMapAndTable(dataUrl) {
       e.layer.spiderfy();
     }
   });
+}
+
+// Main function for initializing the map and table
+function setupMapAndTable(dataUrl) {
+  const { map, layerGroups, mcgLayerSupportGroup } = createMap({
+    initialZoom: 9,
+    layerControl: true,
+    layerControlTree: true,
+    useCluster: true,
+  });
+  manageClusterSpiderfy(mcgLayerSupportGroup, map);
   let markers = {};
+  map.on("popupopen", function (e) {
+    document.querySelectorAll(".goto-marker").forEach((link) => {
+      link.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        const groceristId = this.getAttribute("data-grocerist-id");
+        const marker = markers[groceristId];
+        if (marker) {
+          zoomToPoint(marker, mcgLayerSupportGroup);
+        }
+      });
+    });
+  });
   (async function () {
     try {
       const dataFromJson = await d3.json(dataUrl);
@@ -453,7 +490,19 @@ function setupMapAndTable(dataUrl) {
         });
       tableConfig.data = tableData;
       const table = createTable(tableConfig);
-
+      // Build a dictionary of owners with multiple shops
+      tableData.forEach((item) => {
+        if (item.main_person.length > 0) {
+          const owner = item.main_person[0];
+          if (owner.multiple_shops === true) {
+            const ownerId = owner.grocerist_id;
+            if (!multiShopOwners[ownerId]) {
+              multiShopOwners[ownerId] = [];
+            }
+            multiShopOwners[ownerId].push(item);
+          }
+        }
+      });
       table.on("dataLoaded", function (data) {
         $("#total_count").text(data.length);
       });
@@ -465,12 +514,19 @@ function setupMapAndTable(dataUrl) {
 
       // Event listener for click on row
       table.on("rowClick", (e, row) => {
-        zoomToPointFromRowData(
-          row.getData(),
-          map,
-          markers,
-          mcgLayerSupportGroup
-        );
+        const rowData = row.getData();
+        const { lat, long } = getCoordinates(rowData);
+        if (lat && long) {
+          const markerId = rowData.grocerist_id;
+          const marker = markers[markerId];
+          if (marker) {
+            zoomToPoint(marker, mcgLayerSupportGroup);
+          }
+        } else {
+          // close all open popups when resetting the map
+          map.closePopup();
+          map.setView(mapConfig.initialCoordinates, 9);
+        }
       });
     } catch (error) {
       console.error("Error loading or processing data:", error);
