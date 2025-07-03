@@ -42,3 +42,9 @@
     {% endif %}
 </div>
 {% endblock content %}
+
+{% if object.documents|length > 5 or object.goods |length > 5  %}
+{% block scripts2 %}
+<script src="js/collapse.js"></script>
+{% endblock scripts2 %}
+{% endif %}

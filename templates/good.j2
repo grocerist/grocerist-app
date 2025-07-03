@@ -104,4 +104,7 @@
     })
 </script>
 {% endif %}
+{%if object.documents |length > 5  %}
+<script src="js/collapse.js"></script>
+{% endif%}
 {% endblock scripts2 %}
