@@ -13,7 +13,7 @@ function initializeTabulator(priceData) {
   priceData = priceData.filter(
     (item) => item.document.length > 0
   );
-  const columnDefinitions = [
+  const baseColumnDefinitions = [
     {
       title: "Document",
       field: "document",
@@ -86,6 +86,11 @@ function initializeTabulator(priceData) {
       },
     },
   ];
+
+  const columnDefinitions = baseColumnDefinitions.map((column) => ({
+    ...column,
+    minWidth: 100,
+  }));
 
   const currencyData = priceData.some((entry) => entry.currency);
   if (currencyData) {
