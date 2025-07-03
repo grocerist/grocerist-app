@@ -49,7 +49,8 @@
             {% endif %}
             {% if object.documents %}
             <h2><i class="bi bi-archive me-2" aria-hidden="true"></i>Documents</h2>
-            {% include "templates/partials/doc_list.j2" %}
+            {% set name_attribute = "value" %}
+            {% include "templates/partials/doc_list.j2" with context %}
             {% endif %}
         </div>
 
