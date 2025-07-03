@@ -100,13 +100,26 @@ function initializeTabulator(priceData) {
       headerFilter: "input",
     });
   }
-  new Tabulator("#prices-table", {
+  const table = new Tabulator("#prices-table", {
+    height: 700,
     data: priceData,
     layout: "fitColumns",
     responsiveLayout: "collapse",
     columns: columnDefinitions,
     initialSort: [{ column: "doc_year", dir: "asc" }],
+    pagination: true,
+    paginationSize: 10,
+    footerElement: `<span class="tabulator-counter float-left">
+                      Showing <span id="search_count"></span> results out of <span id="total_count"></span>
+                      </span>`,
   });
+      table.on("dataLoaded", function (data) {
+      $("#total_count").text(data.length);
+    });
+
+    table.on("dataFiltered", function (_filters, rows) {
+      $("#search_count").text(rows.length);
+    });
 }
 
 function markerPerDoc(doc_list, layerGroups) {

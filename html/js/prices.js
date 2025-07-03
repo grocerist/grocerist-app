@@ -109,6 +109,7 @@ function initializeTable(correctedGoodName, priceTableData) {
 
   const table = new Tabulator(`#table-${correctedGoodName}`, {
     layout: "fitColumns",
+    height: "100%",
     responsiveLayout: "collapse",
     data: priceTableData,
     columns: columnDefinitions,
