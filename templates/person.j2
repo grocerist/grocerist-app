@@ -89,15 +89,15 @@
 {% if object.documents %}
 {% include "templates/partials/leaflet.j2" %}
 <script>
-    const icon = "bi bi-house-fill"
+    const icon = "bi bi-people-fill"
 
     // tojson filter is used to keep the data in json format
     // e.g. preventing the null values from being converted to None during processing
     const doc_list = {{ object.documents | tojson | safe }};
 
     const { map } = createMap();
-
-    // create markers for each document
+    markerPerDoc(doc_list, icon);
+    {# // create markers for each document
     for (let i = 0; i < doc_list.length; i++) {
         const doc = doc_list[i];
         if (doc.lat && doc.long) {
@@ -113,7 +113,7 @@
             );
             marker.addTo(map)
         }
-    }
+    } #}
 </script>
 {% endif %}
 {% endblock scripts2 %}

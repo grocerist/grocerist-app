@@ -71,10 +71,8 @@
 </div>
 {% endblock content %}
 {% block scripts2 %}
-{% if object.price_per_document or object.documents %}
-<script src="js/good-common.js"></script>
-{% endif %}
 {% if object.price_per_document %}
+<script src="js/good-common.js"></script>
 <script>
     const priceData = {{ object.price_per_document | tojson | safe }};
     initializeTabulator(priceData);
@@ -85,23 +83,9 @@
     // tojson filter is used to keep the data in json format
     // e.g. preventing the null values from being converted to None during processing
     const doc_list = {{ object.documents | tojson | safe }};
+    const icon = "bi bi-basket3-fill";
     const { map, layerGroups } = createMap({ layerControl: true });
-    markerPerDoc(doc_list, layerGroups);
-    document.addEventListener('DOMContentLoaded', function () {
-        // For each collapsible section, set up event listeners
-        const collapses = document.querySelectorAll('.collapse');
-        collapses.forEach(function (collapse) {
-            const btn = document.querySelector('[data-bs-target="#' + collapse.id + '"]');
-            if (btn) {
-                collapse.addEventListener('shown.bs.collapse', function () {
-                    btn.textContent = 'Show less';
-                });
-                collapse.addEventListener('hidden.bs.collapse', function () {
-                    btn.textContent = 'Show more';
-                });
-            }
-        });
-    })
+    markerPerDoc(doc_list, icon, layerGroups);
 </script>
 {% endif %}
 {%if object.documents |length > 5  %}
