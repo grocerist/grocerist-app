@@ -126,6 +126,9 @@ tabulator footer
 subpages
 highcharts specific
 legend specific
+price page layout
+breadcrumbs
+buttons
 */
 
 .about-text {
@@ -501,6 +504,7 @@ ul.no-bullets {
 .prices-info {
   margin: auto;
   width: 60%;
+  margin-bottom: 2em;
 }
 
 .tabulator-row.tabulator-selectable.tabulator-selected {
@@ -569,6 +573,17 @@ ul.no-bullets {
   float: left;
   margin: 5px 5px 0 0;
   border-radius: 50%;
+}
+
+/* price page layout */
+.col-2-5 {
+  flex: 0 0 20.5%;
+  max-width: 20.5%;
+}
+
+.col-9-5 {
+  flex: 0 0 79%;
+  max-width: 79%;
 }
 
 /* Breadcrumbs */

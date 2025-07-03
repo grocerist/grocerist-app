@@ -20,11 +20,10 @@ const goodsListColumnDefinitions = [
 ];
 
 function initializeTable(correctedGoodName, priceTableData) {
-  const columnDefinitions = [
+  const baseColumnDefinitions = [
   {
     title: "Document",
     field: "document",
-    minWidth: 250,
     headerFilter: "input",
     ...linkListColumnSettings,
     formatterParams: {
@@ -93,6 +92,12 @@ function initializeTable(correctedGoodName, priceTableData) {
     },
   },
 ];
+
+  const columnDefinitions = baseColumnDefinitions.map((column) => ({
+    ...column,
+    minWidth: 100,
+  }));
+
   const currencyData = priceTableData.some((entry) => entry.currency);
   if (currencyData) {
     columnDefinitions.push({
@@ -105,8 +110,6 @@ function initializeTable(correctedGoodName, priceTableData) {
   const table = new Tabulator(`#table-${correctedGoodName}`, {
     layout: "fitColumns",
     responsiveLayout: "collapse",
-    minHeight: 150,
-    maxHeight: 400,
     data: priceTableData,
     columns: columnDefinitions,
     initialSort: [{ column: "doc_year", dir: "asc" }],
@@ -123,11 +126,11 @@ function handleRowSelection(row, allData) {
 
   let goodData = document.createElement("div");
   goodData.id = `data-${correctedGoodName}`;
-  goodData.className = "row col-10";
+  goodData.className = "row col-12";
 
   goodData.innerHTML = `
     <h2 id="title-${correctedGoodName}"><a href="/goods__${goodId}.html">${goodName}</a></h2>
-    <div id="table-${correctedGoodName}"></div>
+    <div id="table-${correctedGoodName}" style="margin-bottom: 1em"></div>
   `;
 
   const pricesContainer = document.getElementById("prices-tables");
