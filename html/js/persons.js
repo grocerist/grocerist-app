@@ -14,7 +14,19 @@ const baseColumnDefinitions = [
   {
     title: "Religion",
     field: "religion",
-    mutator: combineValues,
+    mutator: function (value, data, type, params, component) {
+      // Extract values
+      let values = value.map((item) => item.value);
+      // If "Non muslim" is present, put it first, then sort the rest
+      if (values.includes("Non muslim")) {
+        values = ["Non muslim"].concat(
+          values.filter((v) => v !== "Non muslim").sort()
+        );
+      } else {
+        values = values.sort();
+      }
+      return values.join("|");
+    },
     formatter: "html",
     headerFilter: "list",
     headerFilterFunc: "in",
@@ -163,8 +175,8 @@ const tableConfig = {
 
 const getColor = {
   "Muslim": colors[0],
-  "Non muslim/Orthodox": colors[1],
-  "Non muslim/Armenian": colors[2],
+  "Non muslim|Orthodox": colors[1],
+  "Non muslim|Armenian": colors[2],
   "Unknown": colors[3],
 };
 

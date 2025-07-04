@@ -92,18 +92,6 @@ function noDataFormatter(cell) {
 
 // CUSTOM MUTATORS
 
-// custom mutator that combines the values of an array of objects into a string
-function combineValues(value, data, type, params, component) {
-  let output = value
-    .map((item) => {
-      return `${item.value}`;
-    })
-    .join("|");
-  return `${output}`;
-}
-
-
-
 // Custom mutator for fields with arrays that aren't meant to be arrays
 function reduceArrayMutator(value, data, type, params, component) {
   if (typeof value === "object" && value.length > 0) {
