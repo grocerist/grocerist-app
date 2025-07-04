@@ -71,7 +71,7 @@
             {% if object.documents %}
             <h2><i class="bi bi-archive me-2" aria-hidden="true"></i>Documents</h2>
             <ul>
-                {% for x in object.documents %}
+                {% for x in object.documents | sort(attribute='value')%}
                 <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
                 {% endfor %}
             </ul>

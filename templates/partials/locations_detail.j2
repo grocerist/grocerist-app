@@ -56,18 +56,35 @@
             {% endif %}
             {% if object.documents %}
             <h2><i class="bi bi-archive me-2" aria-hidden="true"></i>Documents</h2>
-            <ul>
-                {% for x in object.documents %}
-                <li><a href="document__{{ x.id }}.html">{{ x.value }}</a></li>
-                {% endfor %}
-            </ul>
+            {% set name_attribute = "value" %}
+            {% include "templates/partials/doc_list.j2" with context %}
             {% endif %}
             {% if object.persons %}
             <h2><i class="bi bi-person me-2" aria-hidden="true"></i>Persons</h2>
-            <ul>
-                {% for x in object.persons %}
-                <li><a href="person__{{ x.id }}.html">{{ x.name }}</a></li>
+                     <ul>
+                {% set sorted_persons = object.persons | sort(attribute='name') %}
+                {% if sorted_persons|length > 5 %}
+                {% for x in sorted_persons[:5] %}
+                <li>
+                    <a href="person__{{ x.id }}.html">{{ x.name }}</a>
+                </li>
                 {% endfor %}
+                <div class="collapse" id="personsmore">
+                    {% for x in sorted_persons[5:] %}
+                    <li><a href="person__{{ x.id }}.html">{{ x.name }}</a></li>
+                    {% endfor %}
+                </div>
+                <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#personsmore" aria-expanded="false" aria-controls="personsmore">
+                    Show more
+                </button>
+                {% else%}
+                {% for x in sorted_persons %}
+                <li>
+                    <a href="person__{{ x.id }}.html">{{ x.name }}</a>
+                </li>
+                {% endfor %}
+                {%endif%}
             </ul>
             {% endif %}
         </div>
@@ -87,7 +104,8 @@
     const { map, layerGroups } = createMap({ layerControl: true });
     markerPerDoc(doc_list, icon, layerGroups);
 </script>
-
-
+{% endif %}
+{% if object.documents|length > 5 or object.persons |length > 5 %}
+<script src="js/collapse.js"></script>
 {% endif %}
 {% endblock scripts2 %}

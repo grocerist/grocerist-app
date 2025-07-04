@@ -42,7 +42,7 @@
             {% if object.has_category %}
             <h2><i class="bi bi-boxes me-2" aria-hidden="true"></i>Categories</h2>
             <ul>
-                {% for x in object.has_category %}
+                {% for x in object.has_category | sort(attribute='value') %}
                 <li><a href="category__{{ x.id }}.html">{{ x.value }}</a></li>
                 {% endfor %}
             </ul>

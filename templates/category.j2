@@ -15,47 +15,47 @@
         {{page_title}}</h1>
     <div class="row">
         <div class="col">
-    <h2><i class="bi bi-basket me-2" aria-hidden="true"></i>Groceries</h2>
-    <ul>
-        {% set sorted_goods = object.goods | sort(attribute='value') %}
-        {% if sorted_goods|length > 5 %}
-        {% for x in sorted_goods[:5] %}
-        <li>
-            <a href="goods__{{ x.id }}.html">{{ x.value }}</a>
-        </li>
-        {% endfor %}
-        <div class="collapse" id="goodsmore">
-            {% for x in sorted_goods[5:] %}
-            <li><a href="goods__{{ x.id }}.html">{{ x.value }}</a></li>
-            {% endfor %}
-        </div>
-        <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#goodsmore"
-            aria-expanded="false" aria-controls="goodsmore">
-            Show more
-        </button>
+            <h2><i class="bi bi-basket me-2" aria-hidden="true"></i>Groceries</h2>
+            <ul>
+                {% set sorted_goods = object.goods | sort(attribute='value') %}
+                {% if sorted_goods|length > 5 %}
+                {% for x in sorted_goods[:5] %}
+                <li>
+                    <a href="goods__{{ x.id }}.html">{{ x.value }}</a>
+                </li>
+                {% endfor %}
+                <div class="collapse" id="goodsmore">
+                    {% for x in sorted_goods[5:] %}
+                    <li><a href="goods__{{ x.id }}.html">{{ x.value }}</a></li>
+                    {% endfor %}
+                </div>
+                <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#goodsmore" aria-expanded="false" aria-controls="goodsmore">
+                    Show more
+                </button>
 
-        {% else%}
-        {% for x in sorted_goods %}
-        <li>
-            <a href="goods__{{ x.id }}.html">{{ x.value }}</a>
-        </li>
-        {% endfor %}
-        {%endif%}
-    </ul>
-    
-    {% if object.documents %}
-    <h2><i class="bi bi-archive me-2" aria-hidden="true"></i>Documents</h2>
-    {% set name_attribute = "shelfmark" %}
-    {% include "templates/partials/doc_list.j2" with context %}
-    </div>
-    {% endif %}
+                {% else%}
+                {% for x in sorted_goods %}
+                <li>
+                    <a href="goods__{{ x.id }}.html">{{ x.value }}</a>
+                </li>
+                {% endfor %}
+                {%endif%}
+            </ul>
+
             {% if object.documents %}
+            <h2><i class="bi bi-archive me-2" aria-hidden="true"></i>Documents</h2>
+            {% set name_attribute = "shelfmark" %}
+            {% include "templates/partials/doc_list.j2" with context %}
+            {% endif %}
+        </div>
+        {% if object.documents %}
         <div class="col">
             <h2><i class="bi bi-map me-2" aria-hidden="true"></i>Map</h2>
             <div id="map" style="height: 600px;" />
         </div>
         {% endif %}
-</div>
+    </div>
 </div>
 
 {% endblock content %}
@@ -70,7 +70,7 @@
     markerPerDoc(doc_list, icon, layerGroups);
 </script>
 {% endif %}
-{% if object.documents|length > 5 or object.goods |length > 5  %}
+{% if object.documents|length > 5 or object.goods |length > 5 %}
 <script src="js/collapse.js"></script>
 {% endif %}
 {% endblock scripts2 %}
