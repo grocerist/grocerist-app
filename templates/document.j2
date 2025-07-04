@@ -112,12 +112,15 @@
                 </script>
             </div>
             {% endif %}
-            <div class="pb-3">
-                <h2 class="text-center"><i class="bi bi-pencil me-2" aria-hidden="true"></i>Transcript</h2>
-                {% for x in paragraphs %}
-                {{ x|safe }}
-                {% endfor %}
-            
+            <div class="pt-3">
+                {% if paragraphs %}
+                    <h2 class="text-center"><i class="bi bi-pencil me-2" aria-hidden="true"></i>Transcript</h2>
+                    {% for x in paragraphs %}
+                    {{ x|safe }}
+                    {% endfor %}
+                {% else %}
+                    <div>This document does not contain any groceries.</div>
+                {% endif %}
             </div>
         </div>
     </div>
