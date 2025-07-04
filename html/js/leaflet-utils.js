@@ -106,7 +106,7 @@ function markerPerDoc(doc_list, icon, layerGroups = null) {
         long: doc.long,
         century,
         popupContent: `<p>Mentioned in document <br>
-            <strong><a href="document__${doc.id}.html">${doc.value}</a></strong><br>
+            <strong><a href="document__${doc.id}.html">${doc.shelfmark || doc.value}</a></strong><br>
             ${yearText}</p>`,
         icon: icon,
       };
