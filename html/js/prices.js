@@ -130,7 +130,7 @@ function handleRowSelection(row, allData) {
   goodData.className = "row col-12";
 
   goodData.innerHTML = `
-    <h2 id="title-${correctedGoodName}"><a href="/goods__${goodId}.html">${goodName}</a></h2>
+    <h2 id="title-${correctedGoodName}"><a href="goods__${goodId}.html">${goodName}</a></h2>
     <div id="table-${correctedGoodName}" style="margin-bottom: 1em"></div>
   `;
 
