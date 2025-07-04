@@ -86,9 +86,10 @@ function initializeTabulator(priceData) {
       },
     },
   ];
-
+  //define column width and add column visibility toggle
   const columnDefinitions = baseColumnDefinitions.map((column) => ({
     ...column,
+    headerMenu: headerMenu,
     minWidth: 100,
   }));
 
@@ -98,6 +99,7 @@ function initializeTabulator(priceData) {
       title: "Currency",
       field: "currency.value",
       headerFilter: "input",
+      visible: false,
     });
   }
   const table = new Tabulator("#prices-table", {
