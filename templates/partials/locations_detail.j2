@@ -79,29 +79,13 @@
 </div>
 {% endblock content %}
 {% block scripts2 %}
-{% if object.lat %}
+{% if object.documents %}
 {% include "templates/partials/leaflet.j2" %}
 <script>
     const icon = "bi bi-map-fill";
-    const lat = {{ object.lat }};
-    const long = {{ object.long }};
-    const { map } = createMap({ initialCoordinates: [lat, long] });
-    const docs = {{ object.documents | tojson | safe }}
-    const persons = {{ object.persons | tojson | safe }};
-
-    const markerData = {
-        lat: lat,
-        long: long,
-        century: null,
-        popupContent: `<strong>{{ object.name }}</strong>
-    <br>${docs.length} related document(s)
-    <br>${persons.length} related person(s)`,
-        icon: icon,
-    };
-    const { marker } = createMarker(
-        markerData
-    );
-    marker.addTo(map).openPopup();
+    const doc_list = {{ object.documents | tojson | safe }}
+    const { map, layerGroups } = createMap({ layerControl: true });
+    markerPerDoc(doc_list, icon, layerGroups);
 </script>
 
 

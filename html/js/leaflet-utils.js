@@ -92,6 +92,35 @@ function getYearFromISODate(date) {
   }
   return year;
 }
+
+function markerPerDoc(doc_list, icon, layerGroups = null) {
+  // create markers for each document
+  for (let i = 0; i < doc_list.length; i++) {
+    const doc = doc_list[i];
+    const century = layerGroups ? doc.century?.value || null : null;
+    const year = layerGroups ? getYearFromISODate(doc.iso_date) : null;
+    if (doc.lat && doc.long) {
+      const yearText = year ? `in ${year}` : "";
+      const markerData = {
+        lat: doc.lat,
+        long: doc.long,
+        century,
+        popupContent: `<p>Mentioned in document <br>
+            <strong><a href="document__${doc.id}.html">${doc.shelfmark || doc.value}</a></strong><br>
+            ${yearText}</p>`,
+        icon: icon,
+      };
+      if (layerGroups) {
+        const { marker, layerName } = createMarker(markerData, true);
+        marker.addTo(layerGroups[layerName]);
+      } else {
+        const { marker } = createMarker(markerData);
+        marker.addTo(map);
+      }
+    }
+  }
+}
+
 function createTreeLayerControl(layerGroups, layerList) {
   const parentCategories = Object.keys(overlayColors);
   const singleShopLabel = `<span style=color:${iconColors["single-shop"]}> Single-shop owner <i class="bi bi-file-earmark-text-fill"></i></span>`;
@@ -174,17 +203,17 @@ function createMap(options = {}) {
       });
       layerControl.addTo(map);
     }
-      // Ensure all checkboxes are checked after adding the control
-      setTimeout(() => {
-        document
-          .querySelectorAll('.leaflet-control-layers-selector[type="checkbox"]')
-          .forEach((cb) => {
-            if (!cb.checked) {
-              cb.checked = true;
-              cb.dispatchEvent(new Event("change")); // trigger any listeners
-            }
-          });
-      }, 10);
+    // Ensure all checkboxes are checked after adding the control
+    setTimeout(() => {
+      document
+        .querySelectorAll('.leaflet-control-layers-selector[type="checkbox"]')
+        .forEach((cb) => {
+          if (!cb.checked) {
+            cb.checked = true;
+            cb.dispatchEvent(new Event("change")); // trigger any listeners
+          }
+        });
+    }, 10);
     if (options.useCluster) {
       // Create a marker cluster group
       mcgLayerSupportGroup = L.markerClusterGroup.layerSupport({

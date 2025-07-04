@@ -123,27 +123,3 @@ function initializeTabulator(priceData) {
       $("#search_count").text(rows.length);
     });
 }
-
-function markerPerDoc(doc_list, layerGroups) {
-  const icon = "bi bi-basket3-fill";
-  // create markers for each document
-  for (let i = 0; i < doc_list.length; i++) {
-    const doc = doc_list[i];
-    const century = doc.century?.value || null;
-    const year = getYearFromISODate(doc.iso_date);
-    if (doc.lat && doc.long) {
-      const yearText = year ? `in ${year}` : "";
-      const markerData = {
-        lat: doc.lat,
-        long: doc.long,
-        century,
-        popupContent: `<p>Mentioned in document <br>
-            <strong><a href="document__${doc.id}.html">${doc.value}</a></strong><br>
-            ${yearText}</p>`,
-        icon: icon,
-      };
-      const { marker, layerName } = createMarker(markerData, true);
-      marker.addTo(layerGroups[layerName]);
-    }
-  }
-}

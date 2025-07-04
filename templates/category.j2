@@ -1,5 +1,11 @@
 {% set page_title = object.name %}
+{% set leaflet_css = object.documents is not none %}
 {% extends "templates/partials/base.j2" %}
+{% block scriptHeader %}
+{% if object.documents %}
+{% include "templates/partials/leaflet.j2" %}
+{% endif %}
+{% endblock %}
 {% block content %}
 {% with parent_page = "categories", parent_page_title = "Grocery Categories" %}
 {% include "templates/partials/breadcrumbs.j2" %}
@@ -7,6 +13,8 @@
 <div class="container subpage">
     <h1 class="text-center">
         {{page_title}}</h1>
+    <div class="row">
+        <div class="col">
     <h2><i class="bi bi-basket me-2" aria-hidden="true"></i>Groceries</h2>
     <ul>
         {% set sorted_goods = object.goods | sort(attribute='value') %}
@@ -34,17 +42,35 @@
         {% endfor %}
         {%endif%}
     </ul>
-
+    
     {% if object.documents %}
     <h2><i class="bi bi-archive me-2" aria-hidden="true"></i>Documents</h2>
     {% set name_attribute = "shelfmark" %}
     {% include "templates/partials/doc_list.j2" with context %}
+    </div>
     {% endif %}
+            {% if object.documents %}
+        <div class="col">
+            <h2><i class="bi bi-map me-2" aria-hidden="true"></i>Map</h2>
+            <div id="map" style="height: 600px;" />
+        </div>
+        {% endif %}
 </div>
-{% endblock content %}
+</div>
 
-{% if object.documents|length > 5 or object.goods |length > 5  %}
+{% endblock content %}
 {% block scripts2 %}
-<script src="js/collapse.js"></script>
-{% endblock scripts2 %}
+{% if object.documents %}
+<script>
+    // tojson filter is used to keep the data in json format
+    // e.g. preventing the null values from being converted to None during processing
+    const doc_list = {{ object.documents | tojson | safe }};
+    const icon = "bi bi-basket-fill";
+    const { map, layerGroups } = createMap({ layerControl: true });
+    markerPerDoc(doc_list, icon, layerGroups);
+</script>
 {% endif %}
+{% if object.documents|length > 5 or object.goods |length > 5  %}
+<script src="js/collapse.js"></script>
+{% endif %}
+{% endblock scripts2 %}
