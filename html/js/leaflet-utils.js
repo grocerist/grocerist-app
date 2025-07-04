@@ -97,6 +97,10 @@ function markerPerDoc(doc_list, icon, layerGroups = null) {
   // create markers for each document
   for (let i = 0; i < doc_list.length; i++) {
     const doc = doc_list[i];
+    // WATCHME filtering out values with same lat and long, could become unnecessary
+    const coords = doc_list
+      .filter((doc) => doc.lat && doc.long && doc.lat !== doc.long)
+      .map((doc) => [doc.lat, doc.long]);
     const century = layerGroups ? doc.century?.value || null : null;
     const year = layerGroups ? getYearFromISODate(doc.iso_date) : null;
     if (doc.lat && doc.long) {
@@ -106,7 +110,9 @@ function markerPerDoc(doc_list, icon, layerGroups = null) {
         long: doc.long,
         century,
         popupContent: `<p>Mentioned in document <br>
-            <strong><a href="document__${doc.id}.html">${doc.shelfmark || doc.value}</a></strong><br>
+            <strong><a href="document__${doc.id}.html">${
+          doc.shelfmark || doc.value
+        }</a></strong><br>
             ${yearText}</p>`,
         icon: icon,
       };
@@ -117,6 +123,11 @@ function markerPerDoc(doc_list, icon, layerGroups = null) {
         const { marker } = createMarker(markerData);
         marker.addTo(map);
       }
+      // set map bounds based on all coordinates
+      if (coords.length > 0) {
+        const bounds = L.latLngBounds(coords);
+        map.fitBounds(bounds,  { padding: [10, 10] });
+    }
     }
   }
 }
