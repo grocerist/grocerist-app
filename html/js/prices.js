@@ -92,9 +92,10 @@ function initializeTable(correctedGoodName, priceTableData) {
     },
   },
 ];
-
+  //define column width and add column visibility toggle
   const columnDefinitions = baseColumnDefinitions.map((column) => ({
     ...column,
+    headerMenu: headerMenu,
     minWidth: 100,
   }));
 
@@ -104,6 +105,7 @@ function initializeTable(correctedGoodName, priceTableData) {
       title: "Currency",
       field: "currency.value",
       headerFilter: "input",
+      visible: false,
     });
   }
 
