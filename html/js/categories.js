@@ -12,6 +12,9 @@ const baseColumnDefinitions = [
     title: "Groceries",
     field: "goods",
     ...linkListColumnSettings,
+    accessorDownloadParams: {
+      nameField: "value",
+    },
     formatterParams: {
       scrollable: true,
       urlPrefix: "goods__",
@@ -31,6 +34,9 @@ const baseColumnDefinitions = [
     title: "Documents",
     field: "documents",
     ...linkListColumnSettings,
+    accessorDownloadParams: {
+      nameField: "shelfmark",
+    },
     formatterParams: {
       scrollable: true,
       urlPrefix: "",
@@ -180,7 +186,7 @@ function childElementFilter(headerValue, rowValue, rowData, filterParams) {
                     Showing <span id="search_count"></span> results out of <span id="total_count"></span>
                     </span>`,
     });
-
+    handleDownloads(table);
     table.on("dataLoaded", function (data) {
       let total = 0;
       function countChildren(row) {
