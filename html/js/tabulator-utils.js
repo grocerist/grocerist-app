@@ -13,6 +13,7 @@ const commonTableConfig = {
 // common settings for columns with arrays of objects
 const linkListColumnSettings = {
   formatter: linkListFormatter,
+  accessorDownload: linkListDownloadFormatter,
   headerFilter: "input",
   headerFilterFunc: objectArrayHeaderFilter,
   sorter: "array",
@@ -102,7 +103,6 @@ function reduceArrayMutator(value, data, type, params, component) {
     return null;
   }
 }
-
 
 // CUSTOM FILTERS
 
@@ -306,3 +306,35 @@ const rangeEditor = function (cell, onRendered, success, cancel, editorParams) {
 
   return container;
 };
+
+function handleDownloads(table) {
+  //trigger download of data.csv file
+  document
+    .getElementById("download-csv")
+    .addEventListener("click", function () {
+      table.download("csv", "data.csv", {formatters:true});
+    });
+
+  //trigger download of data.json file
+  document
+    .getElementById("download-json")
+    .addEventListener("click", function () {
+      table.download("json", "data.json");
+    });
+
+  //trigger download of data.html file
+  document
+    .getElementById("download-html")
+    .addEventListener("click", function () {
+      table.download("html", "data.html", { style: true });
+    });
+}
+
+// Download formatter for link lists
+function linkListDownloadFormatter(value, data, type, params, column) {
+  if (value === "No data") return value;
+  let output = value
+    .map((item) => item[params.nameField])
+    .join("\n"); // Use line breaks
+  return `"${output}"`; // Wrap in quotes for CSV safety
+}
