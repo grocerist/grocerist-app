@@ -14,19 +14,6 @@ const baseColumnDefinitions = [
   {
     title: "Religion",
     field: "religion",
-    mutator: function (value, data, type, params, component) {
-      // Extract values
-      let values = value.map((item) => item.value);
-      // If "Non muslim" is present, put it first, then sort the rest
-      if (values.includes("Non muslim")) {
-        values = ["Non muslim"].concat(
-          values.filter((v) => v !== "Non muslim").sort()
-        );
-      } else {
-        values = values.sort();
-      }
-      return values.join("|");
-    },
     formatter: "html",
     headerFilter: "list",
     headerFilterFunc: "in",
@@ -174,12 +161,7 @@ const tableConfig = {
     "</span>",
 };
 
-const getColor = {
-  "Muslim": colors[0],
-  "Non muslim|Orthodox": colors[1],
-  "Non muslim|Armenian": colors[2],
-  "Unknown": colors[3],
-};
+const getColor = {};
 
 // generate chart
 function generateChartsFromTable(rows, table) {
@@ -362,8 +344,24 @@ function createTable(tableConfig) {
         if (isNaN(item.century)) {
           item.century = null;
         }
+        let values = item.religion.map((entry) => entry.value);
+        if (values.includes("Non muslim")) {
+          values = ["Non muslim"].concat(
+            values.filter((v) => v !== "Non muslim").sort()
+          );
+        } else {
+          values = values.sort();
+        }
+        item.religion = values.join("|");
+
         return item;
       });
+
+    const uniqueReligions = Array.from(new Set(tableData.map(item => item.religion || "Unknown")));
+    // Assign colors to each unique religion key
+    uniqueReligions.forEach((religion, idx) => {
+      getColor[religion] = colors[idx];
+    });
     tableConfig.data = tableData;
     const table = createTable(tableConfig);
     handleDownloads(table, "Grocers");
