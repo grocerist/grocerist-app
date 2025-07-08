@@ -307,26 +307,27 @@ const rangeEditor = function (cell, onRendered, success, cancel, editorParams) {
   return container;
 };
 
-function handleDownloads(table) {
+function handleDownloads(table, title) {
+  filename= title.replace(/ /g, "_").toLowerCase()
   //trigger download of data.csv file
   document
     .getElementById("download-csv")
     .addEventListener("click", function () {
-      table.download("csv", "data.csv", {formatters:true});
+      table.download("csv", `${filename}.csv`);
     });
 
   //trigger download of data.json file
   document
     .getElementById("download-json")
     .addEventListener("click", function () {
-      table.download("json", "data.json");
+      table.download("json", `${filename}.json`);
     });
 
-  //trigger download of data.html file
+  //trigger download of data.xslx file
   document
-    .getElementById("download-html")
+    .getElementById("download-xlsx")
     .addEventListener("click", function () {
-      table.download("html", "data.html", { style: true });
+      table.download("xlsx", `${filename}.xlsx`, {sheetName:`${title}`});
     });
 }
 
@@ -336,5 +337,5 @@ function linkListDownloadFormatter(value, data, type, params, column) {
   let output = value
     .map((item) => item[params.nameField])
     .join(" ; ");
-  return `"${output}"`; // Wrap in quotes for CSV safety
+  return output;
 }
