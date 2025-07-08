@@ -65,6 +65,9 @@
     <div class="row">
         <h2><i class="bi bi-cash-stack me-2" aria-hidden="true"></i>Price Information</h2>
         <div id="prices-table"></div>
+        <div class="d-flex justify-content-end mt-2">
+            {% include "templates/partials/tabulator_dl_buttons.j2" %}
+        </div>
     </div>
     {% endif %}
 </div>
@@ -88,7 +91,7 @@
     markerPerDoc(doc_list, icon, layerGroups);
 </script>
 {% endif %}
-{%if object.documents |length > 5  %}
+{%if object.documents |length > 5 %}
 <script src="js/collapse.js"></script>
 {% endif%}
 {% endblock scripts2 %}
