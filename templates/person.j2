@@ -79,8 +79,7 @@
         </div>
         <div class="col">
             <h2><i class="bi bi-map me-2" aria-hidden="true"></i>Map</h2>
-            <div id="map" style="height: 600px;">
-            </div>
+            <div id="map"></div>
         </div>
     </div>
 </div>
@@ -97,23 +96,6 @@
 
     const { map } = createMap();
     markerPerDoc(doc_list, icon);
-    {# // create markers for each document
-    for (let i = 0; i < doc_list.length; i++) {
-        const doc = doc_list[i];
-        if (doc.lat && doc.long) {
-            const markerData = {
-                lat: doc.lat,
-                long: doc.long,
-                century: null,
-                popupContent: `<p><strong><a href="document__${doc.id}.html">${doc.value}</a></strong><br></p>`,
-                icon: icon,
-            };
-            const { marker } = createMarker(
-                markerData
-            );
-            marker.addTo(map)
-        }
-    } #}
 </script>
 {% endif %}
 {% endblock scripts2 %}
