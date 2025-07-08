@@ -50,14 +50,12 @@ const baseColumnDefinitions = [
   {
     title: "District",
     field: "district",
-    formatter: linkListFormatter,
-    headerFilterFunc: objectArrayHeaderFilter,
+    ...linkListColumnSettings,
     headerFilter: "list",
     headerFilterParams: {
       valuesLookup: objectLookup,
       multiselect: false,
     },
-    headerFilterFunc: objectArrayHeaderFilter,
     formatterParams: {
       urlPrefix: "district__",
       idField: "id",
@@ -72,6 +70,7 @@ const baseColumnDefinitions = [
   {
     title: "<i>Mahalle</i>",
     field: "neighbourhood",
+    titleDownload: "Mahalle",
     visible: false,
     ...linkListColumnSettings,
     formatterParams: {
@@ -87,6 +86,7 @@ const baseColumnDefinitions = [
   {
     title: "<i>Karye</i>",
     field: "karye",
+    titleDownload: "Karye",
     visible: false,
     ...linkListColumnSettings,
     formatterParams: {
@@ -102,6 +102,7 @@ const baseColumnDefinitions = [
   {
     title: "<i>Nahiye</i>",
     field: "nahiye",
+    titleDownload: "Nahiye",
     visible: false,
     ...linkListColumnSettings,
     formatterParams: {
@@ -365,6 +366,7 @@ function createTable(tableConfig) {
       });
     tableConfig.data = tableData;
     const table = createTable(tableConfig);
+    handleDownloads(table, "Grocers");
     table.on("dataLoaded", function (data) {
       $("#total_count").text(data.length);
     });

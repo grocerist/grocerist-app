@@ -180,7 +180,7 @@ function childElementFilter(headerValue, rowValue, rowData, filterParams) {
                     Showing <span id="search_count"></span> results out of <span id="total_count"></span>
                     </span>`,
     });
-
+    handleDownloads(table, "Grocery Categories");
     table.on("dataLoaded", function (data) {
       let total = 0;
       function countChildren(row) {

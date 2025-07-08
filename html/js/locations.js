@@ -84,6 +84,9 @@ const baseColumnDefinitions = [
       multiselect: false,
     },
     headerFilterFunc: objectHeaderFilter,
+    accessorDownload: function (value) {
+      return value && value.value ? value.value : "";
+    },
   },
   {
     title: "Century",
@@ -92,6 +95,7 @@ const baseColumnDefinitions = [
     formatterParams: {
       delimiter: ", ",
     },
+    accessorDownload: function (value) {return value.join("; ");},
     headerFilter: "list",
     headerFilterParams: {
       valuesLookup: true,
@@ -327,7 +331,7 @@ function calculateLocationData(rows, selectedLocationType, districtColors) {
             centuries.add(century);
           }
         });
-        enriched["centuries"] = Array.from(centuries).sort()
+        enriched["centuries"] = Array.from(centuries).sort();
         if (item.properties.location_type === "District") {
           enriched["first_level"] = item.properties.name;
         } else if (item.properties.upper_admin.length > 0) {
@@ -337,6 +341,7 @@ function calculateLocationData(rows, selectedLocationType, districtColors) {
       });
     tableConfig.data = tableData;
     const table = new Tabulator("#places_table", tableConfig);
+    handleDownloads(table, "Locations");
     let first = true;
     let chart;
     table.on("dataLoaded", function (data) {

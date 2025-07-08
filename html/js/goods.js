@@ -52,13 +52,12 @@ const baseColumnDefinitions = [
     formatterParams: {
       delimiter: ", ", 
     },
+    accessorDownload: function (value) {return value.join("; ");},
     headerFilter: "list",
     headerFilterParams: {
       valuesLookup: true,
     }, 
     visible : false, 
-
-
   }
 ];
 // Add minWidth and visibility toggle to each column
@@ -95,7 +94,7 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
                       Showing <span id="search_count"></span> results out of <span id="total_count"></span>
                       </span>`,
     });
-
+    handleDownloads(table, "Groceries");
     table.on("dataLoaded", function (data) {
       $("#total_count").text(data.length);
     });

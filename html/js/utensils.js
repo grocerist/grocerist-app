@@ -52,6 +52,7 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
                     Showing <span id="search_count"></span> results out of <span id="total_count"></span>
                     </span>`,
     });
+    handleDownloads(table, "Utensils");
     table.on("dataLoaded", function (data) {
       $("#total_count").text(data.length);
     });
