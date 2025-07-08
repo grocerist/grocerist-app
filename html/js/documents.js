@@ -381,6 +381,7 @@ function rowsToMarkers(map, rows, layerGroups) {
         multi: rowData.main_person[0]
           ? rowData.main_person[0].multiple_shops
           : false,
+        altText: `Document ${rowData.shelfmark}`,
       };
       const { marker, layerName } = createMarker(markerData, false, true);
       marker.addTo(layerGroups[layerName]);

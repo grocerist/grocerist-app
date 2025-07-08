@@ -43,10 +43,10 @@ const createAndAddLayerGroups = (map, layerList) => {
 };
 
 // Function to create a custom css marker with an icon
-function createMarkerIcon(pinColor, icon, iconColor) {
+function createMarkerIcon(pinColor, icon, iconColor, altText) {
   const customIcon = L.divIcon({
     className: "custom-marker",
-    html: `<div class="custom-marker-pin" style="background-color:${pinColor};"><i class="${icon}" style="color:${iconColor}" ></i></div><div class="custom-marker-shadow"></div>
+    html: `<div class="custom-marker-pin" style="background-color:${pinColor};" aria-label="${altText}"><i class="${icon}" style="color:${iconColor}" ></i></div><div class="custom-marker-shadow"></div>
     `,
     // !! if iconSize is changed, markerSize variable in style.css has to be adjusted accordingly
     iconSize: [32, 32],
@@ -58,7 +58,7 @@ function createMarkerIcon(pinColor, icon, iconColor) {
 
 // Function to create a marker and add it to the right layer group based on the year
 function createMarker(markerData, centuryLayers = false, treeLayers = false) {
-  const { lat, long, century, popupContent, icon } = markerData;
+  const { lat, long, century, popupContent, icon, altText } = markerData;
   // --primary color as default
   let color = "#5d7799";
   let iconColor = "#5d7799";
@@ -75,8 +75,8 @@ function createMarker(markerData, centuryLayers = false, treeLayers = false) {
       layerName = `${century}-${markerData.multi ? "more" : "1"}`;
     }
   }
-  const customIcon = createMarkerIcon(color, icon, iconColor);
-  const marker = L.marker([lat, long], { icon: customIcon, riseOnHover: true });
+  const customIcon = createMarkerIcon(color, icon, iconColor, altText);
+  const marker = L.marker([lat, long], {  icon: customIcon, riseOnHover: true });
 
   marker.bindPopup(popupContent);
   return { marker, layerName };
@@ -111,10 +111,11 @@ function markerPerDoc(doc_list, icon, layerGroups = null) {
         century,
         popupContent: `<p>Mentioned in document <br>
             <strong><a href="document__${doc.id}.html">${
-          doc.shelfmark || doc.value
+           doc.value || doc.shelfmark 
         }</a></strong><br>
             ${yearText}</p>`,
         icon: icon,
+        altText : `Document ${doc.value || doc.shelfmark}` ,
       };
       if (layerGroups) {
         const { marker, layerName } = createMarker(markerData, true);
