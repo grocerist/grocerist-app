@@ -335,6 +335,6 @@ function linkListDownloadFormatter(value, data, type, params, column) {
   if (value === "No data") return value;
   let output = value
     .map((item) => item[params.nameField])
-    .join("\n"); // Use line breaks
+    .join(" ; ");
   return `"${output}"`; // Wrap in quotes for CSV safety
 }
