@@ -116,6 +116,7 @@ const baseColumnDefinitions = [
   {
     title: "<i>Bakkal</i>/Grocer",
     field: "main_person",
+    titleDownload: "Grocer",
     ...linkListColumnSettings,
     formatterParams: {
       urlPrefix: "",
@@ -153,21 +154,17 @@ const baseColumnDefinitions = [
   {
     title: "District",
     field: "district",
-
+    ...linkListColumnSettings,
     headerFilter: "list",
     headerFilterParams: {
       valuesLookup: objectLookup,
       multiselect: false,
     },
-    headerFilterFunc: objectArrayHeaderFilter,
-    formatter: linkListFormatter,
     formatterParams: {
       urlPrefix: "district__",
       idField: "id",
       nameField: "value",
     },
-    headerFilterFunc: objectArrayHeaderFilter,
-    sorter: "array",
     sorterParams: {
       type: "string",
       valueMap: "value",
@@ -176,6 +173,7 @@ const baseColumnDefinitions = [
   {
     title: "<i>Mahalle</i>",
     field: "neighbourhood",
+    titleDownload: "Mahalle",
     visible: false,
     ...linkListColumnSettings,
     formatterParams: {
@@ -191,6 +189,7 @@ const baseColumnDefinitions = [
   {
     title: "<i>Karye</i>",
     field: "karye",
+    titleDownload: "Karye",
     visible: false,
     ...linkListColumnSettings,
     formatterParams: {
@@ -206,6 +205,7 @@ const baseColumnDefinitions = [
   {
     title: "<i>Nahiye</i>",
     field: "nahiye",
+    titleDownload: "Nahiye",
     visible: false,
     ...linkListColumnSettings,
     formatterParams: {
@@ -251,6 +251,7 @@ const baseColumnDefinitions = [
   {
     title: "Year <i>Hicri</i>",
     field: "year_of_creation_hicri",
+    titleDownload: "Year (Hicri)",
     headerFilter: rangeEditor,
     headerFilterParams: {
       labels: ["Start", "End"],
@@ -264,6 +265,7 @@ const baseColumnDefinitions = [
   {
     title: "Date <i>Miladi</i>",
     field: "creation_date_ISO",
+    titleDownload:"Creation Date (ISO)",
     headerFilter: dateFilterEditor,
     headerFilterFunc: dateFilterFunction,
     visible: false,
@@ -279,6 +281,7 @@ const baseColumnDefinitions = [
       return value === null;
     },
     visible: false,
+    download:false
   },
 ];
 // Add minWidth and visibility toggle to each column
@@ -309,6 +312,7 @@ const tableConfig = {
   footerElement: `<span class="tabulator-counter float-left">
                     Showing <span id="search_count"></span> results out of <span id="total_count"></span>
                     </span>`,
+
 };
 
 // Function for creating table
@@ -490,6 +494,7 @@ function setupMapAndTable(dataUrl) {
         });
       tableConfig.data = tableData;
       const table = createTable(tableConfig);
+      handleDownloads(table, "Documents");
       // Build a dictionary of owners with multiple shops
       tableData.forEach((item) => {
         if (item.main_person.length > 0) {

@@ -115,6 +115,7 @@ function initializeTabulator(priceData) {
                       Showing <span id="search_count"></span> results out of <span id="total_count"></span>
                       </span>`,
   });
+  handleDownloads(table, "Prices");
       table.on("dataLoaded", function (data) {
       $("#total_count").text(data.length);
     });

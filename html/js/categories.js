@@ -12,9 +12,6 @@ const baseColumnDefinitions = [
     title: "Groceries",
     field: "goods",
     ...linkListColumnSettings,
-    accessorDownloadParams: {
-      nameField: "value",
-    },
     formatterParams: {
       scrollable: true,
       urlPrefix: "goods__",
@@ -34,9 +31,6 @@ const baseColumnDefinitions = [
     title: "Documents",
     field: "documents",
     ...linkListColumnSettings,
-    accessorDownloadParams: {
-      nameField: "shelfmark",
-    },
     formatterParams: {
       scrollable: true,
       urlPrefix: "",

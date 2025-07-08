@@ -313,7 +313,7 @@ function handleDownloads(table, title) {
   document
     .getElementById("download-csv")
     .addEventListener("click", function () {
-      table.download("csv", `${filename}.csv`);
+      table.download("csv", `${filename}.csv`, {bom:true});
     });
 
   //trigger download of data.json file
@@ -335,7 +335,7 @@ function handleDownloads(table, title) {
 function linkListDownloadFormatter(value, data, type, params, column) {
   if (value === "No data") return value;
   let output = value
-    .map((item) => item[params.nameField])
+    .map((item) => item.value || item.name || item.shelfmark)
     .join(" ; ");
   return output;
 }
