@@ -74,10 +74,12 @@
                     <li><a href="person__{{ x.id }}.html">{{ x.name }}</a></li>
                     {% endfor %}
                 </div>
+                <li class="list-unstyled">
                 <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse"
                     data-bs-target="#personsmore" aria-expanded="false" aria-controls="personsmore">
                     Show more
                 </button>
+                </li>
                 {% else%}
                 {% for x in sorted_persons %}
                 <li>

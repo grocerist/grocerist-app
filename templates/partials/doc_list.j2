@@ -22,10 +22,12 @@
         <li><a href="document__{{ x.id }}.html">{{ x[name_attribute]  }}</a></li>
         {% endfor %}
     </div>
+    <li class="list-unstyled">
     <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#docs18more"
         aria-expanded="false" aria-controls="docs18more">
         Show more
     </button>
+    </li>
     {% else %}
     {% for x in docs_18 %}
     <li><a href="document__{{ x.id }}.html">{{ x[name_attribute]  }}</a></li>
@@ -47,10 +49,12 @@
         <li><a href="document__{{ x.id }}.html">{{ x[name_attribute] }}</a></li>
         {% endfor %}
     </div>
+    <li class="list-unstyled">
     <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#docs19more"
         aria-expanded="false" aria-controls="docs19more">
         Show more
     </button>
+    </li>
     {% else %}
     {% for x in docs_19 %}
     <li><a href="document__{{ x.id }}.html">{{ x[name_attribute] }}</a></li>

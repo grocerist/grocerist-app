@@ -29,11 +29,12 @@
                     <li><a href="goods__{{ x.id }}.html">{{ x.value }}</a></li>
                     {% endfor %}
                 </div>
-                <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#goodsmore" aria-expanded="false" aria-controls="goodsmore">
-                    Show more
-                </button>
-
+                <li class="list-unstyled">
+                    <button class="btn grocerist-button mt-2" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#goodsmore" aria-expanded="false" aria-controls="goodsmore">
+                        Show more
+                    </button>
+                </li>
                 {% else%}
                 {% for x in sorted_goods %}
                 <li>
