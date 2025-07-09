@@ -15,7 +15,7 @@
 }
 
 #map {
-  height: 100%;
+  height: 90%;
   min-height: 300px;
   max-height: 800px;
 }
@@ -501,12 +501,6 @@ ul.no-bullets {
   list-style-type: none;
 }
 
-.prices-info {
-  margin: auto;
-  width: 60%;
-  margin-bottom: 2em;
-}
-
 .tabulator-row.tabulator-selectable.tabulator-selected {
   background-color: var(--primary);
   color: white;
@@ -576,14 +570,13 @@ ul.no-bullets {
 }
 
 /* price page layout */
-.col-2-5 {
-  flex: 0 0 20.5%;
-  max-width: 20.5%;
-}
-
-.col-9-5 {
-  flex: 0 0 79%;
-  max-width: 79%;
+  .goods-list-col {
+    height: 40vh ;
+  }
+@media (min-width: 768px) {
+  .goods-list-col {
+    height: 80vh ;
+  }
 }
 
 /* Breadcrumbs */
@@ -647,4 +640,11 @@ ul.no-bullets {
     columns: 2 300px;
     column-gap: 2rem;
   }
+}
+/* OpenSeadragon responsive container */
+.osd-responsive {
+  width: 100%;
+  aspect-ratio: 3/4;    
+  min-height: 200px;    
+  margin: 0 auto;   
 }

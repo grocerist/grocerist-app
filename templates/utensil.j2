@@ -10,8 +10,8 @@
     <h1 class="text-center">
         {{page_title}}
     </h1>
-    <div class="row">
-        <div class="col">
+    <div class="row p-2">
+        <div class="col-12 col-md-6">
             {% if object.notes %}
             <h2><i class="bi bi-info-circle me-2" aria-hidden="true"></i>Description</h2>
             <p class="ms-4">{{ object.notes }}</p>
@@ -23,7 +23,7 @@
             {% include "templates/partials/doc_list.j2" with context%}
             {% endif %}
         </div>
-        <div class="col">
+        <div class="col-12 col-md-6">
             <h2><i class="bi bi-map me-2" aria-hidden="true"></i>Map</h2>
             <div id="map"></div>
         </div>

@@ -11,15 +11,15 @@
 <div class="container">
     <h1 class="text-center">
         {{page_title}}</h1>
-    <div class="row">
-        <div class="col-6">
-            <div id="religion-chart"></div>
+    <div class="row p-2">
+        <div class="col-12 col-md-6 d-flex justify-content-center">
+            <div class="w-100" id="religion-chart"></div>
         </div>
-        <div class="col-6">
-            <div id="districts-chart"></div>
+        <div class="col-12 col-md-6 d-flex justify-content-center">
+            <div class="w-100" id="districts-chart"></div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col">
                 <div id="persons-table"></div>
                 <div class="d-flex justify-content-end mt-2">
                     {% include "templates/partials/tabulator_dl_buttons.j2" %}

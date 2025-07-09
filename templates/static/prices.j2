@@ -3,7 +3,8 @@
 {% extends "templates/partials/base.j2" %}
 {% block title %}Browse {{page_title}}{% endblock title %}
 
-{% block page_description %}<meta name="description" content="{{ project_data.project_sub_title }}">
+{% block page_description %}
+<meta name="description" content="{{ project_data.project_sub_title }}">
 {% endblock page_description %}
 
 {% block scriptHeader %}
@@ -11,19 +12,19 @@
 {% endblock scriptHeader %}
 {% block content %}
 {% include "templates/partials/breadcrumbs.j2" %}
-<div class="container col-md-12">
-    <h1 class="text-center">
-        {{page_title}}
-    </h1>
-    <div class="prices-info text-center">
-        Click up to 3 goods in the list to display their price data
+<div class="container">
+    <h1 class="text-center">{{ page_title }}</h1>
+    <div class="text-center mx-auto mb-3 w-60">
+        Select up to 3 goods in the list to display their price data
     </div>
     <div class="row">
-        <div class="col-2-5" style="height: 80vh; margin-top: 2.85em;">
+        <div class="col-12 col-lg-2 col-md-3 goods-list-col mt-3 mb-4 mb-lg-0">
             <div id="goods-list"></div>
-            <div class="d-grid col-10 mx-auto mt-3"><button id="deselect-button" class="btn grocerist-button">Deselect all</button></div>
+           <div class="d-grid col-10 mx-auto mt-3 ">
+                <button id="deselect-button" class="btn grocerist-button">Deselect all</button>
+            </div>
         </div>
-        <div id="prices-tables" class="col-9-5 ms-auto">
+        <div id="prices-tables" class="col-12 col-lg-10 col-md-9 mt-3"></div>
         </div>
     </div>
 </div>
@@ -32,4 +33,3 @@
 {% block scripts2 %}
 <script src="js/prices.js"></script>
 {% endblock scripts2 %}
-
