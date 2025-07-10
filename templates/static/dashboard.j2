@@ -56,7 +56,14 @@
         <div id="container_mentions_chart"></div>
     </div>
     <figure class="highcharts-figure">
-        <div class="card py-3 mb-3" id="container_time_chart"></div>
+        <div class="card py-3 mb-3">
+            <div class="buttons d-flex justify-content-center mb-3">
+                <button id="btn-absolute-time-chart"
+                    class="btn grocerist-button time-chart-btn active">Absolute</button>
+                <button id="btn-normalized-time-chart" class="btn grocerist-button time-chart-btn">Normalized</button>
+            </div>
+            <div id="container_time_chart"></div>
+        </div>
         <p class="highcharts-description my-3 mx-5">The chart displays the frequency with which various grocery
             categories
             were mentioned in inheritance inventory documents, broken down by decade. <br /> Each mention of a product
@@ -69,13 +76,8 @@
             sub-subcategories in italics. <br />Please note that for some main categories, the sum of mentions across
             subcategories may be lower than the total shown for the main category, as certain products are not assigned
             to
-            any subcategory.</p>
-    </figure>
-    <figure class="highcharts-figure">
-        <div class="card py-3 mb-3" id="container_normalized_time_chart">
-        </div>
-        <p class="highcharts-description my-3 mx-5"> For this chart, the total number of product mentions per decade was
-            used to normalize the counts from the previous chart.</p>
+            any subcategory. You can view the same data as the absolute number of mentions or normalized, in relation to
+            the total number of documents from that decade.</p>
     </figure>
     <figure class="highcharts-figure">
         <div class="card py-3 mb-3" id="container_price_time_chart">

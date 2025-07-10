@@ -202,8 +202,7 @@ function createColumnChart({
 }
 
 function createSplineChart(data, isNormalized) {
-  return Highcharts.chart(
-    isNormalized ? "container_normalized_time_chart" : "container_time_chart",
+  return Highcharts.chart("container_time_chart",
     {
       chart: {
         type: "spline",
@@ -217,9 +216,7 @@ function createSplineChart(data, isNormalized) {
         } during each decade.`,
       },
       title: {
-        text: isNormalized
-          ? "Category Mentions Over Time: Percentage of Total Mentions"
-          : "Category Mentions Over Time",
+        text: "Category Mentions Over Time",
         style: titleStyle,
       },
       subtitle: {
@@ -296,6 +293,18 @@ function createSplineChart(data, isNormalized) {
               },
             },
           },
+          // {
+          //   condition: {
+          //     maxWidth: 780,
+          //   },
+          //   chartOptions: {
+          //     legend: {
+          //       layout: "horizontal",
+          //       align: "center",
+          //       verticalAlign: "bottom",
+          //     },
+          //   },
+          // },
         ],
       },
       exporting: {
@@ -444,9 +453,9 @@ function createPriceChart(data) {
       text: "Select more groceries to display their prices, <br/> click and drag in the plot area to zoom in",
     },
     legend: {
-      layout: "vertical",
-      align: "left",
-      verticalAlign: "top",
+      layout: "horizontal",
+      align: "center",
+      verticalAlign: "bottom",
       itemWidth: 100,
       itemHiddenStyle: {
         color: "#d3d3d3",
@@ -587,6 +596,90 @@ function flattenMentions(mentions) {
   }
 }
 
+function applyDataRangeFilter(mentions, interactiveBarChart) {
+  document
+    .getElementById("range-apply-btn")
+    .addEventListener("click", function () {
+      const min = parseInt(document.getElementById("min").value, 10);
+      const max = parseInt(document.getElementById("max").value, 10);
+      const filteredData = {};
+      for (const [category, products] of Object.entries(
+        mentions[currentCentury]
+      )) {
+        filteredData[category] = {};
+        for (const [product, count] of Object.entries(products)) {
+          if (
+            typeof count === "number" &&
+            (!isNaN(min) ? count >= min : true) &&
+            (!isNaN(max) ? count <= max : true)
+          ) {
+            filteredData[category][product] = count;
+          }
+        }
+      }
+      // create a new chart with the filtered data
+      interactiveBarChart.destroy();
+      let title =
+        document.getElementById("chart-title").value || "Frequency of Mentions";
+
+      interactiveBarChart = createInteractiveBarChart(filteredData, title);
+    });
+  return interactiveBarChart;
+}
+function updateMentionsChart(interactiveBarChart, mentions) {
+  ["18", "19"].forEach((century) => {
+    const btn = document.getElementById(`btn-mentions-${century}`);
+    btn.addEventListener("click", () => {
+      // Remove active class from all mentions buttons
+      toggleActiveButton(btn, ".mentions-century-btn");
+      currentCentury = century;
+      // Clear the range inputs
+      document.getElementById("min").value = "";
+      document.getElementById("max").value = "";
+      document.getElementById("chart-title").value = "";
+      interactiveBarChart.destroy();
+      interactiveBarChart = createInteractiveBarChart(mentions[century]);
+    });
+  });
+  return interactiveBarChart;
+}
+
+function updateCategoryChart(catChart, catChartOptions, catChartData) {
+  ["18", "19"].forEach((century) => {
+    const btn = document.getElementById(`btn-cat-${century}`);
+    btn.addEventListener("click", () => {
+      // Remove active class from all category buttons
+      toggleActiveButton(btn, ".cat-century-btn");
+      currentCentury1 = century;
+      catChart.destroy();
+      catChart = createColumnChart({
+        ...catChartOptions,
+        series: [
+          {
+            name: "Grocery Categories",
+            colorByPoint: true,
+            data: catChartData["categories_" + currentCentury1],
+          },
+        ],
+        drilldown: {
+          ...baseDrilldown,
+          series: catChartData["drilldown_" + currentCentury1],
+        },
+      });
+    });
+  });
+  return catChart;
+}
+
+function toggleActiveButton(btn, selector) {
+  document
+    .querySelectorAll(`${selector}.active`)
+    .forEach((active) => {
+      active.classList.remove("active");
+    });
+  btn.classList.add("active");
+}
+
 (async function () {
   try {
     // Load and prepare the data
@@ -601,6 +694,7 @@ function flattenMentions(mentions) {
       drilldown_19: Object.values(dataFromJson.categories_19_drilldown),
     };
     const timeChartData = Object.values(dataFromJson.categories_over_decades);
+    
     const normalizedTimeChartData = Object.values(
       dataFromJson.normalized_categories_over_decades
     );
@@ -652,59 +746,14 @@ function flattenMentions(mentions) {
         chartOptions: { subtitle: null },
       },
     };
-
     let catChart = createColumnChart(catChartOptions);
+
     let interactiveBarChart = createInteractiveBarChart(
       mentions[currentCentury]
     );
     // Redraw charts when the century is changed
-    ["18", "19"].forEach((century) => {
-      const btn = document.getElementById(`btn-cat-${century}`);
-      btn.addEventListener("click", () => {
-        // Remove active class from all category buttons
-        document
-          .querySelectorAll(".cat-century-btn.active")
-          .forEach((active) => {
-            active.classList.remove("active");
-          });
-        btn.classList.add("active");
-        currentCentury1 = century;
-        catChart.destroy();
-        catChart = createColumnChart({
-          ...catChartOptions,
-          series: [
-            {
-              name: "Grocery Categories",
-              colorByPoint: true,
-              data: catChartData["categories_" + currentCentury1],
-            },
-          ],
-          drilldown: {
-            ...baseDrilldown,
-            series: catChartData["drilldown_" + currentCentury1],
-          },
-        });
-      });
-    });
-    ["18", "19"].forEach((century) => {
-      const btn = document.getElementById(`btn-mentions-${century}`);
-      btn.addEventListener("click", () => {
-        // Remove active class from all mentions buttons
-        document
-          .querySelectorAll(".mentions-century-btn.active")
-          .forEach((active) => {
-            active.classList.remove("active");
-          });
-        btn.classList.add("active");
-        currentCentury = century;
-        // Clear the range inputs
-        document.getElementById("min").value = "";
-        document.getElementById("max").value = "";
-        document.getElementById("chart-title").value = "";
-        interactiveBarChart.destroy();
-        interactiveBarChart = createInteractiveBarChart(mentions[century]);
-      });
-    });
+    catChart = updateCategoryChart(catChart, catChartOptions, catChartData);
+    interactiveBarChart = updateMentionsChart(interactiveBarChart, mentions);
     // Add event listener for title set button
     document
       .getElementById("set-title-btn")
@@ -713,45 +762,32 @@ function flattenMentions(mentions) {
         interactiveBarChart.setTitle({ text: title });
       });
     // when the apply button is clicked, get the values from the inputs
-    document
-      .getElementById("range-apply-btn")
-      .addEventListener("click", function () {
-        const min = parseInt(document.getElementById("min").value, 10);
-        const max = parseInt(document.getElementById("max").value, 10);
-        const filteredData = {};
-        for (const [category, products] of Object.entries(
-          mentions[currentCentury]
-        )) {
-          filteredData[category] = {};
-          for (const [product, count] of Object.entries(products)) {
-            if (
-              typeof count === "number" &&
-              (!isNaN(min) ? count >= min : true) &&
-              (!isNaN(max) ? count <= max : true)
-            ) {
-              filteredData[category][product] = count;
-            }
-          }
-        }
-        // create a new chart with the filtered data
-        interactiveBarChart.destroy();
-        let title =
-          document.getElementById("chart-title").value ||
-          "Frequency of Mentions";
-
-        interactiveBarChart = createInteractiveBarChart(filteredData, title);
-      });
+    interactiveBarChart = applyDataRangeFilter(mentions, interactiveBarChart);
 
     // Add visibility attribute for the spline charts
     setVisibilityForFirstElement(timeChartData, false);
     setVisibilityForFirstElement(normalizedTimeChartData, false);
     setVisibilityForFirstElement(priceChartData, true);
-
-    createSplineChart(timeChartData, false);
-    createSplineChart(normalizedTimeChartData, true);
+    
+    let splineChart = createSplineChart(timeChartData, false);
+    ["absolute", "normalized"].forEach((type) => {
+      const btn = document.getElementById(`btn-${type}-time-chart`);
+      btn.addEventListener("click", () => {
+        // Remove active class from all time chart buttons
+        toggleActiveButton(btn, ".time-chart-btn");
+        const isNormalized = type === "normalized";
+        splineChart.destroy();
+        splineChart = createSplineChart(
+          isNormalized ? normalizedTimeChartData : timeChartData,
+          isNormalized
+        );
+      });
+    });
 
     createPriceChart(priceChartData);
   } catch (error) {
     console.error("Error loading or processing data:", error);
   }
 })();
+
+
