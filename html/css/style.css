@@ -406,6 +406,18 @@ div h2 > a {
 }
 
 /*Custom Tabulator styles*/
+
+
+#documents-table,
+#locations-table,
+#persons-table,
+#categories-table,
+#goods-table,
+#prices-table,
+#utensils-table {
+  min-width: 375px;
+}
+
 .tabulator-row.tabulator-row-even {
   background-color: white;
 }
@@ -472,6 +484,7 @@ div h2 > a {
   color: white;
   background-color: var(--tabulator-secondary);
 }
+
 
 /* color for data tree toggler*/
 .bi-caret-right-fill {

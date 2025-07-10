@@ -265,7 +265,7 @@ const baseColumnDefinitions = [
   {
     title: "Date <i>Miladi</i>",
     field: "creation_date_ISO",
-    titleDownload:"Creation Date (ISO)",
+    titleDownload: "Creation Date (ISO)",
     headerFilter: dateFilterEditor,
     headerFilterFunc: dateFilterFunction,
     visible: false,
@@ -281,7 +281,7 @@ const baseColumnDefinitions = [
       return value === null;
     },
     visible: false,
-    download:false
+    download: false,
   },
 ];
 // Add minWidth and visibility toggle to each column
@@ -309,10 +309,14 @@ const tableConfig = {
   headerFilterLiveFilterDelay: 600,
   columns: columnDefinitions,
   initialSort: [{ column: "shelfmark", dir: "asc" }],
-  footerElement: `<span class="tabulator-counter float-left">
-                    Showing <span id="search_count"></span> results out of <span id="total_count"></span>
-                    </span>`,
-
+  footerElement: `<span class="tabulator-page-counter">
+    <span class="d-none d-sm-inline">
+      Showing <span class="search_count"></span> results out of <span class="total_count"></span>
+    </span>
+    <span class="d-inline d-sm-none">
+      <span class="search_count"></span> out of <span class="total_count"></span>
+    </span>
+  </span>`,
 };
 
 // Function for creating table
@@ -510,11 +514,11 @@ function setupMapAndTable(dataUrl) {
         }
       });
       table.on("dataLoaded", function (data) {
-        $("#total_count").text(data.length);
+        $(".total_count").text(data.length);
       });
 
       table.on("dataFiltered", function (_filters, rows) {
-        $("#search_count").text(rows.length);
+        $(".search_count").text(rows.length);
         markers = rowsToMarkers(map, rows, layerGroups);
       });
 

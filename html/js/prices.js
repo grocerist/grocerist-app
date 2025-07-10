@@ -116,7 +116,7 @@ function initializeTable(correctedGoodName, priceTableData) {
     data: priceTableData,
     columns: columnDefinitions,
     initialSort: [{ column: "doc_year", dir: "asc" }],
-    footerElement: `<span class="tabulator-counter"></span>`,
+    footerElement: `<span></span>`,
   });
 }
 
@@ -185,7 +185,7 @@ function handleDeselectingAllRows(table) {
       height: "90%",
       columns: goodsListColumnDefinitions,
       initialSort: [{ column: "good", dir: "asc" }],
-      footerElement: `<span class="tabulator-counter"></span>`,
+      footerElement: `<span></span>`,
     });
     table.on("rowSelected", function (row) {
       handleRowSelection(row, allData);

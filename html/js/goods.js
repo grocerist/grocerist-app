@@ -50,15 +50,17 @@ const baseColumnDefinitions = [
     field: "centuries",
     formatter: "array",
     formatterParams: {
-      delimiter: ", ", 
+      delimiter: ", ",
     },
-    accessorDownload: function (value) {return value.join("; ");},
+    accessorDownload: function (value) {
+      return value.join("; ");
+    },
     headerFilter: "list",
     headerFilterParams: {
       valuesLookup: true,
-    }, 
-    visible : false, 
-  }
+    },
+    visible: false,
+  },
 ];
 // Add minWidth and visibility toggle to each column
 const columnDefinitions = baseColumnDefinitions.map((column) => ({
@@ -69,7 +71,9 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
 (async function () {
   try {
     const dataFromJson = await d3.json(dataUrl);
-    const filteredData = Object.values(dataFromJson).filter((item) => item.name !== "");
+    const filteredData = Object.values(dataFromJson).filter(
+      (item) => item.name !== ""
+    );
     const tableData = filteredData.map((item) => {
       const enriched = item;
       const centuries = new Set();
@@ -79,9 +83,9 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
           centuries.add(century);
         }
       });
-      enriched["centuries"] = Array.from(centuries).sort()
+      enriched["centuries"] = Array.from(centuries).sort();
       enriched["doc_count"] = item.documents.length;
-    
+
       return enriched;
     });
 
@@ -90,17 +94,22 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
       data: tableData,
       columns: columnDefinitions,
       initialSort: [{ column: "name", dir: "asc" }],
-      footerElement: `<span class="tabulator-counter float-left">
-                      Showing <span id="search_count"></span> results out of <span id="total_count"></span>
+      footerElement: `<span class="tabulator-page-counter">
+                        <span class="d-none d-sm-inline">
+                          Showing <span class="search_count"></span> results out of <span class="total_count"></span>
+                        </span>
+                        <span class="d-inline d-sm-none">
+                          <span class="search_count"></span> out of <span class="total_count"></span>
+                        </span>
                       </span>`,
     });
     handleDownloads(table, "Groceries");
     table.on("dataLoaded", function (data) {
-      $("#total_count").text(data.length);
+      $(".total_count").text(data.length);
     });
 
     table.on("dataFiltered", function (_filters, rows) {
-      $("#search_count").text(rows.length);
+      $(".search_count").text(rows.length);
     });
   } catch (error) {
     console.error("Error loading or processing data:", error);

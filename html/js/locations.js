@@ -95,7 +95,9 @@ const baseColumnDefinitions = [
     formatterParams: {
       delimiter: ", ",
     },
-    accessorDownload: function (value) {return value.join("; ");},
+    accessorDownload: function (value) {
+      return value.join("; ");
+    },
     headerFilter: "list",
     headerFilterParams: {
       valuesLookup: true,
@@ -122,8 +124,13 @@ const tableConfig = {
   headerFilterLiveFilterDelay: 600,
   columns: columnDefinitions,
   initialSort: [{ column: "properties.name", dir: "asc" }],
-  footerElement: `<span class="tabulator-counter float-left">
-  Showing <span id="search_count"></span> results out of <span id="total_count"></span>
+  footerElement: `<span class="tabulator-page-counter">
+    <span class="d-none d-sm-inline">
+      Showing <span class="search_count"></span> results out of <span class="total_count"></span>
+    </span>
+    <span class="d-inline d-sm-none">
+      <span class="search_count"></span> out of <span class="total_count"></span>
+    </span>
   </span>`,
 };
 // drilldown data and selected lcoation type need to be global variables
@@ -345,11 +352,11 @@ function calculateLocationData(rows, selectedLocationType, districtColors) {
     let first = true;
     let chart;
     table.on("dataLoaded", function (data) {
-      $("#total_count").text(data.length);
+      $(".total_count").text(data.length);
     });
 
     table.on("dataFiltered", function (filters, rows) {
-      $("#search_count").text(rows.length);
+      $(".search_count").text(rows.length);
 
       if (first) {
         // set specific colors for each district

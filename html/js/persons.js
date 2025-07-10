@@ -155,10 +155,14 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
 const tableConfig = {
   ...commonTableConfig,
   columns: columnDefinitions,
-  footerElement:
-    '<span class="tabulator-counter float-left">' +
-    'Showing <span id="search_count"></span> results out of <span id="total_count"></span> ' +
-    "</span>",
+  footerElement: `<span class="tabulator-page-counter">
+    <span class="d-none d-sm-inline">
+      Showing <span class="search_count"></span> results out of <span class="total_count"></span>
+    </span>
+    <span class="d-inline d-sm-none">
+      <span class="search_count"></span> out of <span class="total_count"></span>
+    </span>
+  </span>`,
 };
 
 const getColor = {};
@@ -357,7 +361,9 @@ function createTable(tableConfig) {
         return item;
       });
 
-    const uniqueReligions = Array.from(new Set(tableData.map(item => item.religion || "Unknown")));
+    const uniqueReligions = Array.from(
+      new Set(tableData.map((item) => item.religion || "Unknown"))
+    );
     // Assign colors to each unique religion key
     uniqueReligions.forEach((religion, idx) => {
       getColor[religion] = colors[idx];
@@ -366,10 +372,10 @@ function createTable(tableConfig) {
     const table = createTable(tableConfig);
     handleDownloads(table, "Grocers");
     table.on("dataLoaded", function (data) {
-      $("#total_count").text(data.length);
+      $(".total_count").text(data.length);
     });
     table.on("dataFiltered", function (_filters, rows) {
-      $("#search_count").text(rows.length);
+      $(".search_count").text(rows.length);
       generateChartsFromTable(rows, table);
     });
   } catch (error) {

@@ -10,9 +10,7 @@ function getYearFromISODate(date) {
 }
 
 function initializeTabulator(priceData) {
-  priceData = priceData.filter(
-    (item) => item.document.length > 0
-  );
+  priceData = priceData.filter((item) => item.document.length > 0);
   const baseColumnDefinitions = [
     {
       title: "Document",
@@ -35,7 +33,8 @@ function initializeTabulator(priceData) {
       field: "doc_year",
       mutator: function (value, data, type, params, component) {
         if (value && value[0]) {
-          return value[0].value}
+          return value[0].value;
+        }
       },
       headerFilter: "input",
       sorterParams: {
@@ -111,16 +110,21 @@ function initializeTabulator(priceData) {
     initialSort: [{ column: "doc_year", dir: "asc" }],
     pagination: true,
     paginationSize: 10,
-    footerElement: `<span class="tabulator-counter float-left">
-                      Showing <span id="search_count"></span> results out of <span id="total_count"></span>
-                      </span>`,
+    footerElement: `<span class="tabulator-page-counter">
+    <span class="d-none d-sm-inline">
+      Showing <span class="search_count"></span> results out of <span class="total_count"></span>
+    </span>
+    <span class="d-inline d-sm-none">
+      <span class="search_count"></span> out of <span class="total_count"></span>
+    </span>
+  </span>`,
   });
   handleDownloads(table, "Prices");
-      table.on("dataLoaded", function (data) {
-      $("#total_count").text(data.length);
-    });
+  table.on("dataLoaded", function (data) {
+    $(".total_count").text(data.length);
+  });
 
-    table.on("dataFiltered", function (_filters, rows) {
-      $("#search_count").text(rows.length);
-    });
+  table.on("dataFiltered", function (_filters, rows) {
+    $(".search_count").text(rows.length);
+  });
 }

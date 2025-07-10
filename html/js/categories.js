@@ -176,9 +176,14 @@ function childElementFilter(headerValue, rowValue, rowData, filterParams) {
       columns: columnDefinitions,
       dataTreeExpandElement: `<i class="bi bi-caret-right-fill"></i>`,
       dataTreeCollapseElement: `<i class="bi bi-caret-down-fill"></i>`,
-      footerElement: `<span class="tabulator-counter float-left">
-                    Showing <span id="search_count"></span> results out of <span id="total_count"></span>
-                    </span>`,
+      footerElement: `<span class="tabulator-page-counter">
+    <span class="d-none d-sm-inline">
+      Showing <span class="search_count"></span> results out of <span class="total_count"></span>
+    </span>
+    <span class="d-inline d-sm-none">
+      <span class="search_count"></span> out of <span class="total_count"></span>
+    </span>
+  </span>`,
     });
     handleDownloads(table, "Grocery Categories");
     table.on("dataLoaded", function (data) {
@@ -197,7 +202,7 @@ function childElementFilter(headerValue, rowValue, rowData, filterParams) {
         countChildren(row);
       });
 
-      $("#total_count").text(total);
+      $(".total_count").text(total);
     });
 
     let filtersApplied = false;
@@ -216,7 +221,7 @@ function childElementFilter(headerValue, rowValue, rowData, filterParams) {
     });
     table.on("renderComplete", function () {
       const rowCount = table.element.querySelectorAll(".tabulator-row").length;
-      $("#search_count").text(rowCount);
+      $(".search_count").text(rowCount);
     });
   } catch (error) {
     console.error("Error loading or processing data:", error);
