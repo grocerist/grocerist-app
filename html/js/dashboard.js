@@ -135,7 +135,6 @@ function createColumnChart({
   yAxisTitle = "Mentions",
   tooltip = undefined,
   xAxisType = "category",
-  responsive = undefined,
   exporting = undefined,
   accessibility = undefined,
 }) {
@@ -189,12 +188,25 @@ function createColumnChart({
       },
     },
     series,
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 500,
+          },
+          chartOptions: {
+            title: {
+              style: { fontSize: "1rem" },
+            },
+          },
+        },
+      ],
+    },
   };
 
   if (subtitle) options.subtitle = { text: subtitle };
   if (tooltip) options.tooltip = tooltip;
   if (drilldown) options.drilldown = drilldown;
-  if (responsive) options.responsive = responsive;
   if (exporting) options.exporting = exporting;
   if (accessibility) options.accessibility = accessibility;
 
@@ -202,121 +214,108 @@ function createColumnChart({
 }
 
 function createSplineChart(data, isNormalized) {
-  return Highcharts.chart("container_time_chart",
-    {
-      chart: {
-        type: "spline",
-        zoomType: "x",
+  return Highcharts.chart("container_time_chart", {
+    chart: {
+      type: "spline",
+      zoomType: "x",
+    },
+    accessibility: {
+      description: `This chart shows the ${
+        isNormalized ? "percentage" : "frequency"
+      } of mentions of a grocery in a grocery category in inheritance inventories ${
+        isNormalized ? "relative to the total number of product mentions" : ""
+      } during each decade.`,
+    },
+    title: {
+      text: "Category Mentions Over Time",
+      style: titleStyle,
+    },
+    subtitle: {
+      text: "Select more categories to display their numbers, <br/> click and drag in the plot area to zoom in",
+    },
+    legend: {
+      layout: "vertical",
+      align: "left",
+      verticalAlign: "top",
+      itemWidth: 100,
+      labelFormatter: function () {
+        // Apply bold style to main category legend items, italic to subsub categories
+        if (this.userOptions.category === "main") {
+          return `<span style="font-weight:bold;">${this.name}</span>`;
+        } else if (this.userOptions.category === "subsub") {
+          return `<span style="font-style:italic;">&nbsp;&nbsp; ${this.name}</span>`;
+        } else {
+          return `<span>&nbsp; ${this.name}</span>`;
+        }
       },
-      accessibility: {
-        description: `This chart shows the ${
-          isNormalized ? "percentage" : "frequency"
-        } of mentions of a grocery in a grocery category in inheritance inventories ${
-          isNormalized ? "relative to the total number of product mentions" : ""
-        } during each decade.`,
+      itemHiddenStyle: {
+        color: "#d3d3d3",
+        textDecoration: "none",
       },
+    },
+    xAxis: {
       title: {
-        text: "Category Mentions Over Time",
-        style: titleStyle,
+        text: "Decades",
       },
-      subtitle: {
-        text: "Select more categories to display their numbers, <br/> click and drag in the plot area to zoom in",
+      labels: {
+        format: "{value}s",
       },
-      legend: {
-        layout: "vertical",
-        align: "left",
-        verticalAlign: "top",
-        itemWidth: 100,
-        labelFormatter: function () {
-          // Apply bold style to main category legend items, italic to subsub categories
-          if (this.userOptions.category === "main") {
-            return `<span style="font-weight:bold;">${this.name}</span>`;
-          } else if (this.userOptions.category === "subsub") {
-            return `<span style="font-style:italic;">&nbsp;&nbsp; ${this.name}</span>`;
-          } else {
-            return `<span>&nbsp; ${this.name}</span>`;
-          }
+      categories: data[0],
+    },
+    yAxis: {
+      title: {
+        text: `${isNormalized ? "Percentage" : "Mentions"}`,
+      },
+    },
+    tooltip: {
+      headerFormat: "<span>{point.key}s</span><br>",
+      pointFormat: `<span style="color:{point.color}">{series.name}</span>: ${
+        isNormalized
+          ? "<b>{point.y}</b> % of product mentions from this decade"
+          : " mentioned <b>{point.y}</b> times"
+      }<br/>`,
+      shared: true,
+    },
+    plotOptions: {
+      line: {
+        dataLabels: {
+          enabled: true,
         },
-        itemHiddenStyle: {
-          color: "#d3d3d3",
-          textDecoration: "none",
-        },
+        enableMouseTracking: false,
       },
-      xAxis: {
-        title: {
-          text: "Decades",
-        },
-        labels: {
-          format: "{value}s",
-        },
-        categories: data[0],
-      },
-      yAxis: {
-        title: {
-          text: `${isNormalized ? "Percentage" : "Mentions"}`,
-        },
-      },
-      tooltip: {
-        headerFormat: "<span>{point.key}s</span><br>",
-        pointFormat: `<span style="color:{point.color}">{series.name}</span>: ${
-          isNormalized
-            ? "<b>{point.y}</b> % of product mentions from this decade"
-            : " mentioned <b>{point.y}</b> times"
-        }<br/>`,
-        shared: true,
-      },
-      plotOptions: {
-        line: {
-          dataLabels: {
-            enabled: true,
+    },
+    series: data[1],
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 550,
           },
-          enableMouseTracking: false,
-        },
-      },
-      series: data[1],
-      responsive: {
-        rules: [
-          {
-            condition: {
-              maxWidth: 500,
+          chartOptions: {
+            title: {
+              style: { fontSize: "1rem" },
             },
-            chartOptions: {
-              title: {
-                style: { fontSize: "1rem" },
-              },
-              subtitle: {
-                text: "Select more categories to display their numbers",
-              },
-              yAxis: {
-                labels: { align: "left", x: 0, y: -2 },
-                title: { text: "" },
-              },
+            subtitle: {
+              text: "Select more categories to display their numbers",
+            },
+            legend: {
+              align: "center",
+              verticalAlign: "bottom",
+              maxHeight: 150,
             },
           },
-          // {
-          //   condition: {
-          //     maxWidth: 780,
-          //   },
-          //   chartOptions: {
-          //     legend: {
-          //       layout: "horizontal",
-          //       align: "center",
-          //       verticalAlign: "bottom",
-          //     },
-          //   },
-          // },
-        ],
-      },
-      exporting: {
-        //downloaded image will have this width/height * scale (2 by default)
-        sourceWidth: 900,
-        sourceHeight: 500,
-        chartOptions: {
-          subtitle: null,
         },
+      ],
+    },
+    exporting: {
+      //downloaded image will have this width/height * scale (2 by default)
+      sourceWidth: 900,
+      sourceHeight: 500,
+      chartOptions: {
+        subtitle: null,
       },
-    }
-  );
+    },
+  });
 }
 
 function createInteractiveBarChart(data, chartTitle = "Frequency of Mentions") {
@@ -672,11 +671,9 @@ function updateCategoryChart(catChart, catChartOptions, catChartData) {
 }
 
 function toggleActiveButton(btn, selector) {
-  document
-    .querySelectorAll(`${selector}.active`)
-    .forEach((active) => {
-      active.classList.remove("active");
-    });
+  document.querySelectorAll(`${selector}.active`).forEach((active) => {
+    active.classList.remove("active");
+  });
   btn.classList.add("active");
 }
 
@@ -694,7 +691,7 @@ function toggleActiveButton(btn, selector) {
       drilldown_19: Object.values(dataFromJson.categories_19_drilldown),
     };
     const timeChartData = Object.values(dataFromJson.categories_over_decades);
-    
+
     const normalizedTimeChartData = Object.values(
       dataFromJson.normalized_categories_over_decades
     );
@@ -768,7 +765,7 @@ function toggleActiveButton(btn, selector) {
     setVisibilityForFirstElement(timeChartData, false);
     setVisibilityForFirstElement(normalizedTimeChartData, false);
     setVisibilityForFirstElement(priceChartData, true);
-    
+
     let splineChart = createSplineChart(timeChartData, false);
     ["absolute", "normalized"].forEach((type) => {
       const btn = document.getElementById(`btn-${type}-time-chart`);
@@ -789,5 +786,3 @@ function toggleActiveButton(btn, selector) {
     console.error("Error loading or processing data:", error);
   }
 })();
-
-

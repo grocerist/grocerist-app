@@ -26,20 +26,19 @@
             <button id="btn-mentions-18" class="btn grocerist-button mentions-century-btn active">18th century</button>
             <button id="btn-mentions-19" class="btn grocerist-button mentions-century-btn">19th century</button>
         </div>
-        <div class="row g-3 align-items-end mb-3">
-            <div class="col-md-1"></div>
+        <div class="row g-3 align-items-end mb-3 p-3">
             <!-- Chart Title Input and Button -->
-            <div class="col-md-5">
+            <div class="col-12 col-md-6">
                 <label for="chart-title" class="form-label">Chart title:</label>
                 <div class="input-group">
-                    <input type="text" class="form-control" id="chart-title" placeholder="Enter chart title">
+                    <input type="text" class="form-control" id="chart-title" placeholder="Enter chart title" style="max-width:300px;">
                     <button id="set-title-btn" class="btn grocerist-button">Set title</button>
                 </div>
             </div>
             <!-- Range Inputs and Button -->
-            <div class="col-md-5">
+            <div class="col-12 col-md-6">
                 <label for="range-inputs" class="form-label">Select min. and max. documents:</label>
-                <div id="range-inputs" class="row g-2 align-items-center">
+                <div class="input-group" id="range-inputs" class="row g-2 align-items-center">
                     <div class="col-auto">
                         <input type="number" class="form-control" id="min" placeholder="Min" min="0" max="100">
                     </div>
@@ -51,7 +50,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-1"></div>
         </div>
         <div id="container_mentions_chart"></div>
     </div>
