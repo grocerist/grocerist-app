@@ -4,6 +4,8 @@
 const commonTableConfig = {
   layout: "fitColumns",
   responsiveLayout: "collapse",
+  rowHeader:{formatter:"responsiveCollapse", width:40, minWidth: 40, hozAlign:"center", resizable:false, headerSort:false},
+  responsiveLayoutCollapseStartOpen:false,
   height: 800,
   // width: "100%",
   pagination: true,

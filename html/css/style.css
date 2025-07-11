@@ -418,15 +418,17 @@ div h2 > a {
   min-width: 375px;
 }
 
+.tabulator-row.tabulator-row-odd .tabulator-cell.tabulator-row-header,
 .tabulator-row.tabulator-row-even {
   background-color: white;
 }
-
+.tabulator-row.tabulator-row-odd .tabulator-cell.tabulator-row-header,
 .tabulator-row.tabulator-row-odd {
   background-color: var(--tabulator-primary);
 }
 
-.tabulator-row.tabulator-selectable:hover {
+.tabulator-row.tabulator-selectable:hover,
+.tabulator-cell.tabulator-row-header:hover {
   background-color: var(--tabulator-secondary);
 }
 
