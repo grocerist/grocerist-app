@@ -19,7 +19,7 @@ const goodsListColumnDefinitions = [
   },
 ];
 
-function initializeTable(correctedGoodName, priceTableData) {
+function initializeTable(goodId, priceTableData) {
   const baseColumnDefinitions = [
   {
     title: "Document",
@@ -109,7 +109,7 @@ function initializeTable(correctedGoodName, priceTableData) {
     });
   }
 
-  const table = new Tabulator(`#table-${correctedGoodName}`, {
+  const table = new Tabulator(`#table-goods__${goodId}`, {
     layout: "fitColumns",
     height: "100%",
     responsiveLayout: "collapse",
@@ -125,15 +125,13 @@ function handleRowSelection(row, allData) {
   let goodName = rowData.good;
   let goodId = rowData.id;
 
-  let correctedGoodName = goodName.replace(/\//g, "").replace(/\s+/g, "_");
-
   let goodData = document.createElement("div");
-  goodData.id = `data-${correctedGoodName}`;
+  goodData.id = `data-goods__${goodId}`;
   goodData.className = "row col-12";
 
   goodData.innerHTML = `
-    <h2 id="title-${correctedGoodName}"><a href="goods__${goodId}.html">${goodName}</a></h2>
-    <div id="table-${correctedGoodName}" style="margin-bottom: 1em"></div>
+    <h2 id="title-goods__${goodId}"><a href="goods__${goodId}.html">${goodName}</a></h2>
+    <div id="table-goods__${goodId}" style="margin-bottom: 1em"></div>
   `;
 
   const pricesContainer = document.getElementById("prices-tables");
@@ -141,19 +139,18 @@ function handleRowSelection(row, allData) {
   let priceTableData = JSON.parse(
     JSON.stringify(
       allData.filter(
-        (item) => item.document.length > 0 && item.good.length > 0 && item.good[0].value == goodName
+        (item) => item.document.length > 0 && item.good.length > 0 && item.good[0].id == goodId
       )
     )
   );
-  initializeTable(correctedGoodName, priceTableData);
+  initializeTable(goodId, priceTableData);
 }
 
 function handleRowDeselection(row) {
   let rowData = row.getData();
-  let goodName = rowData.good;
+  let goodId = rowData.id;
 
-  let correctedGoodName = goodName.replace(/\//g, "").replace(/\s+/g, "_");
-  let goodData = document.getElementById(`data-${correctedGoodName}`);
+  let goodData = document.getElementById(`data-goods__${goodId}`);
   goodData.remove();
 }
 
