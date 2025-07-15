@@ -43,7 +43,9 @@ const baseColumnDefinitions = [
     hozAlign: "center",
     formatter: "tickCross",
     headerFilter: "tickCross",
+    formatterParams: {crossElement: false},
     headerFilterParams: { tristate: true },
+    visible: false,
   },
   {
     title: "Century",
@@ -60,7 +62,6 @@ const baseColumnDefinitions = [
     headerFilterParams: {
       valuesLookup: true,
     },
-    visible: false,
   },
 ];
 // Add minWidth and visibility toggle to each column
