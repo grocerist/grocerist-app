@@ -4,8 +4,15 @@
 const commonTableConfig = {
   layout: "fitColumns",
   responsiveLayout: "collapse",
-  rowHeader:{formatter:"responsiveCollapse", width:40, minWidth: 40, hozAlign:"center", resizable:false, headerSort:false},
-  responsiveLayoutCollapseStartOpen:false,
+  rowHeader: {
+    formatter: "responsiveCollapse",
+    width: 40,
+    minWidth: 40,
+    hozAlign: "center",
+    resizable: false,
+    headerSort: false,
+  },
+  responsiveLayoutCollapseStartOpen: false,
   height: 800,
   // width: "100%",
   pagination: true,
@@ -231,6 +238,11 @@ const headerMenu = function () {
         // Toggle current column visibility
         column.toggle();
 
+        // Clear the header filter if column is now hidden
+        if (!column.isVisible()) {
+         table.setHeaderFilterValue(column.getField(), null);
+        }
+
         // Redraw the table, potentially uncollapsing columns
         table.redraw();
 
@@ -314,12 +326,12 @@ const rangeEditor = function (cell, onRendered, success, cancel, editorParams) {
 };
 
 function handleDownloads(table, title) {
-  filename= title.replace(/ /g, "_").toLowerCase()
+  filename = title.replace(/ /g, "_").toLowerCase();
   //trigger download of data.csv file
   document
     .getElementById("download-csv")
     .addEventListener("click", function () {
-      table.download("csv", `${filename}.csv`, {bom:true});
+      table.download("csv", `${filename}.csv`, { bom: true });
     });
 
   //trigger download of data.json file
@@ -333,7 +345,7 @@ function handleDownloads(table, title) {
   document
     .getElementById("download-xlsx")
     .addEventListener("click", function () {
-      table.download("xlsx", `${filename}.xlsx`, {sheetName:`${title}`});
+      table.download("xlsx", `${filename}.xlsx`, { sheetName: `${title}` });
     });
 }
 
