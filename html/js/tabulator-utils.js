@@ -115,6 +115,9 @@ const rangeFilter = function (headerValue, rowValue, rowData, filterParams) {
 
   const { start, end } = headerValue;
 
+  // If both start and end are empty, show all rows
+  if (!start && !end) return true;
+
   // Handle open-ended ranges
   if (!start) return rowValue <= end;
   if (!end) return rowValue >= start;
