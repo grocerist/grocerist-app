@@ -22,9 +22,9 @@ const baseColumnDefinitions = [
   {
     title: "Nr. of Documents",
     field: "doc_count",
-    headerFilter: "number",
-    headerFilterPlaceholder: "at least...",
-    headerFilterFunc: ">=",
+    headerFilter: rangeEditor,
+    headerFilterFunc: rangeFilter,
+    headerFilterLiveFilter: false,
   },
 ];
 // Add minWidth and visibility toggle to each column

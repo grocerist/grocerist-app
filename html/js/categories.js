@@ -23,9 +23,9 @@ const baseColumnDefinitions = [
   {
     title: "# Groceries",
     field: "good_count",
-    headerFilter: "number",
-    headerFilterPlaceholder: "at least...",
-    headerFilterFunc: ">=",
+    headerFilter: rangeEditor,
+    headerFilterFunc: rangeFilter,
+    headerFilterLiveFilter: false,
   },
   {
     title: "Documents",
@@ -43,9 +43,9 @@ const baseColumnDefinitions = [
   {
     title: "# Docs",
     field: "doc_count",
-    headerFilter: "number",
-    headerFilterPlaceholder: "at least...",
-    headerFilterFunc: ">=",
+    headerFilter: rangeEditor,
+    headerFilterFunc: rangeFilter,
+    headerFilterLiveFilter: false,
   },
 ];
 // Add minWidth to each column

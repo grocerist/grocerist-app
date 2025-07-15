@@ -25,7 +25,7 @@ const baseColumnDefinitions = [
       return linkToDetailView(cell);
     },
   },
-    {
+  {
     title: "Century",
     field: "centuries",
     formatter: "array",
@@ -56,9 +56,9 @@ const baseColumnDefinitions = [
   {
     title: "Nr. of Documents",
     field: "properties.doc_count",
-    headerFilter: "number",
-    headerFilterPlaceholder: "at least...",
-    headerFilterFunc: ">=",
+    headerFilter: rangeEditor,
+    headerFilterFunc: rangeFilter,
+    headerFilterLiveFilter: false,
   },
   {
     title: "Persons",
@@ -76,9 +76,9 @@ const baseColumnDefinitions = [
   {
     title: "Nr. of Persons",
     field: "properties.person_count",
-    headerFilter: "number",
-    headerFilterPlaceholder: "at least...",
-    headerFilterFunc: ">=",
+    headerFilter: rangeEditor,
+    headerFilterFunc: rangeFilter,
+    headerFilterLiveFilter: false,
   },
   {
     title: "District",
@@ -102,7 +102,7 @@ const baseColumnDefinitions = [
     accessorDownload: function (value) {
       return value && value.value ? value.value : "";
     },
-    visible:false,
+    visible: false,
   },
   {
     field: "first_level",

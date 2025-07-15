@@ -21,77 +21,87 @@ const goodsListColumnDefinitions = [
 
 function initializeTable(goodId, priceTableData) {
   const baseColumnDefinitions = [
-  {
-    title: "Document",
-    field: "document",
-    headerFilter: "input",
-    ...linkListColumnSettings,
-    formatterParams: {
-      urlPrefix: "document__",
-      idField: "id",
-      nameField: "value",
+    {
+      title: "Document",
+      field: "document",
+      headerFilter: "input",
+      ...linkListColumnSettings,
+      formatterParams: {
+        urlPrefix: "document__",
+        idField: "id",
+        nameField: "value",
+      },
+      sorterParams: {
+        type: "string",
+        alignEmptyValues: "bottom",
+        valueMap: "value",
+      },
     },
-    sorterParams: {
-      type: "string",
-      alignEmptyValues: "bottom",
-      valueMap: "value",
+    {
+      title: "Year",
+      field: "doc_year",
+      mutator: function (value, data, type, params, component) {
+        return value[0].value;
+      },
+      headerFilter: rangeEditor,
+      headerFilterFunc: rangeFilter,
+      headerFilterParams: {
+      labels: ["Start", "End"],
+      min: 1690,
+      max: 1900,
     },
-  },
-  {
-    title: "Year",
-    field: "doc_year",
-    mutator: function (value, data, type, params, component) {
-      return value[0].value
+      headerFilterLiveFilter: false,
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
-    headerFilter: "input",
-    sorterParams: {
-      alignEmptyValues: "bottom",
+    {
+      title: "Price",
+      field: "price",
+      formatter: noDataFormatter,
+      mutator: convertToNumber,
+      headerFilter: rangeEditor,
+      headerFilterFunc: rangeFilter,
+      headerFilterLiveFilter: false,
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
-  },
-  {
-    title: "Price",
-    field: "price",
-    formatter: noDataFormatter,
-    headerFilter: "number",
-    headerFilterPlaceholder: "at least...",
-    headerFilterFunc: greaterThanFilter,
-    sorterParams: {
-      alignEmptyValues: "bottom",
+    {
+      title: "Unit",
+      field: "unit.value",
+      headerFilter: "list",
+      headerFilterParams: {
+        valuesLookup: true,
+      },
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
-  },
-  {
-    title: "Unit",
-    field: "unit.value",
-    headerFilter: "list",
-    headerFilterParams: {
-      valuesLookup: true,
+    {
+      title: "Amount",
+      field: "amount_of_units",
+      formatter: noDataFormatter,
+      mutator: convertToNumber,
+      headerFilter: rangeEditor,
+      headerFilterFunc: rangeFilter,
+      headerFilterLiveFilter: false,
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
-    sorterParams: {
-      alignEmptyValues: "bottom",
+    {
+      title: "Total Value",
+      field: "total_value",
+      mutator: convertToNumber,
+      headerFilter: rangeEditor,
+      headerFilterFunc: rangeFilter,
+      headerFilterLiveFilter: false,
+      sorterParams: {
+        alignEmptyValues: "bottom",
+      },
     },
-  },
-  {
-    title: "Amount",
-    field: "amount_of_units",
-    formatter: noDataFormatter,
-    headerFilter: "number",
-    headerFilterPlaceholder: "at least...",
-    headerFilterFunc: greaterThanFilter,
-    sorterParams: {
-      alignEmptyValues: "bottom",
-    },
-  },
-  {
-    title: "Total Value",
-    field: "total_value",
-    headerFilter: "number",
-    headerFilterPlaceholder: "at least...",
-    headerFilterFunc: greaterThanFilter,
-    sorterParams: {
-      alignEmptyValues: "bottom",
-    },
-  },
-];
+  ];
   //define column width and add column visibility toggle
   const columnDefinitions = baseColumnDefinitions.map((column) => ({
     ...column,
@@ -139,7 +149,10 @@ function handleRowSelection(row, allData) {
   let priceTableData = JSON.parse(
     JSON.stringify(
       allData.filter(
-        (item) => item.document.length > 0 && item.good.length > 0 && item.good[0].id == goodId
+        (item) =>
+          item.document.length > 0 &&
+          item.good.length > 0 &&
+          item.good[0].id == goodId
       )
     )
   );

@@ -101,6 +101,18 @@ function noDataFormatter(cell) {
 }
 
 // CUSTOM MUTATORS
+// mutatator function for columns containing numbers as strings
+// NOTE: Baserow exports numbers as strings to keep the decimal points
+function convertToNumber(value) {
+  if (value === null) {
+    return value;
+  }
+  let decimalPlaces = 0
+  if (value.includes(".")) {
+    decimalPlaces = value.split(".")[1].length;
+  }
+  return Number(value).toFixed(decimalPlaces);
+}
 
 // Custom mutator for fields with arrays that aren't meant to be arrays
 function reduceArrayMutator(value, data, type, params, component) {
@@ -160,14 +172,6 @@ function objectHeaderFilter(headerValue, rowValue, rowData, filterParams) {
   } else {
     return false;
   }
-}
-
-// custom headerFilter function for columns containing numbers as strings
-// NOTE: Baserow exports numbers as strings to keep the decimal points
-// Numbers calculated by us, like Nr. of Documents are numbers, so they can use the standard ">="
-function greaterThanFilter(headerValue, rowValue, rowData, filterParams) {
-  // Convert headerValue to a number before comparing
-  return Number(rowValue) >= Number(headerValue);
 }
 
 // custom lookupfunction for list type headerfilters
@@ -240,7 +244,7 @@ const headerMenu = function () {
 
         // Clear the header filter if column is now hidden
         if (!column.isVisible()) {
-         table.setHeaderFilterValue(column.getField(), null);
+          table.setHeaderFilterValue(column.getField(), null);
         }
 
         // Redraw the table, potentially uncollapsing columns
