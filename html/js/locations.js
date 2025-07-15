@@ -95,6 +95,7 @@ const baseColumnDefinitions = [
     formatterParams: {
       delimiter: ", ",
     },
+    sorter: "array",
     accessorDownload: function (value) {
       return value.join("; ");
     },
