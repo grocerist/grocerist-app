@@ -7,6 +7,22 @@ const baseColumnDefinitions = [
     headerFilter: "input",
     formatter: linkToDetailView,
   },
+   {
+    title: "Century",
+    field: "centuries",
+    formatter: "array",
+    formatterParams: {
+      delimiter: ", ",
+    },
+    sorter: "array",
+    accessorDownload: function (value) {
+      return value.join("; ");
+    },
+    headerFilter: "list",
+    headerFilterParams: {
+      valuesLookup: true,
+    },
+  },
   {
     title: "Documents",
     field: "documents",
@@ -46,22 +62,6 @@ const baseColumnDefinitions = [
     formatterParams: {crossElement: false},
     headerFilterParams: { tristate: true },
     visible: false,
-  },
-  {
-    title: "Century",
-    field: "centuries",
-    formatter: "array",
-    formatterParams: {
-      delimiter: ", ",
-    },
-    sorter: "array",
-    accessorDownload: function (value) {
-      return value.join("; ");
-    },
-    headerFilter: "list",
-    headerFilterParams: {
-      valuesLookup: true,
-    },
   },
 ];
 // Add minWidth and visibility toggle to each column

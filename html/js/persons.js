@@ -11,6 +11,17 @@ const baseColumnDefinitions = [
     headerFilter: "input",
     formatter: linkToDetailView,
   },
+   {
+    title: "Century",
+    field: "century",
+    headerFilter: "list",
+    headerFilterFunc: "in",
+    headerFilterParams: {
+      valuesLookup: "century",
+      sort: "asc",
+      multiselect: true,
+    },
+  },
   {
     title: "Religion",
     field: "religion",
@@ -130,17 +141,6 @@ const baseColumnDefinitions = [
     sorterParams: {
       type: "string",
       valueMap: "value",
-    },
-  },
-  {
-    title: "Century",
-    field: "century",
-    headerFilter: "list",
-    headerFilterFunc: "in",
-    headerFilterParams: {
-      valuesLookup: "century",
-      sort: "asc",
-      multiselect: true,
     },
   },
 ];

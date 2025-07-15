@@ -10,7 +10,6 @@ const baseColumnDefinitions = [
     field: "properties.location_type",
     formatter: makeItalic,
     headerFilter: "list",
-    // headerFilterFunc: "in",
     headerFilterParams: {
       valuesLookup: true,
       multiselect: false,
@@ -24,6 +23,22 @@ const baseColumnDefinitions = [
     headerFilter: "input",
     formatter: function (cell) {
       return linkToDetailView(cell);
+    },
+  },
+    {
+    title: "Century",
+    field: "centuries",
+    formatter: "array",
+    formatterParams: {
+      delimiter: ", ",
+    },
+    sorter: "array",
+    accessorDownload: function (value) {
+      return value.join("; ");
+    },
+    headerFilter: "list",
+    headerFilterParams: {
+      valuesLookup: true,
     },
   },
   {
@@ -87,23 +102,7 @@ const baseColumnDefinitions = [
     accessorDownload: function (value) {
       return value && value.value ? value.value : "";
     },
-  },
-  {
-    title: "Century",
-    field: "centuries",
-    formatter: "array",
-    formatterParams: {
-      delimiter: ", ",
-    },
-    sorter: "array",
-    accessorDownload: function (value) {
-      return value.join("; ");
-    },
-    headerFilter: "list",
-    headerFilterParams: {
-      valuesLookup: true,
-    },
-    visible: false,
+    visible:false,
   },
   {
     field: "first_level",
