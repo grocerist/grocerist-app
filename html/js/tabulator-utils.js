@@ -198,8 +198,9 @@ const headerMenu = function () {
   table = this; // to access the table instance in the menu item action
 
   allColumns.forEach((column) => {
-    // Skip columns that are excluded from the header menu
-    if (excludeFromHeaderMenu.includes(column.getField())) {
+    const field = column.getField();
+    // Skip rowHeaders and columns that are excluded from the header menu
+    if (!field || excludeFromHeaderMenu.includes(field)) {
       return;
     }
 
