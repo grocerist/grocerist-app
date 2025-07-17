@@ -228,7 +228,7 @@ function createColumnChart(containerId, data) {
           chartOptions: {
             yAxis: {
               title: {
-                text: null, 
+                text: null,
               },
               labels: {
                 enabled: false,
@@ -239,8 +239,10 @@ function createColumnChart(containerId, data) {
       ],
     },
     exporting: {
-      sourceWidth: 900,
+      sourceWidth: 1600,
+      sourceHeight: 600,
       filename: "grocers_per_location",
+      chartOptions: { xAxis: { labels: { step: 1 } } },
     },
   });
 }

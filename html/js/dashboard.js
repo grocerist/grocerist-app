@@ -19,7 +19,10 @@ const baseColumnChartOptions = {
     },
   },
   yAxisTitle: "Documents",
-  exporting: { sourceWidth: 1200 },
+  exporting: {
+    sourceWidth: 1200,
+    chartOptions: { xAxis: { labels: { step: 1 } } },
+  },
 };
 const baseTooltip = {
   headerFormat: '<span style="font-size:11px">{series.name}</span><br/>',
@@ -89,7 +92,6 @@ function createPieChart(containerId, title, data) {
         cursor: "pointer",
         dataLabels: {
           enabled: true,
-          alignTo: "connectors",
         },
       },
     },
@@ -104,7 +106,7 @@ function createPieChart(containerId, title, data) {
       rules: [
         {
           condition: {
-            maxWidth: 500,
+            maxWidth: 400,
           },
           chartOptions: {
             title: {
@@ -175,9 +177,6 @@ function createColumnChart({
     title: { text: title, style: titleStyle },
     xAxis: {
       type: xAxisType,
-      labels: {
-        step: 1, // Show every label
-      },
     },
     yAxis: { title: { text: yAxisTitle } },
     legend: { enabled: false },
@@ -199,7 +198,6 @@ function createColumnChart({
             title: {
               style: { fontSize: "1rem" },
             },
-            xAxis: { labels: { step: 0 } }, // auto steps fro small screens
             yAxis: {
               title: {
                 text: null,
@@ -491,7 +489,7 @@ function createPriceChart(data) {
     },
     yAxis: {
       title: {
-        text: `Akçe per kıyye`, 
+        text: `Akçe per kıyye`,
       },
       min: 0,
     },
