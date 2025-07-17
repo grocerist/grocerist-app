@@ -350,6 +350,7 @@ function rowsToMarkers(map, rows, layerGroups) {
             )
             .join("")}</ul></div>`
         : "";
+      const disclaimer = rowData.popup_note ? `<div class="fw-light fst-italic mt-1"><i class="bi bi-info-circle"></i> These coordinates were randomly chosen in accordance with the district information found in the document.</div>` : "";
       const markerData = {
         lat: rowData.lat,
         long: rowData.long,
@@ -358,6 +359,7 @@ function rowsToMarkers(map, rows, layerGroups) {
         ${popupHeader}
         ${grocerInfo}
         ${otherShopsInfo}
+        ${disclaimer}
       `,
         icon: "bi bi-file-earmark-text-fill",
         multi: rowData.main_person[0]
