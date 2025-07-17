@@ -77,10 +77,19 @@
 {% endblock content %}
 {% block scripts2 %}
 {% if object.price_per_document %}
-<script src="js/good-common.js"></script>
+<script src="js/prices.js"></script>
 <script>
     const priceData = {{ object.price_per_document | tojson | safe }};
-    initializeTabulator(priceData);
+    priceTableConfig.data = priceData;
+    const table = createTable("#prices-table", priceTableConfig);
+    handleDownloads(table, "Prices");
+    table.on("dataLoaded", function (data) {
+        $(".total_count").text(data.length);
+    });
+
+    table.on("dataFiltered", function (_filters, rows) {
+        $(".search_count").text(rows.length);
+    });
 </script>
 {% endif %}
 {% if object.documents %}
