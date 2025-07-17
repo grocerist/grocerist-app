@@ -176,19 +176,6 @@ function createPieChart(containerId, title, data, table) {
     },
     plotOptions: {
       series: {
-        allowPointSelect: true,
-        cursor: "pointer",
-        point: {
-          events: {
-            click: function () {
-              if (this.name === "Unknown") {
-                //nothing happens
-              } else {
-                table.setHeaderFilterValue("religion", [this.name]);
-              }
-            },
-          },
-        },
         dataLabels: {
           enabled: true,
         },
@@ -204,7 +191,7 @@ function createPieChart(containerId, title, data, table) {
         })),
       },
     ],
-     responsive: {
+    responsive: {
       rules: [
         {
           condition: {
@@ -226,7 +213,7 @@ function createPieChart(containerId, title, data, table) {
 }
 
 function createColumnChart(containerId, title, data, table) {
-  Highcharts.chart(containerId, {
+  return Highcharts.chart(containerId, {
     chart: {
       type: "column",
     },
@@ -254,20 +241,6 @@ function createColumnChart(containerId, title, data, table) {
     },
     plotOptions: {
       series: {
-        allowPointSelect: true,
-        cursor: "pointer",
-        point: {
-          events: {
-            click: function () {
-              if (this.name === "Unknown") {
-                // nothing happens
-              } else {
-                // set the filter value for the districts column
-                table.setHeaderFilterValue("district", this.name);
-              }
-            },
-          },
-        },
         dataLabels: {
           enabled: true,
         },
@@ -373,13 +346,42 @@ function calculateDistrictData(rows) {
       data: tableData,
       initialSort: [{ column: "name", dir: "asc" }],
     });
+
     handleDownloads(table, "Grocers");
     table.on("dataLoaded", function (data) {
       $(".total_count").text(data.length);
     });
+    // Calculate the data for the charts
+    let first = true;
+    let religionsChart, districtsChart;
+    let religionsResults = calculateReligionData(table.getRows());
+    let districtResults = calculateDistrictData(table.getRows());
     table.on("dataFiltered", function (_filters, rows) {
       $(".search_count").text(rows.length);
-      generateChartsFromTable(rows, table);
+      if (first) {
+        // Create charts
+        religionsChart = createPieChart(
+          "religion-chart",
+          "Religion",
+          religionsResults,
+          table
+        );
+        districtsChart = createColumnChart(
+          "districts-chart",
+          "Districts",
+          districtResults,
+          table
+        );
+        first = false;
+      }
+      religionsResults = calculateReligionData(rows);
+      districtResults = calculateDistrictData(rows);
+      religionsChart.series[0].update({
+        data: religionsResults,
+      });
+      districtsChart.series[0].update({
+        data: districtResults, 
+      });
     });
   } catch (error) {
     console.error("Error loading or processing data:", error);
