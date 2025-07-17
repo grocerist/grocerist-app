@@ -228,7 +228,7 @@ const headerMenu = function () {
 
     let icon = document.createElement("i");
     icon.className = "bi " + (column.isVisible() ? "bi-eye" : "bi-eye-slash");
-
+    table = this
     //build label (contains icon and title)
     let label = document.createElement("span");
     let title = document.createElement("span");
@@ -255,11 +255,11 @@ const headerMenu = function () {
 
         // Clear the header filter if column is now hidden
         if (!column.isVisible()) {
-          this.setHeaderFilterValue(column.getField(), null);
+          table.setHeaderFilterValue(column.getField(), null);
         }
 
         // Redraw the table, potentially uncollapsing columns
-        this.redraw();
+        table.redraw();
 
         // Change menu item icon and toggle text-muted class based on visibility
         label.classList.toggle("text-muted", !column.isVisible());
