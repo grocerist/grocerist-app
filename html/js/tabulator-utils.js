@@ -37,8 +37,7 @@ const linkListColumnSettings = {
 
 // basic function to create the table
 function createTable(containerId, tableConfig) {
-  const table = new Tabulator(containerId, tableConfig);
-  return table;
+  return new Tabulator(containerId, tableConfig);
 }
 
 function get_scrollable_cell(renderer, cell, cell_html_string) {
@@ -219,7 +218,6 @@ excludeFromHeaderMenu = ["first_level"];
 const headerMenu = function () {
   let menu = [];
   const allColumns = this.getColumns();
-  table = this; // to access the table instance in the menu item action
 
   allColumns.forEach((column) => {
     const field = column.getField();
@@ -257,11 +255,11 @@ const headerMenu = function () {
 
         // Clear the header filter if column is now hidden
         if (!column.isVisible()) {
-          table.setHeaderFilterValue(column.getField(), null);
+          this.setHeaderFilterValue(column.getField(), null);
         }
 
         // Redraw the table, potentially uncollapsing columns
-        table.redraw();
+        this.redraw();
 
         // Change menu item icon and toggle text-muted class based on visibility
         label.classList.toggle("text-muted", !column.isVisible());
