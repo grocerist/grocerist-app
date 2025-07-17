@@ -11,7 +11,7 @@ const baseColumnDefinitions = [
     headerFilter: "input",
     formatter: linkToDetailView,
   },
-   {
+  {
     title: "Century",
     field: "century",
     headerFilter: "list",
@@ -151,19 +151,6 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
   headerMenu: headerMenu,
   minWidth: 150,
 }));
-
-const tableConfig = {
-  ...commonTableConfig,
-  columns: columnDefinitions,
-  footerElement: `<span class="tabulator-page-counter">
-    <span class="d-none d-sm-inline">
-      Showing <span class="search_count"></span> results out of <span class="total_count"></span>
-    </span>
-    <span class="d-inline d-sm-none">
-      <span class="search_count"></span> out of <span class="total_count"></span>
-    </span>
-  </span>`,
-};
 
 const getColor = {};
 
@@ -332,12 +319,6 @@ function calculateDistrictData(rows) {
   return results;
 }
 
-function createTable(tableConfig) {
-  console.log("loading table");
-  const table = new Tabulator("#persons-table", tableConfig);
-  return table;
-}
-
 (async function () {
   try {
     const dataFromJson = await d3.json(dataUrl);
@@ -368,8 +349,12 @@ function createTable(tableConfig) {
     uniqueReligions.forEach((religion, idx) => {
       getColor[religion] = colors[idx];
     });
-    tableConfig.data = tableData;
-    const table = createTable(tableConfig);
+    const table = createTable("#persons-table", {
+      ...commonTableConfig,
+      columns: columnDefinitions,
+      data: tableData,
+      initialSort: [{ column: "name", dir: "asc" }],
+    });
     handleDownloads(table, "Grocers");
     table.on("dataLoaded", function (data) {
       $(".total_count").text(data.length);

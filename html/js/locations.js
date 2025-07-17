@@ -118,21 +118,6 @@ const columnDefinitions = baseColumnDefinitions.map((column) => {
   };
 });
 
-// Config settings for table
-const tableConfig = {
-  ...commonTableConfig,
-  headerFilterLiveFilterDelay: 600,
-  columns: columnDefinitions,
-  initialSort: [{ column: "properties.name", dir: "asc" }],
-  footerElement: `<span class="tabulator-page-counter">
-    <span class="d-none d-sm-inline">
-      Showing <span class="search_count"></span> results out of <span class="total_count"></span>
-    </span>
-    <span class="d-inline d-sm-none">
-      <span class="search_count"></span> out of <span class="total_count"></span>
-    </span>
-  </span>`,
-};
 // drilldown data and selected lcoation type need to be global variables
 let globalDrilldownData = [];
 let selectedLocationType = "allLocations";
@@ -346,8 +331,14 @@ function calculateLocationData(rows, selectedLocationType, districtColors) {
         }
         return enriched;
       });
-    tableConfig.data = tableData;
-    const table = new Tabulator("#places_table", tableConfig);
+
+    const table = createTable("#places_table", {
+      ...commonTableConfig,
+      headerFilterLiveFilterDelay: 600,
+      columns: columnDefinitions,
+      data: tableData,
+      initialSort: [{ column: "properties.name", dir: "asc" }],
+    });
     handleDownloads(table, "Locations");
     let first = true;
     let chart;
