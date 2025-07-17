@@ -55,6 +55,16 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
 }));
 let table;
 
+const tableConfig = {
+      ...commonTableConfig,
+      pagination: false,
+      headerFilterLiveFilterDelay: 400,
+      dataTree: true,
+      columns: columnDefinitions,
+      dataTreeExpandElement: `<i class="bi bi-caret-right-fill"></i>`,
+      dataTreeCollapseElement: `<i class="bi bi-caret-down-fill"></i>`,
+    }
+
 function childElementFilter(headerValue, rowValue, rowData, filterParams) {
   //!! expanding while filter active will run the filter on the expanded rows
   const searchValue = headerValue.toLowerCase();
@@ -167,24 +177,8 @@ function childElementFilter(headerValue, rowValue, rowData, filterParams) {
       }
     });
     const tableData = Object.values(hierarchicalData);
-    table = new Tabulator("#categories-table", {
-      ...commonTableConfig,
-      pagination: false,
-      data: tableData,
-      headerFilterLiveFilterDelay: 400,
-      dataTree: true,
-      columns: columnDefinitions,
-      dataTreeExpandElement: `<i class="bi bi-caret-right-fill"></i>`,
-      dataTreeCollapseElement: `<i class="bi bi-caret-down-fill"></i>`,
-      footerElement: `<span class="tabulator-page-counter">
-    <span class="d-none d-sm-inline">
-      Showing <span class="search_count"></span> results out of <span class="total_count"></span>
-    </span>
-    <span class="d-inline d-sm-none">
-      <span class="search_count"></span> out of <span class="total_count"></span>
-    </span>
-  </span>`,
-    });
+    tableConfig.data = tableData;
+    table = createTable("#categories-table", tableConfig);
     handleDownloads(table, "Grocery Categories");
     table.on("dataLoaded", function (data) {
       let total = 0;

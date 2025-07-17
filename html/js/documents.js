@@ -303,28 +303,6 @@ const columnDefinitions = baseColumnDefinitions.map((column) => {
   };
 });
 
-// Config settings for table
-const tableConfig = {
-  ...commonTableConfig,
-  headerFilterLiveFilterDelay: 600,
-  columns: columnDefinitions,
-  initialSort: [{ column: "shelfmark", dir: "asc" }],
-  footerElement: `<span class="tabulator-page-counter">
-    <span class="d-none d-sm-inline">
-      Showing <span class="search_count"></span> results out of <span class="total_count"></span>
-    </span>
-    <span class="d-inline d-sm-none">
-      <span class="search_count"></span> out of <span class="total_count"></span>
-    </span>
-  </span>`,
-};
-
-// Function for creating table
-function createTable(tableConfig) {
-  console.log("loading table");
-  const table = new Tabulator("#documents-table", tableConfig);
-  return table;
-}
 // ###### MAP AND TABLE INTERACTION #######
 // Function to get coordinate key from row data
 function getCoordinates(rowData) {
@@ -497,8 +475,13 @@ function setupMapAndTable(dataUrl) {
           }
           return item;
         });
-      tableConfig.data = tableData;
-      const table = createTable(tableConfig);
+      const table = createTable("#documents-table", {
+        ...commonTableConfig,
+        headerFilterLiveFilterDelay: 600,
+        columns: columnDefinitions,
+        data: tableData,
+        initialSort: [{ column: "shelfmark", dir: "asc" }],
+      });
       handleDownloads(table, "Documents");
       // Build a dictionary of owners with multiple shops
       tableData.forEach((item) => {

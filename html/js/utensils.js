@@ -43,19 +43,11 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
         return enriched;
       });
 
-    const table = new Tabulator("#utensils-table", {
+    const table = createTable("#utensils-table", {
       ...commonTableConfig,
       data: tableData,
       columns: columnDefinitions,
       initialSort: [{ column: "name", dir: "asc" }],
-      footerElement: `<span class="tabulator-page-counter">
-                        <span class="d-none d-sm-inline">
-                          Showing <span class="search_count"></span> results out of <span class="total_count"></span>
-                        </span>
-                        <span class="d-inline d-sm-none">
-                          <span class="search_count"></span> out of <span class="total_count"></span>
-                        </span>
-                      </span>`,
     });
     handleDownloads(table, "Utensils");
     table.on("dataLoaded", function (data) {

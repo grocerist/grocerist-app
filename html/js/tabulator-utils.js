@@ -14,9 +14,16 @@ const commonTableConfig = {
   },
   responsiveLayoutCollapseStartOpen: false,
   height: 800,
-  // width: "100%",
   pagination: true,
   paginationSize: 15,
+  footerElement: `<span class="tabulator-page-counter">
+    <span class="d-none d-sm-inline">
+      Showing <span class="search_count"></span> results out of <span class="total_count"></span>
+    </span>
+    <span class="d-inline d-sm-none">
+      <span class="search_count"></span> out of <span class="total_count"></span>
+    </span>
+  </span>`,
 };
 
 // common settings for columns with arrays of objects
@@ -27,6 +34,11 @@ const linkListColumnSettings = {
   headerFilterFunc: objectArrayHeaderFilter,
   sorter: "array",
 };
+
+// basic function to create the table
+function createTable(containerId, tableConfig) {
+  return new Tabulator(containerId, tableConfig);
+}
 
 function get_scrollable_cell(renderer, cell, cell_html_string) {
   // by @cfhaak, https://github.com/NestroyCA/nestroyca-astro-base/blob/main/src/pages/places.astro#L80
@@ -107,7 +119,7 @@ function convertToNumber(value) {
   if (value === null) {
     return value;
   }
-  let decimalPlaces = 0
+  let decimalPlaces = 0;
   if (value.includes(".")) {
     decimalPlaces = value.split(".")[1].length;
   }
@@ -206,7 +218,6 @@ excludeFromHeaderMenu = ["first_level"];
 const headerMenu = function () {
   let menu = [];
   const allColumns = this.getColumns();
-  table = this; // to access the table instance in the menu item action
 
   allColumns.forEach((column) => {
     const field = column.getField();
@@ -244,11 +255,11 @@ const headerMenu = function () {
 
         // Clear the header filter if column is now hidden
         if (!column.isVisible()) {
-          table.setHeaderFilterValue(column.getField(), null);
+          this.setHeaderFilterValue(column.getField(), null);
         }
 
         // Redraw the table, potentially uncollapsing columns
-        table.redraw();
+        this.redraw();
 
         // Change menu item icon and toggle text-muted class based on visibility
         label.classList.toggle("text-muted", !column.isVisible());
