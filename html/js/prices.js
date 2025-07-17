@@ -16,6 +16,7 @@ const baseColumnDefinitions = [
       alignEmptyValues: "bottom",
       valueMap: "value",
     },
+    minWidth: 180,
   },
   {
     title: "Year",
@@ -34,10 +35,23 @@ const baseColumnDefinitions = [
     sorterParams: {
       alignEmptyValues: "bottom",
     },
+    minWidth: 160,
   },
   {
-    title: "Price",
-    field: "price",
+    title: "Total Value",
+    field: "total_value",
+    mutator: convertToNumber,
+    headerFilter: rangeEditor,
+    headerFilterFunc: rangeFilter,
+    headerFilterLiveFilter: false,
+    sorterParams: {
+      alignEmptyValues: "bottom",
+    },
+    minWidth: 165,
+  },
+  {
+    title: "Amount",
+    field: "amount_of_units",
     formatter: noDataFormatter,
     mutator: convertToNumber,
     headerFilter: rangeEditor,
@@ -46,6 +60,7 @@ const baseColumnDefinitions = [
     sorterParams: {
       alignEmptyValues: "bottom",
     },
+    minWidth: 165,
   },
   {
     title: "Unit",
@@ -59,8 +74,8 @@ const baseColumnDefinitions = [
     },
   },
   {
-    title: "Amount",
-    field: "amount_of_units",
+    title: "Price per unit",
+    field: "price",
     formatter: noDataFormatter,
     mutator: convertToNumber,
     headerFilter: rangeEditor,
@@ -69,25 +84,14 @@ const baseColumnDefinitions = [
     sorterParams: {
       alignEmptyValues: "bottom",
     },
-  },
-  {
-    title: "Total Value",
-    field: "total_value",
-    mutator: convertToNumber,
-    headerFilter: rangeEditor,
-    headerFilterFunc: rangeFilter,
-    headerFilterLiveFilter: false,
-    sorterParams: {
-      alignEmptyValues: "bottom",
-    },
+     minWidth: 165,
   },
 ];
 
-//define column width and add column visibility toggle
+//add column visibility toggle
 const columnDefinitions = baseColumnDefinitions.map((column) => ({
   ...column,
   headerMenu: headerMenu,
-  minWidth: 150,
 }));
 
 const priceTableConfig = {
@@ -101,7 +105,6 @@ const priceTableConfig = {
     return containerHeight - h2Height;
   },
   columns: columnDefinitions,
-  // pagination: false,
   initialSort: [{ column: "doc_year", dir: "asc" }],
 };
 
@@ -144,8 +147,8 @@ function handleRowSelection(row, allData) {
   );
 
   priceTableConfig.data = priceTableData;
-  priceTableConfig.pagination = false
-  priceTableConfig.footerElement = `<span></span>`
+  priceTableConfig.pagination = false;
+  priceTableConfig.footerElement = `<span></span>`;
   createTable(`#table-goods__${goodId}`, priceTableConfig);
 }
 
