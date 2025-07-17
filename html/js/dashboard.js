@@ -89,6 +89,7 @@ function createPieChart(containerId, title, data) {
         cursor: "pointer",
         dataLabels: {
           enabled: true,
+          alignTo: "connectors",
         },
       },
     },
@@ -112,10 +113,7 @@ function createPieChart(containerId, title, data) {
             plotOptions: {
               series: {
                 dataLabels: {
-                  distance: 10,
-                  style: {
-                    fontSize: "0.5rem",
-                  },
+                  enabled: false,
                 },
               },
             },
@@ -141,6 +139,9 @@ function createColumnChart({
   const options = {
     chart: {
       type: "column",
+      scrollablePlotArea: {
+        minWidth: 500,
+      },
       events: {
         render() {
           const chart = this;
@@ -198,6 +199,15 @@ function createColumnChart({
             title: {
               style: { fontSize: "1rem" },
             },
+            xAxis: { labels: { step: 0 } }, // auto steps fro small screens
+            yAxis: {
+              title: {
+                text: null,
+              },
+              labels: {
+                enabled: false,
+              },
+            },
           },
         },
       ],
@@ -217,6 +227,9 @@ function createSplineChart(data, isNormalized) {
   return Highcharts.chart("container_time_chart", {
     chart: {
       type: "spline",
+      scrollablePlotArea: {
+        minWidth: 500,
+      },
       zoomType: "x",
     },
     accessibility: {
@@ -289,7 +302,7 @@ function createSplineChart(data, isNormalized) {
       rules: [
         {
           condition: {
-            maxWidth: 550,
+            maxWidth: 500,
           },
           chartOptions: {
             title: {
@@ -302,6 +315,14 @@ function createSplineChart(data, isNormalized) {
               align: "center",
               verticalAlign: "bottom",
               maxHeight: 150,
+            },
+            yAxis: {
+              title: {
+                text: null,
+              },
+              labels: {
+                enabled: false,
+              },
             },
           },
         },
@@ -419,6 +440,9 @@ function getTrendLine(data) {
 function createPriceChart(data) {
   return Highcharts.chart("container_price_time_chart", {
     chart: {
+      scrollablePlotArea: {
+        minWidth: 500,
+      },
       zoomType: "x",
       events: {
         render: function () {
@@ -455,7 +479,6 @@ function createPriceChart(data) {
       layout: "horizontal",
       align: "center",
       verticalAlign: "bottom",
-      itemWidth: 100,
       itemHiddenStyle: {
         color: "#d3d3d3",
         textDecoration: "none",
@@ -468,7 +491,7 @@ function createPriceChart(data) {
     },
     yAxis: {
       title: {
-        text: `Akçe per kıyye`, //change to keyl when needed
+        text: `Akçe per kıyye`, 
       },
       min: 0,
     },
@@ -529,6 +552,14 @@ function createPriceChart(data) {
           chartOptions: {
             title: {
               style: { fontSize: "1rem" },
+            },
+            yAxis: {
+              title: {
+                text: null,
+              },
+              labels: {
+                enabled: false,
+              },
             },
           },
         },

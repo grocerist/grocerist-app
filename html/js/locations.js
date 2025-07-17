@@ -127,6 +127,9 @@ function createColumnChart(containerId, data) {
   return Highcharts.chart(containerId, {
     chart: {
       type: "column",
+      scrollablePlotArea: {
+        minWidth: 500,
+      },
       events: {
         drilldown: function (e) {
           if (!e.seriesOptions && globalDrilldownData.length > 0) {
@@ -143,8 +146,19 @@ function createColumnChart(containerId, data) {
                 (item) => item.drilldownKey === e.point.name.split(" of ").pop()
               );
             }
+            // Calculate total data points across all series
+            const totalLength = drillDownSeries.reduce((total, series) => {
+              return total + series.data.length;
+            }, 0);
+
             drillDownSeries.forEach((series) => {
+              // dynamically set the bar widtht based on the length of the data and the chart width
+              series.pointWidth = Math.min(
+                chart.plotWidth / totalLength - 1,
+                50
+              );
               if (series.data.length > 0) {
+                console.log(series);
                 chart.addSingleSeriesAsDrilldown(e.point, series);
               }
             });
@@ -205,6 +219,25 @@ function createColumnChart(containerId, data) {
         textDecoration: "unset",
       },
     },
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 500,
+          },
+          chartOptions: {
+            yAxis: {
+              title: {
+                text: null, 
+              },
+              labels: {
+                enabled: false,
+              },
+            },
+          },
+        },
+      ],
+    },
     exporting: {
       sourceWidth: 900,
       filename: "grocers_per_location",
@@ -218,16 +251,10 @@ function calculateLocationData(rows, selectedLocationType, districtColors) {
   let nonDistrictTypes = ["Mahalle", "Karye", "Nahiye", "Quarter", "Address"];
   let processedAdmins = new Set();
 
-  function addDrilldownEntry(
-    drilldownKey,
-    name,
-    pointWidth,
-    colorIndex = null
-  ) {
+  function addDrilldownEntry(drilldownKey, name, colorIndex = null) {
     let entry = {
       name,
       drilldownKey,
-      pointWidth,
       data: [],
     };
     if (colorIndex !== null) entry.color = colors[colorIndex];
@@ -266,10 +293,10 @@ function calculateLocationData(rows, selectedLocationType, districtColors) {
         if (selectedLocationType === "allLocations") {
           nonDistrictTypes.forEach((type, i) =>
             // for each location type, we set a different color (counting from the end, so they're different from the district colors)
-            addDrilldownEntry(firstLevel, type, 10, colors.length - 1 - i)
+            addDrilldownEntry(firstLevel, type, colors.length - 1 - i)
           );
         } else {
-          addDrilldownEntry(firstLevel, firstLevel, 20);
+          addDrilldownEntry(firstLevel, firstLevel);
         }
         processedAdmins.add(firstLevel);
       }

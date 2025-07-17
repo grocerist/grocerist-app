@@ -204,6 +204,24 @@ function createPieChart(containerId, title, data, table) {
         })),
       },
     ],
+     responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 400,
+          },
+          chartOptions: {
+            plotOptions: {
+              series: {
+                dataLabels: {
+                  enabled: false,
+                },
+              },
+            },
+          },
+        },
+      ],
+    },
   });
 }
 
