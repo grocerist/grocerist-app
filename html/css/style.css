@@ -444,6 +444,7 @@ div h2 > a {
 }
 .location-type-filter {
   background-color: var(--primary);
+  color: white;
 }
 
 /* tabulator header */

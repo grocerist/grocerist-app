@@ -6,7 +6,7 @@ const titleStyle = {
 };
 const baseColumnDefinitions = [
   {
-    title: "Location Type",
+    title: "Type of location",
     field: "properties.location_type",
     formatter: makeItalic,
     headerFilter: "list",
