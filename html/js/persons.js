@@ -154,14 +154,6 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
 
 const getColor = {};
 
-// generate chart
-function generateChartsFromTable(rows, table) {
-  let religionsResults = calculateReligionData(rows);
-  createPieChart("religion-chart", "Religion", religionsResults, table);
-  let districtResults = calculateDistrictData(rows);
-  createColumnChart("districts-chart", "Districts", districtResults, table);
-}
-
 function createPieChart(containerId, title, data, table) {
   return Highcharts.chart(containerId, {
     chart: {
