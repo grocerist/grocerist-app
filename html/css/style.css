@@ -14,106 +14,7 @@
   --marker-size: 32px;
 }
 
-#map {
-  height: 90%;
-  min-height: 300px;
-  max-height: 800px;
-}
 
-.leaflet-container a {
-  color: var(--secondary);
-}
-
-.custom-marker {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.custom-marker-pin {
-  width: 70%;
-  height: 70%;
-  border-top-left-radius: 50%;
-  border-top-right-radius: 50% 100%;
-  border-bottom-left-radius: 100% 50%;
-  border-bottom-right-radius: 0%;
-  transform: rotate(45deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.custom-marker-pin::before {
-  content: "";
-  position: absolute;
-  top: 10%;
-  left: 45%;
-  transform: translateX(-50%);
-  width: 70%;
-  height: 70%;
-  background: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.custom-marker-shadow {
-  /* background: #d6d4d4; */
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 50%;
-  height: 50%;
-  width: 50%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin: 25% 0 0 -25%;
-  transform: rotateX(55deg);
-  z-index: -2;
-  filter: blur(calc(var(--marker-size) / 15));
-  box-shadow: 0 0 calc(var(--marker-size) / 3) rgba(0, 0, 0, 0.5);
-}
-
-.custom-marker-pin i {
-  font-size: calc(var(--marker-size) / 3);
-  position: absolute;
-  top: 45%;
-  left: 45%;
-  transform: translate(-50%, -50%) rotate(-45deg);
-}
-
-.custom-cluster {
-  background-color: var(--primary-hover);
-  background-clip: padding-box;
-  border-radius: 25px;
-}
-.custom-cluster div {
-  background-color: var(--primary);
-  width: 40px;
-  height: 40px;
-  margin-left: 5px;
-  margin-top: 5px;
-  text-align: center;
-  border-radius: 20px;
-  font: 14px Arial, Helvetica, sans-serif;
-  position: relative;
-}
-
-.custom-cluster span {
-  color: #fff;
-  line-height: 40px;
-  /* font-weight: bold; */
-  text-shadow: 0 1px 4px rgba(0,0,0,0.7);
-  position: relative; /* Add this */
-  z-index: 1; 
-}
-.leaflet-layerstree-children .leaflet-layerstree-children {
-  padding-left: 20px;
-}
-.leaflet-control-layers-selector {
-  margin-right: 3px;
-}
 /*
 document is built up as follows: 
  
@@ -121,14 +22,15 @@ index page
 footer
 links
 page headers
-tabulator header
-tabulator footer
+map styles
+tabulator styles
 subpages
 highcharts specific
-legend specific
 price page layout
 breadcrumbs
 buttons
+glossary styles
+OpenSeadragon responsive container
 */
 
 .about-text {
@@ -404,9 +306,108 @@ div h2 > a {
     color: var(--secondary-hover);
   }
 }
+/* Map styles */
+#map {
+  height: 90%;
+  min-height: 300px;
+  max-height: 800px;
+}
 
+.leaflet-container a {
+  color: var(--secondary);
+}
+
+.custom-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-marker-pin {
+  width: 70%;
+  height: 70%;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50% 100%;
+  border-bottom-left-radius: 100% 50%;
+  border-bottom-right-radius: 0%;
+  transform: rotate(45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.custom-marker-pin::before {
+  content: "";
+  position: absolute;
+  top: 10%;
+  left: 45%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 70%;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-marker-shadow {
+  /* background: #d6d4d4; */
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  height: 50%;
+  width: 50%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 25% 0 0 -25%;
+  transform: rotateX(55deg);
+  z-index: -2;
+  filter: blur(calc(var(--marker-size) / 15));
+  box-shadow: 0 0 calc(var(--marker-size) / 3) rgba(0, 0, 0, 0.5);
+}
+
+.custom-marker-pin i {
+  font-size: calc(var(--marker-size) / 3);
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.custom-cluster {
+  background-color: var(--primary-hover);
+  background-clip: padding-box;
+  border-radius: 25px;
+}
+.custom-cluster div {
+  background-color: var(--primary);
+  width: 40px;
+  height: 40px;
+  margin-left: 5px;
+  margin-top: 5px;
+  text-align: center;
+  border-radius: 20px;
+  font: 14px Arial, Helvetica, sans-serif;
+  position: relative;
+}
+
+.custom-cluster span {
+  color: #fff;
+  line-height: 40px;
+  /* font-weight: bold; */
+  text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+  position: relative; /* Add this */
+  z-index: 1; 
+}
+.leaflet-layerstree-children .leaflet-layerstree-children {
+  padding-left: 20px;
+}
+.leaflet-control-layers-selector {
+  margin-right: 3px;
+}
 /*Custom Tabulator styles*/
-
 
 #documents-table,
 #locations-table,
@@ -560,31 +561,6 @@ ul.no-bullets {
   }
 }
 
-
-/*Legend specific*/
-.legend {
-  padding: 6px 8px;
-  font: 14px Arial, Helvetica, sans-serif;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-  /*border-radius: 5px;*/
-  line-height: 24px;
-  color: #555;
-}
-
-.legend span {
-  position: relative;
-  bottom: 3px;
-}
-
-.legend div {
-  width: 10px;
-  height: 10px;
-  float: left;
-  margin: 5px 5px 0 0;
-  border-radius: 50%;
-}
-
 /* price page layout */
   .goods-list-col {
     height: 40vh ;
@@ -630,8 +606,8 @@ ul.no-bullets {
   z-index: 10000;
   display: none;
 }
-
-.glossary dt, dd {
+/* Glossary styles */
+.glossary dt, .glossary dd {
   display: inline;
   margin: 0;
   padding: 0;
