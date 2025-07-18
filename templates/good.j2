@@ -98,7 +98,8 @@
     // e.g. preventing the null values from being converted to None during processing
     const doc_list = {{ object.documents | tojson | safe }};
     const icon = "bi bi-basket3-fill";
-    const { map, layerGroups } = createMap({ layerControl: true });
+    const { map, mcgLayerSupportGroup, layerGroups} = createMap({ layerControl: true });
+    manageClusterSpiderfy(mcgLayerSupportGroup, map);
     markerPerDoc(doc_list, icon, layerGroups);
 </script>
 {% endif %}

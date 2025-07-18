@@ -390,66 +390,12 @@ function zoomToPoint(marker, mcgLayerSupportGroup) {
   }
 }
 
-function manageClusterSpiderfy(mcgLayerSupportGroup, map) {
-  let spiderfyTimeout = null;
-  let isSpiderfied = false;
-
-  mcgLayerSupportGroup.on("spiderfied", function () {
-    isSpiderfied = true;
-  });
-  mcgLayerSupportGroup.on("unspiderfied", function () {
-    isSpiderfied = false;
-  });
-  // spiderfy clusters beyond a certain zoom level
-  // (!only if there is only one cluster visible!)
-  mcgLayerSupportGroup.on("animationend", function () {
-    const currentZoom = map.getZoom();
-    const autoSpiderfyZoomLevel = 12;
-    // Zooming automically unspiderfies, so the timeout ensures
-    // there's less spiderfying when zooming in and out quickly.
-    // Clear any pending spiderfy timeout
-    if (spiderfyTimeout) {
-      clearTimeout(spiderfyTimeout);
-    }
-
-    spiderfyTimeout = setTimeout(() => {
-      if (currentZoom >= autoSpiderfyZoomLevel && !isSpiderfied) {
-        const visibleClusters = new Set();
-        mcgLayerSupportGroup.eachLayer(function (layer) {
-          let parent = mcgLayerSupportGroup.getVisibleParent(layer);
-          if (parent) {
-            // check if the parent is a cluster and if it is visible
-            if (
-              typeof parent.getChildCount === "function" &&
-              map.getBounds().contains(parent.getLatLng())
-            ) {
-              visibleClusters.add(parent);
-            }
-          }
-        });
-
-        if (visibleClusters.size === 1) {
-          const clusterToSpiderfy = Array.from(visibleClusters)[0];
-          clusterToSpiderfy.spiderfy();
-        }
-      }
-    }, 400);
-  });
-  // spiderfy smaller clusters on mouseover
-  mcgLayerSupportGroup.on("clustermouseover", function (e) {
-    if (e.layer.getChildCount() <= 5) {
-      e.layer.spiderfy();
-    }
-  });
-}
-
 // Main function for initializing the map and table
 function setupMapAndTable(dataUrl) {
-  const { map, layerGroups, mcgLayerSupportGroup } = createMap({
+  const { map, mcgLayerSupportGroup, layerGroups} = createMap({
     initialZoom: 9,
     layerControl: true,
     layerControlTree: true,
-    useCluster: true,
   });
   manageClusterSpiderfy(mcgLayerSupportGroup, map);
   let markers = {};

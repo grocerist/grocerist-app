@@ -103,7 +103,8 @@
 <script>
     const icon = "bi bi-map-fill";
     const doc_list = {{ object.documents | tojson | safe }}
-    const { map, layerGroups } = createMap({ layerControl: true });
+    const { map, mcgLayerSupportGroup, layerGroups} = createMap({ layerControl: true });
+    manageClusterSpiderfy(mcgLayerSupportGroup, map);
     markerPerDoc(doc_list, icon, layerGroups);
 </script>
 {% endif %}

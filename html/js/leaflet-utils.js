@@ -76,7 +76,7 @@ function createMarker(markerData, centuryLayers = false, treeLayers = false) {
     }
   }
   const customIcon = createMarkerIcon(color, icon, iconColor, altText);
-  const marker = L.marker([lat, long], {  icon: customIcon, riseOnHover: true });
+  const marker = L.marker([lat, long], { icon: customIcon, riseOnHover: true });
 
   marker.bindPopup(popupContent);
   return { marker, layerName };
@@ -91,6 +91,60 @@ function getYearFromISODate(date) {
     }
   }
   return year;
+}
+// Function to handles cluster spiderfying at a certain zoom level
+// and on mouseover for smaller clusters (<= 5)
+function manageClusterSpiderfy(mcgLayerSupportGroup, map) {
+  let spiderfyTimeout = null;
+  let isSpiderfied = false;
+
+  mcgLayerSupportGroup.on("spiderfied", function () {
+    isSpiderfied = true;
+  });
+  mcgLayerSupportGroup.on("unspiderfied", function () {
+    isSpiderfied = false;
+  });
+  // spiderfy clusters beyond a certain zoom level
+  // (!only if there is only one cluster visible!)
+  mcgLayerSupportGroup.on("animationend", function () {
+    const currentZoom = map.getZoom();
+    const autoSpiderfyZoomLevel = 12;
+    // Zooming automically unspiderfies, so the timeout ensures
+    // there's less spiderfying when zooming in and out quickly.
+    // Clear any pending spiderfy timeout
+    if (spiderfyTimeout) {
+      clearTimeout(spiderfyTimeout);
+    }
+
+    spiderfyTimeout = setTimeout(() => {
+      if (currentZoom >= autoSpiderfyZoomLevel && !isSpiderfied) {
+        const visibleClusters = new Set();
+        mcgLayerSupportGroup.eachLayer(function (layer) {
+          let parent = mcgLayerSupportGroup.getVisibleParent(layer);
+          if (parent) {
+            // check if the parent is a cluster and if it is visible
+            if (
+              typeof parent.getChildCount === "function" &&
+              map.getBounds().contains(parent.getLatLng())
+            ) {
+              visibleClusters.add(parent);
+            }
+          }
+        });
+
+        if (visibleClusters.size === 1) {
+          const clusterToSpiderfy = Array.from(visibleClusters)[0];
+          clusterToSpiderfy.spiderfy();
+        }
+      }
+    }, 400);
+  });
+  // spiderfy smaller clusters on mouseover
+  mcgLayerSupportGroup.on("clustermouseover", function (e) {
+    if (e.layer.getChildCount() <= 5) {
+      e.layer.spiderfy();
+    }
+  });
 }
 
 function markerPerDoc(doc_list, icon, layerGroups = null) {
@@ -111,24 +165,25 @@ function markerPerDoc(doc_list, icon, layerGroups = null) {
         century,
         popupContent: `<p>Mentioned in document <br>
             <strong><a href="document__${doc.id}.html">${
-           doc.value || doc.shelfmark 
+          doc.value || doc.shelfmark
         }</a></strong><br>
             ${yearText}</p>`,
         icon: icon,
-        altText : `Document ${doc.value || doc.shelfmark}` ,
+        altText: `Document ${doc.value || doc.shelfmark}`,
       };
       if (layerGroups) {
         const { marker, layerName } = createMarker(markerData, true);
         marker.addTo(layerGroups[layerName]);
       } else {
         const { marker } = createMarker(markerData);
-        marker.addTo(map);
+        marker.addTo(mcgLayerSupportGroup);
+        //  marker.addTo(mcgLayerSupportGroup || map);
       }
       // set map bounds based on all coordinates
       if (coords.length > 0) {
         const bounds = L.latLngBounds(coords);
-        map.fitBounds(bounds,  { padding: [10, 10] });
-    }
+        map.fitBounds(bounds, { padding: [10, 10] });
+      }
     }
   }
 }
@@ -198,13 +253,30 @@ function createMap(options = {}) {
   });
   baseMapLayer.addTo(map);
 
+  // Create a marker cluster group
+  const mcgLayerSupportGroup = L.markerClusterGroup.layerSupport({
+    iconCreateFunction: function (cluster) {
+      return L.divIcon({
+        className: "custom-cluster",
+        html: `<div><span>${cluster.getChildCount()}</span></div>`,
+        iconSize: [50, 50],
+      });
+    },
+  });
+  mcgLayerSupportGroup.addTo(map);
+
   let layerGroups = null;
-  let mcgLayerSupportGroup = null;
   if (options.layerControl) {
     const layerList = options.layerControlTree
       ? ["18-1", "18-more", "19-1", "19-more"]
       : Object.keys(overlayColors);
     layerGroups = createAndAddLayerGroups(map, layerList);
+
+    // Add layer groups to clustering immediately
+    Object.values(layerGroups).forEach((layerGroup) => {
+      mcgLayerSupportGroup.addLayer(layerGroup);
+    });
+
     if (options.layerControlTree) {
       const layerControlTree = createTreeLayerControl(layerGroups, layerList);
       layerControlTree.addTo(map);
@@ -215,6 +287,7 @@ function createMap(options = {}) {
       });
       layerControl.addTo(map);
     }
+
     // Ensure all checkboxes are checked after adding the control
     setTimeout(() => {
       document
@@ -226,23 +299,7 @@ function createMap(options = {}) {
           }
         });
     }, 10);
-    if (options.useCluster) {
-      // Create a marker cluster group
-      mcgLayerSupportGroup = L.markerClusterGroup.layerSupport({
-        iconCreateFunction: function (cluster) {
-          return L.divIcon({
-            className: "custom-cluster",
-            html: `<div><span>${cluster.getChildCount()}</span></div>`,
-            iconSize: [50, 50],
-          });
-        },
-      });
-      mcgLayerSupportGroup.addTo(map);
-      Object.values(layerGroups).forEach((layerGroup) => {
-        mcgLayerSupportGroup.addLayer(layerGroup);
-      });
-    }
   }
 
-  return { map, layerGroups, mcgLayerSupportGroup };
+  return { map, mcgLayerSupportGroup, layerGroups };
 }
