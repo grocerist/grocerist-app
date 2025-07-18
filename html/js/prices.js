@@ -84,14 +84,13 @@ const baseColumnDefinitions = [
     sorterParams: {
       alignEmptyValues: "bottom",
     },
-     minWidth: 165,
+    minWidth: 165,
   },
 ];
 
 //add column visibility toggle
 const columnDefinitions = baseColumnDefinitions.map((column) => ({
   ...column,
-  headerMenu: headerMenu,
 }));
 
 const priceTableConfig = {
@@ -110,20 +109,6 @@ const priceTableConfig = {
 
 // code specific for the price page
 
-// function initializeTable(containerId, tableData) {
-// const currencyData = tableData.some((entry) => entry.currency);
-// if (currencyData) {
-//   columnDefinitions.push({
-//     title: "Currency",
-//     field: "currency.value",
-//     headerFilter: "input",
-//     visible: false,
-//   });
-// }
-//   tableConfig.data = tableData;
-//   const table = createTable(containerId, tableConfig);
-// }
-
 function handleRowSelection(row, allData) {
   let rowData = row.getData();
   let goodName = rowData.good;
@@ -133,18 +118,24 @@ function handleRowSelection(row, allData) {
   goodData.id = `data-goods__${goodId}`;
   goodData.className = "row";
 
+  let priceTableData = allData.filter(
+    (item) => item.document.length > 0 && item.good[0].id === goodId
+  );
+  const hasCurrencyData = priceTableData.some((item) => item.currency);
+  const currencyNote = hasCurrencyData
+    ? "The currency is in akçe."
+    : "No currency information is available for these price records.";
+
   goodData.innerHTML = `
    <div class="col">
     <h2 id="title-goods__${goodId}"><a href="goods__${goodId}.html">${goodName}</a></h2>
     <div id="table-goods__${goodId}" style="margin-bottom: 1em"></div>
-  </div>
+    <p class="text-muted small"><i class="bi bi-info-circle"></i> ${currencyNote}</p>
+    </div>
   `;
 
   const pricesContainer = document.getElementById("prices-tables");
   pricesContainer.appendChild(goodData);
-  let priceTableData = allData.filter(
-    (item) => item.document.length > 0 && item.good[0].id === goodId
-  );
 
   priceTableConfig.data = priceTableData;
   priceTableConfig.pagination = false;
@@ -191,7 +182,7 @@ function initializePricesPage() {
 
       const goodsList = createTable(`#goods-list`, {
         selectableRows: 3,
-        ...commonTableConfig,
+        layout: "fitColumns",
         pagination: false,
         data: tableData,
         height: "90%",
