@@ -271,8 +271,8 @@ const baseColumnDefinitions = [
     visible: false,
   },
   {
-    title: "Facsimiles",
-    field: "images",
+    title: "Transcript",
+    field: "transcript",
     hozAlign: "center",
     formatter: "tickCross",
     headerFilter: "tickCross",
