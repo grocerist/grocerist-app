@@ -19,7 +19,7 @@ const baseColumnDefinitions = [
     headerFilterParams: {
       valuesLookup: "century",
       sort: "asc",
-      multiselect: true,
+      multiselect: false,
     },
   },
   {
@@ -31,7 +31,7 @@ const baseColumnDefinitions = [
     headerFilterParams: {
       valuesLookup: "religion",
       sort: "asc",
-      multiselect: true,
+      multiselect: false,
     },
   },
   {
