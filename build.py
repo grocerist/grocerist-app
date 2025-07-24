@@ -119,6 +119,9 @@ for key, value in data.items():
     if doc:
         paragraphs = []
         for p in doc.any_xpath(".//tei:body//tei:p"):
+            p_text = ET.tostring(p).decode("utf-8")
+            if "This document does not contain any groceries." in p_text:
+                continue  # Skip paragraphs with the standard text for no transcript
             parent_div = p.getparent()
             if (
                 parent_div.tag == "{http://www.tei-c.org/ns/1.0}div"
@@ -128,7 +131,9 @@ for key, value in data.items():
                 )
             ):
                 p.set("class", "fw-bold")
-            paragraphs.append(ET.tostring(p).decode("utf-8"))
+            p_text = ET.tostring(p).decode("utf-8")
+            if "This document does not contain any groceries." not in p_text:
+                paragraphs.append(p_text)
     context["paragraphs"] = paragraphs
     if paragraphs:
         context["transcript"] = True
@@ -149,7 +154,6 @@ for key, value in data.items():
         f.write(template.render(context))
 with open(os.path.join(json_dumps, data_file), "w", encoding="utf-8") as f:
     json.dump(data, f, ensure_ascii=False)
-
 print("building category sites")
 data_file = "categories.json"
 template = templateEnv.get_template("./templates/category.j2")
