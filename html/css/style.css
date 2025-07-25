@@ -448,10 +448,7 @@ div h2 > a {
   color: white;
 }
 
-.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle svg {
-  width: 20px;
-  height: 20px;
-}
+
 /* tabulator header */
 .tabulator-header-contents {
   background-color: var(--primary);
@@ -502,7 +499,15 @@ div h2 > a {
 .bi-caret-down-fill {
   color: #666;
 }
+/* tabulator responsive collapse */
+.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle svg {
+  width: 20px;
+  height: 20px;
+}
 
+.tabulator-row .tabulator-responsive-collapse table tr td {
+    vertical-align: top;
+}
 /* subpages */
 div.subpage h1 {
   /*create line*/
