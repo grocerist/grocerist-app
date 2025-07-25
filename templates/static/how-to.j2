@@ -10,7 +10,7 @@
 <div class="container subpage">
     <h1 class="text-center pb-2">
         {{page_title}}</h1>
-    <div class="mt-4 mx-auto">
+    <div class="mt-4 mx-auto info-text">
         <h2 class="h4">Navigating the site</h2>
         <p>Most pages on the website follow the same structure: a table is presented as the main interface, often
             accompanied by a map or chart for visualising the table data. Each row in the table represents a single
@@ -24,8 +24,8 @@
         <p>Columns offer different types of filters depending on their data: text input, single-select dropdowns,
             numeric ranges, or date ranges. Filters can be combined freely, the table will show only rows that match all
             active conditions.</p>
-        <p>Most columns can be sorted. However, columns with list-type cells (e.g. a list of documents related to a
-            location) can’t be sorted, as the order wouldn’t be meaningful.</p>
+        <p>Most columns can be sorted. Columns with list-type cells (e.g. a list of documents related to a
+            location) are an exception, as the order wouldn’t be meaningful.</p>
         <h2 class="h4">Interaction between table and map / chart</h2>
         <For>On some pages, the table is paired with a map or chart. These elements are linked, but the interaction is
             only one-way: filtering the table will update the map or chart, but not the other way around. For example, if you filter the Documents table by century, the map will update to show only the corresponding
