@@ -448,6 +448,10 @@ div h2 > a {
   color: white;
 }
 
+.tabulator-row .tabulator-cell .tabulator-responsive-collapse-toggle svg {
+  width: 20px;
+  height: 20px;
+}
 /* tabulator header */
 .tabulator-header-contents {
   background-color: var(--primary);
