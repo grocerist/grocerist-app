@@ -55,9 +55,12 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
 }));
 let table;
 
+// only use certain common table config options
+const {layout, height, footerElement} = commonTableConfig;
 const tableConfig = {
-      ...commonTableConfig,
-      pagination: false,
+      layout,
+      height,
+      footerElement,
       headerFilterLiveFilterDelay: 400,
       dataTree: true,
       columns: columnDefinitions,
