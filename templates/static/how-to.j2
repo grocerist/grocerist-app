@@ -1,0 +1,40 @@
+{% set page_title = "User Guide" %}
+{% extends "templates/partials/base.j2" %}
+{% block title %}{{page_title}}{% endblock title %}
+{% block page_description %}
+<meta name="description" content="{{ project_data.project_sub_title }}">
+{% endblock page_description %}
+
+{% block content %}
+{% include "templates/partials/breadcrumbs.j2" %}
+<div class="container subpage">
+    <h1 class="text-center pb-2">
+        {{page_title}}</h1>
+    <div class="mt-4 mx-auto">
+        <h2 class="h4">Navigating the site</h2>
+        <p>Most pages on the website follow the same structure: a table is presented as the main interface, often
+            accompanied by a map or chart for visualising the table data. Each row in the table represents a single
+            item, such as a document, location, or category. Most cells in the table contain clickable links that lead
+            to a detail view of the corresponding entry.</p>
+        <h2 class="h4">Column visibility</h2>
+        <p>Some tables contain many columns, some of which are hidden by default. To
+            manage column visibility, click the three dots (⋮) in the header of any visible column. From there, you can
+            show or hide columns as needed.</p>
+        <h2 class="h4">Filters & sorting</h2>
+        <p>Columns offer different types of filters depending on their data: text input, single-select dropdowns,
+            numeric ranges, or date ranges. Filters can be combined freely, the table will show only rows that match all
+            active conditions.</p>
+        <p>Most columns can be sorted. However, columns with list-type cells (e.g. a list of documents related to a
+            location) can’t be sorted, as the order wouldn’t be meaningful.</p>
+        <h2 class="h4">Interaction between table and map / chart</h2>
+        <For>On some pages, the table is paired with a map or chart. These elements are linked, but the interaction is
+            only one-way: filtering the table will update the map or chart, but not the other way around. For example, if you filter the Documents table by century, the map will update to show only the corresponding
+            markers. But if you deselect a century layer on the map, the table will still display all entries.</p>
+        <h2 class="h4">Exporting data</h2>
+        <p>Data from the tables can be exported in XLSX, CSV, or JSON format using the buttons provided below each
+            table. The export will include only visible columns and, if filters are applied, only the filtered rows.</p>
+        <p>Charts can also be exported. Click the icon in the top right corner to save them as images or as data tables.
+        </p>
+
+    </div>
+    {% endblock content %}

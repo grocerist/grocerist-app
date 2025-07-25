@@ -33,7 +33,7 @@ glossary styles
 OpenSeadragon responsive container
 */
 
-.about-text {
+.info-text {
   max-width: 85ch;
   overflow-wrap: break-word;
   text-align: justify;
