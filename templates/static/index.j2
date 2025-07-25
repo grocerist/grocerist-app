@@ -1,17 +1,16 @@
 {% extends "templates/partials/base.j2" %}
 {% block title %}{{ project_data.project_title }}{% endblock title %}
 {% block page_description %}
-<meta name="description" content="{{ project_data.project_sub_title }}">
+<meta name="description" content="{{ project_data.project_full_title }}">
 {% endblock page_description %}
 
 {% block content %}
 <div class="header pb-1">
     <div class="container justify-content-center align-items-center text-white">
-        <h1 class="text-center p-3">{{ project_data.project_title }}</h1>
-        <h2 class="text-center">{{ project_data.project_sub_title }}</h2>
+        <h1 class="text-center p-4">{{ project_data.project_full_title }}</h1>
         <p class="description_text lh-base p-1">
-            The main objective of GrocerIST is to reveal and analyse the food
-            consumption patterns of inhabitants in the eighteenth and nineteenth
+            The main objective of <i>Grocers of Istanbul: Tracing Food Consumption</i> (GrocerIST) is to reveal and
+            analyse the food consumption patterns of inhabitants in the eighteenth and nineteenth
             centuries in Istanbul through the use of grocers' (<i>bakkal</i>)
             inheritance inventories. By making comparisons across the centuries
             and different socio-economic conditions of the city, this project
