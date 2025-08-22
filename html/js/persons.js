@@ -15,11 +15,9 @@ const baseColumnDefinitions = [
     title: "Century",
     field: "century",
     headerFilter: "list",
-    headerFilterFunc: "in",
     headerFilterParams: {
       valuesLookup: "century",
       sort: "asc",
-      multiselect: false,
     },
   },
   {
@@ -27,7 +25,7 @@ const baseColumnDefinitions = [
     field: "religion",
     formatter: "html",
     headerFilter: "list",
-    headerFilterFunc: "in",
+    headerFilterFunc: "=",
     headerFilterParams: {
       valuesLookup: "religion",
       sort: "asc",
