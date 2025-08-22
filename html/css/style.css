@@ -14,7 +14,6 @@
   --marker-size: 32px;
 }
 
-
 /*
 document is built up as follows: 
  
@@ -317,7 +316,6 @@ div h2 > a {
 .leaflet-container a {
   color: var(--secondary);
 }
-
 .custom-marker {
   display: flex;
   align-items: center;
@@ -398,9 +396,9 @@ div h2 > a {
   color: #fff;
   line-height: 40px;
   /* font-weight: bold; */
-  text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
   position: relative; /* Add this */
-  z-index: 1; 
+  z-index: 1;
 }
 .leaflet-layerstree-children .leaflet-layerstree-children {
   padding-left: 20px;
@@ -449,7 +447,6 @@ div h2 > a {
   color: white;
 }
 
-
 /* tabulator header */
 .tabulator-header-contents {
   background-color: var(--primary);
@@ -491,7 +488,6 @@ div h2 > a {
   background-color: var(--tabulator-secondary);
 }
 
-
 /* color for data tree toggler*/
 .bi-caret-right-fill {
   color: #bbb;
@@ -507,7 +503,7 @@ div h2 > a {
 }
 
 .tabulator-row .tabulator-responsive-collapse table tr td {
-    vertical-align: top;
+  vertical-align: top;
 }
 /* subpages */
 div.subpage h1 {
@@ -572,12 +568,12 @@ ul.no-bullets {
 }
 
 /* price page layout */
-  .goods-list-col {
-    height: 40vh ;
-  }
+.goods-list-col {
+  height: 40vh;
+}
 @media (min-width: 768px) {
   .goods-list-col {
-    height: 80vh ;
+    height: 80vh;
   }
 }
 
@@ -608,7 +604,7 @@ ul.no-bullets {
   pointer-events: none;
   background: #fff;
   color: var(--primary);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 12px;
@@ -617,7 +613,8 @@ ul.no-bullets {
   display: none;
 }
 /* Glossary styles */
-.glossary dt, .glossary dd {
+.glossary dt,
+.glossary dd {
   display: inline;
   margin: 0;
   padding: 0;
@@ -634,10 +631,11 @@ ul.no-bullets {
 
 .glossary hr,
 .glossary-heading {
-   color: var(--primary);
+  color: var(--primary);
 }
 
-@media (min-width: 768px) { /* md and up */
+@media (min-width: 768px) {
+  /* md and up */
   .glossary-list {
     columns: 2 300px;
     column-gap: 2rem;
@@ -646,7 +644,7 @@ ul.no-bullets {
 /* OpenSeadragon responsive container */
 .osd-responsive {
   width: 100%;
-  aspect-ratio: 3/4;    
-  min-height: 200px;    
-  margin: 0 auto;   
+  aspect-ratio: 3/4;
+  min-height: 200px;
+  margin: 0 auto;
 }

@@ -5,7 +5,14 @@ const mapConfig = {
   initialCoordinates: [41.015137, 28.97953],
   divId: "map",
   // L.map options
-  mapOptions: { maxZoom: 18, minZoom: 8 },
+  mapOptions: {
+    maxZoom: 18,
+    minZoom: 8,
+    fullscreenControl: true,
+    fullscreenControlOptions: {
+      position: "topleft",
+    },
+  },
   // L.tileLayer options
   baseMapUrl: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
   attribution:
