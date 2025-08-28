@@ -1,5 +1,5 @@
 const dataUrl = "json_dumps/categories.json";
-const baseColumnDefinitions = [
+const columnDefinitions = [
   {
     title: "Grocery Category",
     field: "name",
@@ -48,11 +48,7 @@ const baseColumnDefinitions = [
     headerFilterLiveFilter: false,
   },
 ];
-// Add minWidth to each column
-const columnDefinitions = baseColumnDefinitions.map((column) => ({
-  ...column,
-  minWidth: 150,
-}));
+
 let table;
 
 // only use certain common table config options
@@ -64,6 +60,9 @@ const tableConfig = {
       headerFilterLiveFilterDelay: 400,
       dataTree: true,
       columns: columnDefinitions,
+      columnDefaults : {
+        minWidth: 150,
+      },
       dataTreeExpandElement: `<i class="bi bi-caret-right-fill"></i>`,
       dataTreeCollapseElement: `<i class="bi bi-caret-down-fill"></i>`,
     }

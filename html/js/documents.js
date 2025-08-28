@@ -106,7 +106,7 @@ const dateFilterFunction = function (
 };
 
 // ####### TABLE CONFIG AND FUNCTIONS #######
-const baseColumnDefinitions = [
+const columnDefinitions = [
   {
     title: "Shelfmark",
     field: "shelfmark",
@@ -274,6 +274,7 @@ const baseColumnDefinitions = [
     title: "Transcript",
     field: "transcript",
     hozAlign: "center",
+    minWidth: 100,
     formatter: "tickCross",
     headerFilter: "tickCross",
     headerFilterParams: { tristate: true },
@@ -284,24 +285,7 @@ const baseColumnDefinitions = [
     download: false,
   },
 ];
-// Add minWidth and visibility toggle to each column
-const columnDefinitions = baseColumnDefinitions.map((column) => {
-  // List of columns that should not have minWidth
-  const narrowColumns = ["transcript", "images"];
-  const narrowMinWidth = 100;
-  const defaultMinWidth = 150;
 
-  // Determine the minWidth for the current column
-  const minWidth = narrowColumns.includes(column.field)
-    ? narrowMinWidth
-    : defaultMinWidth;
-
-  return {
-    ...column,
-    headerMenu: headerMenu,
-    minWidth: minWidth,
-  };
-});
 
 // ###### MAP AND TABLE INTERACTION #######
 // Function to get coordinate key from row data
@@ -427,6 +411,10 @@ function setupMapAndTable(dataUrl) {
         ...commonTableConfig,
         headerFilterLiveFilterDelay: 600,
         columns: columnDefinitions,
+        columnDefaults: {
+          minWidth: 150,
+          headerMenu: headerMenu,
+        },
         data: tableData,
         initialSort: [{ column: "shelfmark", dir: "asc" }],
       });

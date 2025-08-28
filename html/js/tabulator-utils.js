@@ -11,6 +11,7 @@ const commonTableConfig = {
     hozAlign: "center",
     resizable: false,
     headerSort: false,
+    headerMenu: false,
   },
   responsiveLayoutCollapseStartOpen: false,
   height: 800,
@@ -221,6 +222,7 @@ const headerMenu = function () {
 
   allColumns.forEach((column) => {
     const field = column.getField();
+
     // Skip rowHeaders and columns that are excluded from the header menu
     if (!field || excludeFromHeaderMenu.includes(field)) {
       return;

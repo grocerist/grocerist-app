@@ -1,6 +1,6 @@
 const dataUrl = "json_dumps/utensils.json";
 
-const baseColumnDefinitions = [
+const columnDefinitions = [
   {
     title: "Name",
     field: "name",
@@ -27,11 +27,6 @@ const baseColumnDefinitions = [
     headerFilterLiveFilter: false,
   },
 ];
-// Add minWidth and visibility toggle to each column
-const columnDefinitions = baseColumnDefinitions.map((column) => ({
-  ...column,
-  minWidth: 200,
-}));
 (async function () {
   try {
     const dataFromJson = await d3.json(dataUrl);
@@ -47,6 +42,9 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
       ...commonTableConfig,
       data: tableData,
       columns: columnDefinitions,
+      columnDefaults: {
+        minWidth: 200,
+      },
       initialSort: [{ column: "name", dir: "asc" }],
     });
     handleDownloads(table, "Utensils");

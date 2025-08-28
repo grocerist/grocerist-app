@@ -4,7 +4,7 @@ const titleStyle = {
   fontWeight: "bold",
   fontSize: "20px",
 };
-const baseColumnDefinitions = [
+const columnDefinitions = [
   {
     title: "Name",
     field: "name",
@@ -142,13 +142,6 @@ const baseColumnDefinitions = [
     },
   },
 ];
-
-// Add minWidth and visibility toggle to each column
-const columnDefinitions = baseColumnDefinitions.map((column) => ({
-  ...column,
-  headerMenu: headerMenu,
-  minWidth: 150,
-}));
 
 const getColor = {};
 
@@ -333,6 +326,7 @@ function calculateDistrictData(rows) {
     const table = createTable("#persons-table", {
       ...commonTableConfig,
       columns: columnDefinitions,
+      columnDefaults: { headerMenu: headerMenu, minWidth: 150 },
       data: tableData,
       initialSort: [{ column: "name", dir: "asc" }],
     });
@@ -370,7 +364,7 @@ function calculateDistrictData(rows) {
         data: religionsResults,
       });
       districtsChart.series[0].update({
-        data: districtResults, 
+        data: districtResults,
       });
     });
   } catch (error) {

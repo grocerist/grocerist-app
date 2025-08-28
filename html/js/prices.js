@@ -1,5 +1,5 @@
 // column definitions shared by price tables on prices page and on goods detail pages
-const baseColumnDefinitions = [
+const columnDefinitions = [
   {
     title: "Document",
     field: "document",
@@ -35,7 +35,6 @@ const baseColumnDefinitions = [
     sorterParams: {
       alignEmptyValues: "bottom",
     },
-    minWidth: 160,
   },
   {
     title: "Total Value",
@@ -47,7 +46,6 @@ const baseColumnDefinitions = [
     sorterParams: {
       alignEmptyValues: "bottom",
     },
-    minWidth: 165,
   },
   {
     title: "Amount",
@@ -60,7 +58,6 @@ const baseColumnDefinitions = [
     sorterParams: {
       alignEmptyValues: "bottom",
     },
-    minWidth: 165,
   },
   {
     title: "Unit",
@@ -72,6 +69,7 @@ const baseColumnDefinitions = [
     sorterParams: {
       alignEmptyValues: "bottom",
     },
+    minWidth: 80,
   },
   {
     title: "Price per unit",
@@ -84,14 +82,8 @@ const baseColumnDefinitions = [
     sorterParams: {
       alignEmptyValues: "bottom",
     },
-    minWidth: 165,
   },
 ];
-
-//add column visibility toggle
-const columnDefinitions = baseColumnDefinitions.map((column) => ({
-  ...column,
-}));
 
 const priceTableConfig = {
   ...commonTableConfig,
@@ -104,6 +96,9 @@ const priceTableConfig = {
     return containerHeight - h2Height;
   },
   columns: columnDefinitions,
+  columnDefaults: {
+    minWidth: 165,
+  },
   initialSort: [{ column: "doc_year", dir: "asc" }],
 };
 

@@ -4,7 +4,7 @@ const titleStyle = {
   fontWeight: "bold",
   fontSize: "20px",
 };
-const baseColumnDefinitions = [
+const columnDefinitions = [
   {
     title: "Type of location",
     field: "properties.location_type",
@@ -109,14 +109,6 @@ const baseColumnDefinitions = [
     visible: false,
   },
 ];
-// Add minWidth to each column
-const columnDefinitions = baseColumnDefinitions.map((column) => {
-  return {
-    ...(column.field !== "first_level" ? { headerMenu: headerMenu } : {}),
-    ...column,
-    minWidth: 150,
-  };
-});
 
 // drilldown data and selected lcoation type need to be global variables
 let globalDrilldownData = [];
@@ -365,6 +357,10 @@ function calculateLocationData(rows, selectedLocationType, districtColors) {
       ...commonTableConfig,
       headerFilterLiveFilterDelay: 600,
       columns: columnDefinitions,
+      columnDefaults: {
+        headerMenu: headerMenu,
+        minWidth: 150,
+      },
       data: tableData,
       initialSort: [{ column: "properties.name", dir: "asc" }],
     });

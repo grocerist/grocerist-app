@@ -1,13 +1,13 @@
 const dataUrl = "json_dumps/goods.json";
 
-const baseColumnDefinitions = [
+const columnDefinitions = [
   {
     title: "Name",
     field: "name",
     headerFilter: "input",
     formatter: linkToDetailView,
   },
-   {
+  {
     title: "Century",
     field: "centuries",
     formatter: "array",
@@ -59,17 +59,12 @@ const baseColumnDefinitions = [
     hozAlign: "center",
     formatter: "tickCross",
     headerFilter: "tickCross",
-    formatterParams: {crossElement: false},
+    formatterParams: { crossElement: false },
     headerFilterParams: { tristate: true },
     visible: false,
   },
 ];
-// Add minWidth and visibility toggle to each column
-const columnDefinitions = baseColumnDefinitions.map((column) => ({
-  headerMenu: headerMenu,
-  ...column,
-  minWidth: 200,
-}));
+
 (async function () {
   try {
     const dataFromJson = await d3.json(dataUrl);
@@ -95,8 +90,12 @@ const columnDefinitions = baseColumnDefinitions.map((column) => ({
       ...commonTableConfig,
       data: tableData,
       columns: columnDefinitions,
+      columnDefaults: {
+        headerMenu: headerMenu,
+        minWidth: 200,
+      },
       initialSort: [{ column: "name", dir: "asc" }],
-  });
+    });
     handleDownloads(table, "Groceries");
     table.on("dataLoaded", function (data) {
       $(".total_count").text(data.length);
