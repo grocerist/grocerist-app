@@ -101,6 +101,10 @@
             <div class="pb-3">
                 <h2 class="text-center"><i class="bi bi-images me-2" aria-hidden="true"></i>Facsimiles</h2>
                 <div id="openseadragon1" class="osd-responsive"></div>
+                <p class="attribution"> Source: <a
+                        href="https://www.devletarsivleri.gov.tr" target="_blank"
+                        rel="noopener noreferrer">Başbakanlık Osmanlı Arşivi (Ottoman Archives)</a>
+                </p>
                 <script src="vendor/openseadragon-bin-5.0.1/openseadragon.min.js"></script>
                 <script type="text/javascript">
                     var viewer = OpenSeadragon({
@@ -114,12 +118,12 @@
             {% endif %}
             <div class="pt-3">
                 {% if paragraphs %}
-                    <h2 class="text-center"><i class="bi bi-pencil me-2" aria-hidden="true"></i>Transcript</h2>
-                    {% for x in paragraphs %}
-                    {{ x|safe }}
-                    {% endfor %}
+                <h2 class="text-center"><i class="bi bi-pencil me-2" aria-hidden="true"></i>Transcript</h2>
+                {% for x in paragraphs %}
+                {{ x|safe }}
+                {% endfor %}
                 {% else %}
-                    <div>This document does not contain any groceries.</div>
+                <div>This document does not contain any groceries.</div>
                 {% endif %}
             </div>
         </div>
